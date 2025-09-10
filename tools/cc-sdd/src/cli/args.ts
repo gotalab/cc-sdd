@@ -5,7 +5,19 @@ export type OverwritePolicy = 'prompt' | 'skip' | 'force';
 
 export type ParsedArgs = {
   agent?: AgentType;
-  lang?: 'ja' | 'en' | 'zh-TW';
+  lang?:
+    | 'ja'
+    | 'en'
+    | 'zh-TW'
+    | 'zh'
+    | 'es'
+    | 'pt'
+    | 'de'
+    | 'fr'
+    | 'ru'
+    | 'it'
+    | 'ko'
+    | 'ar';
   os?: 'auto' | OSType;
   overwrite?: OverwritePolicy;
   yes?: boolean;
@@ -100,7 +112,26 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
           break;
         case 'lang': {
           const v = String(value);
-          if (!isEnum(v, ['ja', 'en', 'zh-TW'] as const)) throw new Error('lang value invalid');
+          if (
+            !isEnum(
+              v,
+              [
+                'ja',
+                'en',
+                'zh-TW',
+                'zh',
+                'es',
+                'pt',
+                'de',
+                'fr',
+                'ru',
+                'it',
+                'ko',
+                'ar',
+              ] as const,
+            )
+          )
+            throw new Error('lang value invalid');
           out.lang = v;
           break;
         }

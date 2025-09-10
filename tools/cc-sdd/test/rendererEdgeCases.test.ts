@@ -31,6 +31,12 @@ describe('template renderer edge cases', () => {
       expect(result).toBe('claude-code.claudeen');
     });
 
+    it('replaces development guidelines', () => {
+      const input = 'Guidelines: {{DEV_GUIDELINES}}';
+      const result = renderTemplateString(input, agent, ctx);
+      expect(result).toBe(`Guidelines: ${ctx.DEV_GUIDELINES}`);
+    });
+
     it('preserves whitespace around placeholders', () => {
       const input = '  {{AGENT}}  \n  {{AGENT_DIR}}  ';
       const result = renderTemplateString(input, agent, ctx);
@@ -76,14 +82,14 @@ describe('template renderer edge cases', () => {
             file: '{{AGENT_DOC}}'
           }
         },
-        array: ['{{LANG_CODE}}', '{{KIRO_DIR}}']
+        array: ['{{LANG_CODE}}', '{{KIRO_DIR}}', '{{DEV_GUIDELINES}}']
       });
-      
+
       const result = renderJsonTemplate(input, agent, ctx) as any;
       expect(result.config.agent).toBe('claude-code');
       expect(result.config.nested.dir).toBe('.claude');
       expect(result.config.nested.file).toBe('CLAUDE.md');
-      expect(result.array).toEqual(['en', '.kiro']);
+      expect(result.array).toEqual(['en', '.kiro', ctx.DEV_GUIDELINES]);
     });
 
     it('handles JSON with numbers and booleans', () => {

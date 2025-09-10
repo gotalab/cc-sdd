@@ -39,7 +39,7 @@ describe('real claude-code manifest', () => {
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
     expect(out).toContain('[templateDir] commands_os_mac: templates/agents/claude-code/commands/os-mac -> .claude/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code/docs/CLAUDE/CLAUDE.en.tpl.md -> ./CLAUDE.md');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code/docs/CLAUDE.tpl.md -> ./CLAUDE.md');
   });
 
   it('apply writes CLAUDE.md and command files to cwd', async () => {
@@ -71,7 +71,7 @@ describe('real claude-code manifest (linux)', () => {
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
     expect(out).toContain('[templateDir] commands_os_windows: templates/agents/claude-code/commands/os-windows -> .claude/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code/docs/CLAUDE/CLAUDE.en.tpl.md -> ./CLAUDE.md');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code/docs/CLAUDE.tpl.md -> ./CLAUDE.md');
   });
 
   it('apply writes CLAUDE.md and command files to cwd on linux', async () => {

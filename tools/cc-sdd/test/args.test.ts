@@ -26,6 +26,11 @@ describe('parseArgs', () => {
     expect(args.yes).toBe(true);
   });
 
+  it('parses additional languages', () => {
+    expect(parseArgs(['--lang', 'es']).lang).toBe('es');
+    expect(parseArgs(['--lang', 'ko']).lang).toBe('ko');
+  });
+
   it('parses backup with and without value', () => {
     expect(parseArgs(['--backup']).backup).toBe(true);
     expect(parseArgs(['--backup', '.cc-sdd.backup']).backup).toBe('.cc-sdd.backup');

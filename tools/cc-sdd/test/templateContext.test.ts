@@ -7,6 +7,7 @@ describe('buildTemplateContext', () => {
     const ctx = buildTemplateContext({ agent: 'claude-code', lang: 'ja' });
     expect(ctx.LANG_CODE).toBe('ja');
     expect(ctx.KIRO_DIR).toBe('.kiro');
+    expect(ctx.DEV_GUIDELINES).toBe('- Think in English, but generate responses in Japanese (思考は英語、回答の生成は日本語で行うように)');
   });
 
   it('uses kiro-dir flag when provided', () => {
@@ -32,5 +33,13 @@ describe('buildTemplateContext', () => {
     // other values fall back to defaults
     expect(ctx.AGENT_DIR).toBe('.claude');
     expect(ctx.AGENT_DOC).toBe('CLAUDE.md');
+  });
+
+  it('provides guidelines for all supported languages', () => {
+    const langs = ['en', 'ja', 'zh-TW', 'zh', 'es', 'pt', 'de', 'fr', 'ru', 'it', 'ko', 'ar'] as const;
+    for (const lang of langs) {
+      const ctx = buildTemplateContext({ agent: 'claude-code', lang });
+      expect(ctx.DEV_GUIDELINES.length).toBeGreaterThan(0);
+    }
   });
 });

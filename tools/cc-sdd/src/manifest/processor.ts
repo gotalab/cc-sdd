@@ -56,6 +56,7 @@ const applyPlaceholders = (input: string, agent: AgentType, ctx: TemplateContext
   const dict: Record<string, string> = {
     AGENT: agent,
     LANG_CODE: ctx.LANG_CODE,
+    DEV_GUIDELINES: ctx.DEV_GUIDELINES,
     KIRO_DIR: ctx.KIRO_DIR,
     AGENT_DIR: ctx.AGENT_DIR,
     AGENT_DOC: ctx.AGENT_DOC,

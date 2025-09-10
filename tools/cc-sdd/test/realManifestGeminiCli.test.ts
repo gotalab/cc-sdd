@@ -35,7 +35,7 @@ describe('real gemini-cli manifest (mac)', () => {
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
     expect(out).toContain('[templateDir] commands_os_mac: templates/agents/gemini-cli/commands/os-mac -> .gemini/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/gemini-cli/docs/GEMINI/GEMINI.en.tpl.md -> ./GEMINI.md');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/gemini-cli/docs/GEMINI.tpl.md -> ./GEMINI.md');
   });
 
   it('apply writes GEMINI.md and command files to cwd', async () => {
@@ -66,7 +66,7 @@ describe('real gemini-cli manifest (linux)', () => {
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
     expect(out).toContain('[templateDir] commands_os_windows: templates/agents/gemini-cli/commands/os-windows -> .gemini/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/gemini-cli/docs/GEMINI/GEMINI.en.tpl.md -> ./GEMINI.md');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/gemini-cli/docs/GEMINI.tpl.md -> ./GEMINI.md');
   });
 
   it('apply writes GEMINI.md and command files to cwd on linux', async () => {

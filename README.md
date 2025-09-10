@@ -20,7 +20,7 @@ One command installs **AI-DLC** (AI-Driven Development Life Cycle) with **SDD** 
 # Basic installation (default: Claude Code)
 npx cc-sdd@latest
 
-# With language: --lang en (English) or --lang ja (Japanese) or --lang zh-TW (Traditional Chinese)
+# With language: --lang en|ja|zh-TW|zh|es|pt|de|fr|ru|it|ko|ar
 # With OS: --os mac | --os windows | --os linux (if auto-detection fails)
 npx cc-sdd@latest --lang ja --os mac
 
@@ -30,6 +30,21 @@ npx cc-sdd@latest --cursor
 
 # Ready to go! Now Claude Code and Gemini CLI can leverage `/kiro:spec-init <what to build>` and the full SDD workflow
 ```
+
+## 🌐 Supported Languages
+
+- English (`en`)
+- Japanese (`ja`)
+- Traditional Chinese (`zh-TW`)
+- Chinese (`zh`)
+- Spanish (`es`)
+- Portuguese (`pt`)
+- German (`de`)
+- French (`fr`)
+- Russian (`ru`)
+- Italian (`it`)
+- Korean (`ko`)
+- Arabic (`ar`)
 
 ## ✨ What You Get
 

@@ -26,6 +26,7 @@ npx cc-sdd@latest
 # 言語オプション（デフォルト: --lang en）
 npx cc-sdd@latest --lang ja    # 日本語
 npx cc-sdd@latest --lang zh-TW # 繁体字中国語
+# 対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # エージェントオプション（デフォルト: claude-code）
 npx cc-sdd@latest --gemini-cli --lang ja # Gemini CLI用

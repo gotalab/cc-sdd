@@ -12,7 +12,19 @@ export type UserConfig = Partial<{
   agent: AgentType;
   os: 'auto' | OSType;
   resolvedOs: OSType;
-  lang: 'ja' | 'en' | 'zh-TW';
+  lang:
+    | 'ja'
+    | 'en'
+    | 'zh-TW'
+    | 'zh'
+    | 'es'
+    | 'pt'
+    | 'de'
+    | 'fr'
+    | 'ru'
+    | 'it'
+    | 'ko'
+    | 'ar';
   kiroDir: string;
   overwrite: OverwritePolicy;
   backupDir: string;
@@ -23,7 +35,19 @@ export type ResolvedConfig = {
   agent: AgentType;
   os: 'auto' | OSType;
   resolvedOs: OSType;
-  lang: 'ja' | 'en' | 'zh-TW';
+  lang:
+    | 'ja'
+    | 'en'
+    | 'zh-TW'
+    | 'zh'
+    | 'es'
+    | 'pt'
+    | 'de'
+    | 'fr'
+    | 'ru'
+    | 'it'
+    | 'ko'
+    | 'ar';
   kiroDir: string;
   overwrite: OverwritePolicy;
   effectiveOverwrite: OverwritePolicy;
@@ -53,7 +77,19 @@ export const mergeConfigAndArgs = (
   const agent: AgentType = (args.agent ?? config.agent ?? defaults.agent) as AgentType;
   const osInput: 'auto' | OSType = (args.os ?? config.os ?? defaults.os) as any;
   const resolvedOs = resolveOs(osInput, runtime);
-  const lang = (args.lang ?? config.lang ?? defaults.lang) as 'ja' | 'en' | 'zh-TW';
+  const lang = (args.lang ?? config.lang ?? defaults.lang) as
+    | 'ja'
+    | 'en'
+    | 'zh-TW'
+    | 'zh'
+    | 'es'
+    | 'pt'
+    | 'de'
+    | 'fr'
+    | 'ru'
+    | 'it'
+    | 'ko'
+    | 'ar';
 
   const kiroDir = resolveKiroDir({ flag: args.kiroDir, config: config.kiroDir });
 

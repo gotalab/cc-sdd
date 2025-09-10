@@ -23,7 +23,7 @@
       "id": "doc_main",
       "source": {
         "type": "templateFile",
-        "from": "templates/agents/{{AGENT}}/docs/GEMINI/GEMINI.{{LANG_CODE}}.tpl.md",
+        "from": "templates/agents/{{AGENT}}/docs/GEMINI.tpl.md",
         "toDir": ".",
         "rename": "{{AGENT_DOC}}"
       },
