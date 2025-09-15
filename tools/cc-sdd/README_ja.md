@@ -96,7 +96,7 @@ npx cc-sdd@latest --cursor --lang ja # Cursor IDE用
 
 > **仕様を基盤として**: [Kiroの仕様駆動手法](https://kiro.dev/docs/specs/)に基づく - 仕様がアドホック開発を体系的ワークフローに変換し、明確なAI-人間協働ポイントでアイデアから実装への橋渡しをします。
 
-> **Kiro IDE統合**: 作成された仕様はKiro IDEにポータブル - `/kiro:spec-impl`を実装ガードレールとチーム協働機能付きで実行できます。
+> **Kiro IDE統合**: 作成された仕様は[Kiro IDE](https://kiro.dev)での利用/実装も可能 - 強化された実装ガードレールとチーム協働機能を利用可能。
 
 ### 既存コードに対する品質向上（オプション - ブラウンフィールド開発）
 ```bash

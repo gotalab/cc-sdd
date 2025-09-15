@@ -111,7 +111,7 @@ npx cc-sdd@latest --cursor --lang ja # For Cursor IDE instead
 
 > **Specifications as the Foundation**: Based on [Kiro's specs](https://kiro.dev/docs/specs/) - specs transform ad-hoc development into systematic workflows, bridging ideas to implementation with clear AI-human collaboration points.
 
-> **Kiro IDE Integration**: Specs are portable to [Kiro IDE](https://kiro.dev) - run `/kiro:spec-impl` with implementation guardrails and team collaboration features.
+> **Kiro IDE Integration**: Specs are portable to [Kiro IDE](https://kiro.dev) for enhanced implementation with guardrails and team collaboration features.
 
 ### Quality Validation (Optional - Brownfield Development)
 ```bash

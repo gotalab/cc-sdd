@@ -96,7 +96,7 @@ npx cc-sdd@latest --cursor --lang zh-TW # Cursor IDE 用
 
 > **規格作為基礎**：基於 [Kiro 的規格驅動方法論](https://kiro.dev/docs/specs/) - 規格將隨意開發轉換為系統工作流程，在明確的 AI-人類協作點將想法與實作連接。
 
-> **Kiro IDE 整合**：規格可移植到 [Kiro IDE](https://kiro.dev) - 以實作保護欄和團隊協作功能執行 `/kiro:spec-impl`。
+> **Kiro IDE 整合**：規格可移植到 [Kiro IDE](https://kiro.dev) - 提供強化的實作保護欄和團隊協作功能。
 
 ### 品質驗證（可選 - 棕地開發）
 ```bash
