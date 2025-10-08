@@ -1,7 +1,7 @@
 {
   "name": "cc-sdd",
-  "version": "1.1.5",
-  "description": "Transform your coding workflow with AI-DLC and Spec-Driven Development. One command installs 7 powerful slash commands, Project Memory, and structured development workflows for Claude Code.",
+  "version": "2.0.0-alpha",
+  "description": "Transform your coding workflow with AI-DLC and Spec-Driven Development. One command installs 11 powerful slash commands, Project Memory, and structured development workflows for Claude Code.",
   "keywords": ["claude-code", "spec-driven-development", "kiro", "steering", "ai-development", "tdd", "ai-dlc", "ai-driven-development-life-cycle"],
   "author": "Gota",
   "license": "MIT",

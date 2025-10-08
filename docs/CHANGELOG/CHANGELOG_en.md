@@ -4,6 +4,28 @@ Updates for Claude Code Spec-Driven Development.
 
 ---
 
+## Ver 2.0.0 (October 8, 2025 Major Update) 🚀
+
+### 🎯 Highlights
+- **Spec-driven command redesign**: Re-authored all 11 commands per agent (`spec-*`, `validate-*`, `steering*`) and removed `.tpl` files, making specs, designs, and task plans easier to tailor per project.
+- **Steering overhaul**: The steering command no longer summarizes just `product/tech/structure`; every document under `steering/` now carries equal weight and captures reusable rules, patterns, examples, and guidelines so governance can evolve with the project.
+- **Flexible deliverables**: The new `templates/shared/settings/` bundle deploys into `{{KIRO_DIR}}/settings`, so teams can tailor requirements/design/tasks formats without rewriting the core templates.
+- **Codex CLI support**: Ships 11 prompts to `.codex/prompts/`, enabling the full Spec-Driven Development workflow for Codex CLI users.
+- **GitHub Copilot support**: Automatically installs the same 11 prompts under `.github/prompts/`, leveraging the shared steering/templates bundle to keep workflow parity.
+
+### 🛠️ Under-the-Hood Improvements
+- **Unified template layout**: Removed per-OS directories and consolidated into a single `commands/` tree; all templates now ship as `.md` / `.prompt.md` / `.toml` assets with runtime substitutions.
+- **Manifest & CLI updates**: Rewrote manifests to the new layout, added Codex/GitHub Copilot manifests, exposed `--codex` / `--github-copilot` flags, and extended `resolveAgentLayout` with the new output paths.
+- **Testing & QA**: Refreshed real-manifest integration tests to cover `.kiro/settings` output and added new end-to-end coverage for Codex CLI and GitHub Copilot.
+- **Documentation**: Updated all READMEs (English/Japanese/Traditional Chinese) plus the repo root README with the expanded agent list, 11-command structure, and unified directory layout.
+
+### 📈 Key Metrics
+- **Supported platforms**: 6 (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code)
+- **Command count**: 11 (6 spec + 3 validate + 2 steering)
+- **Artifacts shipped**: Agent commands, project memory, shared settings bundle
+
+---
+
 ## Ver 1.1.0 (September 8, 2025 Official Release) 🎯
 
 ### ✨ Brownfield Development Features Added
@@ -19,13 +41,13 @@ Enhanced spec-driven development for existing projects
 
 ### 🚀 Full Cursor IDE Support
 Official support as the third major platform
-- **10 commands** - Full functionality equivalent to Claude Code/Gemini CLI
+- **11 commands** - Full functionality equivalent to Claude Code/Gemini CLI
 - **AGENTS.md configuration file** - Optimized settings specific to Cursor IDE
 - **Unified workflow** - Same development experience across all platforms
 
 ### 📊 Command System Expansion
 Enhanced spec-driven development completeness
-- **Expanded from 8 to 10 commands** - Enriched with validate-type commands
+- **Expanded from 8 to 11 commands** - Enriched with validation and implementation review commands
 - **Optional workflows** - Quality gates can be added as needed
 - **Flexible development paths** - Optimal flows for new/existing projects
 
@@ -49,8 +71,8 @@ Enhanced development experience and maintainability
 - **CHANGELOG organization** - Moved to docs directory
 
 ### 📈 Key Metrics
-- **Supported platforms**: 3 (Claude Code, Cursor IDE, Gemini CLI)
-- **Command count**: 10 (8 spec + 2 validate)
+- **Supported platforms**: 5 (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot)
+- **Command count**: 11 (6 spec + 3 validate + 2 steering)
 - **Documentation languages**: 3 (English, Japanese, Traditional Chinese)
 - **npm weekly downloads**: Stable growth
 
@@ -256,3 +278,4 @@ For detailed usage instructions, see [README_en.md](README_en.md).
 - **[Zenn Article](https://zenn.dev/gotalab/articles/3db0621ce3d6d2)** - Detailed explanation of Kiro's specification-driven development process
 - **[Japanese Documentation](README.md)**
 - **[Traditional Chinese Documentation](README_zh-TW.md)**
+- **Claude Code Command Refresh**: Retired `.tpl` files and standardized on 11 commands (including `validate-impl`), delivering the same cross-platform template set with a simplified layout.

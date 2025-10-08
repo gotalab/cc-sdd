@@ -33,8 +33,9 @@ describe('real cursor manifest', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
-    expect(out).toContain('[templateDir] commands_all_os: templates/agents/cursor/commands/os-mac -> .cursor/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/cursor/docs/AGENTS.tpl.md -> ./AGENTS.md');
+    expect(out).toContain('[templateDir] commands: templates/agents/cursor/commands -> .cursor/commands/kiro');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/cursor/docs/AGENTS.md -> ./AGENTS.md');
+    expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
   it('dry-run prints plan including commands for linux via mac template', async () => {
     const repoRoot = join(process.cwd(), '..', '..');
@@ -45,8 +46,9 @@ describe('real cursor manifest', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
-    expect(out).toContain('[templateDir] commands_all_os: templates/agents/cursor/commands/os-mac -> .cursor/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/cursor/docs/AGENTS.tpl.md -> ./AGENTS.md');
+    expect(out).toContain('[templateDir] commands: templates/agents/cursor/commands -> .cursor/commands/kiro');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/cursor/docs/AGENTS.md -> ./AGENTS.md');
+    expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
   
   it('shows cursor recommendation message after applying plan', async () => {

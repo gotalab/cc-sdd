@@ -1,6 +1,6 @@
 # cc-sdd
 
-✨ **Transform Claude Code/ Cursor IDE / Gemini CLI / Qwen Code from prototype to production-ready development**
+✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code from prototype to production-ready development**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -11,7 +11,7 @@
 English | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, Gemini CLI, and Qwen Code. **AI-native processes** with **minimal human approval gates**: AI drives execution while humans validate critical decisions at each phase.
+Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, and Qwen Code. **AI-native processes** with **minimal human approval gates**: AI drives execution while humans validate critical decisions at each phase.
 
 🎯 **Perfect for**: Escaping the 70% overhead trap of traditional development (meetings, documentation, ceremonies) to achieve **weeks-to-hours delivery** with AI-native execution and human quality gates.
 
@@ -31,6 +31,8 @@ npx cc-sdd@latest --lang zh-TW # Traditional Chinese
 # With agent options (default: claude-code)
 npx cc-sdd@latest --gemini-cli --lang ja # For Gemini CLI instead
 npx cc-sdd@latest --cursor --lang ja # For Cursor IDE instead
+npx cc-sdd@latest --codex --lang ja # For Codex CLI (Codex prompts) instead
+npx cc-sdd@latest --github-copilot --lang ja # For GitHub Copilot chat prompts
 npx cc-sdd@latest --qwen-code --lang ja # For Qwen Code instead
 ```
 
@@ -93,10 +95,12 @@ npx cc-sdd@latest --qwen-code --lang ja # For Qwen Code instead
 
 | Agent | Status | Commands | Config |
 |-------|--------|----------|--------|
-| **Claude Code** | ✅ Full | 10 slash commands | `CLAUDE.md` |
-| **Gemini CLI** | ✅ Full | 10 commands | `GEMINI.md` |
-| **Cursor IDE** | ✅ Full | 10 commands | `AGENTS.md` |
-| **Qwen Code** | ✅ Full | 10 commands | `QWEN.md` |
+| **Claude Code** | ✅ Full | 11 slash commands | `CLAUDE.md` |
+| **Gemini CLI** | ✅ Full | 11 commands | `GEMINI.md` |
+| **Cursor IDE** | ✅ Full | 11 commands | `AGENTS.md` |
+| **Codex CLI** | ✅ Full | 11 prompts | `AGENTS.md` |
+| **GitHub Copilot** | ✅ Full | 11 prompts | `AGENTS.md` |
+| **Qwen Code** | ✅ Full | 11 commands | `QWEN.md` |
 | Others | 📅 Planned | - | - |
  
 ## 📋 Commands
@@ -138,8 +142,8 @@ npx cc-sdd@latest --qwen-code --lang ja # For Qwen Code instead
 
 ```bash
 # Language and platform
-npx cc-sdd@latest --lang ja --os mac   # macOS
-npx cc-sdd@latest --lang ja --os linux # Linux (shares mac templates)
+npx cc-sdd@latest --lang ja            # macOS / Linux / Windows (auto-detected)
+npx cc-sdd@latest --lang ja --os mac   # Optional explicit override (legacy flag)
 
 # Safe operations  
 npx cc-sdd@latest --dry-run --backup
@@ -154,7 +158,10 @@ After installation, your project gets:
 
 ```
 project/
-├── .claude/commands/kiro/    # 10 slash commands
+├── .claude/commands/kiro/    # 11 slash commands
+├── .codex/prompts/           # 11 prompt commands (Codex CLI)
+├── .github/prompts/          # 11 prompt commands (GitHub Copilot)
+├── .kiro/settings/           # Shared rules & templates (variables resolved with {{KIRO_DIR}})
 ├── .kiro/specs/              # Feature specifications
 ├── .kiro/steering/           # AI guidance rules
 └── CLAUDE.md (Claude Code)    # Project configuration
@@ -173,4 +180,6 @@ project/
 
 ### Platform Support
 - Supported OS: macOS, Linux, Windows (auto-detected by default).
-- Linux uses the same command templates as macOS. Windows has dedicated templates.
+- Unified command templates across operating systems; `--os` override is optional for legacy automation.
+
+> **Heads-up:** Passing `--os` still works for backward compatibility, but all platforms now receive the same command set.

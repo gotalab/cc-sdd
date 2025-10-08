@@ -81,5 +81,5 @@ docs/kiro/
 .claude/agents/
 .claude/hooks/
 .claude/commands/utils/
-GEMINI.md
-AGENTS.md
+# GEMINI.md
+# AGENTS.md

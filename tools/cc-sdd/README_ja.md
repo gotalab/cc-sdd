@@ -1,6 +1,6 @@
 # cc-sdd
 
-✨ **Claude Code / Cursor IDE / Gemini CLI / Qwen Codeをプロトタイプからプロダクション開発プロセスへ**
+✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Codeをプロトタイプからプロダクション開発プロセスへ**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -11,7 +11,7 @@
 <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README.md">English</a> | 日本語 | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-Claude Code、Cursor IDE、Gemini CLI、Qwen Codeを **AI-DLC (AI駆動開発ライフサイクル)**へ。**AIネイティブプロセス**と**最小限の人間承認ゲート**：AIが実行を駆動し、人間が各フェーズで重要な決定を検証。
+Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Codeを **AI-DLC (AI駆動開発ライフサイクル)**へ。**AIネイティブプロセス**と**最小限の人間承認ゲート**：AIが実行を駆動し、人間が各フェーズで重要な決定を検証。
 
 🎯 **最適な用途**: 従来開発の70%オーバーヘッド（会議・文書・儀式）から脱却し、AIネイティブ実行と人間品質ゲートで **週単位から時間単位の納期** を実現。
 
@@ -31,6 +31,8 @@ npx cc-sdd@latest --lang zh-TW # 繁体字中国語
 # エージェントオプション（デフォルト: claude-code）
 npx cc-sdd@latest --gemini-cli --lang ja # Gemini CLI用
 npx cc-sdd@latest --cursor --lang ja # Cursor IDE用
+npx cc-sdd@latest --codex --lang ja # Codex CLI（Prompts）用
+npx cc-sdd@latest --github-copilot --lang ja # GitHub Copilot用プロンプト
 npx cc-sdd@latest --qwen-code --lang ja # Qwen Code用
 ```
 
@@ -78,10 +80,12 @@ npx cc-sdd@latest --qwen-code --lang ja # Qwen Code用
 
 | エージェント | 状態 | コマンド | 設定 |
 |-------|--------|----------|--------|
-| **Claude Code** | ✅ 完全対応 | 10スラッシュコマンド | `CLAUDE.md` |
-| **Gemini CLI** | ✅ 完全対応 | 10コマンド | `GEMINI.md` |
-| **Cursor IDE** | ✅ 完全対応 | 10コマンド | `AGENTS.md` |
-| **Qwen Code** | ✅ 完全対応 | 10コマンド | `QWEN.md` |
+| **Claude Code** | ✅ 完全対応 | 11スラッシュコマンド | `CLAUDE.md` |
+| **Gemini CLI** | ✅ 完全対応 | 11コマンド | `GEMINI.md` |
+| **Cursor IDE** | ✅ 完全対応 | 11コマンド | `AGENTS.md` |
+| **Codex CLI** | ✅ 完全対応 | 11プロンプト | `AGENTS.md` |
+| **GitHub Copilot** | ✅ 完全対応 | 11プロンプト | `AGENTS.md` |
+| **Qwen Code** | ✅ 完全対応 | 11コマンド | `QWEN.md` |
 | その他 | 📅 予定 | - | - |
  
 ## 📋 コマンド
@@ -123,8 +127,8 @@ npx cc-sdd@latest --qwen-code --lang ja # Qwen Code用
 
 ```bash
 # 言語とプラットフォーム
-npx cc-sdd@latest --lang ja --os mac   # macOS
-npx cc-sdd@latest --lang ja --os linux # Linux（macテンプレートを共有）
+npx cc-sdd@latest --lang ja            # macOS / Linux / Windows（自動検出）
+npx cc-sdd@latest --lang ja --os mac   # 旧来のフラグとして任意指定
 
 # 安全な操作  
 npx cc-sdd@latest --dry-run --backup
@@ -139,7 +143,10 @@ npx cc-sdd@latest --kiro-dir docs/specs
 
 ```
 project/
-├── .claude/commands/kiro/    # 10のスラッシュコマンド
+├── .claude/commands/kiro/    # 11のスラッシュコマンド
+├── .codex/prompts/           # 11のプロンプトコマンド（Codex CLI）
+├── .github/prompts/          # 11のプロンプトコマンド（GitHub Copilot）
+├── .kiro/settings/           # 共通ルールとテンプレート（{{KIRO_DIR}} を展開）
 ├── .kiro/specs/             # 機能仕様書
 ├── .kiro/steering/          # AI指導ルール
 └── CLAUDE.md (Claude Code)    # プロジェクト設定
@@ -158,4 +165,6 @@ project/
 
 ### プラットフォーム対応
 - 対応OS: macOS / Linux / Windows（通常は自動検出）。
-- Linux は macOS と同じコマンドテンプレートを使用します。Windows は専用テンプレートを使用します。
+- すべてのOSで統一コマンドテンプレートを提供。`--os` 指定は後方互換用の任意オプションです。
+
+> **補足:** `--os` フラグを指定しても動作しますが、現在は全プラットフォーム共通テンプレートが展開されます。

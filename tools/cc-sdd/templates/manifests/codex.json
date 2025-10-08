@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "artifacts": [
+    {
+      "id": "commands",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/commands",
+        "toDir": "{{AGENT_COMMANDS_DIR}}"
+      },
+      "when": { "agent": "codex" }
+    },
+    {
+      "id": "doc_main",
+      "source": {
+        "type": "templateFile",
+        "from": "templates/agents/{{AGENT}}/docs/AGENTS.md",
+        "toDir": ".",
+        "rename": "{{AGENT_DOC}}"
+      },
+      "when": { "agent": "codex" }
+    },
+    {
+      "id": "settings_common",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/shared/settings",
+        "toDir": "{{KIRO_DIR}}/settings"
+      },
+      "when": { "agent": "codex" }
+    }
+  ]
+}

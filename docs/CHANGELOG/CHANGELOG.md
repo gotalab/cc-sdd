@@ -4,6 +4,28 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
+## Ver 2.0.0 (2025年10月8日 メジャーアップデート) 🚀
+
+### 🎯 ハイライト
+- **Spec-Drivenコマンドの再設計**：全エージェントの 11 コマンド（`spec-*`, `validate-*`, `steering*`）をコンテキストを再設計。仕様書・詳細設計・タスク計画などの成果物をチームやプロジェクトに合わせて柔軟に調整しやすくしました。
+- **Steeringの強化**：ステアリングをプロジェクト全体で適用すべきルールやパターン、例、ガイドラインのプロジェクトメモリとして適切に機能するように改修しました。`product/tech/structure` 中心だったステアリングの読み込みを`steering/` 配下のそれ以外のドキュメントも同じ重みで採用。
+- **設定/テンプレートのカスタマイズ性向上**：`{{KIRO_DIR}}/settings` へ共通ルール/テンプレートを展開。プロジェクトに合わせた設計・タスクのフォーマット調整が容易になりました。1回のカスタマイズで、別のコーディングエージェントでも同様の設定を引き継ぐことが可能になりました。
+- **Codex CLI正式対応**：`.codex/prompts/` へ 11 個のプロンプトを提供し、Spec-Driven Development ワークフローを正式サポート。
+- **GitHub Copilot正式対応**：`.github/prompts/` に 11 個のプロンプトを自動配置。Codex CLI と同じステアリング/テンプレート構造を共有し、クロスプラットフォームで共通運用可能に。
+
+### 🛠️ 内部改善
+- **テンプレート構造刷新**：各エージェントの `os-mac / os-windows` ディレクトリを廃止し、単一の `commands/` 構成へ統一。すべてのテンプレートを `.md` / `.prompt.md` / `.toml` といった実拡張子で管理。
+- **マニフェストと CLI の更新**：全マニフェストを新構造に合わせて再定義し、Codex / GitHub Copilot 用マニフェストを追加。CLI も `--codex`, `--github-copilot` フラグとヘルプを拡張し、`resolveAgentLayout` に新ディレクトリを登録。
+- **テスト体制の強化**：既存エージェント向けリアルマニフェストテストを刷新し、`.kiro/settings` 展開を含む動作を検証。Codex / GitHub Copilot 用 E2E テストを追加。
+- **ドキュメント整備**：README（英語/日本語/繁体字）およびリポジトリ README を更新し、対応エージェント、コマンド数、ディレクトリ構造、CLI 例を最新状態に反映。
+
+### 📈 主要メトリクス
+- **対応プラットフォーム**: 6 (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code)
+- **コマンド数**: 11（spec系6 + validate系3 + steering系2）
+- **配布テンプレート**: 共通設定 + 各エージェントコマンド + プロジェクトメモリの3系統
+
+---
+
 ## Ver 1.1.0 (2025年9月8日 正式リリース) 🎯
 
 ### ✨ ブラウンフィールド開発機能の追加
@@ -19,13 +41,13 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ### 🚀 Cursor IDE完全サポート
 3つ目の主要プラットフォームとして正式対応
-- **10個のコマンド** - Claude Code/Gemini CLIと同等の完全機能
+- **11個のコマンド** - Claude Code/Gemini CLIと同等の完全機能
 - **AGENTS.md設定ファイル** - Cursor IDE専用の最適化設定
 - **統一されたワークフロー** - 全プラットフォームで同じ開発体験
 
 ### 📊 コマンド体系の拡充
 仕様駆動開発の完成度向上
-- **8→10コマンドへ拡張** - validate系コマンドの追加により充実
+- **8→11コマンドへ拡張** - validate系コマンドと実装検証コマンドの追加で充実
 - **オプショナルワークフロー** - 必要に応じて品質ゲートを追加可能
 - **柔軟な開発パス** - 新規/既存プロジェクトに応じた最適なフロー
 
@@ -49,8 +71,8 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 - **CHANGELOGの整理** - docsディレクトリへの移動
 
 ### 📈 主要メトリクス
-- **対応プラットフォーム**: 3 (Claude Code, Cursor IDE, Gemini CLI)
-- **コマンド数**: 10 (spec系8 + validate系2)
+- **対応プラットフォーム**: 5 (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot)
+- **コマンド数**: 11 (spec系6 + validate系3 + steering系2)
 - **ドキュメント言語**: 3 (英語、日本語、繁体中国語)
 - **npm週間ダウンロード**: 安定成長中
 
@@ -265,3 +287,4 @@ requirements、design、tasksの各文書生成品質を大幅改善、過剰な
 - **[日本語ドキュメント](docs/README/README_ja.md)**
 - **[English Documentation](docs/README/README_en.md)**
 - **[繁體中文說明](docs/README/README_zh-TW.md)**
+- **Claude Codeコマンド刷新**：`.tpl` を撤廃し 10 → 11 コマンド体制へ（`validate-impl` を含む）。旧 OS 別テンプレートよりファイル数はそのまま維持しつつ、クロスプラットフォームで同一内容を配布。
