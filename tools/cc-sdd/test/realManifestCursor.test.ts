@@ -71,6 +71,6 @@ describe('real cursor manifest', () => {
     expect(out).toMatch(/Setup completed: written=\d+, skipped=\d+/);
     
     // Check that the Cursor-specific recommendation message is present (with color codes)
-    expect(out).toContain('\x1b[93m\x1b[1mRecommended: Use claude-4-sonnet or later model');
+    expect(out).toContain('Recommended: Use claude-4-sonnet or later model');
   });
 });

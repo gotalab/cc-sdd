@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { executeProcessedArtifacts } from '../src/plan/executor';
-import type { ProcessedArtifact } from '../src/manifest/processor';
+import { executeProcessedArtifacts } from '../src/plan/executor.js';
+import type { ConflictInfo } from '../src/plan/executor.js';
+import type { ProcessedArtifact } from '../src/manifest/processor.js';
 import { mkdtemp, mkdir, writeFile, readFile, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
-import { parseArgs } from '../src/cli/args';
-import { mergeConfigAndArgs } from '../src/cli/config';
+import { parseArgs } from '../src/cli/args.js';
+import { mergeConfigAndArgs } from '../src/cli/config.js';
 
 const runtimeDarwin = { platform: 'darwin' } as const;
 const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-exec-'));
@@ -165,8 +166,8 @@ describe('plan executor', () => {
 
       const resolved = mergeConfigAndArgs(parseArgs(['--overwrite', 'prompt']), {}, runtimeDarwin);
       let conflictPath: string | undefined;
-      const onConflict = async (relPath: string) => {
-        conflictPath = relPath;
+      const onConflict = async ({ relTargetPath }: ConflictInfo) => {
+        conflictPath = relTargetPath;
         return 'overwrite' as const;
       };
 
@@ -189,7 +190,7 @@ describe('plan executor', () => {
       ];
 
       const resolved = mergeConfigAndArgs(parseArgs(['--overwrite', 'prompt']), {}, runtimeDarwin);
-      const onConflict = async () => 'skip' as const;
+      const onConflict = async (_info: ConflictInfo) => 'skip' as const;
 
       const res = await executeProcessedArtifacts(items, resolved, { cwd, templatesRoot, onConflict });
       expect(res.skipped).toBeGreaterThan(0);
@@ -231,7 +232,7 @@ describe('plan executor', () => {
       ];
 
       const resolved = mergeConfigAndArgs(parseArgs(['--overwrite', 'prompt']), {}, runtimeDarwin);
-      const onConflict = async () => 'overwrite' as const;
+      const onConflict = async (_info: ConflictInfo) => 'overwrite' as const;
 
       const res = await executeProcessedArtifacts(items, resolved, { cwd, templatesRoot, onConflict });
       expect(res.written).toBe(1);
@@ -250,7 +251,7 @@ describe('plan executor', () => {
 
       const resolved = mergeConfigAndArgs(parseArgs(['--overwrite', 'prompt']), {}, runtimeDarwin);
       let onConflictCalled = false;
-      const onConflict = async () => {
+      const onConflict = async (_info: ConflictInfo) => {
         onConflictCalled = true;
         return 'overwrite' as const;
       };

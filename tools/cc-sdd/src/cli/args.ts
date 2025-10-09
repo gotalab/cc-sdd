@@ -33,11 +33,16 @@ const booleanFlags = new Set([
   'y',
   'dry-run',
   'claude-code',
+  'claude',
   'gemini-cli',
+  'gemini',
   'qwen-code',
+  'qwen',
   'cursor',
   'codex',
+  'codex-cli',
   'github-copilot',
+  'copilot',
   'backup',
 ]);
 const valueFlags = new Set(['agent', 'lang', 'os', 'overwrite', 'kiro-dir', 'backup', 'manifest', 'profile']);
@@ -170,7 +175,7 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
         }
         case 'agent': {
           const v = String(value) as AgentType;
-          if (!isEnum(v, ['claude-code', 'gemini-cli', 'qwen-code', 'cursor', 'codex', 'github-copilot'] as const))
+          if (!isEnum(v, ['claude-code', 'gemini-cli', 'qwen-code', 'cursor', 'codex', 'github-copilot', 'qwen', 'codex-cli', 'claude', 'copilot', 'gemini'] as const))
             throw new Error('agent value invalid');
           setAgent(v);
           break;
@@ -178,10 +183,19 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
         case 'claude-code':
           setAgent('claude-code');
           break;
+        case 'claude':
+          setAgent('claude-code');
+          break;
         case 'gemini-cli':
           setAgent('gemini-cli');
           break;
+        case 'gemini':
+          setAgent('gemini-cli');
+          break;
         case 'qwen-code':
+          setAgent('qwen-code');
+          break;
+        case 'qwen':
           setAgent('qwen-code');
           break;
         case 'cursor':
@@ -190,7 +204,16 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
         case 'codex':
           setAgent('codex');
           break;
+        case 'codex-cli':
+          setAgent('codex');
+          break;
+        case 'codex':
+          setAgent('codex');
+          break;
         case 'github-copilot':
+          setAgent('github-copilot');
+          break;
+        case 'copilot':
           setAgent('github-copilot');
           break;
         default:
