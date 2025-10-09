@@ -70,7 +70,14 @@ describe('real cursor manifest', () => {
     // Check that the setup completion message is present (new format)
     expect(out).toMatch(/Setup completed: written=\d+, skipped=\d+/);
     
-    // Check that the Cursor-specific recommendation message is present (with color codes)
-    expect(out).toContain('Recommended: Use claude-4-sonnet or later model');
+    // Check that the Cursor-specific recommended models are shown
+    expect(out).toContain('Recommended models');
+    expect(out).toContain('Claude 4.5 Sonnet');
+    expect(out).toContain('GPT-5-Codex');
+
+    // Check that the unified next steps are present
+    expect(out).toContain("Launch Cursor IDE and run `/kiro/spec-init <what-to-build>` to create a new specification.");
+    expect(out).toContain("Capture project context in `AGENTS.md` so the assistant follows your team's rules.");
+    expect(out).toContain("Tailor `{{KIRO_DIR}}/settings/templates` so requirements, design, and tasks match your team's format.");
   });
 });

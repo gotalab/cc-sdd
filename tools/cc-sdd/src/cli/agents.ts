@@ -55,6 +55,17 @@ export const agentOptions: AgentOption[] = [
   },
 ];
 
+const recommendedModels: Partial<Record<AgentType, string[]>> = {
+  'claude-code': ['Claude 4.5 Sonnet or newer'],
+  codex: ['GPT-5-Codex (e.g. gpt-5-codex medium, gpt-5-codex high)'],
+  cursor: [
+    'Claude 4.5 Sonnet or newer — turn on thinking mode',
+    'GPT-5-Codex',
+  ],
+  'github-copilot': ['Claude 4.5 Sonnet or newer'],
+  'gemini-cli': ['Gemini 2.5 Pro or newer'],
+};
+
 export const ensureAgentSelection = async (
   current: AgentType | undefined,
   io: CliIO,
@@ -74,44 +85,51 @@ export const ensureAgentSelection = async (
   return option;
 };
 
-const guideSteps: Record<AgentType, string[]> = {
-  'claude-code': [
-    'Launch Claude desktop and run `/kiro:spec-init <feature>` to generate your first spec.',
-    'Review `.claude/commands/kiro/` to see the available commands.',
-    'Adjust `{{KIRO_DIR}}/settings/` to fine-tune project rules before continuing.',
-  ],
-  codex: [
-    'Open the Codex CLI and execute `/prompts:kiro-spec-init <feature>` to initialise a new specification.',
-    'Inspect `.codex/prompts/` to learn the available commands and workflow order.',
-    'Read `AGENTS.md` for Codex-specific shortcuts and tips.',
-  ],
-  cursor: [
-    'Open Cursor\'s side panel and run `/kiro/spec-init <feature>` with Claude 4 Sonnet in thinking mode.',
-    'Review `.cursor/commands/kiro/` to confirm prompts synced correctly.',
-    'Keep `{{KIRO_DIR}}/settings/` up to date so subsequent AI runs follow your project rules.',
-  ],
-  'github-copilot': [
-    'Open GitHub Copilot Chat and ask it to run the prompt `kiro-spec-init` for your feature.',
-    'Read `.github/prompts/` to understand the generated workflows.',
-    'Use `AGENTS.md` for a walkthrough of the Copilot-focused development cycle.',
-  ],
-  'gemini-cli': [
-    'Use `gemini /kiro:spec-init "<feature>"` to kick off the first specification conversation.',
-    'Browse `.gemini/commands/kiro/` to preview the available stages.',
-    'Adjust `{{KIRO_DIR}}/settings/` as needed before moving to design and tasks generation.',
-  ],
-  'qwen-code': [
-    'Run `/kiro:spec-init <feature>` inside your Qwen Code environment to begin the workflow.',
-    'Check `.qwen/commands/kiro/` to confirm prompt files and available steps.',
-    'Review `{{KIRO_DIR}}/settings/` so the assistant stays aligned with your project rules.',
-  ],
+const docFiles: Record<AgentType, string> = {
+  'claude-code': 'CLAUDE.md',
+  codex: 'AGENTS.md',
+  cursor: 'AGENTS.md',
+  'github-copilot': 'AGENTS.md',
+  'gemini-cli': 'GEMINI.md',
+  'qwen-code': 'QWEN.md',
 };
 
+const specCommands: Record<AgentType, string> = {
+  'claude-code': '`/kiro:spec-init <what-to-build>`',
+  codex: '`/prompts:kiro-spec-init <what-to-build>`',
+  cursor: '`/kiro/spec-init <what-to-build>`',
+  'github-copilot': '`/kiro-spec-init <what-to-build>`',
+  'gemini-cli': '`gemini /kiro:spec-init "<what-to-build>"`',
+  'qwen-code': '`/kiro:spec-init <what-to-build>`',
+};
+
+const agentLabels: Record<AgentType, string> = agentOptions.reduce((acc, option) => {
+  acc[option.value] = option.label;
+  return acc;
+}, {} as Record<AgentType, string>);
+
+const guideSteps: Record<AgentType, string[]> = (Object.keys(specCommands) as AgentType[]).reduce(
+  (acc, agent) => {
+    const label = agentLabels[agent];
+    const doc = docFiles[agent];
+    const command = specCommands[agent];
+    acc[agent] = [
+      `Launch ${label} and run ${command} to create a new specification.`,
+      `Capture project context in \`${doc}\` so the assistant follows your team's rules.`,
+      'Tailor `{{KIRO_DIR}}/settings/templates` so requirements, design, and tasks match your team\'s format.',
+    ];
+    return acc;
+  },
+  {} as Record<AgentType, string[]>,
+);
+
 export const printCompletionGuide = (agent: AgentType, io: CliIO): void => {
-  const option = agentOptions.find((opt) => opt.value === agent);
   io.log('');
-  if (agent === 'cursor') {
-    io.log(formatAttention('Recommended: Use claude-4-sonnet or later model with thinking mode enabled.'));
+  const models = recommendedModels[agent];
+  if (models && models.length > 0) {
+    io.log(formatSectionTitle('Recommended models'));
+    models.forEach((model) => io.log(formatAttention(`  • ${model}`)));
+    io.log('');
   }
   io.log(formatSectionTitle('Next steps'));
   guideSteps[agent]?.forEach((step, idx) => {
