@@ -7,6 +7,7 @@ Updates for Claude Code Spec-Driven Development.
 ## Ver 2.0.0 (October 8, 2025 Major Update) 🚀
 
 ### 🎯 Highlights
+- **Guided CLI installer**: The `npx cc-sdd@latest` flow now previews planned files, groups them by Commands / Project Memory / Settings, and lets you choose overwrite vs append for agent docs so reinstalling is safer and faster.
 - **Spec-driven command redesign**: Re-authored all 11 commands per agent (`spec-*`, `validate-*`, `steering*`) and removed `.tpl` files, making specs, designs, and task plans easier to tailor per project.
 - **Steering overhaul**: The steering command no longer summarizes just `product/tech/structure`; every document under `steering/` now carries equal weight and captures reusable rules, patterns, examples, and guidelines so governance can evolve with the project.
 - **Flexible deliverables**: The new `templates/shared/settings/` bundle deploys into `{{KIRO_DIR}}/settings`, so teams can tailor requirements/design/tasks formats without rewriting the core templates.
