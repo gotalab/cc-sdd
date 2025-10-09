@@ -2,9 +2,9 @@
 <a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-# cc-sdd / prev. Claude Code Spec
+# cc-sdd: high quality spec-driven development
 
-✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / Qwen Code from prototype to production-ready development**
+✨ **Transform Claude Code / Codex / Gemini CLI / Cursor / GitHub Copilot / Qwen Code from prototype to production-ready development**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)

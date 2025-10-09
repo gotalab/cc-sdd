@@ -130,12 +130,12 @@ Provide brief summary in the language specified in spec.json:
 **Requirements Not Approved**:
 - **Stop Execution**: Cannot proceed without approved requirements
 - **User Message**: "Requirements not yet approved. Approval required before design generation."
-- **Suggested Action**: "Run `/prompts:spec-design $1 -y` to auto-approve requirements and proceed"
+- **Suggested Action**: "Run `/prompts:kiro-spec-design $1 -y` to auto-approve requirements and proceed"
 
 **Missing Requirements**:
 - **Stop Execution**: Requirements document must exist
 - **User Message**: "No requirements.md found at `{{KIRO_DIR}}/specs/$1/requirements.md`"
-- **Suggested Action**: "Run `/prompts:spec-requirements $1` to generate requirements first"
+- **Suggested Action**: "Run `/prompts:kiro-spec-requirements $1` to generate requirements first"
 
 **Template Missing**:
 - **User Message**: "Template file missing at `{{KIRO_DIR}}/settings/templates/specs/design.md`"
@@ -154,11 +154,11 @@ Provide brief summary in the language specified in spec.json:
 
 **If Design Approved**:
 - Review generated design at `{{KIRO_DIR}}/specs/$1/design.md`
-- **Optional**: Run `/prompts:validate-design $1` for interactive quality review
-- Then `/prompts:spec-tasks $1 -y` to generate implementation tasks
+- **Optional**: Run `/prompts:kiro-validate-design $1` for interactive quality review
+- Then `/prompts:kiro-spec-tasks $1 -y` to generate implementation tasks
 
 **If Modifications Needed**:
-- Provide feedback and re-run `/prompts:spec-design $1`
+- Provide feedback and re-run `/prompts:kiro-spec-design $1`
 - Existing design used as reference (merge mode)
 
 **Note**: Design approval is mandatory before proceeding to task generation.

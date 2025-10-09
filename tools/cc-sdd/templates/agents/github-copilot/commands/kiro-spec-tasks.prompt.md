@@ -96,7 +96,7 @@ Provide brief summary in the language specified in spec.json:
 **Requirements or Design Not Approved**:
 - **Stop Execution**: Cannot proceed without approved requirements and design
 - **User Message**: "Requirements and design must be approved before task generation"
-- **Suggested Action**: "Run `/spec-tasks $1 -y` to auto-approve both and proceed"
+- **Suggested Action**: "Run `/kiro-spec-tasks $1 -y` to auto-approve both and proceed"
 
 **Missing Requirements or Design**:
 - **Stop Execution**: Both documents must exist
@@ -115,17 +115,17 @@ Provide brief summary in the language specified in spec.json:
 ### Next Phase: Implementation
 
 **Before Starting Implementation**:
-- **IMPORTANT**: Clear conversation history and free up context before running `/spec-impl`
+- **IMPORTANT**: Clear conversation history and free up context before running `/kiro-spec-impl`
 - This applies when starting first task OR switching between tasks
 - Fresh context ensures clean state and proper task focus
 
 **If Tasks Approved**:
-- Execute specific task: `/spec-impl $1 1.1` (recommended: clear context between each task)
-- Execute multiple tasks: `/spec-impl $1 1.1,1.2` (use cautiously, clear context between tasks)
-- Without arguments: `/spec-impl $1` (executes all pending tasks - NOT recommended due to context bloat)
+- Execute specific task: `/kiro-spec-impl $1 1.1` (recommended: clear context between each task)
+- Execute multiple tasks: `/kiro-spec-impl $1 1.1,1.2` (use cautiously, clear context between tasks)
+- Without arguments: `/kiro-spec-impl $1` (executes all pending tasks - NOT recommended due to context bloat)
 
 **If Modifications Needed**:
-- Provide feedback and re-run `/spec-tasks $1`
+- Provide feedback and re-run `/kiro-spec-tasks $1`
 - Existing tasks used as reference (merge mode)
 
 **Note**: The implementation phase will guide you through executing tasks with appropriate context and validation.

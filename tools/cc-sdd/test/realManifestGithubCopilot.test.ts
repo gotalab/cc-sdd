@@ -72,7 +72,7 @@ describe('real github-copilot manifest', () => {
     const text = await readFile(doc, 'utf8');
     expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
 
-    const prompt = join(cwd, '.github/prompts/spec-init.prompt.md');
+    const prompt = join(cwd, '.github/prompts/kiro-spec-init.prompt.md');
     expect(await exists(prompt)).toBe(true);
 
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/tasks.md');

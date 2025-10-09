@@ -15,30 +15,30 @@ Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life
 
 ### Active Specifications
 - Check `{{KIRO_DIR}}/specs/` for active specifications
-- Use `/prompts:spec-status [feature-name]` to check progress
+- Use `/prompts:kiro-spec-status [feature-name]` to check progress
 
 ## Development Guidelines
 {{DEV_GUIDELINES}}
 
 ## Minimal Workflow
-- Phase 0 (optional): `/prompts:steering`, `/prompts:steering-custom`
+- Phase 0 (optional): `/prompts:kiro-steering`, `/prompts:kiro-steering-custom`
 - Phase 1 (Specification):
-  - `/prompts:spec-init "description"`
-  - `/prompts:spec-requirements {feature}`
-  - `/prompts:validate-gap {feature}` (optional: for existing codebase)
-  - `/prompts:spec-design {feature} [-y]`
-  - `/prompts:validate-design {feature}` (optional: design review)
-  - `/prompts:spec-tasks {feature} [-y]`
-- Phase 2 (Implementation): `/prompts:spec-impl {feature} [tasks]`
-  - `/prompts:validate-impl {feature}` (optional: after implementation)
-- Progress check: `/prompts:spec-status {feature}` (use anytime)
+  - `/prompts:kiro-spec-init "description"`
+  - `/prompts:kiro-spec-requirements {feature}`
+  - `/prompts:kiro-validate-gap {feature}` (optional: for existing codebase)
+  - `/prompts:kiro-spec-design {feature} [-y]`
+  - `/prompts:kiro-validate-design {feature}` (optional: design review)
+  - `/prompts:kiro-spec-tasks {feature} [-y]`
+- Phase 2 (Implementation): `/prompts:kiro-spec-impl {feature} [tasks]`
+  - `/prompts:kiro-validate-impl {feature}` (optional: after implementation)
+- Progress check: `/prompts:kiro-spec-status {feature}` (use anytime)
 
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation
 - Human review required each phase; use `-y` only for intentional fast-track
-- Keep steering current and verify alignment with `/prompts:spec-status`
+- Keep steering current and verify alignment with `/prompts:kiro-spec-status`
 
 ## Steering Configuration
 - Load entire `{{KIRO_DIR}}/steering/` as project memory
 - Default files: `product.md`, `tech.md`, `structure.md`
-- Custom files are supported (managed via `/prompts:steering-custom`)
+- Custom files are supported (managed via `/prompts:kiro-steering-custom`)

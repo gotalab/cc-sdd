@@ -72,7 +72,7 @@ describe('real codex manifest', () => {
     const text = await readFile(doc, 'utf8');
     expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
 
-    const cmd = join(cwd, '.codex/prompts/spec-init.md');
+    const cmd = join(cwd, '.codex/prompts/kiro-spec-init.md');
     expect(await exists(cmd)).toBe(true);
 
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');

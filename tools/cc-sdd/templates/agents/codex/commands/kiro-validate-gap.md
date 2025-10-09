@@ -1,10 +1,8 @@
----
-mode: 'agent'
-description: Analyze implementation gap between requirements and existing codebase
----
 <meta>
 description: Analyze implementation gap between requirements and existing codebase
-argument-hint: <feature-name:$1>
+argument-hint: <feature-name>
+arguments:
+   feature-name: $1
 </meta>
 
 # Implementation Gap Validation
@@ -75,7 +73,7 @@ Provide output in the language specified in spec.json with:
 ## Safety & Fallback
 
 ### Error Scenarios
-- **Missing Requirements**: If requirements.md doesn't exist, stop with message: "Run `/spec-requirements $1` first to generate requirements"
+- **Missing Requirements**: If requirements.md doesn't exist, stop with message: "Run `/prompts:kiro-spec-requirements $1` first to generate requirements"
 - **Requirements Not Approved**: If requirements not approved, warn user but proceed (gap analysis can inform requirement revisions)
 - **Empty Steering Directory**: Warn user that project context is missing and may affect analysis quality
 - **Complex Integration Unclear**: Flag for comprehensive research in design phase rather than blocking
@@ -85,8 +83,8 @@ Provide output in the language specified in spec.json with:
 
 **If Gap Analysis Complete**:
 - Review gap analysis insights
-- Run `/spec-design $1` to create technical design document
-- Or `/spec-design $1 -y` to auto-approve requirements and proceed directly
+- Run `/prompts:kiro-spec-design $1` to create technical design document
+- Or `/prompts:kiro-spec-design $1 -y` to auto-approve requirements and proceed directly
 
 **Note**: Gap analysis is optional but recommended for brownfield projects to inform design decisions.
 
