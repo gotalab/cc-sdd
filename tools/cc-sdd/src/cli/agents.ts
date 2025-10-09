@@ -103,6 +103,24 @@ const specCommands: Record<AgentType, string> = {
   'qwen-code': '`/kiro:spec-init <what-to-build>`',
 };
 
+const steeringCommands: Record<AgentType, string> = {
+  'claude-code': '`/kiro:steering`',
+  codex: '`/prompts:kiro-steering`',
+  cursor: '`/kiro/steering`',
+  'github-copilot': '`/kiro-steering`',
+  'gemini-cli': '`gemini /kiro:steering`',
+  'qwen-code': '`/kiro:steering`',
+};
+
+const steeringCustomCommands: Record<AgentType, string> = {
+  'claude-code': '`/kiro:steering-custom`',
+  codex: '`/prompts:kiro-steering-custom`',
+  cursor: '`/kiro/steering-custom`',
+  'github-copilot': '`/kiro-steering-custom`',
+  'gemini-cli': '`gemini /kiro:steering-custom`',
+  'qwen-code': '`/kiro:steering-custom`',
+};
+
 const agentLabels: Record<AgentType, string> = agentOptions.reduce((acc, option) => {
   acc[option.value] = option.label;
   return acc;
@@ -113,14 +131,28 @@ const guideSteps: Record<AgentType, string[]> = (Object.keys(specCommands) as Ag
     const label = agentLabels[agent];
     const doc = docFiles[agent];
     const command = specCommands[agent];
+    const steeringCommand = steeringCommands[agent];
+    const steeringCustomCommand = steeringCustomCommands[agent];
     acc[agent] = [
       `Launch ${label} and run ${command} to create a new specification.`,
-      `Capture project context in \`${doc}\` so the assistant follows your team's rules.`,
-      'Tailor `{{KIRO_DIR}}/settings/templates` so requirements, design, and tasks match your team\'s format.',
+      `Tip: Steering holds persistent project knowledge—patterns, standards, and org-wide policies. Kick off ${steeringCommand} (essential for existing projects) and  ${steeringCustomCommand}. Maintain Regularly`,
+      'Tip: Update `{{KIRO_DIR}}/settings/templates/` like `requirements.md`, `design.md`, and `tasks.md` so the generated steering and specs follow your team\'s and project\'s development process.',
     ];
     return acc;
   },
   {} as Record<AgentType, string[]>,
+);
+
+guideSteps.codex.unshift(
+  [
+    'Move Codex Custom prompts to ~/.codex/prompts by running:',
+    '    mkdir -p ~/.codex/prompts \\',
+    '      && cp -Ri ./.codex/prompts/ ~/.codex/prompts/ \\',
+    "      && printf '\\n==== COPY PHASE DONE ====\\n' \\",
+    "      && printf 'Remove original ./.codex/prompts ? [y/N]: ' \\",
+    '      && IFS= read -r a \\',
+    '      && case "$a" in [yY]) rm -rf ./.codex/prompts && echo \'Removed.\' ;; *) echo \'Kept original.\' ;; esac',
+  ].join('\n'),
 );
 
 export const printCompletionGuide = (agent: AgentType, io: CliIO): void => {

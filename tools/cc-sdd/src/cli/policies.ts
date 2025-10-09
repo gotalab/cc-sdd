@@ -117,7 +117,7 @@ export const determineCategoryPolicies = async (
   // Settings templates/rules
   if (settings && hasConflicts(settings)) {
     const confirm = await promptConfirm(
-      `Update settings templates and rules in ${categoryDescriptions('settings', resolved)}? (recommended: Yes)`,
+      `Update settings templates and rules in ${categoryDescriptions('settings', resolved)}?`,
       true,
     );
     policies.settings = confirm ? 'overwrite' : 'skip';
