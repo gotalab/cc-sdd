@@ -1,6 +1,8 @@
-# cc-sdd
+# cc-sdd: 一鍵讓 AI 程式代理進入生產級規格開發
 
-✨ **將 Claude Code / Cursor IDE / Gemini CLI / Qwen Code 從原型開發轉型為生產級開發**
+所有規格與指導模板皆可自由調整—在代理執行前就能把需求、設計、任務與專案記憶輸出對齊團隊流程。
+
+✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code 從原型開發轉型為生產級開發**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -11,7 +13,7 @@
 <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README.md">English</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
-將 **AI-DLC (AI 驅動開發生命週期)** 帶入 Claude Code、Cursor IDE、Gemini CLI 與 Qwen Code。**AI 原生流程**與**最小限的人類批准關卡**：AI 驅動執行，人類在各階段驗證關鍵決策。
+將 **AI-DLC (AI 驅動開發生命週期)** 帶入 Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot 與 Qwen Code。**AI 原生流程**與**最小限的人類批准關卡**：AI 驅動執行，人類在各階段驗證關鍵決策。
 
 🎯 **最佳用途**：脱離傳統開發 70% 的額外負擔（會議、文件、儀式），透過 AI 原生執行和人類品質關卡實現 **從週到小時的交付**。
 
@@ -28,10 +30,12 @@ npx cc-sdd@latest --lang zh-TW # 繁體中文
 npx cc-sdd@latest --lang ja    # 日語
 # 支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
-# 代理選項（預設：claude-code）
-npx cc-sdd@latest --gemini-cli --lang zh-TW # Gemini CLI 用
+# 代理選項（預設：claude-code / --claude）
+npx cc-sdd@latest --gemini --lang zh-TW # Gemini CLI 用
 npx cc-sdd@latest --cursor --lang zh-TW # Cursor IDE 用
-npx cc-sdd@latest --qwen-code --lang zh-TW # Qwen Code 用
+npx cc-sdd@latest --codex --lang zh-TW # Codex CLI（提示集）用
+npx cc-sdd@latest --copilot --lang zh-TW # GitHub Copilot 用提示
+npx cc-sdd@latest --qwen --lang zh-TW # Qwen Code 用
 ```
 
 ## ✨ 快速開始
@@ -71,6 +75,7 @@ npx cc-sdd@latest --qwen-code --lang zh-TW # Qwen Code 用
 - **📋 規格優先開發** - 全面性規格作為唱一信息源驅動整個生命週期
 - **⚡ 「快速衝刺」非衝刺** - [AI-DLC 術語](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)，強度小時/天周期取代數周衝刺。脱離 70% 管理額外負擔
 - **🧠 持久專案記憶** - AI 透過指導文件在所有會話間維持全面上下文（架構、模式、規則、領域知識）
+- **🛠 模板彈性** - 自訂 `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks），符合團隊慣用的文件格式
 - **🔄 AI 原生+人類關卡** - AI 計劃 → AI 提問 → 人類驗證 → AI 實作（具品質控制的快速循環）
 - **🌍 團隊就緒** - 具品質關卡的多語言、跨平台、標準化工作流程
 
@@ -78,10 +83,12 @@ npx cc-sdd@latest --qwen-code --lang zh-TW # Qwen Code 用
 
 | 代理 | 狀態 | 指令 | 設定 |
 |------|------|------|------|
-| **Claude Code** | ✅ 完全支援 | 10 個斜線指令 | `CLAUDE.md` |
-| **Gemini CLI** | ✅ 完全支援 | 10 個指令 | `GEMINI.md` |
-| **Cursor IDE** | ✅ 完全支援 | 10 個指令 | `AGENTS.md` |
-| **Qwen Code** | ✅ 完全支援 | 10 個指令 | `QWEN.md` |
+| **Claude Code** | ✅ 完全支援 | 11 個斜線指令 | `CLAUDE.md` |
+| **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
+| **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
+| **Codex CLI** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
+| **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
+| **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
 | 其他 | 📅 規劃中 | - | - |
 
 ## 📋 指令
@@ -123,8 +130,8 @@ npx cc-sdd@latest --qwen-code --lang zh-TW # Qwen Code 用
 
 ```bash
 # 語言與平台
-npx cc-sdd@latest --lang zh-TW --os mac    # macOS
-npx cc-sdd@latest --lang zh-TW --os linux  # Linux（與 mac 共用模板）
+npx cc-sdd@latest --lang zh-TW             # macOS / Linux / Windows（自動偵測）
+npx cc-sdd@latest --lang zh-TW --os mac    # 保留的可選覆寫
 
 # 安全操作
 npx cc-sdd@latest --dry-run --backup
@@ -139,7 +146,10 @@ npx cc-sdd@latest --kiro-dir docs/specs
 
 ```
 project/
-├── .claude/commands/kiro/    # 10 個斜線指令
+├── .claude/commands/kiro/    # 11 個斜線指令
+├── .codex/prompts/           # 11 個提示指令（Codex CLI）
+├── .github/prompts/          # 11 個提示指令（GitHub Copilot）
+├── .kiro/settings/           # 共用規則與模板（以 {{KIRO_DIR}} 展開）
 ├── .kiro/specs/             # 功能規格文件
 ├── .kiro/steering/          # AI 指導規則
 └── CLAUDE.md (Claude Code)    # 專案設定
@@ -158,4 +168,6 @@ project/
 
 ### 平台支援
 - 支援 OS：macOS / Linux / Windows（預設自動偵測）。
-- Linux 與 macOS 使用相同的指令模板；Windows 使用專用模板。
+- 三大平台共用指令模板；`--os` 參數保留給相容性需求，可視情況指定。
+
+> **提醒:** 即使指定 `--os` 仍會成功執行，但所有平台現在會收到相同的指令模板。

@@ -2,30 +2,30 @@
   "version": 1,
   "artifacts": [
     {
-      "id": "commands_os_mac",
+      "id": "commands",
       "source": {
         "type": "templateDir",
-        "fromDir": "templates/agents/{{AGENT}}/commands/os-mac",
+        "fromDir": "templates/agents/{{AGENT}}/commands",
         "toDir": "{{AGENT_COMMANDS_DIR}}"
       },
-      "when": { "agent": "gemini-cli", "os": ["mac"] }
-    },
-    {
-      "id": "commands_os_windows",
-      "source": {
-        "type": "templateDir",
-        "fromDir": "templates/agents/{{AGENT}}/commands/os-windows",
-        "toDir": "{{AGENT_COMMANDS_DIR}}"
-      },
-      "when": { "agent": "gemini-cli", "os": ["windows", "linux"] }
+      "when": { "agent": "gemini-cli" }
     },
     {
       "id": "doc_main",
       "source": {
         "type": "templateFile",
-        "from": "templates/agents/{{AGENT}}/docs/GEMINI.tpl.md",
+        "from": "templates/agents/{{AGENT}}/docs/GEMINI.md",
         "toDir": ".",
         "rename": "{{AGENT_DOC}}"
+      },
+      "when": { "agent": "gemini-cli" }
+    },
+    {
+      "id": "settings_common",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/shared/settings",
+        "toDir": "{{KIRO_DIR}}/settings"
       },
       "when": { "agent": "gemini-cli" }
     }

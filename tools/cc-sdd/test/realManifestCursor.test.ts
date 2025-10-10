@@ -33,8 +33,9 @@ describe('real cursor manifest', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
-    expect(out).toContain('[templateDir] commands_all_os: templates/agents/cursor/commands/os-mac -> .cursor/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/cursor/docs/AGENTS.tpl.md -> ./AGENTS.md');
+    expect(out).toContain('[templateDir] commands: templates/agents/cursor/commands -> .cursor/commands/kiro');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/cursor/docs/AGENTS.md -> ./AGENTS.md');
+    expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
   it('dry-run prints plan including commands for linux via mac template', async () => {
     const repoRoot = join(process.cwd(), '..', '..');
@@ -45,8 +46,9 @@ describe('real cursor manifest', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
-    expect(out).toContain('[templateDir] commands_all_os: templates/agents/cursor/commands/os-mac -> .cursor/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/cursor/docs/AGENTS.tpl.md -> ./AGENTS.md');
+    expect(out).toContain('[templateDir] commands: templates/agents/cursor/commands -> .cursor/commands/kiro');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/cursor/docs/AGENTS.md -> ./AGENTS.md');
+    expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
   
   it('shows cursor recommendation message after applying plan', async () => {
@@ -68,7 +70,14 @@ describe('real cursor manifest', () => {
     // Check that the setup completion message is present (new format)
     expect(out).toMatch(/Setup completed: written=\d+, skipped=\d+/);
     
-    // Check that the Cursor-specific recommendation message is present (with color codes)
-    expect(out).toContain('\x1b[93m\x1b[1mRecommended: Use claude-4-sonnet or later model');
+    // Check that the Cursor-specific recommended models are shown
+    expect(out).toContain('Recommended models');
+    expect(out).toContain('Claude 4.5 Sonnet');
+    expect(out).toContain('GPT-5-Codex');
+
+    // Check that the unified next steps are present
+    expect(out).toContain("Launch Cursor IDE and run `/kiro/spec-init <what-to-build>` to create a new specification.");
+    expect(out).toContain("Capture project context in `AGENTS.md` so the assistant follows your team's rules.");
+    expect(out).toContain("Tailor `{{KIRO_DIR}}/settings/templates` so requirements, design, and tasks match your team's format.");
   });
 });

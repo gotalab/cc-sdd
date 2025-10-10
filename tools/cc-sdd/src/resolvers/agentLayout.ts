@@ -1,4 +1,4 @@
-export type AgentType = 'claude-code' | 'gemini-cli' | 'qwen-code' | 'cursor';
+export type AgentType = 'claude-code' | 'gemini-cli' | 'qwen-code' | 'cursor' | 'codex' | 'github-copilot';
 
 export interface AgentLayout {
   commandsDir: string;
@@ -30,6 +30,16 @@ export const resolveAgentLayout = (agent: AgentType, config?: CCSddConfig): Agen
     'cursor': {
       commandsDir: '.cursor/commands/kiro',
       agentDir: '.cursor',
+      docFile: 'AGENTS.md',
+    },
+    'codex': {
+      commandsDir: '.codex/prompts',
+      agentDir: '.codex',
+      docFile: 'AGENTS.md',
+    },
+    'github-copilot': {
+      commandsDir: '.github/prompts',
+      agentDir: '.github',
       docFile: 'AGENTS.md',
     },
   };

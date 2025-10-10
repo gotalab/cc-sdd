@@ -14,6 +14,14 @@ describe('resolveKiroDir', () => {
     expect(resolveKiroDir({ flag: '.work/kiro', config: 'docs/kiro' })).toBe('.work/kiro');
   });
 
+  it('trims trailing slashes', () => {
+    expect(resolveKiroDir({ flag: 'docs/kiro/' })).toBe('docs/kiro');
+  });
+
+  it('deduplicates consecutive slashes', () => {
+    expect(resolveKiroDir({ flag: '.kiro//specs//' })).toBe('.kiro/specs');
+  });
+
   it('rejects absolute path', () => {
     expect(() => resolveKiroDir({ flag: '/abs/path' })).toThrow();
   });

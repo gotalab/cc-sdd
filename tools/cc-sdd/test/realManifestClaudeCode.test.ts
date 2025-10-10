@@ -38,8 +38,9 @@ describe('real claude-code manifest', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
-    expect(out).toContain('[templateDir] commands_os_mac: templates/agents/claude-code/commands/os-mac -> .claude/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code/docs/CLAUDE.tpl.md -> ./CLAUDE.md');
+    expect(out).toContain('[templateDir] commands: templates/agents/claude-code/commands -> .claude/commands/kiro');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code/docs/CLAUDE.md -> ./CLAUDE.md');
+    expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
 
   it('apply writes CLAUDE.md and command files to cwd', async () => {
@@ -51,11 +52,14 @@ describe('real claude-code manifest', () => {
     const doc = join(cwd, 'CLAUDE.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
-    expect(text).toMatch(/Claude Code Spec-Driven Development/);
+    expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
     const cmd = join(cwd, '.claude/commands/kiro/spec-init.md');
     expect(await exists(cmd)).toBe(true);
+
+    const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
+    expect(await exists(settingsRule)).toBe(true);
 
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });
@@ -70,8 +74,9 @@ describe('real claude-code manifest (linux)', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
-    expect(out).toContain('[templateDir] commands_os_windows: templates/agents/claude-code/commands/os-windows -> .claude/commands/kiro');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code/docs/CLAUDE.tpl.md -> ./CLAUDE.md');
+    expect(out).toContain('[templateDir] commands: templates/agents/claude-code/commands -> .claude/commands/kiro');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code/docs/CLAUDE.md -> ./CLAUDE.md');
+    expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
 
   it('apply writes CLAUDE.md and command files to cwd on linux', async () => {
@@ -83,11 +88,14 @@ describe('real claude-code manifest (linux)', () => {
     const doc = join(cwd, 'CLAUDE.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
-    expect(text).toMatch(/Claude Code Spec-Driven Development/);
+    expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
     const cmd = join(cwd, '.claude/commands/kiro/spec-init.md');
     expect(await exists(cmd)).toBe(true);
+
+    const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');
+    expect(await exists(settingsTemplate)).toBe(true);
 
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });

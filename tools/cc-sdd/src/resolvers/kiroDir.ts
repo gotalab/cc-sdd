@@ -32,5 +32,13 @@ export const resolveKiroDir = (opts: KiroDirOptions = {}): string => {
     throw new Error('kiroDir must not contain parent traversal (..)');
   }
 
-  return candidate;
+  const trimmed = candidate.replace(/[\\/]+$/, '');
+
+  const normalized = trimmed.replace(/\/{2,}/g, '/');
+
+  if (!normalized) {
+    throw new Error('kiroDir must be a non-empty string');
+  }
+
+  return normalized;
 };
