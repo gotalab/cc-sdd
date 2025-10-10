@@ -2,6 +2,13 @@
 
 Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life Cycle)
 
+## Project Memory
+Project memory keeps persistent guidance (steering, specs notes, component docs) so Codex honors your standards each run. Treat it as the long-lived source of truth for patterns, conventions, and decisions.
+
+- Use `{{KIRO_DIR}}/steering/` for project-wide policies: architecture principles, naming schemes, security constraints, tech stack decisions, api standards, etc.
+- Use local `AGENTS.md` files for feature or library context (e.g. `src/lib/payments/AGENTS.md`): describe domain assumptions, API contracts, or testing conventions specific to that folder. Codex auto-loads these when working in the matching path.
+- Specs notes stay with each spec (under `{{KIRO_DIR}}/specs/`) to guide specification-level workflows.
+
 ## Project Context
 
 ### Paths

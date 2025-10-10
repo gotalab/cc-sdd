@@ -1,4 +1,6 @@
-# cc-sdd
+# cc-sdd: AIコーディングエージェントを本番仕様駆動にするワンコマンドセットアップ
+
+すべての仕様・ステアリングテンプレートを柔軟に編集可能—要件定義書・設計書・実装計画書の出力をチーム向けに調整できます。
 
 ✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Codeをプロトタイプからプロダクション開発プロセスへ**
 
@@ -28,12 +30,12 @@ npx cc-sdd@latest --lang ja    # 日本語
 npx cc-sdd@latest --lang zh-TW # 繁体字中国語
 # 対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
-# エージェントオプション（デフォルト: claude-code）
-npx cc-sdd@latest --gemini-cli --lang ja # Gemini CLI用
+# エージェントオプション（デフォルト: claude-code / --claude）
+npx cc-sdd@latest --gemini --lang ja # Gemini CLI用
 npx cc-sdd@latest --cursor --lang ja # Cursor IDE用
-npx cc-sdd@latest --codex --lang ja # Codex CLI（Prompts）用
-npx cc-sdd@latest --github-copilot --lang ja # GitHub Copilot用プロンプト
-npx cc-sdd@latest --qwen-code --lang ja # Qwen Code用
+npx cc-sdd@latest --codex --lang ja # Codex CLI（プロンプト）用
+npx cc-sdd@latest --copilot --lang ja # GitHub Copilot用プロンプト
+npx cc-sdd@latest --qwen --lang ja # Qwen Code用
 ```
 
 ## ✨ クイックスタート
@@ -73,6 +75,7 @@ npx cc-sdd@latest --qwen-code --lang ja # Qwen Code用
 - **📋 仕様ファースト開発** - 包括的仕様を単一情報源としてライフサイクル全体を駆動
 - **⚡ 「ボルト」（スプリントではなく）** - [AI-DLC](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)で週単位のスプリントを置き換える時間・日単位の集中サイクル。70%の管理オーバーヘッドから脱却
 - **🧠 永続的プロジェクトメモリ** - AIがステアリング文書を通じて全セッション間で包括的コンテキスト（アーキテクチャ、パターン、ルール、ドメイン知識）を維持
+- **🛠 テンプレート柔軟性** - `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks）をチームのドキュメント形式に合わせてカスタマイズ可能
 - **🔄 AIネイティブ+人間ゲート** - AI計画 → AI質問 → 人間検証 → AI実装（品質管理付き高速サイクル）
 - **🌍 チーム対応** - 品質ゲート付き多言語・クロスプラットフォーム・標準化ワークフロー
 

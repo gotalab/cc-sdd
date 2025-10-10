@@ -1,4 +1,6 @@
-# cc-sdd
+# cc-sdd: High quality spec-driven development for AI coding agents
+
+Customize every spec and steering template with simple edits—shape requirements, design docs, tasks (planning docs), and project memory outputs before your agent runs.
 
 ✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code from prototype to production-ready development**
 
@@ -15,7 +17,7 @@ Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, 
 
 🎯 **Perfect for**: Escaping the 70% overhead trap of traditional development (meetings, documentation, ceremonies) to achieve **weeks-to-hours delivery** with AI-native execution and human quality gates.
 
-> **Kiro compatible** — Same proven workflow used in professional environments.
+> **Kiro compatible** — Same or even better proven workflow used in professional environments.
 
 ## 🚀 Installation
 
@@ -28,12 +30,12 @@ npx cc-sdd@latest --lang ja    # Japanese
 npx cc-sdd@latest --lang zh-TW # Traditional Chinese
 # Supported languages: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
-# With agent options (default: claude-code)
-npx cc-sdd@latest --gemini-cli --lang ja # For Gemini CLI instead
-npx cc-sdd@latest --cursor --lang ja # For Cursor IDE instead
-npx cc-sdd@latest --codex --lang ja # For Codex CLI (Codex prompts) instead
-npx cc-sdd@latest --github-copilot --lang ja # For GitHub Copilot chat prompts
-npx cc-sdd@latest --qwen-code --lang ja # For Qwen Code instead
+# With agent options (default: claude-code / --claude)
+npx cc-sdd@latest --gemini --lang ja # Gemini CLI
+npx cc-sdd@latest --cursor --lang ja # Cursor IDE
+npx cc-sdd@latest --codex --lang ja # Codex CLI (prompt set)
+npx cc-sdd@latest --copilot --lang ja # GitHub Copilot chat prompts
+npx cc-sdd@latest --qwen --lang ja # Qwen Code
 ```
 
 ## 🌐 Supported Languages
@@ -88,6 +90,7 @@ npx cc-sdd@latest --qwen-code --lang ja # For Qwen Code instead
 - **📋 Spec-First Development** - Comprehensive specifications as single source of truth driving entire lifecycle
 - **⚡ "Bolts" not Sprints** - [AI-DLC terminology](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/) for intensive hours/days cycles replacing weeks-long sprints. Escape the 70% administrative overhead
 - **🧠 Persistent Project Memory** - AI maintains comprehensive context (architecture, patterns, rules, domain knowledge) across all sessions via steering documents  
+- **🛠 Template flexibility** - Tweak `{{KIRO_DIR}}/settings/templates` (steering, requirements, design, tasks) to mirror your team's deliverables
 - **🔄 AI-Native + Human Gates** - AI Plans → AI Asks → Human Validates → AI Implements (rapid cycles with quality control)
 - **🌍 Team-Ready** - Multi-language, cross-platform, standardized workflows with quality gates
 

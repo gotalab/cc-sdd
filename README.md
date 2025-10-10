@@ -2,9 +2,11 @@
 <a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-# cc-sdd: high quality spec-driven development
+# cc-sdd: High-quality spec-driven development for AI coding agents
 
 ✨ **Transform Claude Code / Codex / Gemini CLI / Cursor / GitHub Copilot / Qwen Code from prototype to production-ready development**
+
+Customize all spec and steering templates with a few edits—tailor the generated requirements, design docs, tasks (plan docs), and project memory to your team before the agent ever runs.
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -24,14 +26,14 @@ npx cc-sdd@latest
 # With OS: --os mac | --os windows | --os linux (if auto-detection fails)
 npx cc-sdd@latest --lang ja --os mac
 
-# With different agents: gemini-cli, cursor, codex, github-copilot, qwen-code
-npx cc-sdd@latest --gemini-cli
+# With different agents: gemini, cursor, codex, copilot, qwen
+npx cc-sdd@latest --gemini
 npx cc-sdd@latest --cursor
 npx cc-sdd@latest --codex
-npx cc-sdd@latest --github-copilot
-npx cc-sdd@latest --qwen-code
+npx cc-sdd@latest --copilot
+npx cc-sdd@latest --qwen
 
-# Ready to go! Now Claude Code and Gemini CLI can leverage `/kiro:spec-init <what to build>` and the full SDD workflow
+# Ready to go! Your chosen agent can now run `/kiro:spec-init <what-to-build>` and unlock the full SDD workflow
 ```
 
 ## ✨ What You Get
@@ -42,9 +44,23 @@ After running cc-sdd, you'll have:
 - **Project Memory (steering)** - AI learns your codebase, patterns, and preferences
 - **Structured AI-DLC workflow** with quality gates and approvals
 - **Spec-Driven Development** methodology built-in
+- **Template flexibility** — tweak `settings/templates/requirements.md`, `design.md`, `tasks.md`, or the steering templates to match your team's and project's preferred docs
 - **Kiro IDE compatibility** for seamless spec management
 
 **Perfect for**: Feature development, code reviews, technical planning, and maintaining development standards across your team.
+
+## 🤖 Supported Coding Agents
+
+| Agent | Flags you can pass | Installs |
+| --- | --- | --- |
+| Claude Code | `--claude-code`, `--claude` | `.claude/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `CLAUDE.md` |
+| Codex CLI | `--codex`, `--codex-cli` | `.codex/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
+| Cursor IDE | `--cursor` | `.cursor/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
+| GitHub Copilot Chat | `--copilot`, `--github-copilot` | `.github/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
+| Gemini CLI | `--gemini-cli`, `--gemini` | `.gemini/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `GEMINI.md` |
+| Qwen Code | `--qwen-code`, `--qwen` | `.qwen/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `QWEN.md` |
+
+*Claude Code remains the default agent when no flag is supplied.*
 
 ## 🌐 Supported Languages
 
@@ -68,7 +84,6 @@ After running cc-sdd, you'll have:
 
 Brings to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, and Qwen Code your project context, Project Memory (steering) and development patterns: **requirements → design → tasks → implementation**. **Kiro IDE compatible** — Reuse Kiro-style SDD specs and workflows seamlessly.
 
-**【Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot】**
 ワンライナーで **AI-DLC（AI-Driven Development Life Cycle）** と **Spec-Driven Development（仕様駆動開発）** のワークフローを導入。プロジェクト直下に **11個のSlash / Prompt Commands** 一式と設定ファイル（Claude Code用 **CLAUDE.md** / Cursor IDE・Codex CLI・GitHub Copilot用 **AGENTS.md** / Gemini CLI用 **GEMINI.md**）を配置、プロジェクトの文脈と開発パターン（**要件 → 設計 → タスク → 実装**）、**プロジェクトメモリ（ステアリング）** を含む。
 
 📝 **関連記事**  
@@ -84,17 +99,6 @@ Brings to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, and Qw
 
 ---
 
-## 🤖 Supported Coding Agents
-
-- **✅ Claude Code** - Fully supported with all 11 custom slash commands and CLAUDE.md
-- **✅ Gemini CLI** - Fully supported with all 11 custom commands and GEMINI.md
-- **✅ Cursor IDE** - Fully supported with all 11 custom commands and AGENTS.md
-- **✅ Codex CLI** - Fully supported with all 11 custom prompts and AGENTS.md
-- **✅ GitHub Copilot** - Fully supported with all 11 custom prompts and AGENTS.md
-- **✅ Qwen Code** - Fully supported with all 11 custom commands and QWEN.md
-- **📅 More agents** - Additional AI coding assistants planned
-
-*Currently optimized for Claude Code. Use `--agent claude-code` (default) for full functionality.*
  
 ## 📋 AI-DLC Workflow
 
@@ -176,7 +180,7 @@ For detailed documentation, installation instructions, and usage examples, see:
 ## Project Structure
 
 ```
-claude-code-spec/
+cc-sdd/
 ├── tools/cc-sdd/              # Main cc-sdd NPM package
 │   ├── src/                   # TypeScript source code
 │   ├── templates/             # Agent templates (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code)
@@ -184,10 +188,7 @@ claude-code-spec/
 │   └── README.md              # Tool documentation
 ├── docs/                      # Documentation
 ├── .claude/                   # Example Claude Code commands
-├── .gemini/                   # Example Gemini CLI commands
-├── README.md                  # This file (English)
-├── README_ja.md               # Japanese project README
-└── README_zh-TW.md            # Traditional Chinese project README
+└── README.md                  # This file
 ```
 
 

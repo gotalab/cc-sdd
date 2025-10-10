@@ -1,4 +1,6 @@
-# cc-sdd
+# cc-sdd: 一鍵讓 AI 程式代理進入生產級規格開發
+
+所有規格與指導模板皆可自由調整—在代理執行前就能把需求、設計、任務與專案記憶輸出對齊團隊流程。
 
 ✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code 從原型開發轉型為生產級開發**
 
@@ -28,12 +30,12 @@ npx cc-sdd@latest --lang zh-TW # 繁體中文
 npx cc-sdd@latest --lang ja    # 日語
 # 支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
-# 代理選項（預設：claude-code）
-npx cc-sdd@latest --gemini-cli --lang zh-TW # Gemini CLI 用
+# 代理選項（預設：claude-code / --claude）
+npx cc-sdd@latest --gemini --lang zh-TW # Gemini CLI 用
 npx cc-sdd@latest --cursor --lang zh-TW # Cursor IDE 用
-npx cc-sdd@latest --codex --lang zh-TW # Codex CLI（Prompts）用
-npx cc-sdd@latest --github-copilot --lang zh-TW # GitHub Copilot 用提示
-npx cc-sdd@latest --qwen-code --lang zh-TW # Qwen Code 用
+npx cc-sdd@latest --codex --lang zh-TW # Codex CLI（提示集）用
+npx cc-sdd@latest --copilot --lang zh-TW # GitHub Copilot 用提示
+npx cc-sdd@latest --qwen --lang zh-TW # Qwen Code 用
 ```
 
 ## ✨ 快速開始
@@ -73,6 +75,7 @@ npx cc-sdd@latest --qwen-code --lang zh-TW # Qwen Code 用
 - **📋 規格優先開發** - 全面性規格作為唱一信息源驅動整個生命週期
 - **⚡ 「快速衝刺」非衝刺** - [AI-DLC 術語](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)，強度小時/天周期取代數周衝刺。脱離 70% 管理額外負擔
 - **🧠 持久專案記憶** - AI 透過指導文件在所有會話間維持全面上下文（架構、模式、規則、領域知識）
+- **🛠 模板彈性** - 自訂 `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks），符合團隊慣用的文件格式
 - **🔄 AI 原生+人類關卡** - AI 計劃 → AI 提問 → 人類驗證 → AI 實作（具品質控制的快速循環）
 - **🌍 團隊就緒** - 具品質關卡的多語言、跨平台、標準化工作流程
 
