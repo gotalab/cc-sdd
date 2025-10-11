@@ -1,0 +1,160 @@
+export interface AgentLayoutDefaults {
+  commandsDir: string;
+  agentDir: string;
+  docFile: string;
+}
+
+export interface AgentCommandHints {
+  spec: string;
+  steering: string;
+  steeringCustom: string;
+}
+
+export interface AgentCompletionGuide {
+  prependSteps?: string[];
+  appendSteps?: string[];
+}
+
+export interface AgentDefinition {
+  label: string;
+  description: string;
+  aliasFlags: string[];
+  recommendedModels?: string[];
+  layout: AgentLayoutDefaults;
+  commands: AgentCommandHints;
+  manifestId?: string;
+  completionGuide?: AgentCompletionGuide;
+}
+
+const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/prompts by running:
+    mkdir -p ~/.codex/prompts \
+      && cp -Ri ./.codex/prompts/ ~/.codex/prompts/ \
+      && printf '\n==== COPY PHASE DONE ====\n' \
+      && printf 'Remove original ./.codex/prompts ? [y/N]: ' \
+      && IFS= read -r a \
+      && case "$a" in [yY]) rm -rf ./.codex/prompts && echo 'Removed.' ;; *) echo 'Kept original.' ;; esac`;
+
+export const agentDefinitions = {
+  'claude-code': {
+    label: 'Claude Code (Desktop app)',
+    description:
+      'Installs kiro prompts in `.claude/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/` (default `.kiro/settings/`), and an AGENTS.md quickstart.',
+    aliasFlags: ['--claude-code', '--claude'],
+    recommendedModels: ['Claude 4.5 Sonnet or newer'],
+    layout: {
+      commandsDir: '.claude/commands/kiro',
+      agentDir: '.claude',
+      docFile: 'CLAUDE.md',
+    },
+    commands: {
+      spec: '`/kiro:spec-init <what-to-build>`',
+      steering: '`/kiro:steering`',
+      steeringCustom: '`/kiro:steering-custom`',
+    },
+    manifestId: 'claude-code',
+  },
+  codex: {
+    label: 'Codex CLI',
+    description:
+      'Installs kiro prompts in `.codex/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--codex', '--codex-cli'],
+    recommendedModels: ['GPT-5-Codex (e.g. gpt-5-codex medium, gpt-5-codex high)'],
+    layout: {
+      commandsDir: '.codex/prompts',
+      agentDir: '.codex',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/prompts:kiro-spec-init <what-to-build>`',
+      steering: '`/prompts:kiro-steering`',
+      steeringCustom: '`/prompts:kiro-steering-custom`',
+    },
+    completionGuide: {
+      prependSteps: [codexCopyInstruction],
+    },
+    manifestId: 'codex',
+  },
+  cursor: {
+    label: 'Cursor IDE',
+    description:
+      'Installs kiro prompts in `.cursor/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--cursor'],
+    recommendedModels: ['Claude 4.5 Sonnet or newer — turn on thinking mode', 'GPT-5-Codex'],
+    layout: {
+      commandsDir: '.cursor/commands/kiro',
+      agentDir: '.cursor',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro/spec-init <what-to-build>`',
+      steering: '`/kiro/steering`',
+      steeringCustom: '`/kiro/steering-custom`',
+    },
+    manifestId: 'cursor',
+  },
+  'github-copilot': {
+    label: 'GitHub Copilot Chat',
+    description:
+      'Installs kiro prompts in `.github/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--copilot', '--github-copilot'],
+    recommendedModels: ['Claude 4.5 Sonnet or newer'],
+    layout: {
+      commandsDir: '.github/prompts',
+      agentDir: '.github',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-init <what-to-build>`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom`',
+    },
+    manifestId: 'github-copilot',
+  },
+  'gemini-cli': {
+    label: 'Gemini CLI',
+    description:
+      'Installs kiro prompts in `.gemini/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--gemini-cli', '--gemini'],
+    recommendedModels: ['Gemini 2.5 Pro or newer'],
+    layout: {
+      commandsDir: '.gemini/commands/kiro',
+      agentDir: '.gemini',
+      docFile: 'GEMINI.md',
+    },
+    commands: {
+      spec: '`gemini /kiro:spec-init "<what-to-build>"`',
+      steering: '`gemini /kiro:steering`',
+      steeringCustom: '`gemini /kiro:steering-custom`',
+    },
+    manifestId: 'gemini-cli',
+  },
+  'qwen-code': {
+    label: 'Qwen Code',
+    description:
+      'Installs kiro prompts in `.qwen/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--qwen-code', '--qwen'],
+    layout: {
+      commandsDir: '.qwen/commands/kiro',
+      agentDir: '.qwen',
+      docFile: 'QWEN.md',
+    },
+    commands: {
+      spec: '`/kiro:spec-init <what-to-build>`',
+      steering: '`/kiro:steering`',
+      steeringCustom: '`/kiro:steering-custom`',
+    },
+    manifestId: 'qwen-code',
+  },
+} as const satisfies Record<string, AgentDefinition>;
+
+export type AgentType = keyof typeof agentDefinitions;
+
+export const getAgentDefinition = (agent: AgentType): AgentDefinition => {
+  const definition = agentDefinitions[agent];
+  if (!definition) {
+    throw new Error(`Unknown agent: ${agent as string}`);
+  }
+  return definition as AgentDefinition;
+};
+
+export const agentList = Object.keys(agentDefinitions) as AgentType[];

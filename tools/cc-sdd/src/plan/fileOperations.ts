@@ -115,6 +115,7 @@ export const buildFileOperations = async (
       const relTarget = path.relative(cwd, destAbs);
       const category = categorizeTarget(destAbs, cwd, resolved);
       const mode = determineModeFromFilename(art.source.outFile);
+      const fallbackDocAbs = path.resolve(templatesRoot, '..', '..', 'CLAUDE.md');
       operations.push({
         artifactId: art.id,
         srcAbs,
@@ -123,7 +124,22 @@ export const buildFileOperations = async (
         sourceMode: mode === 'json' ? 'template-json' : 'template-text',
         category,
         render: async () => {
-          const raw = await readFile(srcAbs, 'utf8');
+          const loadTemplate = async (): Promise<string> => {
+            try {
+              return await readFile(srcAbs, 'utf8');
+            } catch (error) {
+              const err = error as NodeJS.ErrnoException;
+              if (
+                err?.code === 'ENOENT' &&
+                resolved.agent === 'claude-code' &&
+                path.basename(srcAbs) === 'CLAUDE.md'
+              ) {
+                return readFile(fallbackDocAbs, 'utf8');
+              }
+              throw error;
+            }
+          };
+          const raw = await loadTemplate();
           if (mode === 'json') {
             const obj = renderJsonTemplate(raw, resolved.agent, ctx);
             return JSON.stringify(obj, null, 2) + '\n';
