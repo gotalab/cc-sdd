@@ -4,14 +4,15 @@
 
 # cc-sdd: High-quality spec-driven development for AI coding agents
 
-✨ **Transform Claude Code / Codex / Gemini CLI / Cursor / GitHub Copilot / Qwen Code from prototype to production-ready development**
-
-Customize all spec and steering templates with a few edits—tailor the generated requirements, design docs, tasks (plan docs), and project memory to your team before the agent ever runs.
-
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](tools/cc-sdd/LICENSE)
+
+✨ **Transform Claude Code / Codex / Gemini CLI / Cursor / GitHub Copilot / Qwen Code from prototype to production-ready development**
+
+Customize all spec and steering templates with a few edits—tailor the generated requirements, design docs, tasks (plan docs), and project memory to your team before the agent ever runs.
+
 
 
 One command installs **AI-DLC** (AI-Driven Development Life Cycle) with **SDD** (Spec-Driven Development) workflows for Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, and Qwen Code.
@@ -22,16 +23,19 @@ One command installs **AI-DLC** (AI-Driven Development Life Cycle) with **SDD** 
 # Basic installation (default: Claude Code)
 npx cc-sdd@latest
 
+# Alpha version with major updates (v2.0.0-alpha.1)
+npx cc-sdd@next
+
 # With language: --lang en|ja|zh-TW|zh|es|pt|de|fr|ru|it|ko|ar
-# With OS: --os mac | --os windows | --os linux (if auto-detection fails)
-npx cc-sdd@latest --lang ja --os mac
+npx cc-sdd@latest --lang ja
 
 # With different agents: gemini, cursor, codex, copilot, qwen
-npx cc-sdd@latest --gemini
-npx cc-sdd@latest --cursor
-npx cc-sdd@latest --codex
-npx cc-sdd@latest --copilot
-npx cc-sdd@latest --qwen
+npx cc-sdd@latest --claude    # or @next for latest alpha
+npx cc-sdd@latest --gemini    # or @next for latest alpha
+npx cc-sdd@latest --cursor    # or @next for latest alpha
+npx cc-sdd@next --codex       # Requires alpha version
+npx cc-sdd@next --copilot     # Requires alpha version
+npx cc-sdd@latest --qwen      # or @next for latest alpha
 
 # Ready to go! Your chosen agent can now run `/kiro:spec-init <what-to-build>` and unlock the full SDD workflow
 ```
@@ -64,18 +68,22 @@ After running cc-sdd, you'll have:
 
 ## 🌐 Supported Languages
 
-- English (`en`)
-- Japanese (`ja`)
-- Traditional Chinese (`zh-TW`)
-- Chinese (`zh`)
-- Spanish (`es`)
-- Portuguese (`pt`)
-- German (`de`)
-- French (`fr`)
-- Russian (`ru`)
-- Italian (`it`)
-- Korean (`ko`)
-- Arabic (`ar`)
+| Language | Code |  |
+|----------|------|------|
+| English | `en` | 🇬🇧 |
+| Japanese | `ja` | 🇯🇵 |
+| Traditional Chinese | `zh-TW` | 🇹🇼 |
+| Simplified Chinese | `zh` | 🇨🇳 |
+| Spanish | `es` | 🇪🇸 |
+| Portuguese | `pt` | 🇵🇹 |
+| German | `de` | 🇩🇪 |
+| French | `fr` | 🇫🇷 |
+| Russian | `ru` | 🇷🇺 |
+| Italian | `it` | 🇮🇹 |
+| Korean | `ko` | 🇰🇷 |
+| Arabic | `ar` | 🇸🇦 |
+
+**Usage**: `npx cc-sdd@latest --lang <code>` (e.g., `--lang ja` for Japanese)
 
 
 ---

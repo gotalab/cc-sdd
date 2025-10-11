@@ -25,18 +25,40 @@ Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code�
 # 基本インストール（デフォルト: 英語、Claude Code）
 npx cc-sdd@latest
 
+# アルファ版（大幅アップデート版 v2.0.0-alpha.1）
+npx cc-sdd@next
+
 # 言語オプション（デフォルト: --lang en）
 npx cc-sdd@latest --lang ja    # 日本語
 npx cc-sdd@latest --lang zh-TW # 繁体字中国語
-# 対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # エージェントオプション（デフォルト: claude-code / --claude）
-npx cc-sdd@latest --gemini --lang ja # Gemini CLI用
-npx cc-sdd@latest --cursor --lang ja # Cursor IDE用
-npx cc-sdd@latest --codex --lang ja # Codex CLI（プロンプト）用
-npx cc-sdd@latest --copilot --lang ja # GitHub Copilot用プロンプト
-npx cc-sdd@latest --qwen --lang ja # Qwen Code用
+npx cc-sdd@latest --claude --lang ja    # または @next で最新アルファ版
+npx cc-sdd@latest --gemini --lang ja    # または @next で最新アルファ版
+npx cc-sdd@latest --cursor --lang ja    # または @next で最新アルファ版
+npx cc-sdd@next --codex --lang ja       # アルファ版必須
+npx cc-sdd@next --copilot --lang ja     # アルファ版必須
+npx cc-sdd@latest --qwen --lang ja      # または @next で最新アルファ版
 ```
+
+## 🌐 対応言語
+
+| 言語 | コード |  |
+|------|--------|------|
+| 英語 | `en` | 🇬🇧 |
+| 日本語 | `ja` | 🇯🇵 |
+| 繁体字中国語 | `zh-TW` | 🇹🇼 |
+| 簡体字中国語 | `zh` | 🇨🇳 |
+| スペイン語 | `es` | 🇪🇸 |
+| ポルトガル語 | `pt` | 🇵🇹 |
+| ドイツ語 | `de` | 🇩🇪 |
+| フランス語 | `fr` | 🇫🇷 |
+| ロシア語 | `ru` | 🇷🇺 |
+| イタリア語 | `it` | 🇮🇹 |
+| 韓国語 | `ko` | 🇰🇷 |
+| アラビア語 | `ar` | 🇸🇦 |
+
+**使用方法**: `npx cc-sdd@latest --lang <コード>` (例: 日本語の場合は `--lang ja`)
 
 ## ✨ クイックスタート
 

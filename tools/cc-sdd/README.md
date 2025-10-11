@@ -25,33 +25,41 @@ Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, 
 # Basic installation (defaults: English docs, Claude Code agent)
 npx cc-sdd@latest
 
+# Alpha version with major updates (v2.0.0-alpha.1)
+npx cc-sdd@next
+
 # With language options (default: --lang en)
 npx cc-sdd@latest --lang ja    # Japanese
 npx cc-sdd@latest --lang zh-TW # Traditional Chinese
 # Supported languages: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # With agent options (default: claude-code / --claude)
-npx cc-sdd@latest --gemini --lang ja # Gemini CLI
-npx cc-sdd@latest --cursor --lang ja # Cursor IDE
-npx cc-sdd@latest --codex --lang ja # Codex CLI (prompt set)
-npx cc-sdd@latest --copilot --lang ja # GitHub Copilot chat prompts
-npx cc-sdd@latest --qwen --lang ja # Qwen Code
+npx cc-sdd@latest --claude --lang ja    # or @next for latest alpha
+npx cc-sdd@latest --gemini --lang ja    # or @next for latest alpha
+npx cc-sdd@latest --cursor --lang ja    # or @next for latest alpha
+npx cc-sdd@next --codex --lang ja       # Requires alpha version
+npx cc-sdd@next --copilot --lang ja     # Requires alpha version
+npx cc-sdd@latest --qwen --lang ja      # or @next for latest alpha
 ```
 
 ## 🌐 Supported Languages
 
-- English (`en`)
-- Japanese (`ja`)
-- Traditional Chinese (`zh-TW`)
-- Chinese (`zh`)
-- Spanish (`es`)
-- Portuguese (`pt`)
-- German (`de`)
-- French (`fr`)
-- Russian (`ru`)
-- Italian (`it`)
-- Korean (`ko`)
-- Arabic (`ar`)
+| Language | Code |  |
+|----------|------|------|
+| English | `en` | 🇬🇧 |
+| Japanese | `ja` | 🇯🇵 |
+| Traditional Chinese | `zh-TW` | 🇹🇼 |
+| Simplified Chinese | `zh` | 🇨🇳 |
+| Spanish | `es` | 🇪🇸 |
+| Portuguese | `pt` | 🇵🇹 |
+| German | `de` | 🇩🇪 |
+| French | `fr` | 🇫🇷 |
+| Russian | `ru` | 🇷🇺 |
+| Italian | `it` | 🇮🇹 |
+| Korean | `ko` | 🇰🇷 |
+| Arabic | `ar` | 🇸🇦 |
+
+**Usage**: `npx cc-sdd@latest --lang <code>` (e.g., `--lang ja` for Japanese)
 
 ## ✨ Quick Start
 
