@@ -25,18 +25,40 @@
 # 基本安裝（預設：英文文件，Claude Code 代理）
 npx cc-sdd@latest
 
+# Alpha 版本（重大更新版 v2.0.0-alpha.1）
+npx cc-sdd@next
+
 # 語言選項（預設：--lang en）
 npx cc-sdd@latest --lang zh-TW # 繁體中文
 npx cc-sdd@latest --lang ja    # 日語
-# 支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # 代理選項（預設：claude-code / --claude）
-npx cc-sdd@latest --gemini --lang zh-TW # Gemini CLI 用
-npx cc-sdd@latest --cursor --lang zh-TW # Cursor IDE 用
-npx cc-sdd@latest --codex --lang zh-TW # Codex CLI（提示集）用
-npx cc-sdd@latest --copilot --lang zh-TW # GitHub Copilot 用提示
-npx cc-sdd@latest --qwen --lang zh-TW # Qwen Code 用
+npx cc-sdd@latest --claude --lang zh-TW    # 或 @next 取得最新 alpha
+npx cc-sdd@latest --gemini --lang zh-TW    # 或 @next 取得最新 alpha
+npx cc-sdd@latest --cursor --lang zh-TW    # 或 @next 取得最新 alpha
+npx cc-sdd@next --codex --lang zh-TW       # 需要 alpha 版本
+npx cc-sdd@next --copilot --lang zh-TW     # 需要 alpha 版本
+npx cc-sdd@latest --qwen --lang zh-TW      # 或 @next 取得最新 alpha
 ```
+
+## 🌐 支援語言
+
+| 語言 | 代碼 |  |
+|------|------|------|
+| 英語 | `en` | 🇬🇧 |
+| 日語 | `ja` | 🇯🇵 |
+| 繁體中文 | `zh-TW` | 🇹🇼 |
+| 簡體中文 | `zh` | 🇨🇳 |
+| 西班牙語 | `es` | 🇪🇸 |
+| 葡萄牙語 | `pt` | 🇵🇹 |
+| 德語 | `de` | 🇩🇪 |
+| 法語 | `fr` | 🇫🇷 |
+| 俄語 | `ru` | 🇷🇺 |
+| 義大利語 | `it` | 🇮🇹 |
+| 韓語 | `ko` | 🇰🇷 |
+| 阿拉伯語 | `ar` | 🇸🇦 |
+
+**使用方法**: `npx cc-sdd@latest --lang <代碼>` (例如繁體中文使用 `--lang zh-TW`)
 
 ## ✨ 快速開始
 
