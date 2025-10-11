@@ -4,6 +4,7 @@ import { resolveAgentLayout } from '../resolvers/agentLayout.js';
 import type { OSType } from '../resolvers/os.js';
 import { resolveOs } from '../resolvers/os.js';
 import { resolveKiroDir } from '../resolvers/kiroDir.js';
+import type { SupportedLanguage } from '../constants/languages.js';
 
 export type OverwritePolicy = 'prompt' | 'skip' | 'force';
 
@@ -12,19 +13,7 @@ export type UserConfig = Partial<{
   agent: AgentType;
   os: 'auto' | OSType;
   resolvedOs: OSType;
-  lang:
-    | 'ja'
-    | 'en'
-    | 'zh-TW'
-    | 'zh'
-    | 'es'
-    | 'pt'
-    | 'de'
-    | 'fr'
-    | 'ru'
-    | 'it'
-    | 'ko'
-    | 'ar';
+  lang: SupportedLanguage;
   kiroDir: string;
   overwrite: OverwritePolicy;
   backupDir: string;
@@ -35,19 +24,7 @@ export type ResolvedConfig = {
   agent: AgentType;
   os: 'auto' | OSType;
   resolvedOs: OSType;
-  lang:
-    | 'ja'
-    | 'en'
-    | 'zh-TW'
-    | 'zh'
-    | 'es'
-    | 'pt'
-    | 'de'
-    | 'fr'
-    | 'ru'
-    | 'it'
-    | 'ko'
-    | 'ar';
+  lang: SupportedLanguage;
   kiroDir: string;
   overwrite: OverwritePolicy;
   effectiveOverwrite: OverwritePolicy;
@@ -61,7 +38,7 @@ export type ResolvedConfig = {
 const defaults = {
   agent: 'claude-code' as AgentType,
   os: 'auto' as const,
-  lang: 'en' as const,
+  lang: 'en' as SupportedLanguage,
   kiroDir: '.kiro',
   overwrite: 'prompt' as OverwritePolicy,
   backupDir: '.cc-sdd.backup',
@@ -77,19 +54,7 @@ export const mergeConfigAndArgs = (
   const agent: AgentType = (args.agent ?? config.agent ?? defaults.agent) as AgentType;
   const osInput: 'auto' | OSType = (args.os ?? config.os ?? defaults.os) as any;
   const resolvedOs = resolveOs(osInput, runtime);
-  const lang = (args.lang ?? config.lang ?? defaults.lang) as
-    | 'ja'
-    | 'en'
-    | 'zh-TW'
-    | 'zh'
-    | 'es'
-    | 'pt'
-    | 'de'
-    | 'fr'
-    | 'ru'
-    | 'it'
-    | 'ko'
-    | 'ar';
+  const lang = (args.lang ?? config.lang ?? defaults.lang) as SupportedLanguage;
 
   const kiroDir = resolveKiroDir({ flag: args.kiroDir, config: config.kiroDir });
 

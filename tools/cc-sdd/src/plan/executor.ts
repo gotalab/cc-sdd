@@ -1,22 +1,10 @@
-import { appendFile, copyFile, mkdir, stat, writeFile } from 'node:fs/promises';
+import { appendFile, copyFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { ProcessedArtifact } from '../manifest/processor.js';
 import type { ResolvedConfig } from '../cli/config.js';
 import { buildFileOperations, type FileOperation, type SourceMode } from './fileOperations.js';
 import type { InstallCategory } from './categories.js';
-
-const ensureDir = async (dir: string) => {
-  await mkdir(dir, { recursive: true });
-};
-
-const fileExists = async (p: string): Promise<boolean> => {
-  try {
-    await stat(p);
-    return true;
-  } catch {
-    return false;
-  }
-};
+import { ensureDir, fileExists } from '../utils/fs.js';
 
 const backupIfNeeded = async (target: string, cwd: string, resolved: ResolvedConfig): Promise<void> => {
   if (!resolved.backupEnabled) return;

@@ -223,4 +223,3 @@ export const runCli = async (
 
   return runPlanExecution(manifestPath, resolved, io, execOpts);
 };
-

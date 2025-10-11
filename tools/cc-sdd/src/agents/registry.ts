@@ -24,6 +24,7 @@ export interface AgentDefinition {
   commands: AgentCommandHints;
   manifestId?: string;
   completionGuide?: AgentCompletionGuide;
+  templateFallbacks?: Record<string, string>;
 }
 
 const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/prompts by running:
@@ -36,7 +37,7 @@ const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/pr
 
 export const agentDefinitions = {
   'claude-code': {
-    label: 'Claude Code (Desktop app)',
+    label: 'Claude Code',
     description:
       'Installs kiro prompts in `.claude/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/` (default `.kiro/settings/`), and an AGENTS.md quickstart.',
     aliasFlags: ['--claude-code', '--claude'],
@@ -49,7 +50,10 @@ export const agentDefinitions = {
     commands: {
       spec: '`/kiro:spec-init <what-to-build>`',
       steering: '`/kiro:steering`',
-      steeringCustom: '`/kiro:steering-custom`',
+      steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
+    },
+    templateFallbacks: {
+      'CLAUDE.md': '../../CLAUDE.md',
     },
     manifestId: 'claude-code',
   },
@@ -67,7 +71,7 @@ export const agentDefinitions = {
     commands: {
       spec: '`/prompts:kiro-spec-init <what-to-build>`',
       steering: '`/prompts:kiro-steering`',
-      steeringCustom: '`/prompts:kiro-steering-custom`',
+      steeringCustom: '`/prompts:kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
     completionGuide: {
       prependSteps: [codexCopyInstruction],
@@ -79,7 +83,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.cursor/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--cursor'],
-    recommendedModels: ['Claude 4.5 Sonnet or newer — turn on thinking mode', 'GPT-5-Codex'],
+    recommendedModels: ['Claude 4.5 Sonnet thinking mode or newer', 'GPT-5-Codex'],
     layout: {
       commandsDir: '.cursor/commands/kiro',
       agentDir: '.cursor',
@@ -88,16 +92,16 @@ export const agentDefinitions = {
     commands: {
       spec: '`/kiro/spec-init <what-to-build>`',
       steering: '`/kiro/steering`',
-      steeringCustom: '`/kiro/steering-custom`',
+      steeringCustom: '`/kiro/steering-custom <what-to-create-custom-steering-document>`',
     },
     manifestId: 'cursor',
   },
   'github-copilot': {
-    label: 'GitHub Copilot Chat',
+    label: 'GitHub Copilot',
     description:
       'Installs kiro prompts in `.github/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--copilot', '--github-copilot'],
-    recommendedModels: ['Claude 4.5 Sonnet or newer'],
+    recommendedModels: ['Claude 4.5 Sonnet thinking mode or newer', 'GPT-5-Codex'],
     layout: {
       commandsDir: '.github/prompts',
       agentDir: '.github',
@@ -106,7 +110,7 @@ export const agentDefinitions = {
     commands: {
       spec: '`/kiro-spec-init <what-to-build>`',
       steering: '`/kiro-steering`',
-      steeringCustom: '`/kiro-steering-custom`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
     manifestId: 'github-copilot',
   },
@@ -122,9 +126,9 @@ export const agentDefinitions = {
       docFile: 'GEMINI.md',
     },
     commands: {
-      spec: '`gemini /kiro:spec-init "<what-to-build>"`',
-      steering: '`gemini /kiro:steering`',
-      steeringCustom: '`gemini /kiro:steering-custom`',
+      spec: '`/kiro:spec-init <what-to-build>`',
+      steering: '`/kiro:steering`',
+      steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
     },
     manifestId: 'gemini-cli',
   },
