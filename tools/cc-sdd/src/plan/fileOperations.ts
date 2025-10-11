@@ -5,6 +5,7 @@ import type { ResolvedConfig } from '../cli/config.js';
 import { contextFromResolved } from '../template/fromResolved.js';
 import { renderJsonTemplate, renderTemplateString } from '../template/renderer.js';
 import { categorizeTarget, type InstallCategory } from './categories.js';
+import { getAgentDefinition } from '../agents/registry.js';
 
 export type SourceMode = 'static' | 'template-text' | 'template-json';
 
@@ -84,6 +85,7 @@ export const buildFileOperations = async (
   const templatesRoot = opts.templatesRoot ?? cwd;
   const ctx = contextFromResolved(resolved);
   const operations: FileOperation[] = [];
+  const agentDefinition = getAgentDefinition(resolved.agent);
 
   for (const art of artifacts) {
     if (art.source.type === 'staticDir') {
@@ -115,6 +117,7 @@ export const buildFileOperations = async (
       const relTarget = path.relative(cwd, destAbs);
       const category = categorizeTarget(destAbs, cwd, resolved);
       const mode = determineModeFromFilename(art.source.outFile);
+      const fallbackRel = agentDefinition.templateFallbacks?.[art.source.outFile];
       operations.push({
         artifactId: art.id,
         srcAbs,
@@ -123,7 +126,19 @@ export const buildFileOperations = async (
         sourceMode: mode === 'json' ? 'template-json' : 'template-text',
         category,
         render: async () => {
-          const raw = await readFile(srcAbs, 'utf8');
+          const loadTemplate = async (): Promise<string> => {
+            try {
+              return await readFile(srcAbs, 'utf8');
+            } catch (error) {
+              const err = error as NodeJS.ErrnoException;
+              if (err?.code === 'ENOENT' && fallbackRel) {
+                const fallbackAbs = path.resolve(templatesRoot, fallbackRel);
+                return readFile(fallbackAbs, 'utf8');
+              }
+              throw error;
+            }
+          };
+          const raw = await loadTemplate();
           if (mode === 'json') {
             const obj = renderJsonTemplate(raw, resolved.agent, ctx);
             return JSON.stringify(obj, null, 2) + '\n';
@@ -167,4 +182,3 @@ export const buildFileOperations = async (
 
   return operations.sort((a, b) => a.relTarget.localeCompare(b.relTarget));
 };
-

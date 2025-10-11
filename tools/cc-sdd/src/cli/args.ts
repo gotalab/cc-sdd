@@ -1,23 +1,12 @@
-import type { AgentType } from '../resolvers/agentLayout.js';
+import { agentList, getAgentDefinition, type AgentType } from '../agents/registry.js';
 import type { OSType } from '../resolvers/os.js';
+import { supportedLanguages, type SupportedLanguage } from '../constants/languages.js';
 
 export type OverwritePolicy = 'prompt' | 'skip' | 'force';
 
 export type ParsedArgs = {
   agent?: AgentType;
-  lang?:
-    | 'ja'
-    | 'en'
-    | 'zh-TW'
-    | 'zh'
-    | 'es'
-    | 'pt'
-    | 'de'
-    | 'fr'
-    | 'ru'
-    | 'it'
-    | 'ko'
-    | 'ar';
+  lang?: SupportedLanguage;
   os?: 'auto' | OSType;
   overwrite?: OverwritePolicy;
   yes?: boolean;
@@ -28,22 +17,26 @@ export type ParsedArgs = {
   profile?: 'full' | 'minimal';
 };
 
+const agentAliasMap = new Map<string, AgentType>();
+const agentValueMap = new Map<string, AgentType>();
+
+for (const agent of agentList) {
+  const definition = getAgentDefinition(agent);
+  agentAliasMap.set(agent, agent);
+  agentValueMap.set(agent, agent);
+  definition.aliasFlags.forEach((flag) => {
+    const name = flag.startsWith('--') ? flag.slice(2) : flag;
+    agentAliasMap.set(name, agent);
+    agentValueMap.set(name, agent);
+  });
+}
+
 const booleanFlags = new Set([
   'yes',
   'y',
   'dry-run',
-  'claude-code',
-  'claude',
-  'gemini-cli',
-  'gemini',
-  'qwen-code',
-  'qwen',
-  'cursor',
-  'codex',
-  'codex-cli',
-  'github-copilot',
-  'copilot',
   'backup',
+  ...agentAliasMap.keys(),
 ]);
 const valueFlags = new Set(['agent', 'lang', 'os', 'overwrite', 'kiro-dir', 'backup', 'manifest', 'profile']);
 
@@ -56,7 +49,6 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
   const out: ParsedArgs = {};
   let i = 0;
 
-  // track agent to detect any conflicting multiple selections (flag vs alias, or alias vs alias)
   let seenAgent: AgentType | undefined;
   const setAgent = (value: AgentType) => {
     if (seenAgent && seenAgent !== value) {
@@ -73,7 +65,6 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
       throw new Error(`Unknown positional argument: ${token}`);
     }
 
-    // short flag
     if (token === '-y') {
       out.yes = true;
       continue;
@@ -86,17 +77,21 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
         throw new Error(`Unknown flag: --${name}`);
       }
 
+      const aliasAgent = agentAliasMap.get(name);
+      if (aliasAgent && !valueFlags.has(name)) {
+        setAgent(aliasAgent);
+        continue;
+      }
+
       let value: string | true | undefined;
       if (eqIdx > -1) {
         value = token.slice(eqIdx + 1);
       } else if (valueFlags.has(name)) {
-        // consume next token as value iff present and not another flag
         const peek = argv[i];
         if (peek && !peek.startsWith('-')) {
           value = peek;
           i += 1;
         } else {
-          // allow --backup with no value to mean boolean true
           if (name === 'backup') {
             value = true;
           } else {
@@ -107,7 +102,6 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
         value = true;
       }
 
-      // map flags
       switch (name) {
         case 'dry-run':
           out.dryRun = true;
@@ -128,26 +122,7 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
           break;
         case 'lang': {
           const v = String(value);
-          if (
-            !isEnum(
-              v,
-              [
-                'ja',
-                'en',
-                'zh-TW',
-                'zh',
-                'es',
-                'pt',
-                'de',
-                'fr',
-                'ru',
-                'it',
-                'ko',
-                'ar',
-              ] as const,
-            )
-          )
-            throw new Error('lang value invalid');
+          if (!isEnum(v, supportedLanguages)) throw new Error('lang value invalid');
           out.lang = v;
           break;
         }
@@ -174,51 +149,23 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
           break;
         }
         case 'agent': {
-          const v = String(value) as AgentType;
-          if (!isEnum(v, ['claude-code', 'gemini-cli', 'qwen-code', 'cursor', 'codex', 'github-copilot', 'qwen', 'codex-cli', 'claude', 'copilot', 'gemini'] as const))
-            throw new Error('agent value invalid');
-          setAgent(v);
+          const v = String(value);
+          const mapped = agentValueMap.get(v as AgentType);
+          if (!mapped) throw new Error('agent value invalid');
+          setAgent(mapped);
           break;
         }
-        case 'claude-code':
-          setAgent('claude-code');
+        default: {
+          const mapped = agentAliasMap.get(name);
+          if (mapped) {
+            setAgent(mapped);
+            break;
+          }
+          if (!booleanFlags.has(name)) {
+            throw new Error(`Unknown flag: --${name}`);
+          }
           break;
-        case 'claude':
-          setAgent('claude-code');
-          break;
-        case 'gemini-cli':
-          setAgent('gemini-cli');
-          break;
-        case 'gemini':
-          setAgent('gemini-cli');
-          break;
-        case 'qwen-code':
-          setAgent('qwen-code');
-          break;
-        case 'qwen':
-          setAgent('qwen-code');
-          break;
-        case 'cursor':
-          setAgent('cursor');
-          break;
-        case 'codex':
-          setAgent('codex');
-          break;
-        case 'codex-cli':
-          setAgent('codex');
-          break;
-        case 'codex':
-          setAgent('codex');
-          break;
-        case 'github-copilot':
-          setAgent('github-copilot');
-          break;
-        case 'copilot':
-          setAgent('github-copilot');
-          break;
-        default:
-          // should not reach
-          throw new Error(`Unknown flag: --${name}`);
+        }
       }
       continue;
     }

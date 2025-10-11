@@ -38,4 +38,3 @@ export const formatSectionTitle = (label: string): string => {
   return `
 [35m[1m== ${label} ==[22m[39m`;
 };
-

@@ -1,21 +1,10 @@
 import { resolveKiroDir, type KiroDirOptions } from '../resolvers/kiroDir.js';
-import { resolveAgentLayout, type AgentType, type CCSddConfig } from '../resolvers/agentLayout.js';
+import { resolveAgentLayout, type AgentLayout, type AgentType, type CCSddConfig } from '../resolvers/agentLayout.js';
+import type { SupportedLanguage } from '../constants/languages.js';
 
 export interface BuildTemplateContextOptions {
   agent: AgentType;
-  lang:
-    | 'ja'
-    | 'en'
-    | 'zh-TW'
-    | 'zh'
-    | 'es'
-    | 'pt'
-    | 'de'
-    | 'fr'
-    | 'ru'
-    | 'it'
-    | 'ko'
-    | 'ar';
+  lang: SupportedLanguage;
   kiroDir?: KiroDirOptions;
   config?: CCSddConfig;
 }
@@ -29,21 +18,7 @@ export type TemplateContext = {
   AGENT_COMMANDS_DIR: string;
 };
 
-const guidelinesMap: Record<
-  | 'ja'
-  | 'en'
-  | 'zh-TW'
-  | 'zh'
-  | 'es'
-  | 'pt'
-  | 'de'
-  | 'fr'
-  | 'ru'
-  | 'it'
-  | 'ko'
-  | 'ar',
-  string
-> = {
+const guidelinesMap: Record<SupportedLanguage, string> = {
   en: '- Think in English, generate responses in English',
   ja: '- Think in English, but generate responses in Japanese (思考は英語、回答の生成は日本語で行うように)',
   'zh-TW': '- 以英文思考，但以繁體中文生成回應（Think in English, generate in Traditional Chinese）',
@@ -58,32 +33,23 @@ const guidelinesMap: Record<
   ar: '- Think in English, generate responses in Arabic (فكر بالإنجليزية وأجب بالعربية)',
 };
 
-export const getDevGuidelines = (
-  lang:
-    | 'ja'
-    | 'en'
-    | 'zh-TW'
-    | 'zh'
-    | 'es'
-    | 'pt'
-    | 'de'
-    | 'fr'
-    | 'ru'
-    | 'it'
-    | 'ko'
-    | 'ar',
-): string => guidelinesMap[lang];
+export const getDevGuidelines = (lang: SupportedLanguage): string => guidelinesMap[lang];
 
+export const createTemplateContext = (
+  lang: SupportedLanguage,
+  kiroDir: string,
+  layout: AgentLayout,
+): TemplateContext => ({
+  LANG_CODE: lang,
+  DEV_GUIDELINES: getDevGuidelines(lang),
+  KIRO_DIR: kiroDir,
+  AGENT_DIR: layout.agentDir,
+  AGENT_DOC: layout.docFile,
+  AGENT_COMMANDS_DIR: layout.commandsDir,
+});
 
 export const buildTemplateContext = (opts: BuildTemplateContextOptions): TemplateContext => {
   const kiro = resolveKiroDir(opts.kiroDir ?? {});
   const layout = resolveAgentLayout(opts.agent, opts.config);
-  return {
-    LANG_CODE: opts.lang,
-    DEV_GUIDELINES: getDevGuidelines(opts.lang),
-    KIRO_DIR: kiro,
-    AGENT_DIR: layout.agentDir,
-    AGENT_DOC: layout.docFile,
-    AGENT_COMMANDS_DIR: layout.commandsDir,
-  };
+  return createTemplateContext(opts.lang, kiro, layout);
 };

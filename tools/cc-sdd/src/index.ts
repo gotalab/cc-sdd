@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { stat } from 'node:fs/promises';
 import { createRequire } from 'node:module';
+import { agentList, getAgentDefinition } from './agents/registry.js';
 import { parseArgs } from './cli/args.js';
 import { mergeConfigAndArgs, type EnvRuntime, type UserConfig } from './cli/config.js';
 import { planFromFile } from './manifest/planner.js';
@@ -18,12 +19,16 @@ import { defaultIO, type CliIO } from './cli/io.js';
 import { colors, formatError, formatHeading, formatSuccess, formatWarning } from './cli/ui/colors.js';
 import { isInteractive, promptChoice, promptConfirm } from './cli/ui/prompt.js';
 
+const agentKeys = agentList;
+const aliasFlags = Array.from(new Set(agentKeys.flatMap((key) => getAgentDefinition(key).aliasFlags)));
+
+const agentAliasLine = aliasFlags.length > 0 ? `  ${aliasFlags.join(' | ')}  Agent alias flags\n` : '';
+
 const helpText = `Usage: cc-sdd [options]
 
 Options:
-  --agent <claude-code|gemini-cli|qwen-code|cursor|codex|github-copilot>  Select agent
-  --claude-code | --gemini-cli | --qwen-code | --cursor | --codex | --copilot  Agent alias flags
-  --lang <ja|en|zh-TW|zh|es|pt|de|fr|ru|it|ko|ar>  Language
+  --agent <${agentKeys.join('|')}>  Select agent
+${agentAliasLine}  --lang <ja|en|zh-TW|zh|es|pt|de|fr|ru|it|ko|ar>  Language
   --os <auto|mac|windows|linux>               Target OS (auto uses runtime)
   --kiro-dir <path>                           Kiro root dir (default .kiro)
   --overwrite <prompt|skip|force>             Overwrite policy (default: prompt)
@@ -218,4 +223,3 @@ export const runCli = async (
 
   return runPlanExecution(manifestPath, resolved, io, execOpts);
 };
-
