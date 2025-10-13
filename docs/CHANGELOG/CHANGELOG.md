@@ -4,7 +4,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
-## Ver 2.0.0 (2025年10月8日 メジャーアップデート) 🚀
+## Ver 2.0.0 (2025年10月13日 メジャーアップデート) 🚀
 
 ### 🎯 ハイライト
 - **ガイド付きCLIインストーラー**：`npx cc-sdd@latest` 実行時に、作成/更新されるファイルを Commands / Project Memory / Settings で整理表示し、プロジェクトメモリ文書は上書き・追記・維持を対話的に選べるようになりました。再インストール時の安心感とスピードが向上します。
@@ -19,6 +19,17 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 - **マニフェストと CLI の更新**：全マニフェストを新構造に合わせて再定義し、Codex / GitHub Copilot 用マニフェストを追加。CLI も `--codex`, `--github-copilot` フラグとヘルプを拡張し、`resolveAgentLayout` に新ディレクトリを登録。
 - **テスト体制の強化**：既存エージェント向けリアルマニフェストテストを刷新し、`.kiro/settings` 展開を含む動作を検証。Codex / GitHub Copilot 用 E2E テストを追加。
 - **ドキュメント整備**：README（英語/日本語/繁体字）およびリポジトリ README を更新し、対応エージェント、コマンド数、ディレクトリ構造、CLI 例を最新状態に反映。
+
+### 🔄 関連プルリクエスト
+- **[#74](https://github.com/gotalab/cc-sdd/pull/74)** - Claude Code SubAgentsモードの追加（実装中）
+  - コンテキスト最適化のため、SDD コマンドを専用サブエージェントへ委譲
+  - メイン会話のコンテキストウィンドウを保護し、セッション寿命を延長
+  - 各コマンド専用のシステムプロンプトによる品質向上
+  - 関連Issue: [#68](https://github.com/gotalab/cc-sdd/issues/68)
+- **[#73](https://github.com/gotalab/cc-sdd/pull/73)** - CLAUDE.mdドキュメントの追加
+- **[#72](https://github.com/gotalab/cc-sdd/pull/72)** - エージェントメタデータの中央レジストリへのリファクタリング
+- **[#71](https://github.com/gotalab/cc-sdd/pull/71)** - アルファバージョン情報の追加と言語テーブルの改善
+- **[#70](https://github.com/gotalab/cc-sdd/pull/70)** - cc-sdd v2.0.0-alphaリリース
 
 ### 📈 主要メトリクス
 - **対応プラットフォーム**: 6 (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code)
