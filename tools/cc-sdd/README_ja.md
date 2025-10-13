@@ -1,8 +1,6 @@
 # cc-sdd: AIコーディングエージェントを本番仕様駆動にするワンコマンドセットアップ
 
-すべての仕様・ステアリングテンプレートを柔軟に編集可能—要件定義書・設計書・実装計画書の出力をチーム向けに調整できます。
-
-✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Codeをプロトタイプからプロダクション開発プロセスへ**
+✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Codeをプロトタイプからプロダクション開発プロセスへ、さらに仕様・ステアリングテンプレートの出力をチームのワークフローに合わせてカスタマイズできます。**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -21,20 +19,23 @@ Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code�
 
 ## 🚀 インストール
 
+ワンコマンドで、主要AIコーディングエージェント向けの**AI-DLC（AI Driven Development Life Cycle）× SDD（Spec-Driven Development）**ワークフローを導入。要件・設計・タスク・ステアリングのテンプレートもチームの承認プロセスに沿う形で自動生成されます。
+
 ```bash
 # 基本インストール（デフォルト: 英語、Claude Code）
 npx cc-sdd@latest
 
-# アルファ版（大幅アップデート版 v2.0.0-alpha.1）
+# アルファ版（大幅アップデート版 v2.0.0-alpha.2）
 npx cc-sdd@next
 
 # 言語オプション（デフォルト: --lang en）
 npx cc-sdd@latest --lang ja    # 日本語
 npx cc-sdd@latest --lang zh-TW # 繁体字中国語
+# 対応言語（全12言語）: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # エージェントオプション（デフォルト: claude-code / --claude）
 npx cc-sdd@latest --claude --lang ja    # または @next で最新アルファ版
-npx cc-sdd@latest --claude-agent --lang ja # Claudeエージェントライブラリも含めてインストール
+npx cc-sdd@next --claude-agent --lang ja # Claude Code SubAgentsをインストール（@next必須）
 npx cc-sdd@latest --gemini --lang ja    # または @next で最新アルファ版
 npx cc-sdd@latest --cursor --lang ja    # または @next で最新アルファ版
 npx cc-sdd@next --codex --lang ja       # アルファ版必須
@@ -100,14 +101,14 @@ npx cc-sdd@latest --qwen --lang ja      # または @next で最新アルファ�
 - **🧠 永続的プロジェクトメモリ** - AIがステアリング文書を通じて全セッション間で包括的コンテキスト（アーキテクチャ、パターン、ルール、ドメイン知識）を維持
 - **🛠 テンプレート柔軟性** - `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks）をチームのドキュメント形式に合わせてカスタマイズ可能
 - **🔄 AIネイティブ+人間ゲート** - AI計画 → AI質問 → 人間検証 → AI実装（品質管理付き高速サイクル）
-- **🌍 チーム対応** - 品質ゲート付き多言語・クロスプラットフォーム・標準化ワークフロー
+- **🌍 チーム対応** - 品質ゲート付き12言語対応のクロスプラットフォーム標準ワークフロー
 
 ## 🤖 対応AIエージェント
 
 | エージェント | 状態 | コマンド | 設定 |
 |-------|--------|----------|--------|
 | **Claude Code** | ✅ 完全対応 | 11スラッシュコマンド | `CLAUDE.md` |
-| **Claude Code Agents** | ✅ 完全対応 | 11コマンド + エージェントライブラリ | `CLAUDE.md`, `.claude/agents/kiro/` |
+| **Claude Code SubAgents** | ✅ 完全対応 | 12コマンド + 9サブエージェント（cc-sdd@nextが必要） | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Gemini CLI** | ✅ 完全対応 | 11コマンド | `GEMINI.md` |
 | **Cursor IDE** | ✅ 完全対応 | 11コマンド | `AGENTS.md` |
 | **Codex CLI** | ✅ 完全対応 | 11プロンプト | `AGENTS.md` |

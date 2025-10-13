@@ -1,8 +1,6 @@
-# cc-sdd: High quality spec-driven development for AI coding agents
+# cc-sdd: Customize spec-driven development for your team's workflow
 
-Customize every spec and steering template with simple edits—shape requirements, design docs, tasks (planning docs), and project memory outputs before your agent runs.
-
-✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code from prototype to production-ready development**
+✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code from prototype to production-ready development, while customizing every spec and steering template so requirements, design docs, tasks, and project memory match your team workflow.**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -21,21 +19,23 @@ Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, 
 
 ## 🚀 Installation
 
+Run one command to install **AI-DLC** (AI Driven Development Lifecycle) with **SDD** (Spec-Driven Development) workflows across your preferred AI coding agent. cc-sdd also scaffolds team-aligned templates so generated requirements, design reviews, task plans, and steering docs fit your approval flow.
+
 ```bash
-# Basic installation (defaults: English docs, Claude Code agent)
+# Basic installation (defaults: English docs, Claude Code)
 npx cc-sdd@latest
 
-# Alpha version with major updates (v2.0.0-alpha.1)
+# Alpha version with major updates (v2.0.0-alpha.2)
 npx cc-sdd@next
 
 # With language options (default: --lang en)
 npx cc-sdd@latest --lang ja    # Japanese
 npx cc-sdd@latest --lang zh-TW # Traditional Chinese
-# Supported languages: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
+# Supported languages (12 total): en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # With agent options (default: claude-code / --claude)
 npx cc-sdd@latest --claude --lang ja    # or @next for latest alpha
-npx cc-sdd@latest --claude-agent --lang ja # Install Claude agent library + prompts
+npx cc-sdd@next --claude-agent --lang ja # Install Claude Code SubAgents (requires @next)
 npx cc-sdd@latest --gemini --lang ja    # or @next for latest alpha
 npx cc-sdd@latest --cursor --lang ja    # or @next for latest alpha
 npx cc-sdd@next --codex --lang ja       # Requires alpha version
@@ -101,14 +101,14 @@ npx cc-sdd@latest --qwen --lang ja      # or @next for latest alpha
 - **🧠 Persistent Project Memory** - AI maintains comprehensive context (architecture, patterns, rules, domain knowledge) across all sessions via steering documents  
 - **🛠 Template flexibility** - Tweak `{{KIRO_DIR}}/settings/templates` (steering, requirements, design, tasks) to mirror your team's deliverables
 - **🔄 AI-Native + Human Gates** - AI Plans → AI Asks → Human Validates → AI Implements (rapid cycles with quality control)
-- **🌍 Team-Ready** - Multi-language, cross-platform, standardized workflows with quality gates
+- **🌍 Team-Ready** - 12-language support, cross-platform, standardized workflows with quality gates
 
 ## 🤖 Supported AI Agents
 
-| Agent | Status | Commands | Config |
+| Agent | Status | Commands |  |
 |-------|--------|----------|--------|
 | **Claude Code** | ✅ Full | 11 slash commands | `CLAUDE.md` |
-| **Claude Code Agents** | ✅ Full | 11 commands + agent library | `CLAUDE.md`, `.claude/agents/kiro/` |
+| **Claude Code SubAgents** | ✅ Full | 12 commands + 9 subagents (requires cc-sdd@next) | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Gemini CLI** | ✅ Full | 11 commands | `GEMINI.md` |
 | **Cursor IDE** | ✅ Full | 11 commands | `AGENTS.md` |
 | **Codex CLI** | ✅ Full | 11 prompts | `AGENTS.md` |

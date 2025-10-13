@@ -1,29 +1,25 @@
-<div align="center" style="font-size: 1rem; margin-bottom: 1rem;"><sub>
+<div align="center" style="font-size: 1.2rem; margin-bottom: 1rem;"><sub>
 <a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-# cc-sdd: High-quality spec-driven development for AI coding agents
+# cc-sdd: Customize spec-driven development for your team's workflow
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](tools/cc-sdd/LICENSE)
 
-✨ **Transform Claude Code / Codex / Gemini CLI / Cursor / GitHub Copilot / Qwen Code from prototype to production-ready development**
-
-Customize all spec and steering templates with a few edits—tailor the generated requirements, design docs, tasks (plan docs), and project memory to your team before the agent ever runs.
-
-
-
-One command installs **AI-DLC** (AI-Driven Development Life Cycle) with **SDD** (Spec-Driven Development) workflows for Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, and Qwen Code.
+✨ **Transform Claude Code / Codex / Gemini CLI / Cursor / GitHub Copilot / Qwen Code from prototype to production-ready development, while customizing every spec and steering template so the generated requirements, design docs, tasks, and project memory match your team's workflow from day one.**
 
 ## 🚀 Quick Start
+One command installs **AI-DLC** (AI-Driven Development Life Cycle) with **SDD** (Spec-Driven Development) workflows for Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, and Qwen Code.
+It also scaffolds team-aligned templates—requirements, design reviews, task plans, and steering docs—so every slash command outputs documentation that fits your existing approval process.
 
 ```bash
 # Basic installation (default: Claude Code)
 npx cc-sdd@latest
 
-# Alpha version with major updates (v2.0.0-alpha.1)
+# Alpha version with major updates (v2.0.0-alpha.2)
 npx cc-sdd@next
 
 # With language: --lang en|ja|zh-TW|zh|es|pt|de|fr|ru|it|ko|ar
@@ -31,6 +27,7 @@ npx cc-sdd@latest --lang ja
 
 # With different agents: gemini, cursor, codex, copilot, qwen
 npx cc-sdd@latest --claude    # or @next for latest alpha
+npx cc-sdd@next --claude-agent    # Installs Claude Code SubAgents (requires @next)
 npx cc-sdd@latest --gemini    # or @next for latest alpha
 npx cc-sdd@latest --cursor    # or @next for latest alpha
 npx cc-sdd@next --codex       # Requires alpha version
@@ -44,11 +41,11 @@ npx cc-sdd@latest --qwen      # or @next for latest alpha
 
 After running cc-sdd, you'll have:
 
+- **Team workflow alignment** — tailor requirements, design, task, and steering templates so outputs fit your review and approval process
 - **11 powerful slash commands** (`/kiro:steering`, `/kiro:spec-requirements`, `/kiro:validate-gap`, etc.)
 - **Project Memory (steering)** - AI learns your codebase, patterns, and preferences
 - **Structured AI-DLC workflow** with quality gates and approvals
 - **Spec-Driven Development** methodology built-in
-- **Template flexibility** — tweak `settings/templates/requirements.md`, `design.md`, `tasks.md`, or the steering templates to match your team's and project's preferred docs
 - **Kiro IDE compatibility** for seamless spec management
 
 **Perfect for**: Feature development, code reviews, technical planning, and maintaining development standards across your team.
@@ -58,6 +55,7 @@ After running cc-sdd, you'll have:
 | Agent | Flags you can pass | Installs |
 | --- | --- | --- |
 | Claude Code | `--claude-code`, `--claude` | `.claude/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `CLAUDE.md` |
+| Claude Code SubAgents | `--claude-code-agent`, `--claude-agent` | `.claude/commands/kiro/` (12 commands), `.claude/agents/kiro/` (9 subagents), `{{KIRO_DIR}}/settings/`, `CLAUDE.md` — requires `cc-sdd@next` |
 | Codex CLI | `--codex`, `--codex-cli` | `.codex/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
 | Cursor IDE | `--cursor` | `.cursor/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
 | GitHub Copilot Chat | `--copilot`, `--github-copilot` | `.github/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
@@ -163,10 +161,11 @@ npx cc-sdd@latest --kiro-dir docs/specs
 ## Features
 
 ✅ **AI-DLC Integration** - Complete AI-Driven Development Life Cycle  
+✅ **Team-process ready templates** - Requirements, design, task, and steering outputs stay aligned with your company's workflow  
 ✅ **Project Memory** - Steering documents that maintain comprehensive context (architecture, patterns, rules, domain knowledge) across all sessions  
 ✅ **Spec-Driven Development** - Structured requirements → design → tasks → implementation  
 ✅ **Cross-Platform** - macOS, Linux, and Windows support with auto-detection (Linux reuses mac templates)  
-✅ **Multi-Language** - Japanese, English, Traditional Chinese  
+✅ **Multi-Language** - 12 languages (English, Japanese, Traditional Chinese, Simplified Chinese, Spanish, Portuguese, German, French, Russian, Italian, Korean, Arabic)  
 ✅ **Safe Updates** - Interactive prompts with backup options  
 
 ## 📚 Related Resources

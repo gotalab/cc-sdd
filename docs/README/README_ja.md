@@ -1,5 +1,7 @@
 # Multi-Platform Spec-Driven Development
 
+> ⚠️ **旧版ドキュメント（アーカイブ）です。** 本ページは初期の cc-sdd ワークフローを扱っています。最新情報は [README.md](../../README.md) を参照してください。
+
 > 🌐 **Language**  
 > 📖 **[English Version](README_en.md)** | 📖 **日本語版 README** (このページ) | 📖 **[繁體中文說明](README_zh-TW.md)**
 
