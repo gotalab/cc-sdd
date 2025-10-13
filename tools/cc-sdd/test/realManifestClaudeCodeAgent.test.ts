@@ -58,10 +58,10 @@ describe('real claude-code-agent manifest', () => {
     const cmd = join(cwd, '.claude/commands/kiro/spec-init.md');
     expect(await exists(cmd)).toBe(true);
 
-    const agentReadme = join(cwd, '.claude/agents/kiro/README.md');
-    expect(await exists(agentReadme)).toBe(true);
-    const agentReadmeText = await readFile(agentReadme, 'utf8');
-    expect(agentReadmeText).toMatch(/Claude Agent Library/);
+    const agentSpecImpl = join(cwd, '.claude/agents/kiro/spec-impl.md');
+    expect(await exists(agentSpecImpl)).toBe(true);
+    const agentSpecImplText = await readFile(agentSpecImpl, 'utf8');
+    expect(agentSpecImplText).toMatch(/SubAgent/);
 
     const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
     expect(await exists(settingsRule)).toBe(true);
