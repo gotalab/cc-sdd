@@ -34,6 +34,7 @@ npx cc-sdd@latest --lang zh-TW # 繁体字中国語
 
 # エージェントオプション（デフォルト: claude-code / --claude）
 npx cc-sdd@latest --claude --lang ja    # または @next で最新アルファ版
+npx cc-sdd@latest --claude-agent --lang ja # Claudeエージェントライブラリも含めてインストール
 npx cc-sdd@latest --gemini --lang ja    # または @next で最新アルファ版
 npx cc-sdd@latest --cursor --lang ja    # または @next で最新アルファ版
 npx cc-sdd@next --codex --lang ja       # アルファ版必須
@@ -106,6 +107,7 @@ npx cc-sdd@latest --qwen --lang ja      # または @next で最新アルファ�
 | エージェント | 状態 | コマンド | 設定 |
 |-------|--------|----------|--------|
 | **Claude Code** | ✅ 完全対応 | 11スラッシュコマンド | `CLAUDE.md` |
+| **Claude Code Agents** | ✅ 完全対応 | 11コマンド + エージェントライブラリ | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Gemini CLI** | ✅ 完全対応 | 11コマンド | `GEMINI.md` |
 | **Cursor IDE** | ✅ 完全対応 | 11コマンド | `AGENTS.md` |
 | **Codex CLI** | ✅ 完全対応 | 11プロンプト | `AGENTS.md` |

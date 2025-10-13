@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "artifacts": [
+    {
+      "id": "commands",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/commands",
+        "toDir": "{{AGENT_COMMANDS_DIR}}"
+      },
+      "when": { "agent": "claude-code-agent" }
+    },
+    {
+      "id": "doc_main",
+      "source": {
+        "type": "templateFile",
+        "from": "templates/agents/{{AGENT}}/docs/CLAUDE.md",
+        "toDir": ".",
+        "rename": "{{AGENT_DOC}}"
+      },
+      "when": { "agent": "claude-code-agent" }
+    },
+    {
+      "id": "agents_library",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/agents",
+        "toDir": "{{AGENT_DIR}}/agents/kiro"
+      },
+      "when": { "agent": "claude-code-agent" }
+    },
+    {
+      "id": "settings_common",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/shared/settings",
+        "toDir": "{{KIRO_DIR}}/settings"
+      },
+      "when": { "agent": "claude-code-agent" }
+    }
+  ]
+}

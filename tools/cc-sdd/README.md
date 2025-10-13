@@ -35,6 +35,7 @@ npx cc-sdd@latest --lang zh-TW # Traditional Chinese
 
 # With agent options (default: claude-code / --claude)
 npx cc-sdd@latest --claude --lang ja    # or @next for latest alpha
+npx cc-sdd@latest --claude-agent --lang ja # Install Claude agent library + prompts
 npx cc-sdd@latest --gemini --lang ja    # or @next for latest alpha
 npx cc-sdd@latest --cursor --lang ja    # or @next for latest alpha
 npx cc-sdd@next --codex --lang ja       # Requires alpha version
@@ -107,6 +108,7 @@ npx cc-sdd@latest --qwen --lang ja      # or @next for latest alpha
 | Agent | Status | Commands | Config |
 |-------|--------|----------|--------|
 | **Claude Code** | ✅ Full | 11 slash commands | `CLAUDE.md` |
+| **Claude Code Agents** | ✅ Full | 11 commands + agent library | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Gemini CLI** | ✅ Full | 11 commands | `GEMINI.md` |
 | **Cursor IDE** | ✅ Full | 11 commands | `AGENTS.md` |
 | **Codex CLI** | ✅ Full | 11 prompts | `AGENTS.md` |

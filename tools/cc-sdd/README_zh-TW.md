@@ -34,6 +34,7 @@ npx cc-sdd@latest --lang ja    # 日語
 
 # 代理選項（預設：claude-code / --claude）
 npx cc-sdd@latest --claude --lang zh-TW    # 或 @next 取得最新 alpha
+npx cc-sdd@latest --claude-agent --lang zh-TW # 安裝 Claude 代理資源與命令
 npx cc-sdd@latest --gemini --lang zh-TW    # 或 @next 取得最新 alpha
 npx cc-sdd@latest --cursor --lang zh-TW    # 或 @next 取得最新 alpha
 npx cc-sdd@next --codex --lang zh-TW       # 需要 alpha 版本
@@ -106,6 +107,7 @@ npx cc-sdd@latest --qwen --lang zh-TW      # 或 @next 取得最新 alpha
 | 代理 | 狀態 | 指令 | 設定 |
 |------|------|------|------|
 | **Claude Code** | ✅ 完全支援 | 11 個斜線指令 | `CLAUDE.md` |
+| **Claude Code Agents** | ✅ 完全支援 | 11 個指令 + 代理資料庫 | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
 | **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
 | **Codex CLI** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |

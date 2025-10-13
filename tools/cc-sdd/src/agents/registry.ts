@@ -57,6 +57,27 @@ export const agentDefinitions = {
     },
     manifestId: 'claude-code',
   },
+  'claude-code-agent': {
+    label: 'Claude Code Agents',
+    description:
+      'Installs kiro prompts in `.claude/commands/kiro/`, a Claude agent library in `.claude/agents/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and a CLAUDE.md quickstart.',
+    aliasFlags: ['--claude-code-agent', '--claude-agent'],
+    recommendedModels: ['Claude 4.5 Sonnet or newer'],
+    layout: {
+      commandsDir: '.claude/commands/kiro',
+      agentDir: '.claude',
+      docFile: 'CLAUDE.md',
+    },
+    commands: {
+      spec: '`/kiro:spec-init <what-to-build>`',
+      steering: '`/kiro:steering`',
+      steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
+    },
+    templateFallbacks: {
+      'CLAUDE.md': '../../CLAUDE.md',
+    },
+    manifestId: 'claude-code-agent',
+  },
   codex: {
     label: 'Codex CLI',
     description:

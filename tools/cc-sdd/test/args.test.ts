@@ -41,6 +41,8 @@ describe('parseArgs', () => {
     expect(parseArgs(['--gemini-cli']).agent).toBe('gemini-cli');
     expect(parseArgs(['--qwen-code']).agent).toBe('qwen-code');
     expect(parseArgs(['--claude-code']).agent).toBe('claude-code');
+    expect(parseArgs(['--claude-agent']).agent).toBe('claude-code-agent');
+    expect(parseArgs(['--claude-code-agent']).agent).toBe('claude-code-agent');
 
     expect(() => parseArgs(['--agent', 'qwen-code', '--gemini-cli'])).toThrowError(/agent.*conflict/i);
     expect(() => parseArgs(['--gemini-cli', '--qwen-code'])).toThrowError(/agent.*conflict/i);

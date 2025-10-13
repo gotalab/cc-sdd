@@ -41,4 +41,13 @@ describe('resolveAgentLayout', () => {
     });
   });
 
+  it('returns claude-code-agent defaults', () => {
+    const res = resolveAgentLayout('claude-code-agent');
+    expect(res).toEqual({
+      commandsDir: '.claude/commands/kiro',
+      agentDir: '.claude',
+      docFile: 'CLAUDE.md',
+    });
+  });
+
 });
