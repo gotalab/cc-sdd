@@ -1,102 +1,57 @@
 ---
 description: Execute spec tasks using TDD methodology
-allowed-tools: Bash, Read, Write, Edit, MultiEdit, Grep, Glob, LS, WebFetch, WebSearch
+allowed-tools: Read, Task
 argument-hint: <feature-name> [task-numbers]
 ---
 
 # Implementation Task Executor
 
-<background_information>
-- **Mission**: Execute implementation tasks using Test-Driven Development methodology based on approved specifications
-- **Success Criteria**:
-  - All tests written before implementation code
-  - Code passes all tests with no regressions
-  - Tasks marked as completed in tasks.md
-  - Implementation aligns with design and requirements
-</background_information>
+## Parse Arguments
+- Feature name: `$1`
+- Task numbers: `$2` (optional)
+  - Format: "1.1" (single task) or "1,2,3" (multiple tasks)
+  - If not provided: Execute all pending tasks
 
-<instructions>
-## Core Task
-Execute implementation tasks for feature **$1** using Test-Driven Development.
+## Validate
+Check that tasks have been generated:
+- Verify `{{KIRO_DIR}}/specs/$1/` exists
+- Verify `{{KIRO_DIR}}/specs/$1/tasks.md` exists
 
-## Execution Steps
+If validation fails, inform user to complete tasks generation first.
 
-### Step 1: Load Context
+## Task Selection Logic
 
-**Read all necessary context**:
-- `{{KIRO_DIR}}/specs/$1/spec.json`, `requirements.md`, `design.md`, `tasks.md`
-- **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
+**Parse task numbers from `$2`** (perform this in Slash Command before invoking SubAgent):
+- If `$2` provided: Parse task numbers (e.g., "1.1", "1,2,3")
+- Otherwise: Read `{{KIRO_DIR}}/specs/$1/tasks.md` and find all unchecked tasks (`- [ ]`)
 
-**Validate approvals**:
-- Verify tasks are approved in spec.json (stop if not, see Safety & Fallback)
+## Invoke SubAgent
 
-### Step 2: Select Tasks
+Delegate TDD implementation to spec-tdd-impl-agent:
 
-**Determine which tasks to execute**:
-- If `$2` provided: Execute specified task numbers (e.g., "1.1" or "1,2,3")
-- Otherwise: Execute all pending tasks (unchecked `- [ ]` in tasks.md)
+Use the Task tool to invoke the SubAgent with file path patterns:
 
-### Step 3: Execute with TDD
+```
+Task(
+  subagent_type="spec-tdd-impl-agent",
+  description="Execute TDD implementation",
+  prompt="""
+Feature: $1
+Spec directory: {{KIRO_DIR}}/specs/$1/
+Target tasks: {parsed task numbers or "all pending"}
 
-For each selected task, follow Kent Beck's TDD cycle:
+File patterns to read:
+- {{KIRO_DIR}}/specs/$1/*.{json,md}
+- {{KIRO_DIR}}/steering/*.md
 
-1. **RED - Write Failing Test**:
-   - Write test for the next small piece of functionality
-   - Test should fail (code doesn't exist yet)
-   - Use descriptive test names
+TDD Mode: strict (test-first)
+"""
+)
+```
 
-2. **GREEN - Write Minimal Code**:
-   - Implement simplest solution to make test pass
-   - Focus only on making THIS test pass
-   - Avoid over-engineering
+## Display Result
 
-3. **REFACTOR - Clean Up**:
-   - Improve code structure and readability
-   - Remove duplication
-   - Apply design patterns where appropriate
-   - Ensure all tests still pass after refactoring
-
-4. **VERIFY - Validate Quality**:
-   - All tests pass (new and existing)
-   - No regressions in existing functionality
-   - Code coverage maintained or improved
-
-5. **MARK COMPLETE**:
-   - Update checkbox from `- [ ]` to `- [x]` in tasks.md
-
-## Critical Constraints
-- **TDD Mandatory**: Tests MUST be written before implementation code
-- **Task Scope**: Implement only what the specific task requires
-- **Test Coverage**: All new code must have tests
-- **No Regressions**: Existing tests must continue to pass
-- **Design Alignment**: Implementation must follow design.md specifications
-</instructions>
-
-## Tool Guidance
-- **Read first**: Load all context before implementation
-- **Test first**: Write tests before code
-- Use **WebSearch/WebFetch** for library documentation when needed
-
-## Output Description
-
-Provide brief summary in the language specified in spec.json:
-
-1. **Tasks Executed**: Task numbers and test results
-2. **Status**: Completed tasks marked in tasks.md, remaining tasks count
-
-**Format**: Concise (under 150 words)
-
-## Safety & Fallback
-
-### Error Scenarios
-
-**Tasks Not Approved or Missing Spec Files**:
-- **Stop Execution**: All spec files must exist and tasks must be approved
-- **Suggested Action**: "Complete previous phases: `/kiro:spec-requirements`, `/kiro:spec-design`, `/kiro:spec-tasks`"
-
-**Test Failures**:
-- **Stop Implementation**: Fix failing tests before continuing
-- **Action**: Debug and fix, then re-run
+Show SubAgent summary to user, then provide next step guidance:
 
 ### Task Execution
 
@@ -107,4 +62,7 @@ Provide brief summary in the language specified in spec.json:
 **Execute all pending**:
 - `/kiro:spec-impl $1` - All unchecked tasks
 
-think
+**Before Starting Implementation**:
+- **IMPORTANT**: Clear conversation history and free up context before running `/kiro:spec-impl`
+- This applies when starting first task OR switching between tasks
+- Fresh context ensures clean state and proper task focus

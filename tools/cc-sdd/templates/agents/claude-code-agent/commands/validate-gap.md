@@ -1,82 +1,47 @@
 ---
 description: Analyze implementation gap between requirements and existing codebase
-allowed-tools: Bash, Glob, Grep, Read, Write, Edit, MultiEdit, WebSearch, WebFetch
+allowed-tools: Read, Task
 argument-hint: <feature-name>
 ---
 
 # Implementation Gap Validation
 
-<background_information>
-- **Mission**: Analyze the gap between requirements and existing codebase to inform implementation strategy
-- **Success Criteria**:
-  - Comprehensive understanding of existing codebase patterns and components
-  - Clear identification of missing capabilities and integration challenges
-  - Multiple viable implementation approaches evaluated
-  - Technical research needs identified for design phase
-</background_information>
+## Parse Arguments
+- Feature name: `$1`
 
-<instructions>
-## Core Task
-Analyze implementation gap for feature **$1** based on approved requirements and existing codebase.
+## Validate
+Check that requirements have been completed:
+- Verify `{{KIRO_DIR}}/specs/$1/` exists
+- Verify `{{KIRO_DIR}}/specs/$1/requirements.md` exists
 
-## Execution Steps
+If validation fails, inform user to complete requirements phase first.
 
-1. **Load Context**:
-   - Read `{{KIRO_DIR}}/specs/$1/spec.json` for language and metadata
-   - Read `{{KIRO_DIR}}/specs/$1/requirements.md` for requirements
-   - **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory including:
-     - Default files: `structure.md`, `tech.md`, `product.md`
-     - All custom steering files (regardless of mode settings)
-     - This provides complete project memory and context
+## Invoke SubAgent
 
-2. **Read Analysis Guidelines**:
-   - Read `{{KIRO_DIR}}/settings/rules/gap-analysis.md` for comprehensive analysis framework
+Delegate gap analysis to validate-gap-agent:
 
-3. **Execute Gap Analysis**:
-   - Follow gap-analysis.md framework for thorough investigation
-   - Analyze existing codebase using Grep and Read tools
-   - Use WebSearch/WebFetch for external dependency research if needed
-   - Evaluate multiple implementation approaches (extend/new/hybrid)
-   - Use language specified in spec.json for output
+Use the Task tool to invoke the SubAgent with file path patterns:
 
-4. **Generate Analysis Document**:
-   - Create comprehensive gap analysis following the output guidelines in gap-analysis.md
-   - Present multiple viable options with trade-offs
-   - Flag areas requiring further research
+```
+Task(
+  subagent_type="validate-gap-agent",
+  description="Analyze implementation gap",
+  prompt="""
+Feature: $1
+Spec directory: {{KIRO_DIR}}/specs/$1/
 
-## Important Constraints
-- **Information over Decisions**: Provide analysis and options, not final implementation choices
-- **Multiple Options**: Present viable alternatives when applicable
-- **Thorough Investigation**: Use tools to deeply understand existing codebase
-- **Explicit Gaps**: Clearly flag areas needing research or investigation
-</instructions>
+File patterns to read:
+- {{KIRO_DIR}}/specs/$1/spec.json
+- {{KIRO_DIR}}/specs/$1/requirements.md
+- {{KIRO_DIR}}/steering/*.md
+- {{KIRO_DIR}}/settings/rules/gap-analysis.md
+"""
+)
+```
 
-## Tool Guidance
-- **Read first**: Load all context (spec, steering, rules) before analysis
-- **Grep extensively**: Search codebase for patterns, conventions, and integration points
-- **WebSearch/WebFetch**: Research external dependencies and best practices when needed
-- **Write last**: Generate analysis only after complete investigation
+## Display Result
 
-## Output Description
-Provide output in the language specified in spec.json with:
-
-1. **Analysis Summary**: Brief overview (3-5 bullets) of scope, challenges, and recommendations
-2. **Document Status**: Confirm analysis approach used
-3. **Next Steps**: Guide user on proceeding to design phase
-
-**Format Requirements**:
-- Use Markdown headings for clarity
-- Keep summary concise (under 300 words)
-- Detailed analysis follows gap-analysis.md output guidelines
-
-## Safety & Fallback
-
-### Error Scenarios
-- **Missing Requirements**: If requirements.md doesn't exist, stop with message: "Run `/kiro:spec-requirements $1` first to generate requirements"
-- **Requirements Not Approved**: If requirements not approved, warn user but proceed (gap analysis can inform requirement revisions)
-- **Empty Steering Directory**: Warn user that project context is missing and may affect analysis quality
-- **Complex Integration Unclear**: Flag for comprehensive research in design phase rather than blocking
-- **Language Undefined**: Default to Japanese if spec.json doesn't specify language
+Show SubAgent summary to user, then provide next step guidance:
 
 ### Next Phase: Design Generation
 

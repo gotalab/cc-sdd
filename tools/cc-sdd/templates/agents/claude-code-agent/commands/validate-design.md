@@ -1,81 +1,48 @@
 ---
 description: Interactive technical design quality review and validation
-allowed-tools: Read, Glob, Grep
+allowed-tools: Read, Task
 argument-hint: <feature-name>
 ---
 
 # Technical Design Validation
 
-<background_information>
-- **Mission**: Conduct interactive quality review of technical design to ensure readiness for implementation
-- **Success Criteria**:
-  - Critical issues identified (maximum 3 most important concerns)
-  - Balanced assessment with strengths recognized
-  - Clear GO/NO-GO decision with rationale
-  - Actionable feedback for improvements if needed
-</background_information>
+## Parse Arguments
+- Feature name: `$1`
 
-<instructions>
-## Core Task
-Interactive design quality review for feature **$1** based on approved requirements and design document.
+## Validate
+Check that design has been completed:
+- Verify `{{KIRO_DIR}}/specs/$1/` exists
+- Verify `{{KIRO_DIR}}/specs/$1/design.md` exists
 
-## Execution Steps
+If validation fails, inform user to complete design phase first.
 
-1. **Load Context**:
-   - Read `{{KIRO_DIR}}/specs/$1/spec.json` for language and metadata
-   - Read `{{KIRO_DIR}}/specs/$1/requirements.md` for requirements
-   - Read `{{KIRO_DIR}}/specs/$1/design.md` for design document
-   - **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory including:
-     - Default files: `structure.md`, `tech.md`, `product.md`
-     - All custom steering files (regardless of mode settings)
-     - This provides complete project memory and context
+## Invoke SubAgent
 
-2. **Read Review Guidelines**:
-   - Read `{{KIRO_DIR}}/settings/rules/design-review.md` for review criteria and process
+Delegate design validation to validate-design-agent:
 
-3. **Execute Design Review**:
-   - Follow design-review.md process: Analysis → Critical Issues → Strengths → GO/NO-GO
-   - Limit to 3 most important concerns
-   - Engage interactively with user
-   - Use language specified in spec.json for output
+Use the Task tool to invoke the SubAgent with file path patterns:
 
-4. **Provide Decision and Next Steps**:
-   - Clear GO/NO-GO decision with rationale
-   - Guide user on proceeding based on decision
+```
+Task(
+  subagent_type="validate-design-agent",
+  description="Interactive design review",
+  prompt="""
+Feature: $1
+Spec directory: {{KIRO_DIR}}/specs/$1/
 
-## Important Constraints
-- **Quality assurance, not perfection seeking**: Accept acceptable risk
-- **Critical focus only**: Maximum 3 issues, only those significantly impacting success
-- **Interactive approach**: Engage in dialogue, not one-way evaluation
-- **Balanced assessment**: Recognize both strengths and weaknesses
-- **Actionable feedback**: All suggestions must be implementable
-</instructions>
+File patterns to read:
+- {{KIRO_DIR}}/specs/$1/spec.json
+- {{KIRO_DIR}}/specs/$1/requirements.md
+- {{KIRO_DIR}}/specs/$1/design.md
+- {{KIRO_DIR}}/steering/*.md
+- {{KIRO_DIR}}/settings/rules/design-review.md
+"""
+)
+```
 
-## Tool Guidance
-- **Read first**: Load all context (spec, steering, rules) before review
-- **Grep if needed**: Search codebase for pattern validation or integration checks
-- **Interactive**: Engage with user throughout the review process
+## Display Result
 
-## Output Description
-Provide output in the language specified in spec.json with:
-
-1. **Review Summary**: Brief overview (2-3 sentences) of design quality and readiness
-2. **Critical Issues**: Maximum 3, following design-review.md format
-3. **Design Strengths**: 1-2 positive aspects
-4. **Final Assessment**: GO/NO-GO decision with rationale and next steps
-
-**Format Requirements**:
-- Use Markdown headings for clarity
-- Follow design-review.md output format
-- Keep summary concise
-
-## Safety & Fallback
-
-### Error Scenarios
-- **Missing Design**: If design.md doesn't exist, stop with message: "Run `/kiro:spec-design $1` first to generate design document"
-- **Design Not Generated**: If design phase not marked as generated in spec.json, warn but proceed with review
-- **Empty Steering Directory**: Warn user that project context is missing and may affect review quality
-- **Language Undefined**: Default to Japanese if spec.json doesn't specify language
+Show SubAgent summary to user, then provide next step guidance:
 
 ### Next Phase: Task Generation
 
