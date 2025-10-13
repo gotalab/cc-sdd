@@ -1,8 +1,6 @@
 # cc-sdd: 一鍵讓 AI 程式代理進入生產級規格開發
 
-所有規格與指導模板皆可自由調整—在代理執行前就能把需求、設計、任務與專案記憶輸出對齊團隊流程。
-
-✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code 從原型開發轉型為生產級開發**
+✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code 從原型開發轉型為生產級開發，同時可將規格與指導模板調整為符合團隊流程。**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -21,19 +19,23 @@
 
 ## 🚀 安裝
 
+只需一個指令，即可為主要 AI 程式代理匯入 **AI-DLC（AI Driven Development Life Cycle）× SDD（Spec-Driven Development）** 工作流程。需求、設計、任務、指導文件也會同步生成，並對齊團隊既有批准流程。
+
 ```bash
 # 基本安裝（預設：英文文件，Claude Code 代理）
 npx cc-sdd@latest
 
-# Alpha 版本（重大更新版 v2.0.0-alpha.1）
+# Alpha 版本（重大更新版 v2.0.0-alpha.2）
 npx cc-sdd@next
 
 # 語言選項（預設：--lang en）
 npx cc-sdd@latest --lang zh-TW # 繁體中文
 npx cc-sdd@latest --lang ja    # 日語
+# 支援語言（共12種）: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # 代理選項（預設：claude-code / --claude）
 npx cc-sdd@latest --claude --lang zh-TW    # 或 @next 取得最新 alpha
+npx cc-sdd@next --claude-agent --lang zh-TW # 安裝 Claude Code SubAgents（需使用 @next）
 npx cc-sdd@latest --gemini --lang zh-TW    # 或 @next 取得最新 alpha
 npx cc-sdd@latest --cursor --lang zh-TW    # 或 @next 取得最新 alpha
 npx cc-sdd@next --codex --lang zh-TW       # 需要 alpha 版本
@@ -99,13 +101,14 @@ npx cc-sdd@latest --qwen --lang zh-TW      # 或 @next 取得最新 alpha
 - **🧠 持久專案記憶** - AI 透過指導文件在所有會話間維持全面上下文（架構、模式、規則、領域知識）
 - **🛠 模板彈性** - 自訂 `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks），符合團隊慣用的文件格式
 - **🔄 AI 原生+人類關卡** - AI 計劃 → AI 提問 → 人類驗證 → AI 實作（具品質控制的快速循環）
-- **🌍 團隊就緒** - 具品質關卡的多語言、跨平台、標準化工作流程
+- **🌍 團隊就緒** - 具品質關卡的12語言跨平台標準化工作流程
 
 ## 🤖 支援的 AI 代理
 
 | 代理 | 狀態 | 指令 | 設定 |
 |------|------|------|------|
 | **Claude Code** | ✅ 完全支援 | 11 個斜線指令 | `CLAUDE.md` |
+| **Claude Code SubAgents** | ✅ 完全支援 | 12 個指令 + 9 個子代理（需 cc-sdd@next） | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
 | **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
 | **Codex CLI** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |

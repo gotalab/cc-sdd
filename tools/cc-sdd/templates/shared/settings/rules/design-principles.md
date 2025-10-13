@@ -60,35 +60,30 @@
 
 ## Diagram Guidelines
 
-### Mermaid Best Practices
+### When to include a diagram
+- **Architecture**: Use a structural diagram when 3+ components or external systems interact.
+- **Sequence**: Draw a sequence diagram when calls/handshakes span multiple steps.
+- **State / Flow**: Capture complex state machines or business flows in a dedicated diagram.
+- **ER**: Provide an entity-relationship diagram for non-trivial data models.
+- **Skip**: Minor one-component changes generally do not need diagrams.
+
+### Mermaid requirements
 ```mermaid
 graph TB
-    A[Client] --> B[API Gateway]
-    B --> C[Service A]
-    B --> D[Service B]
-    C --> E[Database]
+    Client --> ApiGateway
+    ApiGateway --> ServiceA
+    ApiGateway --> ServiceB
+    ServiceA --> Database
 ```
 
-- Use descriptive node names
-- Show data flow direction
-- Group related components
-- Indicate external systems
-- Keep layouts simple and readable
-- **Avoid special characters in node IDs and labels**: 
-  - **Node IDs**: Use only alphanumeric characters and underscores (no `@`, `/`, `-` at start, etc.)
-  - **Node labels**: No parentheses `()`, brackets `[]` (except wrapper), quotes, or slashes
-  - ❌ `DnD[@dnd-kit/core]` → ⚠️ Parse error (invalid ID with `@`)
-  - ❌ `UI[KanbanBoard(React)]` → ⚠️ Parse error (invalid label with `()`)
-  - ✅ `DndKit[dnd-kit/core]` → Use alphanumeric IDs, package names in labels
-  - ✅ `UI[KanbanBoard UI]` → Use simple alphanumeric text
-  - Details like technology stack belong in component descriptions, not diagram labels
-
-### When to Include Diagrams
-- Architecture: Always for 3+ components
-- Sequence: For multi-step interactions
-- State: For complex state machines
-- ER: For complex data relationships
-- Flow: For business processes
+- **Plain Mermaid only** – avoid custom styling or unsupported syntax.
+- **Node IDs** – alphanumeric plus underscores only (e.g., `Client`, `ServiceA`). Do not use `@`, `/`, or leading `-`.
+- **Labels** – simple words. Do not embed parentheses `()`, square brackets `[]`, quotes `"`, or slashes `/`.
+  - ❌ `DnD[@dnd-kit/core]` → invalid ID (`@`).
+  - ❌ `UI[KanbanBoard(React)]` → invalid label (`()`).
+  - ✅ `DndKit[dnd-kit core]` → use plain text in labels, keep technology details in the accompanying description.
+- **Edges** – show data or control flow direction.
+- **Groups** – using Mermaid subgraphs to cluster related components is allowed; use it sparingly for clarity.
 
 ## Quality Metrics
 ### Design Completeness Checklist
@@ -110,5 +105,3 @@ graph TB
 ❌ Tight coupling between components
 ❌ Missing data consistency strategy
 ❌ Incomplete dependency analysis
-
-

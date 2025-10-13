@@ -1,10 +1,10 @@
-# Update Information
+# Release Notes
 
-Updates for Claude Code Spec-Driven Development.
+New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md) for technical changes.
 
 ---
 
-## Ver 2.0.0 (October 8, 2025 Major Update) 🚀
+## 🚀 Ver 2.0.0 (2025-10-13)
 
 ### 🎯 Highlights
 - **Guided CLI installer**: The `npx cc-sdd@latest` flow now previews planned files, groups them by Commands / Project Memory / Settings, and lets you choose overwrite vs append for agent docs so reinstalling is safer and faster.

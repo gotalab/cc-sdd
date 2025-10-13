@@ -1,10 +1,10 @@
-# アップデート情報
+# リリースノート
 
-Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
+cc-sddの新機能・改善情報をお届けします。技術的な変更履歴は [CHANGELOG.md](../../CHANGELOG.md) をご覧ください。
 
 ---
 
-## Ver 2.0.0 (2025年10月8日 メジャーアップデート) 🚀
+## 🚀 Ver 2.0.0 (2025-10-13)
 
 ### 🎯 ハイライト
 - **ガイド付きCLIインストーラー**：`npx cc-sdd@latest` 実行時に、作成/更新されるファイルを Commands / Project Memory / Settings で整理表示し、プロジェクトメモリ文書は上書き・追記・維持を対話的に選べるようになりました。再インストール時の安心感とスピードが向上します。
@@ -20,6 +20,17 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 - **テスト体制の強化**：既存エージェント向けリアルマニフェストテストを刷新し、`.kiro/settings` 展開を含む動作を検証。Codex / GitHub Copilot 用 E2E テストを追加。
 - **ドキュメント整備**：README（英語/日本語/繁体字）およびリポジトリ README を更新し、対応エージェント、コマンド数、ディレクトリ構造、CLI 例を最新状態に反映。
 
+### 🔄 関連プルリクエスト
+- **[#74](https://github.com/gotalab/cc-sdd/pull/74)** - Claude Code SubAgentsモードの追加（実装中）
+  - コンテキスト最適化のため、SDD コマンドを専用サブエージェントへ委譲
+  - メイン会話のコンテキストウィンドウを保護し、セッション寿命を延長
+  - 各コマンド専用のシステムプロンプトによる品質向上
+  - 関連Issue: [#68](https://github.com/gotalab/cc-sdd/issues/68)
+- **[#73](https://github.com/gotalab/cc-sdd/pull/73)** - CLAUDE.mdドキュメントの追加
+- **[#72](https://github.com/gotalab/cc-sdd/pull/72)** - エージェントメタデータの中央レジストリへのリファクタリング
+- **[#71](https://github.com/gotalab/cc-sdd/pull/71)** - アルファバージョン情報の追加と言語テーブルの改善
+- **[#70](https://github.com/gotalab/cc-sdd/pull/70)** - cc-sdd v2.0.0-alphaリリース
+
 ### 📈 主要メトリクス
 - **対応プラットフォーム**: 6 (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code)
 - **コマンド数**: 11（spec系6 + validate系3 + steering系2）
@@ -27,7 +38,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
-## Ver 1.1.0 (2025年9月8日 正式リリース) 🎯
+## 🎯 Ver 1.1.0 (2025-09-08)
 
 ### ✨ ブラウンフィールド開発機能の追加
 既存プロジェクトに対する仕様駆動開発をより効果的に実現
@@ -69,7 +80,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 開発体験とメンテナンス性の向上
 - **GitHub URLの更新** - gotalab/cc-sddへの移行対応
 - **タイポ修正** - "Clade Code" → "Claude Code"
-- **CHANGELOGの整理** - docsディレクトリへの移動
+- **ドキュメント整備** - READMEとテンプレートの改善
 
 ### 📈 主要メトリクス
 - **対応プラットフォーム**: 5 (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot)
@@ -79,7 +90,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
-## Ver 1.0.0 (2025年8月31日 メジャーアップデート) 🚀
+## 🎉 Ver 1.0.0 (2025-08-31)
 
 ### 🚀 マルチプラットフォーム対応完成
 4つのプラットフォームで統一された仕様書駆動開発を実現
@@ -100,7 +111,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
-## Ver 0.3.0 (2025年8月12日 アップデート)
+## Ver 0.3.0 (2025-08-12)
 
 ### Kiro spec-driven developmentコマンド大幅改善
 
@@ -126,7 +137,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
-## Ver 0.2.1 (2025年7月27日 アップデート)
+## Ver 0.2.1 (2025-07-27)
 
 ### CLAUDE.mdパフォーマンス最適化
 
@@ -145,7 +156,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
-## Ver 0.2.0 (2025年7月26日 アップデート)
+## Ver 0.2.0 (2025-07-26)
 
 ### インタラクティブ承認システムの追加
 
@@ -203,7 +214,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
-## Ver 0.1.5 (2025年7月25日アップデート)
+## Ver 0.1.5 (2025-07-25)
 
 ### ステアリングシステム大幅強化
 
@@ -225,7 +236,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
-## Ver 0.1.0 (2025年7月18日アップデート)
+## Ver 0.1.0 (2025-07-18)
 
 ### 基本機能
 - Kiro IDEスタイルの仕様書駆動開発システムを実装
@@ -242,7 +253,7 @@ Multi-Platform Spec-Driven Developmentの更新内容をお知らせします。
 
 ---
 
-## Ver 0.0.1 (2025年7月17日アップデート)
+## Ver 0.0.1 (2025-07-17)
 
 ### 新機能
 - プロジェクトの初期構造を作成
