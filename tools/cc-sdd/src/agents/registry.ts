@@ -69,7 +69,7 @@ export const agentDefinitions = {
       docFile: 'CLAUDE.md',
     },
     commands: {
-      spec: '`/kiro:spec-init <what-to-build>`',
+      spec: '`/kiro:spec-quick <what-to-build>`',
       steering: '`/kiro:steering`',
       steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
     },

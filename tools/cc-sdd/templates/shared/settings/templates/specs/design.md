@@ -1,5 +1,19 @@
 # Design Document Template
 
+---
+**Document Length Guidelines: Max 1000 lines**
+
+**Purpose**: Provide sufficient detail to ensure implementation consistency across different implementers, preventing interpretation drift.
+
+**Approach**:
+- Include essential sections that directly inform implementation decisions
+- Omit optional sections unless critical to preventing implementation errors
+- Match detail level to feature complexity
+- Use diagrams and tables over lengthy prose
+
+**Warning**: Approaching 1000 lines indicates excessive feature complexity that may require design simplification.
+---
+
 ## Overview 
 2-3 paragraphs max
 **Purpose**: This feature delivers [specific value] to [target users].
