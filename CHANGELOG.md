@@ -8,6 +8,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.0-alpha.3] - 2025-10-22
+
+### Added
+- Windsurf IDE agent definition, manifest, and workflow templates so `npx cc-sdd@next --windsurf` installs `.windsurf/workflows/` and AGENTS.md alongside shared settings.
+- `realManifestWindsurf` vitest coverage that exercises dry-run and apply flows across macOS/Linux runtimes.
+- `--windsurf` CLI alias support and accompanying argument parser tests.
+
+### Changed
+- Updated completion guides and recommended model messaging to include Windsurf-specific guidance.
+- Refreshed root README, `tools/cc-sdd/README*`, and `docs/README/README_{en,ja,zh-TW}.md` with Windsurf setup instructions and manual QA steps.
+
 ## [2.0.0-alpha.2] - 2025-10-13
 
 ### Added

@@ -20,7 +20,7 @@ Claude Code、Cursor、Gemini CLI、Codex CLIの4つのプラットフォーム�
 
 ## 概要
 
-このプロジェクトは、複数のAI開発プラットフォーム（Claude Code、Cursor、Gemini CLI、Codex CLI）に対応したSlash Commandsを活用して、仕様駆動開発（Spec-Driven Development）を効率的に行うためのツールセットを提供します。各開発フェーズで適切なコマンドを使用することで、プラットフォームを問わず体系的かつ品質の高い開発プロセスを実現できます。
+このプロジェクトは、複数のAI開発プラットフォーム（Claude Code、Cursor、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code、Windsurf）に対応したSlash Commandsを活用して、仕様駆動開発（Spec-Driven Development）を効率的に行うためのツールセットを提供します。各開発フェーズで適切なコマンドを使用することで、プラットフォームを問わず体系的かつ品質の高い開発プロセスを実現できます。
 
 ## セットアップ
 
@@ -30,9 +30,12 @@ Claude Code、Cursor、Gemini CLI、Codex CLIの4つのプラットフォーム�
 
 #### プラットフォーム別ディレクトリ
 - **🤖 Claude Code**: `.claude/commands/` - Claude Code用のSlash Commands定義
+- **🧠 Codex CLI**: `.codex/prompts/` - OpenAI Codex用のプロンプト定義
 - **🔮 Cursor**: `.cursor/commands/` - Cursor用のコマンド定義  
 - **⚡ Gemini CLI**: `.gemini/commands/` - Gemini CLI用のTOMLファイル
-- **🧠 Codex CLI**: `.codex/commands/` - OpenAI Codex用のプロンプト定義
+- **🐙 GitHub Copilot**: `.github/prompts/` - Copilot向けプロンプト定義
+- **🔧 Qwen Code**: `.qwen/commands/kiro/` - Qwen Code用コマンド定義
+- **🌊 Windsurf IDE**: `.windsurf/workflows/` - Windsurf用ワークフロー定義
 
 #### 共通設定ファイル
 - **設定ファイル**: プラットフォームに応じた設定ファイル（`CLAUDE.md`、`AGENTS.md`等）をコピー
@@ -58,10 +61,13 @@ Claude Code、Cursor、Gemini CLI、Codex CLIの4つのプラットフォーム�
 ```
 あなたのプロジェクト/
 ├── プラットフォーム別ディレクトリ（使用するものをコピー）
-│   ├── .claude/commands/      # Claude Code用コマンド定義
-│   ├── .cursor/commands/      # Cursor用コマンド定義
-│   ├── .gemini/commands/      # Gemini CLI用TOML設定
-│   └── .codex/commands/       # Codex CLI用プロンプト定義
+│   ├── .claude/commands/kiro/ # Claude Code用コマンド定義
+│   ├── .codex/prompts/       # Codex CLI用プロンプト定義
+│   ├── .cursor/commands/kiro/# Cursor用コマンド定義
+│   ├── .gemini/commands/kiro/# Gemini CLI用TOML設定
+│   ├── .github/prompts/      # GitHub Copilot用プロンプト定義
+│   ├── .qwen/commands/kiro/  # Qwen Code用コマンド定義
+│   └── .windsurf/workflows/  # Windsurf用ワークフロー定義
 ├── .kiro/
 │   ├── steering/              # 自動生成されるステアリング文書
 │   └── specs/                 # 自動生成される機能仕様

@@ -1,6 +1,6 @@
 # cc-sdd: Customize spec-driven development for your team's workflow
 
-✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code from prototype to production-ready development, while customizing every spec and steering template so requirements, design docs, tasks, and project memory match your team workflow.**
+✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf from prototype to production-ready development, while customizing every spec and steering template so requirements, design docs, tasks, and project memory match your team workflow.**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -11,7 +11,7 @@
 English | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, and Qwen Code. **AI-native processes** with **minimal human approval gates**: AI drives execution while humans validate critical decisions at each phase.
+Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf. **AI-native processes** with **minimal human approval gates**: AI drives execution while humans validate critical decisions at each phase.
 
 🎯 **Perfect for**: Escaping the 70% overhead trap of traditional development (meetings, documentation, ceremonies) to achieve **weeks-to-hours delivery** with AI-native execution and human quality gates.
 
@@ -25,7 +25,7 @@ Run one command to install **AI-DLC** (AI Driven Development Lifecycle) with **S
 # Basic installation (defaults: English docs, Claude Code)
 npx cc-sdd@latest
 
-# Alpha version with major updates (v2.0.0-alpha.2)
+# Alpha version with major updates (v2.0.0-alpha.3)
 npx cc-sdd@next
 
 # With language options (default: --lang en)
@@ -41,6 +41,7 @@ npx cc-sdd@latest --cursor --lang ja    # or @next for latest alpha
 npx cc-sdd@next --codex --lang ja       # Requires alpha version
 npx cc-sdd@next --copilot --lang ja     # Requires alpha version
 npx cc-sdd@latest --qwen --lang ja      # or @next for latest alpha
+npx cc-sdd@next --windsurf --lang ja    # Requires alpha version (Windsurf workflows)
 ```
 
 ## 🌐 Supported Languages
@@ -109,11 +110,12 @@ npx cc-sdd@latest --qwen --lang ja      # or @next for latest alpha
 |-------|--------|----------|--------|
 | **Claude Code** | ✅ Full | 11 slash commands | `CLAUDE.md` |
 | **Claude Code SubAgents** | ✅ Full | 12 commands + 9 subagents (requires cc-sdd@next) | `CLAUDE.md`, `.claude/agents/kiro/` |
-| **Gemini CLI** | ✅ Full | 11 commands | `GEMINI.md` |
 | **Cursor IDE** | ✅ Full | 11 commands | `AGENTS.md` |
+| **Gemini CLI** | ✅ Full | 11 commands | `GEMINI.md` |
 | **Codex CLI** | ✅ Full | 11 prompts | `AGENTS.md` |
 | **GitHub Copilot** | ✅ Full | 11 prompts | `AGENTS.md` |
 | **Qwen Code** | ✅ Full | 11 commands | `QWEN.md` |
+| **Windsurf IDE** | ✅ Full | 11 workflows | `.windsurf/workflows/`, `AGENTS.md` (requires cc-sdd@next) |
 | Others | 📅 Planned | - | - |
  
 ## 📋 Commands
@@ -174,6 +176,7 @@ project/
 ├── .claude/commands/kiro/    # 11 slash commands
 ├── .codex/prompts/           # 11 prompt commands (Codex CLI)
 ├── .github/prompts/          # 11 prompt commands (GitHub Copilot)
+├── .windsurf/workflows/      # 11 workflow files (Windsurf IDE)
 ├── .kiro/settings/           # Shared rules & templates (variables resolved with {{KIRO_DIR}})
 ├── .kiro/specs/              # Feature specifications
 ├── .kiro/steering/           # AI guidance rules

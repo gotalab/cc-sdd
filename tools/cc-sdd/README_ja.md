@@ -1,6 +1,6 @@
 # cc-sdd: AIコーディングエージェントを本番仕様駆動にするワンコマンドセットアップ
 
-✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Codeをプロトタイプからプロダクション開発プロセスへ、さらに仕様・ステアリングテンプレートの出力をチームのワークフローに合わせてカスタマイズできます。**
+✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurfをプロトタイプからプロダクション開発プロセスへ、さらに仕様・ステアリングテンプレートの出力をチームのワークフローに合わせてカスタマイズできます。**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -11,7 +11,7 @@
 <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README.md">English</a> | 日本語 | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Codeを **AI-DLC (AI駆動開発ライフサイクル)**へ。**AIネイティブプロセス**と**最小限の人間承認ゲート**：AIが実行を駆動し、人間が各フェーズで重要な決定を検証。
+Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code、Windsurfを **AI-DLC (AI駆動開発ライフサイクル)**へ。**AIネイティブプロセス**と**最小限の人間承認ゲート**：AIが実行を駆動し、人間が各フェーズで重要な決定を検証。
 
 🎯 **最適な用途**: 従来開発の70%オーバーヘッド（会議・文書・儀式）から脱却し、AIネイティブ実行と人間品質ゲートで **週単位から時間単位の納期** を実現。
 
@@ -25,7 +25,7 @@ Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code�
 # 基本インストール（デフォルト: 英語、Claude Code）
 npx cc-sdd@latest
 
-# アルファ版（大幅アップデート版 v2.0.0-alpha.2）
+# アルファ版（大幅アップデート版 v2.0.0-alpha.3）
 npx cc-sdd@next
 
 # 言語オプション（デフォルト: --lang en）
@@ -41,6 +41,7 @@ npx cc-sdd@latest --cursor --lang ja    # または @next で最新アルファ�
 npx cc-sdd@next --codex --lang ja       # アルファ版必須
 npx cc-sdd@next --copilot --lang ja     # アルファ版必須
 npx cc-sdd@latest --qwen --lang ja      # または @next で最新アルファ版
+npx cc-sdd@next --windsurf --lang ja    # アルファ版必須（Windsurf向けワークフロー）
 ```
 
 ## 🌐 対応言語
@@ -109,11 +110,12 @@ npx cc-sdd@latest --qwen --lang ja      # または @next で最新アルファ�
 |-------|--------|----------|--------|
 | **Claude Code** | ✅ 完全対応 | 11スラッシュコマンド | `CLAUDE.md` |
 | **Claude Code SubAgents** | ✅ 完全対応 | 12コマンド + 9サブエージェント（cc-sdd@nextが必要） | `CLAUDE.md`, `.claude/agents/kiro/` |
-| **Gemini CLI** | ✅ 完全対応 | 11コマンド | `GEMINI.md` |
 | **Cursor IDE** | ✅ 完全対応 | 11コマンド | `AGENTS.md` |
+| **Gemini CLI** | ✅ 完全対応 | 11コマンド | `GEMINI.md` |
 | **Codex CLI** | ✅ 完全対応 | 11プロンプト | `AGENTS.md` |
 | **GitHub Copilot** | ✅ 完全対応 | 11プロンプト | `AGENTS.md` |
 | **Qwen Code** | ✅ 完全対応 | 11コマンド | `QWEN.md` |
+| **Windsurf IDE** | ✅ 完全対応 | 11ワークフロー | `.windsurf/workflows/`, `AGENTS.md`（cc-sdd@nextが必要） |
 | その他 | 📅 予定 | - | - |
  
 ## 📋 コマンド
@@ -174,6 +176,7 @@ project/
 ├── .claude/commands/kiro/    # 11のスラッシュコマンド
 ├── .codex/prompts/           # 11のプロンプトコマンド（Codex CLI）
 ├── .github/prompts/          # 11のプロンプトコマンド（GitHub Copilot）
+├── .windsurf/workflows/      # 11のワークフローファイル（Windsurf IDE）
 ├── .kiro/settings/           # 共通ルールとテンプレート（{{KIRO_DIR}} を展開）
 ├── .kiro/specs/             # 機能仕様書
 ├── .kiro/steering/          # AI指導ルール

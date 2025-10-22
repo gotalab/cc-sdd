@@ -153,6 +153,24 @@ export const agentDefinitions = {
     },
     manifestId: 'gemini-cli',
   },
+  windsurf: {
+    label: 'Windsurf IDE',
+    description:
+      'Installs kiro workflows in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--windsurf'],
+    recommendedModels: ['Claude 4.5 Sonnet or newer', 'GPT-5-Codex'],
+    layout: {
+      commandsDir: '.windsurf/workflows',
+      agentDir: '.windsurf',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-init <what-to-build>`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'windsurf',
+  },
   'qwen-code': {
     label: 'Qwen Code',
     description:

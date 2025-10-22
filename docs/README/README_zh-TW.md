@@ -17,7 +17,7 @@
 
 ## 專案簡介
 
-本專案提供一套跨多個 AI 平台（Claude Code、Cursor、Gemini CLI、Codex CLI）的規格驅動開發工具組，利用 Slash Commands 讓每個開發階段都能系統化、高品質地推進，不論您偏好哪個平台。
+本專案提供一套跨多個 AI 平台（Claude Code、Cursor、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code、Windsurf）的規格驅動開發工具組，利用 Slash Commands 讓每個開發階段都能系統化、高品質地推進，不論您偏好哪個平台。
 
 ## 安裝與設定
 
@@ -27,9 +27,12 @@
 
 #### 平台專用目錄
 - **🤖 Claude Code**：`.claude/commands/` - Slash Commands 定義
+- **🧠 Codex CLI**：`.codex/prompts/` - OpenAI Codex 提示定義
 - **🔮 Cursor**：`.cursor/commands/` - Cursor 指令定義  
 - **⚡ Gemini CLI**：`.gemini/commands/` - TOML 配置檔案
-- **🧠 Codex CLI**：`.codex/commands/` - OpenAI Codex 提示定義
+- **🐙 GitHub Copilot**：`.github/prompts/` - Copilot 提示集合
+- **🔧 Qwen Code**：`.qwen/commands/kiro/` - Qwen Code 指令定義
+- **🌊 Windsurf IDE**：`.windsurf/workflows/` - Windsurf 工作流程
 
 #### 通用配置檔案
 - **配置檔案**：根據平台複製相應的配置檔案（`CLAUDE.md`、`AGENTS.md` 等）
@@ -53,17 +56,17 @@
 
 ```
 your-project/
-├── .claude/
-│   └── commands/          # 指令定義
+├── .claude/commands/kiro/   # Claude Code 指令定義
+├── .codex/prompts/          # Codex CLI 提示定義
+├── .cursor/commands/kiro/   # Cursor 指令定義
+├── .gemini/commands/kiro/   # Gemini CLI 設定
+├── .github/prompts/         # GitHub Copilot 提示集合
+├── .qwen/commands/kiro/     # Qwen Code 指令定義
+├── .windsurf/workflows/     # Windsurf 工作流程
 ├── .kiro/
-│   ├── steering/          # 自動產生的 steering 文件
-│   └── specs/             # 自動產生的功能規格
-├── CLAUDE.md              # 由 CLAUDE_zh-TW.md 複製並改名（專案主要設定）
-├── CLAUDE_zh-TW.md        # 繁體中文版 Claude Code 設定
-├── CLAUDE_en.md           # 英文版 Claude Code 設定
-├── README.md              # 日文版 README
-├── README_en.md           # 英文版 README
-├── README_zh-TW.md        # 繁體中文版 README
+│   ├── steering/            # 自動產生的 steering 文件
+│   └── specs/               # 自動產生的功能規格
+├── CLAUDE.md                # 由語言別檔案複製並改名
 └── (你的專案檔案)
 ```
 

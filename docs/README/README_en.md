@@ -17,7 +17,7 @@ A comprehensive Spec-Driven Development toolset supporting Claude Code, Cursor, 
 
 ## Overview
 
-This project provides a toolset for efficient Spec-Driven Development using Slash Commands across multiple AI platforms (Claude Code, Cursor, Gemini CLI, Codex CLI). By using appropriate commands for each development phase, you can achieve a systematic and high-quality development process regardless of your preferred platform.
+This project provides a toolset for efficient Spec-Driven Development using Slash Commands across multiple AI platforms (Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf). By using appropriate commands for each development phase, you can achieve a systematic and high-quality development process regardless of your preferred platform.
 
 ## Setup
 
@@ -27,9 +27,12 @@ Copy the appropriate directory based on your AI development platform:
 
 #### Platform-Specific Directories
 - **🤖 Claude Code**: `.claude/commands/` - Slash Commands definitions
+- **🧠 Codex CLI**: `.codex/prompts/` - OpenAI Codex prompt definitions
 - **🔮 Cursor**: `.cursor/commands/` - Cursor command definitions  
 - **⚡ Gemini CLI**: `.gemini/commands/` - TOML configuration files
-- **🧠 Codex CLI**: `.codex/commands/` - OpenAI Codex prompt definitions
+- **🐙 GitHub Copilot**: `.github/prompts/` - Prompt collections for Copilot Chat
+- **🔧 Qwen Code**: `.qwen/commands/kiro/` - Qwen Code slash commands
+- **🌊 Windsurf IDE**: `.windsurf/workflows/` - Windsurf workflow definitions
 
 #### Common Configuration Files
 - **Configuration files**: Copy platform-specific config files (`CLAUDE.md`, `AGENTS.md`, etc.) as needed
@@ -54,17 +57,17 @@ When you run commands, the following directories will be automatically created:
 
 ```
 your-project/
-├── .claude/
-│   └── commands/          # Copied command definitions
+├── .claude/commands/kiro/     # Claude Code slash command definitions
+├── .codex/prompts/            # Codex CLI prompt definitions
+├── .cursor/commands/kiro/     # Cursor command definitions
+├── .gemini/commands/kiro/     # Gemini CLI TOML definitions
+├── .github/prompts/           # GitHub Copilot prompt collections
+├── .qwen/commands/kiro/       # Qwen Code slash command definitions
+├── .windsurf/workflows/       # Windsurf workflow files
 ├── .kiro/
-│   ├── steering/          # Auto-generated steering documents
-│   └── specs/             # Auto-generated feature specifications  
-├── CLAUDE.md              # Copied and renamed from a language-specific file (e.g., CLAUDE_en.md or CLAUDE_zh-TW.md)
-├── CLAUDE_en.md           # English version of Claude Code configuration
-├── CLAUDE_zh-TW.md        # Traditional Chinese version of Claude Code configuration
-├── README.md              # Japanese version README
-├── README_en.md           # English version README
-├── README_zh-TW.md        # Traditional Chinese version README
+│   ├── steering/              # Auto-generated steering documents
+│   └── specs/                 # Auto-generated feature specifications  
+├── CLAUDE.md                  # Copied and renamed from language-specific quickstart
 └── (your project files)
 ```
 
