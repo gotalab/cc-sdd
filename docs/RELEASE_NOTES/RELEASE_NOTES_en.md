@@ -4,6 +4,26 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ---
 
+## 🚀 Ver 2.0.0-alpha.3 (2025-10-22)
+
+### 🎯 Highlights
+- **Windsurf IDE support**: Added a dedicated manifest, workflow templates under `.windsurf/workflows/`, and an AGENTS.md quickstart so Windsurf users can run the full kiro Spec-Driven Development workflow with `npx cc-sdd@next --windsurf`.
+- **CLI experience refresh**: Updated completion guides and recommended models so the setup summary now points Windsurf users to the correct follow-up commands and manual QA flow.
+
+### 🧪 Quality & Tooling
+- Added `realManifestWindsurf` integration tests that cover dry-run planning, cross-platform (macOS/Linux) execution, and completion messaging.
+- Extended CLI argument parsing to recognize the `--windsurf` alias and ensured the agent registry emits the correct layout metadata.
+
+### 📚 Documentation
+- Refreshed the root README, CLI docs (`tools/cc-sdd/README*`), and legacy guides (`docs/README/README_{en,ja,zh-TW}.md`) with Windsurf instructions, updated quick-start matrices, and the manual QA checklist using `npx cc-sdd@next --windsurf`.
+
+### 📈 Key Metrics
+- **Supported platforms**: 7 (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf IDE)
+- **Command/workflow count**: 11 per agent (identical spec/validate/steering coverage)
+- **Automated coverage**: 1 new real-manifest test scenario dedicated to Windsurf
+
+---
+
 ## 🚀 Ver 2.0.0 (2025-10-13)
 
 ### 🎯 Highlights

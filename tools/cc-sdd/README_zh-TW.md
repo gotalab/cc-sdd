@@ -1,6 +1,6 @@
 # cc-sdd: 一鍵讓 AI 程式代理進入生產級規格開發
 
-✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code 從原型開發轉型為生產級開發，同時可將規格與指導模板調整為符合團隊流程。**
+✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf 從原型開發轉型為生產級開發，同時可將規格與指導模板調整為符合團隊流程。**
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -11,7 +11,7 @@
 <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README.md">English</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
-將 **AI-DLC (AI 驅動開發生命週期)** 帶入 Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot 與 Qwen Code。**AI 原生流程**與**最小限的人類批准關卡**：AI 驅動執行，人類在各階段驗證關鍵決策。
+將 **AI-DLC (AI 驅動開發生命週期)** 帶入 Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code 與 Windsurf。**AI 原生流程**與**最小限的人類批准關卡**：AI 驅動執行，人類在各階段驗證關鍵決策。
 
 🎯 **最佳用途**：脱離傳統開發 70% 的額外負擔（會議、文件、儀式），透過 AI 原生執行和人類品質關卡實現 **從週到小時的交付**。
 
@@ -25,7 +25,7 @@
 # 基本安裝（預設：英文文件，Claude Code 代理）
 npx cc-sdd@latest
 
-# Alpha 版本（重大更新版 v2.0.0-alpha.2）
+# Alpha 版本（重大更新版 v2.0.0-alpha.3）
 npx cc-sdd@next
 
 # 語言選項（預設：--lang en）
@@ -41,6 +41,7 @@ npx cc-sdd@latest --cursor --lang zh-TW    # 或 @next 取得最新 alpha
 npx cc-sdd@next --codex --lang zh-TW       # 需要 alpha 版本
 npx cc-sdd@next --copilot --lang zh-TW     # 需要 alpha 版本
 npx cc-sdd@latest --qwen --lang zh-TW      # 或 @next 取得最新 alpha
+npx cc-sdd@next --windsurf --lang zh-TW    # 需要 alpha 版本（Windsurf 工作流程）
 ```
 
 ## 🌐 支援語言
@@ -109,11 +110,12 @@ npx cc-sdd@latest --qwen --lang zh-TW      # 或 @next 取得最新 alpha
 |------|------|------|------|
 | **Claude Code** | ✅ 完全支援 | 11 個斜線指令 | `CLAUDE.md` |
 | **Claude Code SubAgents** | ✅ 完全支援 | 12 個指令 + 9 個子代理（需 cc-sdd@next） | `CLAUDE.md`, `.claude/agents/kiro/` |
-| **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
 | **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
+| **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
 | **Codex CLI** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
+| **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `.windsurf/workflows/`, `AGENTS.md`（需 cc-sdd@next） |
 | 其他 | 📅 規劃中 | - | - |
 
 ## 📋 指令
@@ -174,6 +176,7 @@ project/
 ├── .claude/commands/kiro/    # 11 個斜線指令
 ├── .codex/prompts/           # 11 個提示指令（Codex CLI）
 ├── .github/prompts/          # 11 個提示指令（GitHub Copilot）
+├── .windsurf/workflows/      # 11 個工作流程檔案（Windsurf IDE）
 ├── .kiro/settings/           # 共用規則與模板（以 {{KIRO_DIR}} 展開）
 ├── .kiro/specs/             # 功能規格文件
 ├── .kiro/steering/          # AI 指導規則

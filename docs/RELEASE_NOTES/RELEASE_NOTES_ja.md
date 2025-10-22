@@ -4,6 +4,24 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ---
 
+## 🚀 Ver 2.0.0-alpha.3 (2025-10-22)
+
+### 🎯 ハイライト
+- **Windsurf IDE 対応**： `.windsurf/workflows/` に 11 個のワークフローと AGENTS.md を展開するマニフェストを追加し、`npx cc-sdd@next --windsurf` で kiro 仕様駆動ワークフローを利用できるようになりました。
+- **CLI 体験刷新**： セットアップ完了メッセージに Windsurf 向け推奨モデルと次のコマンドを表示し、ドキュメントでは手動 QA フローを案内するように改善しました。
+
+### 🧪 品質 / ツール
+- macOS / Linux の dry-run・適用結果を検証する `realManifestWindsurf` 統合テストを追加。
+- CLI 引数パーサーに `--windsurf` フラグを追加し、エージェントレジストリへ Windsurf のレイアウト情報を登録。
+
+### 📚 ドキュメント
+- ルート README、`tools/cc-sdd/README*`、および `docs/README/README_{en,ja,zh-TW}.md` を更新し、Windsurf 導入手順と `npx cc-sdd@next --windsurf` を用いた手動 QA 手順を追記しました。
+
+### 📈 指標
+- **対応プラットフォーム**: 7（Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf IDE）
+- **コマンド / ワークフロー数**: 各エージェント 11（spec / validate / steering 共通構成）
+- **自動テスト**: Windsurf 専用 real manifest テストを 1 本追加
+
 ## 🚀 Ver 2.0.0 (2025-10-13)
 
 ### 🎯 ハイライト
