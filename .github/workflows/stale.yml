@@ -42,7 +42,7 @@ jobs:
           stale-pr-label: 'stale'
 
           # 除外するラベル（これらのラベルが付いているissueはstaleにしない）
-          exempt-issue-labels: 'pinned,security,help wanted'
+          exempt-issue-labels: 'pinned,security,help-wanted'
 
           # PR も同様に処理するか（falseにすると issue のみ処理）
           # PR を処理したくない場合は以下を有効化
