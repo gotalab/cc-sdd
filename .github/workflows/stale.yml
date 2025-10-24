@@ -1,0 +1,50 @@
+name: Auto Close Stale Issues
+
+on:
+  schedule:
+    # 毎日午前0時（UTC）に実行
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 手動実行も可能
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          # 何日間活動がなければstaleと判断するか
+          days-before-stale: 30
+          # staleラベルが付いてから何日後にクローズするか
+          days-before-close: 7
+
+          # staleラベルを付ける際のコメント
+          stale-issue-message: |
+            このissueは30日間活動がなかったため、`stale`ラベルが付与されました。
+            7日以内に返信がない場合、自動的にクローズされます。
+
+            This issue has been labeled as "stale" due to no activity for 30 days.
+            It will be closed automatically in 7 days if there is no response.
+
+          # クローズする際のコメント
+          close-issue-message: |
+            このissueは長期間活動がなかったため、自動的にクローズされました。
+            問題が解決していない場合は、issueを再オープンするか、新しいissueを作成してください。
+
+            This issue has been closed due to inactivity.
+            If the problem persists, please reopen this issue or create a new one.
+
+          # 使用するラベル名
+          stale-issue-label: 'stale'
+          stale-pr-label: 'stale'
+
+          # 除外するラベル（これらのラベルが付いているissueはstaleにしない）
+          exempt-issue-labels: 'pinned,security,help wanted'
+
+          # PR も同様に処理するか（falseにすると issue のみ処理）
+          # PR を処理したくない場合は以下を有効化
+          # days-before-pr-stale: -1
+          # days-before-pr-close: -1
