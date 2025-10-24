@@ -2,9 +2,9 @@ name: Auto Close Stale Issues
 
 on:
   schedule:
-    # 毎日午前0時（UTC）に実行
+    # Run every day at 00:00 UTC
     - cron: '0 0 * * *'
-  workflow_dispatch: # 手動実行も可能
+  workflow_dispatch: # Allow manual execution
 
 permissions:
   issues: write
@@ -16,35 +16,28 @@ jobs:
     steps:
       - uses: actions/stale@v9
         with:
-          # 何日間活動がなければstaleと判断するか
+          # Number of days of inactivity before marking as stale
           days-before-stale: 10
-          # staleラベルが付いてから何日後にクローズするか
+          # Number of days after the stale label before closing
           days-before-close: 7
 
-          # staleラベルを付ける際のコメント
+          # Comment posted when applying the stale label
           stale-issue-message: |
-            このissueは10日間活動がなかったため、`stale`ラベルが付与されました。
-            7日以内に返信がない場合、自動的にクローズされます。
-
             This issue has been labeled as "stale" due to no activity for 10 days.
             It will be closed automatically in 7 days if there is no response.
 
-          # クローズする際のコメント
+          # Comment posted when closing the issue
           close-issue-message: |
-            このissueは長期間活動がなかったため、自動的にクローズされました。
-            問題が解決していない場合は、issueを再オープンするか、新しいissueを作成してください。
-
             This issue has been closed due to inactivity.
             If the problem persists, please reopen this issue or create a new one.
 
-          # 使用するラベル名
+          # Labels that will be applied
           stale-issue-label: 'stale'
           stale-pr-label: 'stale'
 
-          # 除外するラベル（これらのラベルが付いているissueはstaleにしない）
+          # Labels that exempt issues from being marked as stale
           exempt-issue-labels: 'pinned,security,help-wanted'
 
-          # PR も同様に処理するか（falseにすると issue のみ処理）
-          # PR を処理したくない場合は以下を有効化
+          # To disable stale processing for PRs, uncomment the following lines
           # days-before-pr-stale: -1
           # days-before-pr-close: -1
