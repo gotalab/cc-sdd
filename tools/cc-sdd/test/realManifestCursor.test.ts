@@ -3,31 +3,14 @@ import { runCli } from '../src/index';
 import { join } from 'node:path';
 import { mkdtemp } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
+import { makeIO, getRepoRoot } from './helpers/testUtils.js';
 
 const runtime = { platform: 'darwin' } as const;
-
-const makeIO = () => {
-  const logs: string[] = [];
-  const errs: string[] = [];
-  return {
-    io: {
-      log: (m: string) => logs.push(m),
-      error: (m: string) => errs.push(m),
-      exit: (_c: number) => {},
-    },
-    get logs() {
-      return logs;
-    },
-    get errs() {
-      return errs;
-    },
-  };
-};
+const repoRoot = getRepoRoot();
+const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/cursor.json');
 
 describe('real cursor manifest', () => {
   it('dry-run prints plan for cursor.json with placeholders applied (mac)', async () => {
-    const repoRoot = join(process.cwd(), '..', '..');
-    const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/cursor.json');
     const ctx = makeIO();
     const code = await runCli(['--dry-run', '--lang', 'en', '--agent', 'cursor', '--manifest', manifestPath], runtime, ctx.io, {});
     expect(code).toBe(0);
@@ -38,8 +21,6 @@ describe('real cursor manifest', () => {
     expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
   it('dry-run prints plan including commands for linux via mac template', async () => {
-    const repoRoot = join(process.cwd(), '..', '..');
-    const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/cursor.json');
     const ctx = makeIO();
     const runtimeLinux = { platform: 'linux' } as const;
     const code = await runCli(['--dry-run', '--lang', 'en', '--agent', 'cursor', '--manifest', manifestPath], runtimeLinux, ctx.io, {});
@@ -52,8 +33,6 @@ describe('real cursor manifest', () => {
   });
   
   it('shows cursor recommendation message after applying plan', async () => {
-    const repoRoot = join(process.cwd(), '..', '..');
-    const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/cursor.json');
     const ctx = makeIO();
     
     // Create a temporary directory for execution 

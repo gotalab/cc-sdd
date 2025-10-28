@@ -1,34 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { runCli } from '../src/index';
-import { mkdtemp, readFile, stat } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { makeIO, mkTmp, exists, getRepoRoot } from './helpers/testUtils.js';
 
 const runtime = { platform: 'darwin' } as const;
-
-const makeIO = () => {
-  const logs: string[] = [];
-  const errs: string[] = [];
-  return {
-    io: {
-      log: (m: string) => logs.push(m),
-      error: (m: string) => errs.push(m),
-      exit: (_c: number) => {},
-    },
-    get logs() {
-      return logs;
-    },
-    get errs() {
-      return errs;
-    },
-  };
-};
-
-const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-real-manifest-'));
-const exists = async (p: string) => { try { await stat(p); return true; } catch { return false; } };
-
-// vitest runs in tools/cc-sdd; repoRoot is two levels up
-const repoRoot = join(process.cwd(), '..', '..');
+const repoRoot = getRepoRoot();
 const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/claude-code-agent.json');
 
 describe('real claude-code-agent manifest', () => {
@@ -45,7 +22,7 @@ describe('real claude-code-agent manifest', () => {
   });
 
   it('apply writes CLAUDE.md, command files, and agent library docs to cwd', async () => {
-    const cwd = await mkTmp();
+    const cwd = await mkTmp('ccsdd-real-manifest-');
     const ctx = makeIO();
     const code = await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force', '--claude-agent'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0);

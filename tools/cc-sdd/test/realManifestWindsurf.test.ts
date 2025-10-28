@@ -3,31 +3,14 @@ import { runCli } from '../src/index';
 import { join } from 'node:path';
 import { mkdtemp } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
+import { makeIO, getRepoRoot } from './helpers/testUtils.js';
 
 const runtime = { platform: 'darwin' } as const;
-
-const makeIO = () => {
-  const logs: string[] = [];
-  const errs: string[] = [];
-  return {
-    io: {
-      log: (m: string) => logs.push(m),
-      error: (m: string) => errs.push(m),
-      exit: (_c: number) => {},
-    },
-    get logs() {
-      return logs;
-    },
-    get errs() {
-      return errs;
-    },
-  };
-};
+const repoRoot = getRepoRoot();
+const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/windsurf.json');
 
 describe('real windsurf manifest', () => {
   it('dry-run prints plan for windsurf.json with placeholders applied (mac)', async () => {
-    const repoRoot = join(process.cwd(), '..', '..');
-    const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/windsurf.json');
     const ctx = makeIO();
     const code = await runCli(['--dry-run', '--lang', 'en', '--agent', 'windsurf', '--manifest', manifestPath], runtime, ctx.io, {});
     expect(code).toBe(0);
@@ -39,8 +22,6 @@ describe('real windsurf manifest', () => {
   });
 
   it('dry-run prints plan including commands for linux via mac template', async () => {
-    const repoRoot = join(process.cwd(), '..', '..');
-    const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/windsurf.json');
     const ctx = makeIO();
     const runtimeLinux = { platform: 'linux' } as const;
     const code = await runCli(['--dry-run', '--lang', 'en', '--agent', 'windsurf', '--manifest', manifestPath], runtimeLinux, ctx.io, {});
@@ -53,8 +34,6 @@ describe('real windsurf manifest', () => {
   });
 
   it('shows windsurf recommendation message after applying plan', async () => {
-    const repoRoot = join(process.cwd(), '..', '..');
-    const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/windsurf.json');
     const ctx = makeIO();
 
     const tmpDir = await mkdtemp(join(tmpdir(), 'ccsdd-windsurf-test-'));

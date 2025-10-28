@@ -1,28 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { runCli } from '../src/index';
-import { mkdtemp, readFile, stat } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { makeIO, mkTmp, exists, getRepoRoot } from './helpers/testUtils.js';
 
-const makeIO = () => {
-  const logs: string[] = [];
-  const errs: string[] = [];
-  return {
-    io: {
-      log: (m: string) => logs.push(m),
-      error: (m: string) => errs.push(m),
-      exit: (_c: number) => {},
-    },
-    get logs() { return logs; },
-    get errs() { return errs; },
-  };
-};
-
-const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-real-manifest-gemini-'));
-const exists = async (p: string) => { try { await stat(p); return true; } catch { return false; } };
-
-// vitest runs in tools/cc-sdd; repoRoot is two levels up
-const repoRoot = join(process.cwd(), '..', '..');
+const repoRoot = getRepoRoot();
 const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/gemini-cli.json');
 
 describe('real gemini-cli manifest (mac)', () => {
@@ -40,7 +22,7 @@ describe('real gemini-cli manifest (mac)', () => {
   });
 
   it('apply writes GEMINI.md and command files to cwd', async () => {
-    const cwd = await mkTmp();
+    const cwd = await mkTmp('ccsdd-real-manifest-gemini-');
     const ctx = makeIO();
     const code = await runCli(['--lang', 'en', '--agent', 'gemini-cli', '--manifest', manifestPath, '--overwrite=force'], runtimeDarwin, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0);
@@ -75,7 +57,7 @@ describe('real gemini-cli manifest (linux)', () => {
   });
 
   it('apply writes GEMINI.md and command files to cwd on linux', async () => {
-    const cwd = await mkTmp();
+    const cwd = await mkTmp('ccsdd-real-manifest-gemini-');
     const ctx = makeIO();
     const code = await runCli(['--lang', 'en', '--agent', 'gemini-cli', '--manifest', manifestPath, '--overwrite=force'], runtimeLinux, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0);
