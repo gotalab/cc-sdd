@@ -51,6 +51,19 @@ After running cc-sdd, you'll have:
 
 **Perfect for**: Feature development, code reviews, technical planning, and maintaining development standards across your team.
 
+## 🎨 Customization
+
+Edit templates in `{{KIRO_DIR}}/settings/templates/` to match your workflow. Keep the core structure (requirement numbers, checkboxes, headings) and add your team's context—AI adapts automatically.
+
+**Common customizations**:
+- **PRD-style requirements** with business context and success metrics
+- **Frontend/Backend designs** optimized for React components or API specs
+- **Approval gates** for security, architecture, or compliance reviews
+- **JIRA/Linear-ready tasks** with estimation, priority, and labels
+- **Domain steering** for API standards, testing conventions, or coding guidelines
+
+📖 **[Customization Guide](docs/guides/customization-guide.md)** — 7 practical examples with copy-paste snippets
+
 ## 🤖 Supported Coding Agents
 
 | Agent | Flags you can pass | Installs |
@@ -85,25 +98,33 @@ After running cc-sdd, you'll have:
 
 **Usage**: `npx cc-sdd@latest --lang <code>` (e.g., `--lang ja` for Japanese)
 
+---
+
+## 📖 Documentation
+
+> **Project Overview** (Spec-Driven Development workflow)
+- English: [README.md](tools/cc-sdd/README.md)
+- 日本語: [README_ja.md](tools/cc-sdd/README_ja.md)
+- 繁體中文: [README_zh-TW.md](tools/cc-sdd/README_zh-TW.md)
+
+> **Command Reference**
+- [Command Reference Guide](docs/guides/command-reference.md) - Complete reference for all `/kiro:*` commands with detailed usage, parameters, examples, and troubleshooting
 
 ---
 
 ## About
 
-Brings to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf your project context, Project Memory (steering) and development patterns: **requirements → design → tasks → implementation**. **Kiro IDE compatible** — Reuse Kiro-style SDD specs and workflows seamlessly.
+**cc-sdd brings Spec-Driven Development to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf.**
 
-ワンライナーで **AI-DLC（AI-Driven Development Life Cycle）** と **Spec-Driven Development（仕様駆動開発）** のワークフローを導入。プロジェクト直下に **11個のSlash / Prompt Commands** 一式と設定ファイル（Claude Code用 **CLAUDE.md** / Cursor IDE・Codex CLI・GitHub Copilot・Windsurf用 **AGENTS.md** / Gemini CLI用 **GEMINI.md**）を配置、プロジェクトの文脈と開発パターン（**要件 → 設計 → タスク → 実装**）、**プロジェクトメモリ（ステアリング）** を含む。
+Provides your project context, Project Memory (steering), and development patterns following the workflow: **requirements → design → tasks → implementation**. 
 
-📝 **関連記事**  
-**[Kiroの仕様書駆動開発プロセスをClaude Codeで徹底的に再現した](https://zenn.dev/gotalab/articles/3db0621ce3d6d2)** - Zenn記事
+**Kiro IDE compatible** — Reuse Kiro-style SDD specs and workflows seamlessly.
 
-## Languages
-> 📖 **Project Overview** (Spec-Driven Development workflow)
-- 日本語: [README_ja.md](tools/cc-sdd/README_ja.md)
-- English: [README.md](tools/cc-sdd/README.md)
-- 繁體中文: [README_zh-TW.md](tools/cc-sdd/README_zh-TW.md)
+---
 
-**Transform your agentic development workflow with Spec-Driven Development**
+ワンライナーで **AI-DLC（AI-Driven Development Life Cycle）** と **Spec-Driven Development（仕様駆動開発）** のワークフローを導入。プロジェクト直下に **11個のSlash / Prompt Commands** 一式と設定ファイル（Claude Code用 **CLAUDE.md** / Cursor IDE・Codex CLI・GitHub Copilot・Windsurf用 **AGENTS.md** / Gemini CLI用 **GEMINI.md** / Qwen Code用 **QWEN.md**）を配置、プロジェクトの文脈と開発パターン（**要件 → 設計 → タスク → 実装**）、**プロジェクトメモリ（ステアリング）** を含む。
+
+**関連記事**: [Kiroの仕様書駆動開発プロセスをClaude Codeで徹底的に再現した](https://zenn.dev/gotalab/articles/3db0621ce3d6d2) (Zenn)
 
 ---
 
@@ -172,11 +193,13 @@ npx cc-sdd@latest --kiro-dir docs/specs
 
 ## 📚 Related Resources
 
-📝 **Related Articles**  
-**[Kiroの仕様書駆動開発プロセスをClaude Codeで徹底的に再現した](https://zenn.dev/gotalab/articles/3db0621ce3d6d2)** - Zenn Article (Japanese)
+� **Articles & Presentations**  
+- [Kiroの仕様書駆動開発プロセスをClaude Codeで徹底的に再現した](https://zenn.dev/gotalab/articles/3db0621ce3d6d2) - Zenn Article (Japanese)
+- [Claude Codeは仕様駆動の夢を見ない](https://speakerdeck.com/gotalab555/claude-codehashi-yang-qu-dong-nomeng-wojian-nai) - Speaker Deck Presentation (Japanese)
 
-🎯 **Presentations**  
-**[Claude Codeは仕様駆動の夢を見ない](https://speakerdeck.com/gotalab555/claude-codehashi-yang-qu-dong-nomeng-wojian-nai)** - Speaker Deck Presentation (Japanese)
+🔗 **External Resources**  
+- [Kiro IDE](https://kiro.dev) - Enhanced spec management and team collaboration
+- [Kiro's Spec Methodology](https://kiro.dev/docs/specs/) - Proven spec-driven development methodology
 
 ## 📦 Package Information
 

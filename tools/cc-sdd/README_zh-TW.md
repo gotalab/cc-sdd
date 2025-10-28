@@ -153,6 +153,19 @@ npx cc-sdd@next --windsurf --lang zh-TW    # 需要 alpha 版本（Windsurf 工�
 
 > **關鍵基礎指令**：指導建立持久專案記憶 - AI 在所有會話中使用的上下文、規則和架構。**現有專案先執行**以大幅提升規格品質。
 
+## 🎨 自訂
+
+可編輯 `{{KIRO_DIR}}/settings/templates/` 中的模板以符合工作流程。保留核心結構（需求編號、勾選框、標題）並新增團隊的上下文—AI 會自動適應。
+
+**常見自訂**:
+- **PRD 風格需求** - 包含業務上下文與成功指標
+- **前端/後端設計** - 針對 React 元件或 API 規格最佳化
+- **批准關卡** - 用於安全、架構或合規審查
+- **JIRA/Linear 就緒任務** - 含估算、優先級、標籤
+- **領域指導** - API 標準、測試慣例、編碼指南
+
+📖 **[自訂指南](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** — 7 個實用範例與可複製程式碼片段
+
 ## ⚙️ 設定
 
 ```bash
@@ -186,7 +199,8 @@ project/
 ## 📚 文件與支援
 
 - **[完整文件](https://github.com/gotalab/cc-sdd/tree/main/docs/README)** - 完整設定指南
-- **[指令參考](https://github.com/gotalab/cc-sdd/docs)** - 所有選項與範例
+- **[指令參考](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - 所有 `/kiro:*` 指令的詳細使用方法、參數、範例
+- **[自訂指南](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** - 7 個實用範例：PRD 需求、前端/後端設計、批准工作流程、JIRA 整合、領域指導
 - **[問題與支援](https://github.com/gotalab/cc-sdd/issues)** - 問題回報與提問
 - **[Kiro IDE](https://kiro.dev)**
 

@@ -153,6 +153,19 @@ npx cc-sdd@next --windsurf --lang ja    # アルファ版必須（Windsurf向け
 
 > **重要な基盤コマンド**: ステアリングは永続的プロジェクトメモリを作成 - AIが全セッションで使用するコンテキスト、ルール、アーキテクチャ。**既存プロジェクトでは最初に実行**して仕様品質を劇的に向上。
 
+## 🎨 カスタマイズ
+
+`{{KIRO_DIR}}/settings/templates/` のテンプレートを編集してワークフローに合わせることができます。コア構造（要件番号、チェックボックス、見出し）を保ちつつ、チームのコンテキストを追加—AIは自動的に適応します。
+
+**よくあるカスタマイズ**:
+- **PRDスタイルの要件** - ビジネスコンテキストと成功指標を含む
+- **フロントエンド/バックエンド設計** - Reactコンポーネントやエンドポイント仕様に最適化
+- **承認ゲート** - セキュリティ、アーキテクチャ、コンプライアンスレビュー用
+- **JIRA/Linear対応タスク** - 見積もり、優先度、ラベル付き
+- **ドメインステアリング** - API標準、テスト規約、コーディングガイドライン
+
+📖 **[カスタマイズガイド](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** — 7つの実践例とコピペ可能なスニペット
+
 ## ⚙️ 設定
 
 ```bash
@@ -186,7 +199,8 @@ project/
 ## 📚 ドキュメント & サポート
 
 - **[完全ドキュメント](https://github.com/gotalab/cc-sdd/tree/main/docs/README)** - 完全セットアップガイド
-- **[コマンドリファレンス](https://github.com/gotalab/cc-sdd/docs)** - すべてのオプションと例  
+- **[コマンドリファレンス](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - すべての `/kiro:*` コマンドの詳細な使い方、パラメータ、例
+- **[カスタマイズガイド](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** - 7つの実践例：PRD要件、フロントエンド/バックエンド設計、承認ワークフロー、JIRA統合、ドメインステアリング
 - **[問題 & サポート](https://github.com/gotalab/cc-sdd/issues)** - バグ報告と質問
 - **[Kiro IDE](https://kiro.dev)**
 
