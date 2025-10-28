@@ -134,6 +134,8 @@ npx cc-sdd@next --windsurf --lang ja    # Requires alpha version (Windsurf workf
 
 > **Kiro IDE Integration**: Specs are portable to [Kiro IDE](https://kiro.dev) for enhanced implementation with guardrails and team collaboration features.
 
+📖 **[Complete Command Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - Detailed usage, parameters, examples, and troubleshooting for all commands
+
 ### Quality Validation (Optional - Brownfield Development)
 ```bash
 # Before spec-design (analyze existing functionality vs requirements):
@@ -152,6 +154,19 @@ npx cc-sdd@next --windsurf --lang ja    # Requires alpha version (Windsurf workf
 ```
 
 > **Critical Foundation Commands**: Steering creates persistent project memory - context, rules, and architecture that AI uses across all sessions. **Run first for existing projects** to dramatically improve spec quality.
+
+## 🎨 Customization
+
+Edit templates in `{{KIRO_DIR}}/settings/templates/` to match your workflow. Keep the core structure (requirement numbers, checkboxes, headings) and add your team's context—AI adapts automatically.
+
+**Common customizations**:
+- **PRD-style requirements** with business context and success metrics
+- **Frontend/Backend designs** optimized for React components or API specs
+- **Approval gates** for security, architecture, or compliance reviews
+- **JIRA/Linear-ready tasks** with estimation, priority, and labels
+- **Domain steering** for API standards, testing conventions, or coding guidelines
+
+📖 **[Customization Guide](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** — 7 practical examples with copy-paste snippets
 
 ## ⚙️ Configuration
 
@@ -185,8 +200,9 @@ project/
 
 ## 📚 Documentation & Support
 
-- **[Full Documentation](https://github.com/gotalab/cc-sdd/tree/main/docs/README)** - Complete setup guide
-- **[Command Reference](https://github.com/gotalab/cc-sdd/docs)** - All options and examples  
+- **[Complete Documentation](https://github.com/gotalab/cc-sdd/tree/main/docs)** - Setup guides and references
+- **[Command Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - All `/kiro:*` commands with detailed usage, parameters, examples
+- **[Customization Guide](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** - 7 practical examples: PRD requirements, frontend/backend designs, approval workflows, JIRA integration, domain steering
 - **[Issues & Support](https://github.com/gotalab/cc-sdd/issues)** - Bug reports and questions
 - **[Kiro IDE](https://kiro.dev)**
 
