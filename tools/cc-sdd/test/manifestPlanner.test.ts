@@ -3,13 +3,11 @@ import { planFromManifest, planFromFile } from '../src/manifest/planner';
 import { loadManifest } from '../src/manifest/loader';
 import { mergeConfigAndArgs } from '../src/cli/config';
 import { parseArgs } from '../src/cli/args';
-import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { mkdtemp, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
+import { mkTmp } from './helpers/testUtils.js';
 
 const runtimeDarwin = { platform: 'darwin' } as const;
-
-const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-manifest-'));
 
 describe('manifest planner glue', () => {
   it('plans artifacts from in-memory manifest using resolved config context', async () => {
@@ -51,7 +49,7 @@ describe('manifest planner glue', () => {
   });
 
   it('loads manifest from file and plans', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-");
     const file = join(dir, 'manifest.json');
     const m = {
       version: 1,
@@ -82,7 +80,7 @@ describe('manifest planner glue', () => {
   });
 
   it('throws with helpful errors when file missing or invalid', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-");
     await expect(loadManifest(join(dir, 'missing.json'))).rejects.toThrow(/Manifest not found/);
 
     const bad = join(dir, 'bad.json');

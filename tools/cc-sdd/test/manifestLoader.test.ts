@@ -1,14 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { loadManifest } from '../src/manifest/loader';
-import { mkdtemp, writeFile } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-
-const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-manifest-loader-'));
+import { mkTmp } from './helpers/testUtils.js';
 
 describe('loadManifest additional edge cases', () => {
   it('validates manifest.version as number', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-loader-");
     const file = join(dir, 'manifest.json');
     const invalidManifest = {
       version: '1', // string instead of number
@@ -20,7 +18,7 @@ describe('loadManifest additional edge cases', () => {
   });
 
   it('validates manifest.artifacts as array', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-loader-");
     const file = join(dir, 'manifest.json');
     const invalidManifest = {
       version: 1,
@@ -32,7 +30,7 @@ describe('loadManifest additional edge cases', () => {
   });
 
   it('rejects null manifest', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-loader-");
     const file = join(dir, 'manifest.json');
     await writeFile(file, 'null', 'utf8');
     
@@ -40,7 +38,7 @@ describe('loadManifest additional edge cases', () => {
   });
 
   it('rejects non-object manifest', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-loader-");
     const file = join(dir, 'manifest.json');
     await writeFile(file, '"string"', 'utf8');
     
@@ -48,7 +46,7 @@ describe('loadManifest additional edge cases', () => {
   });
 
   it('rejects array manifest', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-loader-");
     const file = join(dir, 'manifest.json');
     await writeFile(file, '[]', 'utf8');
     
@@ -56,7 +54,7 @@ describe('loadManifest additional edge cases', () => {
   });
 
   it('handles file read errors other than ENOENT', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-loader-");
     const file = join(dir, 'manifest.json');
     // Create a file with restricted permissions to simulate read error
     await writeFile(file, '{"version":1,"artifacts":[]}', 'utf8');
@@ -73,7 +71,7 @@ describe('loadManifest additional edge cases', () => {
   });
 
   it('loads valid manifest with minimal structure', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-loader-");
     const file = join(dir, 'manifest.json');
     const validMinimalManifest = {
       version: 2,
@@ -97,7 +95,7 @@ describe('loadManifest additional edge cases', () => {
   });
 
   it('preserves additional properties in manifest', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-manifest-loader-");
     const file = join(dir, 'manifest.json');
     const manifestWithExtra = {
       version: 1,

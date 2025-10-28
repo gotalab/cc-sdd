@@ -1,11 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { runCli } from '../src/index';
-import { mkdtemp, writeFile, mkdir } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { mkTmp } from './helpers/testUtils.js';
 
 const runtime = { platform: 'darwin' } as const;
-const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-cli-edge-'));
 
 const makeIO = () => {
   const logs: string[] = [];
@@ -57,7 +56,7 @@ describe('CLI entry edge cases', () => {
   });
 
   it('handles invalid manifest file in dry-run mode', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-cli-edge-");
     const manifestPath = join(dir, 'invalid.json');
     await writeFile(manifestPath, '{ invalid json', 'utf8');
     
@@ -76,7 +75,7 @@ describe('CLI entry edge cases', () => {
   });
 
   it('resolves default manifest path correctly', async () => {
-    const templatesRoot = await mkTmp();
+    const templatesRoot = await mkTmp("ccsdd-cli-edge-");
     const manifestsDir = join(templatesRoot, 'templates', 'manifests');
     await mkdir(manifestsDir, { recursive: true });
     
@@ -104,7 +103,7 @@ describe('CLI entry edge cases', () => {
   });
 
   it('prefers minimal manifest when profile=minimal', async () => {
-    const templatesRoot = await mkTmp();
+    const templatesRoot = await mkTmp("ccsdd-cli-edge-");
     const manifestsDir = join(templatesRoot, 'templates', 'manifests');
     await mkdir(manifestsDir, { recursive: true });
     
@@ -134,7 +133,7 @@ describe('CLI entry edge cases', () => {
   });
 
   it('falls back to default manifest when minimal not found', async () => {
-    const templatesRoot = await mkTmp();
+    const templatesRoot = await mkTmp("ccsdd-cli-edge-");
     const manifestsDir = join(templatesRoot, 'templates', 'manifests');
     await mkdir(manifestsDir, { recursive: true });
     
@@ -163,7 +162,7 @@ describe('CLI entry edge cases', () => {
   });
 
   it('handles execution error in apply mode', async () => {
-    const templatesRoot = await mkTmp();
+    const templatesRoot = await mkTmp("ccsdd-cli-edge-");
     const manifestPath = join(templatesRoot, 'manifest.json');
     const manifest = {
       version: 1,

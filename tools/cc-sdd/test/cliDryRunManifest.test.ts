@@ -1,34 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { runCli } from '../src/index';
-import { mkdtemp, writeFile } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { makeIO, mkTmp } from './helpers/testUtils.js';
 
 const runtime = { platform: 'darwin' } as const;
 
-const makeIO = () => {
-  const logs: string[] = [];
-  const errs: string[] = [];
-  return {
-    io: {
-      log: (m: string) => logs.push(m),
-      error: (m: string) => errs.push(m),
-      exit: (_c: number) => {},
-    },
-    get logs() {
-      return logs;
-    },
-    get errs() {
-      return errs;
-    },
-  };
-};
-
-const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-cli-plan-'));
-
 describe('CLI dry-run with manifest', () => {
   it('prints a formatted plan from manifest', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp('ccsdd-cli-plan-');
     const file = join(dir, 'manifest.json');
     const m = {
       version: 1,

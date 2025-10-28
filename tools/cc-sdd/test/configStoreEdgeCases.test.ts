@@ -1,16 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { mkdtemp, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { loadUserConfig, saveUserConfig, resolveConfigPath } from '../src/cli/store';
 import type { UserConfig } from '../src/cli/config';
-
-const prefix = join(tmpdir(), 'ccsdd-store-edge-');
-const mkTmp = async () => await mkdtemp(prefix);
+import { mkTmp } from './helpers/testUtils.js';
 
 describe('config store edge cases', () => {
   it('handles ENOTDIR error when config path is not a directory', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-store-edge-");
     // Create a file where we expect a directory
     const notADir = join(dir, 'not-a-dir');
     await writeFile(notADir, 'not a directory', 'utf8');
@@ -27,7 +24,7 @@ describe('config store edge cases', () => {
   });
 
   it('handles null config object in JSON', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-store-edge-");
     const file = join(dir, '.cc-sdd.json');
     await writeFile(file, 'null', 'utf8');
     
@@ -36,7 +33,7 @@ describe('config store edge cases', () => {
   });
 
   it('saves config with proper formatting', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-store-edge-");
     const config: UserConfig = {
       agent: 'claude-code',
       lang: 'ja',
@@ -63,7 +60,7 @@ describe('config store edge cases', () => {
   });
 
   it('handles complex nested config structures', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-store-edge-");
     const complexConfig: UserConfig = {
       agent: 'gemini-cli',
       lang: 'zh-TW',
@@ -89,7 +86,7 @@ describe('config store edge cases', () => {
   });
 
   it('handles empty object config', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-store-edge-");
     const emptyConfig: UserConfig = {};
     
     await saveUserConfig(dir, emptyConfig);
@@ -98,7 +95,7 @@ describe('config store edge cases', () => {
   });
 
   it('creates directory structure when saving to non-existent path', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-store-edge-");
     const nestedDir = join(dir, 'nested', 'path');
     
     try {

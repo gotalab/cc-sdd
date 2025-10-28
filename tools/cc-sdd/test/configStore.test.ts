@@ -1,26 +1,19 @@
 import { describe, it, expect } from 'vitest';
-import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { mkdtemp, writeFile, readFile, stat } from 'node:fs/promises';
+import { writeFile, readFile, stat } from 'node:fs/promises';
 import { loadUserConfig, saveUserConfig } from '../src/cli/store';
 import type { UserConfig } from '../src/cli/config';
-
-const prefix = join(tmpdir(), 'ccsdd-store-');
-
-const mkTmp = async () => {
-  const dir = await mkdtemp(prefix);
-  return dir;
-};
+import { mkTmp } from './helpers/testUtils.js';
 
 describe('config store', () => {
   it('returns empty object when config file does not exist', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-store-");
     const cfg = await loadUserConfig(dir);
     expect(cfg).toEqual({});
   });
 
   it('saves and loads config round-trip', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-store-");
     const input: UserConfig = {
       agent: 'gemini-cli',
       lang: 'en',
@@ -46,7 +39,7 @@ describe('config store', () => {
   });
 
   it('throws a helpful error when JSON is invalid', async () => {
-    const dir = await mkTmp();
+    const dir = await mkTmp("ccsdd-store-");
     const file = join(dir, '.cc-sdd.json');
     await writeFile(file, '{ invalid json', 'utf8');
     await expect(loadUserConfig(dir)).rejects.toThrow(/Invalid JSON/);
