@@ -13,7 +13,7 @@ cc-sdd relies on a few structural cues so commands like `/kiro:spec-impl` can pa
 Everything else—context, metadata, extra sections—is yours to customize.
 
 ## Customize in Three Steps
-1. Copy the default templates (`/kiro:template-open` or open files under `{{KIRO_DIR}}/settings/templates/`).
+1. Copy the default templates by opening files under `{{KIRO_DIR}}/settings/templates/`.
 2. Add the structure your team expects while keeping the numbering and checkboxes intact.
 3. Regenerate a spec to confirm the AI follows your additions, then iterate.
 
