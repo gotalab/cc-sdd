@@ -73,7 +73,7 @@ coverage/
 
 # Project specific
 BLOG.md
-docs/cc-sdd/
+# docs/cc-sdd/
 docs/kiro/prompt/
 docs/kiro/
 # .kiro/
