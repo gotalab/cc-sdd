@@ -16,7 +16,7 @@ EARS (Easy Approach to Requirements Syntax) is the standard format for acceptanc
 - **Example**: While payment is processing, the Checkout Service shall display loading indicator
 
 ### 3. Unwanted Behavior Requirements
-- **Pattern**: If [trigger], then the [system] shall [response/action]
+- **Pattern**: If [trigger], the [system] shall [response/action]
 - **Use Case**: System response to errors, failures, or undesired situations
 - **Example**: If invalid credit card number is entered, then the website shall display error message
 
