@@ -17,6 +17,8 @@ One command installs **AI-DLC** (AI-Driven Development Life Cycle) with **SDD** 
 It also scaffolds team-aligned templates—requirements, design reviews, task plans, and steering docs—so every slash command outputs documentation that fits your existing approval process.
 
 ```bash
+# Installation is on a per-project basis. Run the below installation command in the root of your project.
+
 # Basic installation (default: Claude Code)
 npx cc-sdd@latest
 
