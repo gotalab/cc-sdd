@@ -5,29 +5,34 @@ EARS (Easy Approach to Requirements Syntax) is the standard format for acceptanc
 
 ## Primary EARS Patterns
 
-### 1. Event-Driven (WHEN-THEN)
-- **Pattern**: WHEN [event/condition] THEN [system/subject] SHALL [response]
+### 1. Event-Driven Requirements
+- **Pattern**: When [event], the [system] shall [response/action]
 - **Use Case**: Responses to specific events or triggers
-- **Example**: WHEN user clicks checkout button THEN Checkout Service SHALL validate cart contents
+- **Example**: When user clicks checkout button, the Checkout Service shall validate cart contents
 
-### 2. State-Based (IF-THEN)
-- **Pattern**: IF [precondition/state] THEN [system/subject] SHALL [response]
+### 2. State-Driven Requirements
+- **Pattern**: While [precondition], the [system] shall [response/action]
 - **Use Case**: Behavior dependent on system state or preconditions
-- **Example**: IF cart is empty THEN Checkout Service SHALL display empty cart message
+- **Example**: While payment is processing, the Checkout Service shall display loading indicator
 
-### 3. Continuous Behavior (WHILE-THE)
-- **Pattern**: WHILE [ongoing condition] THE [system/subject] SHALL [continuous behavior]
-- **Use Case**: Ongoing behaviors that persist during a condition
-- **Example**: WHILE payment is processing THE Checkout Service SHALL display loading indicator
+### 3. Unwanted Behavior Requirements
+- **Pattern**: If [trigger], the [system] shall [response/action]
+- **Use Case**: System response to errors, failures, or undesired situations
+- **Example**: If invalid credit card number is entered, then the website shall display error message
 
-### 4. Contextual Behavior (WHERE-THE)
-- **Pattern**: WHERE [location/context/trigger] THE [system/subject] SHALL [contextual behavior]
-- **Use Case**: Location or context-specific requirements
-- **Example**: WHERE user is on payment page THE Checkout Service SHALL encrypt all form inputs
+### 4. Optional Feature Requirements
+- **Pattern**: Where [feature is included], the [system] shall [response/action]
+- **Use Case**: Requirements for optional or conditional features
+- **Example**: Where the car has a sunroof, the car shall have a sunroof control panel
+
+### 5. Ubiquitous Requirements
+- **Pattern**: The [system] shall [response/action]
+- **Use Case**: Always-active requirements and fundamental system properties
+- **Example**: The mobile phone shall have a mass of less than 100 grams
 
 ## Combined Patterns
-- WHEN [event] AND [additional condition] THEN [system/subject] SHALL [response]
-- IF [condition] AND [additional condition] THEN [system/subject] SHALL [response]
+- While [precondition], when [event], the [system] shall [response/action]
+- When [event] and [additional condition], the [system] shall [response/action]
 
 ## Subject Selection Guidelines
 - **Software Projects**: Use concrete system/service name (e.g., "Checkout Service", "User Auth Module")
@@ -35,8 +40,6 @@ EARS (Easy Approach to Requirements Syntax) is the standard format for acceptanc
 - **Non-Software**: Use appropriate subject (e.g., "Marketing Campaign", "Documentation")
 
 ## Quality Criteria
-- Each criterion must be testable and verifiable
-- Use SHALL for mandatory requirements, SHOULD for recommended
-- Avoid ambiguous terms (e.g., "fast", "user-friendly")
-- Keep each criterion atomic (one behavior per statement)
-
+- Requirements must be testable, verifiable, and describe a single behavior.
+- Use objective language: "shall" for mandatory behavior, "should" for recommendations; avoid ambiguous terms.
+- Follow EARS syntax: [condition], the [system] shall [response/action].
