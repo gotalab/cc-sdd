@@ -54,3 +54,6 @@ Available templates in `{{KIRO_DIR}}/settings/templates/steering-custom/`:
 - SubAgent will interact with user to understand needs
 - Templates are starting points, customized for project
 - All steering files loaded as project memory
+- Avoid documenting agent-specific tooling directories (e.g. `.cursor/`, `.gemini/`, `.claude/`)
+- `{{KIRO_DIR}}/settings/` content should NOT be documented (it's metadata, not project knowledge)
+- Light references to `{{KIRO_DIR}}/specs/` and `{{KIRO_DIR}}/steering/` are acceptable; avoid other `.kiro/` directories

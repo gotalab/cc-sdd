@@ -4,16 +4,18 @@
 
 Use this structure for all implementation tasks:
 
-- [ ] {{MAJOR_NUMBER}}. {{MAJOR_TASK_DESCRIPTION}}
+- [ ] {{MAJOR_NUMBER}}. {{MAJOR_TASK_DESCRIPTION}}{{PARALLEL_MARK}}
   - {{DETAIL_ITEM_1}}
   - {{DETAIL_ITEM_2}}
   - {{DETAIL_ITEM_3}}
   - _Requirements: {{REQUIREMENT_IDS}}_
 
-- [ ] {{MAJOR_NUMBER}}.{{SUB_NUMBER}} {{SUB_TASK_DESCRIPTION}}
+- [ ] {{MAJOR_NUMBER}}.{{SUB_NUMBER}} {{SUB_TASK_DESCRIPTION}}{{SUB_PARALLEL_MARK}}
   - {{DETAIL_ITEM_1}}
   - {{DETAIL_ITEM_2}}
   - _Requirements: {{REQUIREMENT_IDS}}_
+
+> **Default parallel marker**: When a task can run concurrently without conflicts, append ` (P)` to the placeholder (e.g. set `{{PARALLEL_MARK}}` to ` (P)`). Leave it empty when sequential execution is required or when the user runs with `--sequential`.
 
 ## Example (Reference Only)
 

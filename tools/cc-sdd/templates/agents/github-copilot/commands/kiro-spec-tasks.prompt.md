@@ -39,13 +39,15 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 
 **Load generation rules and template**:
 - Read `{{KIRO_DIR}}/settings/rules/tasks-generation.md` for principles
-- Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format
+- Read `{{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md` for parallel judgement criteria
+- Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format (supports `(P)` markers)
 
 **Generate task list following all rules**:
 - Use language specified in spec.json
 - Map all requirements to tasks
 - Ensure all design components included
 - Verify task progression is logical and incremental
+- Apply `(P)` markers to tasks that satisfy parallel criteria
 - If existing tasks.md found, merge with new content
 
 ### Step 3: Finalize

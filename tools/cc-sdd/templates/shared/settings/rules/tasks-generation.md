@@ -71,6 +71,19 @@ Focus on capabilities and outcomes, not code structure.
 - Sub-tasks reset per major task: 1.1, 1.2, then 2.1, 2.2...
 - Never repeat major task numbers
 
+### Parallel Analysis (default)
+- Assume parallel analysis is enabled unless explicitly disabled (e.g. `--sequential` flag).
+- Identify tasks that can run concurrently when **all** conditions hold:
+  - No data dependency on other pending tasks
+  - No shared file or resource contention
+  - No prerequisite review/approval from another task
+- Append `(P)` immediately after the task number for each parallel-capable task:
+  - Example: `- [ ] 2.1 (P) Build background worker`
+  - Apply to both major tasks and sub-tasks when appropriate.
+- If sequential mode is requested, omit `(P)` markers entirely.
+- Group parallel tasks logically (same parent when possible) and highlight any ordering caveats in detail bullets.
+- Explicitly call out dependencies that prevent `(P)` even when tasks look similar.
+
 ### Checkbox Format
 ```markdown
 - [ ] 1. Major task description
