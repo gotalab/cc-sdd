@@ -1,7 +1,7 @@
 # Design Document Template
 
 ---
-**Document Length Guidelines: Max 1000 lines**
+**Document Length Guidelines: Max 800 lines**
 
 **Purpose**: Provide sufficient detail to ensure implementation consistency across different implementers, preventing interpretation drift.
 

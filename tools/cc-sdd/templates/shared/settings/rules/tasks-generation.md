@@ -96,6 +96,10 @@ Focus on capabilities and outcomes, not code structure.
   - Detail items...
   - _Requirements: Y.Y_
 
+- [ ] 1.3 Sub-task description
+  - Detail items...
+  - _Requirements: Z.Z, W.W_
+
 - [ ] 2. Next major task (NOT 1 again!)
 - [ ] 2.1 Sub-task...
 ```
