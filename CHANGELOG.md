@@ -8,6 +8,79 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- Parallel task analysis by default in spec-tasks command ([#89](https://github.com/gotalab/cc-sdd/pull/89))
+  - Automatic `(P)` marker for parallel-executable tasks
+  - New `--sequential` flag to opt-out of parallel analysis
+  - New rule file: `tasks-parallel-analysis.md` for identifying parallel tasks
+- New `research.md` template for spec-driven workflow
+  - Separates discovery findings and architectural investigations from `design.md`
+  - Captures research logs, architecture pattern evaluations, and design decisions
+  - Provides structured format for documenting trade-offs and rationale
+- Guidelines for excluding agent tooling directories from steering docs
+  - Prevents `.claude/`, `.cursor/`, `.codex/` etc. from being analyzed
+
+### Changed
+- Enhanced task generation guidelines with parallel execution criteria
+- Improved design template with discovery process guidelines
+- Updated spec-design workflow to leverage new research.md template
+- Streamlined tasks.md template structure
+
+**Related PRs:**
+- [#89](https://github.com/gotalab/cc-sdd/pull/89) - Enable parallel task analysis by default
+
+## [2.0.0-alpha.5] - 2025-11-05
+
+### Added
+- npm `next` version badge in README files ([#86](https://github.com/gotalab/cc-sdd/pull/86))
+
+### Changed
+- Updated EARS format to use lowercase syntax ([#88](https://github.com/gotalab/cc-sdd/pull/88))
+  - Changed from "WHILE/WHEN/WHERE/IF" to "while/when/where/if"
+  - Improved readability and consistency
+- Updated installation documentation for better clarity ([#87](https://github.com/gotalab/cc-sdd/pull/87))
+
+**Related PRs:**
+- [#88](https://github.com/gotalab/cc-sdd/pull/88) - Update EARS format to lowercase syntax
+- [#87](https://github.com/gotalab/cc-sdd/pull/87) - Clarify installation
+- [#86](https://github.com/gotalab/cc-sdd/pull/86) - Add npm next badge to README files
+
+## [2.0.0-alpha.4] - 2025-10-30
+
+### Added
+- Comprehensive customization guide with 7 practical examples ([#83](https://github.com/gotalab/cc-sdd/pull/83))
+  - Template customization patterns
+  - Agent-specific workflow examples
+  - Project-specific rule examples
+- Complete command reference documentation ([#83](https://github.com/gotalab/cc-sdd/pull/83))
+  - Detailed usage for all 11 `/kiro:*` commands
+  - Parameter descriptions and examples
+
+### Changed
+- Clarified template customization instructions ([#85](https://github.com/gotalab/cc-sdd/pull/85))
+- Customization guide review improvements ([#84](https://github.com/gotalab/cc-sdd/pull/84))
+
+**Related PRs:**
+- [#83](https://github.com/gotalab/cc-sdd/pull/83) - Add customization guide and command reference
+- [#84](https://github.com/gotalab/cc-sdd/pull/84) - Customization guide review suggestions
+- [#85](https://github.com/gotalab/cc-sdd/pull/85) - Clarify template customization instructions
+
+## [2.0.0-alpha.3.1] - 2025-10-24
+
+### Added
+- Automated GitHub issue lifecycle management ([#80](https://github.com/gotalab/cc-sdd/pull/80))
+  - Auto-close stale issues after 10 days of inactivity
+  - Configurable stale detection workflow
+  - English-only workflow messaging ([#81](https://github.com/gotalab/cc-sdd/pull/81))
+
+### Changed
+- Updated stale detection period to 10 days
+- Improved GitHub Actions workflow for issue management
+
+**Related PRs:**
+- [#80](https://github.com/gotalab/cc-sdd/pull/80) - Automate GitHub issue lifecycle management
+- [#81](https://github.com/gotalab/cc-sdd/pull/81) - Make stale workflow messaging English-only
+
 ## [2.0.0-alpha.3] - 2025-10-22
 
 ### Added

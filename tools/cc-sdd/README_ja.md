@@ -26,7 +26,7 @@ Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code�
 # 基本インストール（デフォルト: 英語、Claude Code）
 npx cc-sdd@latest
 
-# アルファ版（大幅アップデート版 v2.0.0-alpha.3）
+# アルファ版（大幅アップデート版 v2.0.0-alpha.4）
 npx cc-sdd@next
 
 # 言語オプション（デフォルト: --lang en）

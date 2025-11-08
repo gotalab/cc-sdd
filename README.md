@@ -22,7 +22,7 @@ It also scaffolds team-aligned templates—requirements, design reviews, task pl
 # Basic installation (default: Claude Code)
 npx cc-sdd@latest
 
-# Alpha version with major updates (v2.0.0-alpha.3)
+# Alpha version with major updates (v2.0.0-alpha.4)
 npx cc-sdd@next
 
 # With language: --lang en|ja|zh-TW|zh|es|pt|de|fr|ru|it|ko|ar

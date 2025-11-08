@@ -26,7 +26,7 @@
 # 基本安裝（預設：英文文件，Claude Code 代理）
 npx cc-sdd@latest
 
-# Alpha 版本（重大更新版 v2.0.0-alpha.3）
+# Alpha 版本（重大更新版 v2.0.0-alpha.4）
 npx cc-sdd@next
 
 # 語言選項（預設：--lang en）
