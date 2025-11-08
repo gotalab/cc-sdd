@@ -4,7 +4,7 @@ auto_execution_mode: 3
 ---
 <meta>
 description: Generate implementation tasks for a specification
-argument-hint: <feature-name:$1> [-y:$2]
+argument-hint: <feature-name:$1> [-y:$2] [--sequential:$3]
 </meta>
 
 # Implementation Tasks Generator
@@ -34,18 +34,23 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 **Validate approvals**:
 - If `-y` flag provided ($2 == "-y"): Auto-approve requirements and design in spec.json
 - Otherwise: Verify both approved (stop if not, see Safety & Fallback)
+- Determine sequential mode: `sequential = ($3 == "--sequential")`
 
 ### Step 2: Generate Implementation Tasks
 
 **Load generation rules and template**:
 - Read `{{KIRO_DIR}}/settings/rules/tasks-generation.md` for principles
-- Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format
+- If `sequential == false`: Read `{{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md` for parallel judgement criteria
+- Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format (supports `(P)` markers)
 
 **Generate task list following all rules**:
 - Use language specified in spec.json
-- Map all requirements to tasks
+- Map all requirements to tasks and list requirement IDs only (comma-separated) without extra narration
 - Ensure all design components included
 - Verify task progression is logical and incremental
+- Collapse single-subtask structures by promoting them to major tasks and keep container summaries concise
+- Apply `(P)` markers to tasks that satisfy parallel criteria (skip markers when `sequential == true`)
+- Mark optional acceptance-criteria-focused test coverage subtasks with `- [ ]*` only when deferrable post-MVP
 - If existing tasks.md found, merge with new content
 
 ### Step 3: Finalize

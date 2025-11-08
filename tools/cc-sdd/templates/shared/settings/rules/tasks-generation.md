@@ -28,6 +28,9 @@ Focus on capabilities and outcomes, not code structure.
 - Connect to the overall system (no hanging features)
 - Progress incrementally (no big jumps in complexity)
 - Validate core functionality early in sequence
+- Respect architecture boundaries defined in design.md (Architecture Pattern & Boundary Map)
+- Honor interface contracts documented in design.md
+- Use major task summaries sparingly—omit detail bullets if the work is fully captured by child tasks.
 
 **End with integration tasks** to wire everything together.
 
@@ -43,8 +46,9 @@ Focus on capabilities and outcomes, not code structure.
 ### 4. Requirements Mapping
 
 **End each task detail section with**:
-- `_Requirements: X.X, Y.Y_` for specific requirement IDs
-- `_Requirements: [description]_` for cross-cutting requirements
+- `_Requirements: X.X, Y.Y_` listing **only requirement IDs** (comma-separated). Never append descriptive text, parentheses, or translations.
+- For cross-cutting requirements, list every relevant requirement ID. If a requirement lacks an ID, reference its canonical identifier exactly as written in requirements.md (still without extra commentary).
+- Reference components/interfaces from design.md when helpful (e.g., `_Contracts: AuthService API`)
 
 ### 5. Code-Only Focus
 
@@ -59,17 +63,40 @@ Focus on capabilities and outcomes, not code structure.
 - User testing
 - Marketing/business activities
 
+### Optional Test Coverage Tasks
+
+- When the design already guarantees functional coverage and rapid MVP delivery is prioritized, mark purely test-oriented follow-up work (e.g., baseline rendering/unit tests) as **optional** using the `- [ ]*` checkbox form.
+- Only apply the optional marker when the sub-task directly references acceptance criteria from requirements.md in its detail bullets.
+- Never mark implementation work or integration-critical verification as optional—reserve `*` for auxiliary/deferrable test coverage that can be revisited post-MVP.
+
 ## Task Hierarchy Rules
 
 ### Maximum 2 Levels
 - **Level 1**: Major tasks (1, 2, 3, 4...)
 - **Level 2**: Sub-tasks (1.1, 1.2, 2.1, 2.2...)
 - **No deeper nesting** (no 1.1.1)
+- If a major task would contain only a single actionable item, collapse the structure and promote the sub-task to the major level (e.g., replace `1.1` with `1.`).
+- When a major task exists purely as a container, keep the checkbox description concise and avoid duplicating detailed bullets—reserve specifics for its sub-tasks.
 
 ### Sequential Numbering
 - Major tasks MUST increment: 1, 2, 3, 4, 5...
 - Sub-tasks reset per major task: 1.1, 1.2, then 2.1, 2.2...
 - Never repeat major task numbers
+
+### Parallel Analysis (default)
+- Assume parallel analysis is enabled unless explicitly disabled (e.g. `--sequential` flag).
+- Identify tasks that can run concurrently when **all** conditions hold:
+  - No data dependency on other pending tasks
+  - No shared file or resource contention
+  - No prerequisite review/approval from another task
+- Validate that identified parallel tasks operate within separate boundaries defined in the Architecture Pattern & Boundary Map.
+- Confirm API/event contracts from design.md do not overlap in ways that cause conflicts.
+- Append `(P)` immediately after the task number for each parallel-capable task:
+  - Example: `- [ ] 2.1 (P) Build background worker`
+  - Apply to both major tasks and sub-tasks when appropriate.
+- If sequential mode is requested, omit `(P)` markers entirely.
+- Group parallel tasks logically (same parent when possible) and highlight any ordering caveats in detail bullets.
+- Explicitly call out dependencies that prevent `(P)` even when tasks look similar.
 
 ### Checkbox Format
 ```markdown
@@ -82,6 +109,10 @@ Focus on capabilities and outcomes, not code structure.
 - [ ] 1.2 Sub-task description
   - Detail items...
   - _Requirements: Y.Y_
+
+- [ ] 1.3 Sub-task description
+  - Detail items...
+  - _Requirements: Z.Z, W.W_
 
 - [ ] 2. Next major task (NOT 1 again!)
 - [ ] 2.1 Sub-task...

@@ -4,6 +4,91 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ---
 
+## 🔬 In Development (Unreleased)
+
+### 🎯 Highlights
+- **Parallel Task Analysis by Default**: The `spec-tasks` command now automatically identifies tasks suitable for parallel execution and marks them with `(P)` markers, enabling efficient parallelization of large-scale implementation tasks.
+- **New Research Template**: Added `research.md` template that separates discovery findings from detailed design. Systematically document architecture pattern evaluations, design decisions, and trade-offs.
+
+### ✨ New Features
+- **Parallel Task Analysis** ([#89](https://github.com/gotalab/cc-sdd/pull/89))
+  - Automatic analysis of parallel execution feasibility during task generation
+  - `(P)` markers clearly indicate parallelizable tasks
+  - `--sequential` flag to switch back to traditional sequential analysis
+  - New rule file: `tasks-parallel-analysis.md` defines parallelization criteria
+- **research.md Template**
+  - Separates discovery findings and architectural investigations from `design.md`
+  - Captures research logs, architecture pattern evaluations, and design decisions
+  - Provides structured format for documenting trade-offs and rationale
+
+### 🔧 Improvements
+- Enhanced task generation guidelines with parallel execution criteria
+- Improved design template with discovery process guidelines
+- Updated spec-design workflow to leverage new research.md template
+- Streamlined tasks.md template structure
+- Exclude agent tooling directories from steering docs
+  - Automatically excludes `.claude/`, `.cursor/`, `.codex/`, etc. from analysis
+
+### 📈 Key Metrics
+- **Supported Platforms**: 7 (no change)
+- **New Template**: research.md (for investigation & design decisions)
+- **New Rule File**: tasks-parallel-analysis.md
+
+---
+
+## 🚀 Ver 2.0.0-alpha.5 (2025-11-05)
+
+### 🎯 Highlights
+- **EARS Format Improvement**: Unified EARS format to lowercase syntax for better readability in requirements definition.
+- **Enhanced Documentation**: Improved user experience with clarified installation instructions and npm badge addition.
+
+### 🔧 Improvements
+- Updated EARS format to lowercase syntax ([#88](https://github.com/gotalab/cc-sdd/pull/88))
+  - Changed from "WHILE/WHEN/WHERE/IF" to "while/when/where/if"
+  - More natural and readable requirements description
+- Clarified installation documentation ([#87](https://github.com/gotalab/cc-sdd/pull/87))
+- Added npm `next` version badge to README files ([#86](https://github.com/gotalab/cc-sdd/pull/86))
+
+---
+
+## 📚 Ver 2.0.0-alpha.4 (2025-10-30)
+
+### 🎯 Highlights
+- **Comprehensive Customization Guide**: Added customization guide with 7 practical examples and complete command reference, making it easier to tailor templates to your project needs.
+
+### 📖 New Documentation
+- **Customization Guide** ([#83](https://github.com/gotalab/cc-sdd/pull/83))
+  - Template customization patterns
+  - Agent-specific workflow examples
+  - Project-specific rule examples
+  - 7 practical customization examples
+- **Command Reference** ([#83](https://github.com/gotalab/cc-sdd/pull/83))
+  - Detailed usage for all 11 `/kiro:*` commands
+  - Parameter descriptions and practical examples
+
+### 🔧 Improvements
+- Clarified template customization instructions ([#85](https://github.com/gotalab/cc-sdd/pull/85))
+- Customization guide review improvements ([#84](https://github.com/gotalab/cc-sdd/pull/84))
+
+---
+
+## 🤖 Ver 2.0.0-alpha.3.1 (2025-10-24)
+
+### 🎯 Highlights
+- **Automated GitHub Issue Management**: Automatically closes inactive issues after 10 days, streamlining project management.
+
+### ⚙️ Automation
+- Automated GitHub issue lifecycle management ([#80](https://github.com/gotalab/cc-sdd/pull/80))
+  - Auto-close stale issues after 10 days of inactivity
+  - Configurable stale detection workflow
+  - English-only workflow messaging ([#81](https://github.com/gotalab/cc-sdd/pull/81))
+
+### 🔧 Improvements
+- Updated stale detection period to 10 days
+- Improved GitHub Actions workflow for issue management
+
+---
+
 ## 🚀 Ver 2.0.0-alpha.3 (2025-10-22)
 
 ### 🎯 Highlights

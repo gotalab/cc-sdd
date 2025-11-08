@@ -26,7 +26,7 @@ Run one command to install **AI-DLC** (AI Driven Development Lifecycle) with **S
 # Basic installation (defaults: English docs, Claude Code)
 npx cc-sdd@latest
 
-# Alpha version with major updates (v2.0.0-alpha.3)
+# Alpha version with major updates (v2.0.0-alpha.4)
 npx cc-sdd@next
 
 # With language options (default: --lang en)

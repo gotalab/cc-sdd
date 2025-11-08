@@ -57,6 +57,7 @@ yarn.lock
 
 # Cache directories
 .cache/
+cache/
 .parcel-cache/
 .next/
 .nuxt/

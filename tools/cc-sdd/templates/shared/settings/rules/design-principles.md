@@ -25,6 +25,8 @@
 - **Clear Boundaries**: Explicit domain ownership
 - **Dependency Direction**: Follow architectural layers
 - **Interface Segregation**: Minimal, focused interfaces
+- **Team-safe Interfaces**: Design boundaries that allow parallel implementation without merge conflicts
+- **Research Traceability**: Record boundary decisions and rationale in `research.md`
 
 ### 5. Data Modeling Standards
 - **Domain First**: Start with business concepts
@@ -43,6 +45,7 @@
 - **Contract First**: Define interfaces before implementation
 - **Versioning**: Plan for API evolution
 - **Idempotency**: Design for retry safety
+- **Contract Visibility**: Surface API and event contracts in design.md while linking extended details from `research.md`
 
 ## Documentation Standards
 
@@ -57,6 +60,7 @@
 - **Traceable**: Requirements to components mapping
 - **Complete**: All aspects covered for implementation
 - **Consistent**: Uniform terminology throughout
+- **Focused**: Keep design.md centered on architecture and contracts; move investigation logs and lengthy comparisons to `research.md`
 
 ## Diagram Guidelines
 

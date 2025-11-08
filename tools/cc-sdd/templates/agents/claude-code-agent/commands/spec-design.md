@@ -26,7 +26,7 @@ Use the Task tool to invoke the SubAgent with file path patterns:
 ```
 Task(
   subagent_type="spec-design-agent",
-  description="Generate technical design",
+  description="Generate technical design and update research log",
   prompt="""
 Feature: $1
 Spec directory: {{KIRO_DIR}}/specs/$1/
@@ -37,9 +37,11 @@ File patterns to read:
 - {{KIRO_DIR}}/steering/*.md
 - {{KIRO_DIR}}/settings/rules/design-*.md
 - {{KIRO_DIR}}/settings/templates/specs/design.md
+- {{KIRO_DIR}}/settings/templates/specs/research.md
 
 Discovery: auto-detect based on requirements
 Mode: {generate or merge based on design.md existence}
+Language: respect spec.json language for design.md/research.md outputs
 """
 )
 ```

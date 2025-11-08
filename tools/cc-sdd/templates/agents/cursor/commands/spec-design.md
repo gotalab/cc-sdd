@@ -27,6 +27,7 @@ Generate technical design document for feature **$1** based on approved requirem
 - **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
 - `{{KIRO_DIR}}/settings/templates/specs/design.md` for document structure
 - `{{KIRO_DIR}}/settings/rules/design-principles.md` for design principles
+- `{{KIRO_DIR}}/settings/templates/specs/research.md` for discovery log structure
 
 **Validate requirements approval**:
 - If `-y` flag provided ($2 == "-y"): Auto-approve requirements in spec.json
@@ -66,6 +67,15 @@ Generate technical design document for feature **$1** based on approved requirem
    - Existing patterns to follow or extend
    - Integration points and dependencies
    - Identified risks and mitigation strategies
+   - Potential architecture patterns and boundary options (note details in `research.md`)
+   - Parallelization considerations for future tasks (capture dependencies in `research.md`)
+
+4. **Persist Findings to Research Log**:
+   - Create or update `{{KIRO_DIR}}/specs/$1/research.md` using the shared template
+   - Summarize discovery scope and key findings (Summary section)
+   - Record investigations in Research Log topics with sources and implications
+   - Document architecture pattern evaluation, design decisions, and risks using the template sections
+   - Use the language specified in spec.json when writing or updating `research.md`
 
 ### Step 3: Generate Design Document
 
@@ -79,6 +89,7 @@ Generate technical design document for feature **$1** based on approved requirem
    - If existing design.md found in Step 1, use it as reference context (merge mode)
    - Apply design rules: Type Safety, Visual Communication, Formal Tone
    - Use language specified in spec.json
+   - Ensure sections reflect updated headings ("Architecture Pattern & Boundary Map", "Technology Stack & Alignment", "Components & Interface Contracts") and reference supporting details from `research.md`
 
 3. **Update Metadata** in spec.json:
    - Set `phase: "design-generated"`
@@ -97,6 +108,9 @@ Generate technical design document for feature **$1** based on approved requirem
 - **Steering Alignment**: Respect existing architecture patterns from steering context
 - **Template Adherence**: Follow specs/design.md template structure and generation instructions strictly
 - **Design Focus**: Architecture and interfaces ONLY, no implementation code
+
+### Language Reminder
+- Markdown prompt content must remain in English, even when spec.json requests another language for design output. The generated design.md and research.md should use the spec language.
 </instructions>
 
 ## Tool Guidance
