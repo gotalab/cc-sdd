@@ -20,6 +20,28 @@ Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, 
 
 ## 🚀 Installation
 
+Choose your preferred installation method:
+
+### Option 1: Claude Plugins Marketplace (Recommended)
+
+Install cc-sdd as a Claude plugins marketplace for modular, standards-compliant installation:
+
+```bash
+# Add the cc-sdd marketplace
+claude /plugin marketplace add https://github.com/gotalab/cc-sdd
+
+# Install specific plugins for your AI agent
+claude /plugin install cc-sdd-claude-code     # For Claude Code
+claude /plugin install cc-sdd-claude-agent    # For Claude Code SubAgents
+claude /plugin install cc-sdd-cursor          # For Cursor IDE
+claude /plugin install cc-sdd-gemini          # For Gemini CLI
+claude /plugin install cc-sdd-codex           # For Codex CLI
+claude /plugin install cc-sdd-copilot         # For GitHub Copilot
+claude /plugin install cc-sdd-qwen            # For Qwen Code
+```
+
+### Option 2: Traditional CLI Installation
+
 Run one command to install **AI-DLC** (AI Driven Development Lifecycle) with **SDD** (Spec-Driven Development) workflows across your preferred AI coding agent. cc-sdd also scaffolds team-aligned templates so generated requirements, design reviews, task plans, and steering docs fit your approval flow.
 
 ```bash
@@ -104,20 +126,44 @@ npx cc-sdd@next --windsurf --lang ja    # Requires alpha version (Windsurf workf
 - **🛠 Template flexibility** - Tweak `{{KIRO_DIR}}/settings/templates` (steering, requirements, design, tasks) to mirror your team's deliverables
 - **🔄 AI-Native + Human Gates** - AI Plans → AI Asks → Human Validates → AI Implements (rapid cycles with quality control)
 - **🌍 Team-Ready** - 12-language support, cross-platform, standardized workflows with quality gates
+- **🏪 Claude Plugins Standard** - Now available as a proper Claude plugins marketplace for modular installation
+
+## 🏪 Claude Plugins Marketplace
+
+cc-sdd now follows the official Claude plugins specification, providing a marketplace-based installation experience:
+
+- **Modular Installation**: Install only the plugins you need for your specific AI agent
+- **Standards Compliant**: Follows Claude's official plugin architecture
+- **Easy Updates**: Marketplace-based distribution enables seamless updates
+- **Plugin Isolation**: Each agent type is a separate plugin with its own settings and commands
+
+### Marketplace Installation
+
+```bash
+# Add the marketplace
+claude /plugin marketplace add https://github.com/gotalab/cc-sdd
+
+# Browse available plugins
+claude /plugin marketplace list
+
+# Install specific plugins
+claude /plugin install cc-sdd-claude-code
+```
+
+> **Note**: The traditional `npx cc-sdd` CLI installation remains fully supported for backward compatibility.
 
 ## 🤖 Supported AI Agents
 
-| Agent | Status | Commands |  |
-|-------|--------|----------|--------|
-| **Claude Code** | ✅ Full | 11 slash commands | `CLAUDE.md` |
-| **Claude Code SubAgents** | ✅ Full | 12 commands + 9 subagents (requires cc-sdd@next) | `CLAUDE.md`, `.claude/agents/kiro/` |
-| **Cursor IDE** | ✅ Full | 11 commands | `AGENTS.md` |
-| **Gemini CLI** | ✅ Full | 11 commands | `GEMINI.md` |
-| **Codex CLI** | ✅ Full | 11 prompts | `AGENTS.md` |
-| **GitHub Copilot** | ✅ Full | 11 prompts | `AGENTS.md` |
-| **Qwen Code** | ✅ Full | 11 commands | `QWEN.md` |
-| **Windsurf IDE** | ✅ Full | 11 workflows | `.windsurf/workflows/`, `AGENTS.md` (requires cc-sdd@next) |
-| Others | 📅 Planned | - | - |
+| Agent | Status | Plugin | Commands |  |
+|-------|--------|--------|----------|--------|
+| **Claude Code** | ✅ Full | `cc-sdd-claude-code` | 11 slash commands | `CLAUDE.md` |
+| **Claude Code SubAgents** | ✅ Full | `cc-sdd-claude-agent` | 12 commands + 9 subagents | `CLAUDE.md`, `.claude/agents/kiro/` |
+| **Gemini CLI** | ✅ Full | `cc-sdd-gemini` | 11 commands | `GEMINI.md` |
+| **Cursor IDE** | ✅ Full | `cc-sdd-cursor` | 11 commands | `AGENTS.md` |
+| **Codex CLI** | ✅ Full | `cc-sdd-codex` | 11 prompts | `AGENTS.md` |
+| **GitHub Copilot** | ✅ Full | `cc-sdd-copilot` | 11 prompts | `AGENTS.md` |
+| **Qwen Code** | ✅ Full | `cc-sdd-qwen` | 11 commands | `QWEN.md` |
+| Others | 📅 Planned | - | - | - |
  
 ## 📋 Commands
 
@@ -185,7 +231,29 @@ npx cc-sdd@latest --kiro-dir docs/specs
 
 ## 📁 Project Structure
 
-After installation, your project gets:
+### Marketplace Installation Structure
+
+When using Claude plugins marketplace installation:
+
+```
+project/
+├── .claude/plugins/cc-sdd-claude-code/     # Claude Code plugin
+│   ├── .claude-plugin/plugin.json          # Plugin metadata
+│   ├── commands/                           # 11 slash commands
+│   └── .claude-plugin/settings/            # Rules & templates
+├── .claude/plugins/cc-sdd-claude-agent/    # Claude SubAgents plugin
+│   ├── .claude-plugin/plugin.json
+│   ├── commands/                           # 12 commands
+│   ├── agents/                             # 9 subagents
+│   └── .claude-plugin/settings/
+├── .kiro/specs/                            # Feature specifications
+├── .kiro/steering/                         # AI guidance rules
+└── CLAUDE.md                                # Project configuration
+```
+
+### Traditional CLI Installation Structure
+
+When using `npx cc-sdd` installation:
 
 ```
 project/

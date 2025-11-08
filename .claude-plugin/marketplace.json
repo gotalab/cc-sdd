@@ -1,0 +1,27 @@
+{
+  "name": "cc-sdd-marketplace",
+  "owner": {
+    "name": "GotaLab",
+    "url": "https://github.com/gotalab"
+  },
+  "metadata": {
+    "description": "Spec-Driven Development for Claude Code. AI-DLC methodology with human approval gates, specialized agents, and systematic development workflows.",
+    "version": "2.0.0"
+  },
+  "plugins": [
+    {
+      "name": "cc-sdd-claude-code",
+      "description": "Spec-Driven Development for Claude Code. AI-DLC methodology with human approval gates, specialized agents, and systematic development workflows.",
+      "version": "2.0.0",
+      "author": {
+        "name": "GotaLab",
+        "url": "https://github.com/gotalab",
+        "email": "contact@gotalab.io"
+      },
+      "homepage": "https://github.com/gotalab/cc-sdd",
+      "repository": "https://github.com/gotalab/cc-sdd",
+      "tags": ["spec-driven-development", "ai-dlc", "workflow-automation", "claude-code", "systematic-development", "agents"],
+      "source": "./plugins/cc-sdd-claude-code"
+    }
+  ]
+}
