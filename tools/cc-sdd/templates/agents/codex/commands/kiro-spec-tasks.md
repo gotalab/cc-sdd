@@ -46,9 +46,12 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 **Generate task list following all rules**:
 - Use language specified in spec.json
 - Map all requirements to tasks
+- When documenting requirement coverage, list IDs only (comma-separated) without descriptive suffixes or parentheses
 - Ensure all design components included
 - Verify task progression is logical and incremental
+- Collapse single-subtask structures by promoting them to major tasks and avoid duplicating details on container-only major tasks (use template patterns accordingly)
 - Apply `(P)` markers to tasks that satisfy parallel criteria (omit markers when sequential mode requested)
+- Mark optional test coverage subtasks with `- [ ]*` only when they strictly cover acceptance criteria already satisfied by core implementation and can be deferred post-MVP
 - If existing tasks.md found, merge with new content
 
 ### Step 3: Finalize
