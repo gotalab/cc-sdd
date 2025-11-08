@@ -1,0 +1,25 @@
+{
+  "name": "cc-sdd-claude-code",
+  "version": "2.0.0",
+  "description": "Complete spec-driven development toolkit for Claude Code. AI-DLC methodology with 12 commands, 9 specialized agents, and comprehensive templates for systematic software development.",
+  "author": {
+    "name": "GotaLab",
+    "email": "contact@gotalab.io",
+    "url": "https://github.com/gotalab"
+  },
+  "homepage": "https://github.com/gotalab/cc-sdd",
+  "repository": "https://github.com/gotalab/cc-sdd",
+  "license": "MIT",
+  "keywords": [
+    "spec-driven-development",
+    "ai-dlc",
+    "software-engineering",
+    "requirements",
+    "design",
+    "testing",
+    "workflow-automation",
+    "claude-code",
+    "agents",
+    "project-management"
+  ]
+}
