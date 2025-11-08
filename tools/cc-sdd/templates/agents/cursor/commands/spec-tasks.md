@@ -32,6 +32,25 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 - Otherwise: Verify both approved (stop if not, see Safety & Fallback)
 - Determine sequential mode: `sequential = ($3 == "--sequential")`
 
+Feature: $1
+Spec directory: {{KIRO_DIR}}/specs/$1/
+Auto-approve: {true if $2 == "-y", else false}
+Sequential mode: {true if sequential else false}
+
+File patterns to read:
+- {{KIRO_DIR}}/specs/$1/*.{json,md}
+- {{KIRO_DIR}}/steering/*.md
+- {{KIRO_DIR}}/settings/rules/tasks-generation.md
+- {{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md (include only when sequential mode is false)
+- {{KIRO_DIR}}/settings/templates/specs/tasks.md
+
+Mode: {generate or merge based on tasks.md existence}
+Instruction highlights:
+- Map all requirements to tasks and list requirement IDs only (comma-separated) without extra narration
+- Promote single actionable sub-tasks to major tasks and keep container summaries concise
+- Apply `(P)` markers only when parallel criteria met (omit in sequential mode)
+- Mark optional acceptance-criteria-focused test coverage subtasks with `- [ ]*` only when deferrable post-MVP
+
 ### Step 2: Generate Implementation Tasks
 
 **Load generation rules and template**:
@@ -42,9 +61,12 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 **Generate task list following all rules**:
 - Use language specified in spec.json
 - Map all requirements to tasks
+- When documenting requirement coverage, list IDs only (comma-separated) without descriptive suffixes or parentheses
 - Ensure all design components included
 - Verify task progression is logical and incremental
+- Collapse single-subtask structures by promoting them to major tasks and avoid duplicating details on container-only major tasks (use template patterns accordingly)
 - Apply `(P)` markers to tasks that satisfy parallel criteria (skip markers when `sequential == true`)
+- Mark optional acceptance-criteria-focused test coverage subtasks with `- [ ]*` only when deferrable post-MVP
 - If existing tasks.md found, merge with new content
 
 ### Step 3: Finalize

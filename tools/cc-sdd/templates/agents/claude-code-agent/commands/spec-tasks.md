@@ -43,6 +43,11 @@ File patterns to read:
 - {{KIRO_DIR}}/settings/templates/specs/tasks.md
 
 Mode: {generate or merge based on tasks.md existence}
+Instruction highlights:
+- Map all requirements to tasks and list requirement IDs only (comma-separated) without extra narration
+- Promote single actionable sub-tasks to major tasks and keep container summaries concise
+- Apply `(P)` markers only when parallel criteria met (omit in sequential mode)
+- Mark optional acceptance-criteria-focused test coverage subtasks with `- [ ]*` only when deferrable post-MVP
 """
 )
 ```
