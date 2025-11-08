@@ -57,6 +57,7 @@ yarn.lock
 
 # Cache directories
 .cache/
+cache/
 .parcel-cache/
 .next/
 .nuxt/
@@ -73,7 +74,7 @@ coverage/
 
 # Project specific
 BLOG.md
-# docs/cc-sdd/
+docs/cc-sdd/
 docs/kiro/prompt/
 docs/kiro/
 # .kiro/
