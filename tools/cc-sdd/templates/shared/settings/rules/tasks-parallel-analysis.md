@@ -22,6 +22,7 @@ Only mark a task as parallel-capable when **all** of the following are true:
 - Group parallel tasks under the same parent whenever the work belongs to the same theme.
 - List obvious prerequisites or caveats in the detail bullets (e.g., "Requires schema migration from 1.2").
 - When two tasks look similar but are not parallel-safe, call out the blocking dependency explicitly.
+- Skip marking container-only major tasks (those without their own actionable detail bullets) with `(P)`—evaluate parallel execution at the sub-task level instead.
 
 ## Quality Checklist
 Before marking a task with `(P)`, ensure you have:

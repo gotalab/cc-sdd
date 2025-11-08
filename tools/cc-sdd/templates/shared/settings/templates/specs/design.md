@@ -1,8 +1,6 @@
 # Design Document Template
 
 ---
-**Document Length Guidelines: Max 800 lines**
-
 **Purpose**: Provide sufficient detail to ensure implementation consistency across different implementers, preventing interpretation drift.
 
 **Approach**:
@@ -33,6 +31,8 @@
 
 ## Architecture
 
+> Reference detailed discovery notes in `research.md` as needed; keep this document focused on architecture boundaries and explicit contracts.
+
 ### Existing Architecture Analysis (if applicable)
 When modifying existing systems:
 - Current architecture patterns and constraints
@@ -40,16 +40,17 @@ When modifying existing systems:
 - Integration points that must be maintained
 - Technical debt addressed or worked around
 
-### High-Level Architecture
-**RECOMMENDED**: Include Mermaid diagram showing system architecture (required for complex features, optional for simple additions)
+### Architecture Pattern & Boundary Map
+**RECOMMENDED**: Include Mermaid diagram showing the chosen architecture pattern and system boundaries (required for complex features, optional for simple additions)
 
 **Architecture Integration**:
+- Selected pattern: [name and brief rationale]
+- Domain/feature boundaries: [how responsibilities are separated to avoid conflicts]
 - Existing patterns preserved: [list key patterns]
 - New components rationale: [why each is needed]
-- Technology alignment: [how it fits current stack]
 - Steering compliance: [principles maintained]
 
-### Technology Stack and Design Decisions
+### Technology Stack
 
 **Generation Instructions** (DO NOT include this section in design.md):
 Adapt content based on feature classification from Discovery & Analysis Phase:
@@ -57,26 +58,14 @@ Adapt content based on feature classification from Discovery & Analysis Phase:
 **For New Features (greenfield)**:
 Generate Technology Stack section with ONLY relevant layers:
 - Include only applicable technology layers (e.g., skip Frontend for CLI tools, skip Infrastructure for libraries)
-- For each technology choice, provide: selection, rationale, and alternatives considered
-- Include Architecture Pattern Selection if making architectural decisions
+- For each technology choice, state the selected option (name/version) and the role it plays (detailed rationale and alternatives stay in `research.md`)
+- Include Architecture Pattern selection summary when it affects stack composition
 
 **For Extensions/Additions to Existing Systems**:
-Generate Technology Alignment section instead:
-- Document how feature aligns with existing technology stack
-- Note any new dependencies or libraries being introduced
-- Justify deviations from established patterns if necessary
-
-**Key Design Decisions**:
-Generate 1-3 critical technical decisions that significantly impact the implementation.
-Each decision should follow this format:
-- **Decision**: [Specific technical choice made]
-- **Context**: [Problem or requirement driving this decision]
-- **Alternatives**: [2-3 other approaches considered]
-- **Selected Approach**: [What was chosen and how it works]
-- **Rationale**: [Why this is optimal for the specific context]
-- **Trade-offs**: [What we gain vs. what we sacrifice]
-
-Skip this entire section for simple CRUD operations or when following established patterns without deviation.
+Generate Technology Stack section tailored to modifications:
+- Document how the feature aligns with the existing stack only where it affects implementation
+- List new dependencies or libraries being introduced with concise context
+- Note deviations from established patterns at a high level; capture reasoning in `research.md`
 
 ## System Flows
 
