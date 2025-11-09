@@ -55,6 +55,8 @@ npx cc-sdd@latest --claude --lang en ## Claude Code
 - ✅ [design.md](.kiro/specs/photo-albums-en/design.md) — Architecture with Mermaid diagrams
 - ✅ [tasks.md](.kiro/specs/photo-albums-en/tasks.md) — 12 implementation tasks with dependencies
 
+Want to inspect a complex, large-scale requirements set? Jump to the advanced [customer-support-rag-backend-en](.kiro/specs/customer-support-rag-backend-en/) spec for the end-to-end requirements → design → tasks flow.
+
 ![Example: design.md System Flow](assets/design-system_flow.png)
 
 ## 🎯 Use Cases
