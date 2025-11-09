@@ -26,23 +26,22 @@ Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code�
 # 基本インストール（デフォルト: 英語、Claude Code）
 npx cc-sdd@latest
 
-# アルファ版（大幅アップデート版 v2.0.0-alpha.4）
-npx cc-sdd@next
-
 # 言語オプション（デフォルト: --lang en）
 npx cc-sdd@latest --lang ja    # 日本語
 npx cc-sdd@latest --lang zh-TW # 繁体字中国語
 # 対応言語（全12言語）: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # エージェントオプション（デフォルト: claude-code / --claude）
-npx cc-sdd@latest --claude --lang ja    # または @next で最新アルファ版
-npx cc-sdd@next --claude-agent --lang ja # Claude Code SubAgentsをインストール（@next必須）
-npx cc-sdd@latest --gemini --lang ja    # または @next で最新アルファ版
-npx cc-sdd@latest --cursor --lang ja    # または @next で最新アルファ版
-npx cc-sdd@next --codex --lang ja       # アルファ版必須
-npx cc-sdd@next --copilot --lang ja     # アルファ版必須
-npx cc-sdd@latest --qwen --lang ja      # または @next で最新アルファ版
-npx cc-sdd@next --windsurf --lang ja    # アルファ版必須（Windsurf向けワークフロー）
+npx cc-sdd@latest --claude --lang ja        # Claude Code（11コマンド）
+npx cc-sdd@latest --claude-agent --lang ja  # Claude Code SubAgents（12コマンド + 9サブエージェント）
+npx cc-sdd@latest --cursor --lang ja        # Cursor IDE
+npx cc-sdd@latest --gemini --lang ja        # Gemini CLI
+npx cc-sdd@latest --codex --lang ja         # Codex CLI
+npx cc-sdd@latest --copilot --lang ja       # GitHub Copilot
+npx cc-sdd@latest --qwen --lang ja          # Qwen Code
+npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
+
+# 注: @nextは今後のアルファ/ベータ版用に予約されています
 ```
 
 ## 🌐 対応言語
@@ -110,13 +109,13 @@ npx cc-sdd@next --windsurf --lang ja    # アルファ版必須（Windsurf向け
 | エージェント | 状態 | コマンド | 設定 |
 |-------|--------|----------|--------|
 | **Claude Code** | ✅ 完全対応 | 11スラッシュコマンド | `CLAUDE.md` |
-| **Claude Code SubAgents** | ✅ 完全対応 | 12コマンド + 9サブエージェント（cc-sdd@nextが必要） | `CLAUDE.md`, `.claude/agents/kiro/` |
+| **Claude Code SubAgents** | ✅ 完全対応 | 12コマンド + 9サブエージェント | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Cursor IDE** | ✅ 完全対応 | 11コマンド | `AGENTS.md` |
 | **Gemini CLI** | ✅ 完全対応 | 11コマンド | `GEMINI.md` |
 | **Codex CLI** | ✅ 完全対応 | 11プロンプト | `AGENTS.md` |
 | **GitHub Copilot** | ✅ 完全対応 | 11プロンプト | `AGENTS.md` |
 | **Qwen Code** | ✅ 完全対応 | 11コマンド | `QWEN.md` |
-| **Windsurf IDE** | ✅ 完全対応 | 11ワークフロー | `.windsurf/workflows/`, `AGENTS.md`（cc-sdd@nextが必要） |
+| **Windsurf IDE** | ✅ 完全対応 | 11ワークフロー | `.windsurf/workflows/`, `AGENTS.md` |
 | その他 | 📅 予定 | - | - |
  
 ## 📋 コマンド
@@ -207,7 +206,7 @@ project/
 
 ---
 
-**ベータリリース** - 使用可能、改善中。[問題を報告](https://github.com/gotalab/cc-sdd/issues) | MIT License
+**安定版リリース v2.0.0** - 本番環境対応。[問題を報告](https://github.com/gotalab/cc-sdd/issues) | MIT License
 
 ### プラットフォーム対応
 - 対応OS: macOS / Linux / Windows（通常は自動検出）。

@@ -26,23 +26,22 @@
 # 基本安裝（預設：英文文件，Claude Code 代理）
 npx cc-sdd@latest
 
-# Alpha 版本（重大更新版 v2.0.0-alpha.4）
-npx cc-sdd@next
-
 # 語言選項（預設：--lang en）
 npx cc-sdd@latest --lang zh-TW # 繁體中文
 npx cc-sdd@latest --lang ja    # 日語
 # 支援語言（共12種）: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # 代理選項（預設：claude-code / --claude）
-npx cc-sdd@latest --claude --lang zh-TW    # 或 @next 取得最新 alpha
-npx cc-sdd@next --claude-agent --lang zh-TW # 安裝 Claude Code SubAgents（需使用 @next）
-npx cc-sdd@latest --gemini --lang zh-TW    # 或 @next 取得最新 alpha
-npx cc-sdd@latest --cursor --lang zh-TW    # 或 @next 取得最新 alpha
-npx cc-sdd@next --codex --lang zh-TW       # 需要 alpha 版本
-npx cc-sdd@next --copilot --lang zh-TW     # 需要 alpha 版本
-npx cc-sdd@latest --qwen --lang zh-TW      # 或 @next 取得最新 alpha
-npx cc-sdd@next --windsurf --lang zh-TW    # 需要 alpha 版本（Windsurf 工作流程）
+npx cc-sdd@latest --claude --lang zh-TW        # Claude Code（11 個指令）
+npx cc-sdd@latest --claude-agent --lang zh-TW  # Claude Code SubAgents（12 個指令 + 9 個子代理）
+npx cc-sdd@latest --cursor --lang zh-TW        # Cursor IDE
+npx cc-sdd@latest --gemini --lang zh-TW        # Gemini CLI
+npx cc-sdd@latest --codex --lang zh-TW         # Codex CLI
+npx cc-sdd@latest --copilot --lang zh-TW       # GitHub Copilot
+npx cc-sdd@latest --qwen --lang zh-TW          # Qwen Code
+npx cc-sdd@latest --windsurf --lang zh-TW      # Windsurf IDE
+
+# 注意：@next 現已保留給未來的 alpha/beta 版本
 ```
 
 ## 🌐 支援語言
@@ -110,13 +109,13 @@ npx cc-sdd@next --windsurf --lang zh-TW    # 需要 alpha 版本（Windsurf 工�
 | 代理 | 狀態 | 指令 | 設定 |
 |------|------|------|------|
 | **Claude Code** | ✅ 完全支援 | 11 個斜線指令 | `CLAUDE.md` |
-| **Claude Code SubAgents** | ✅ 完全支援 | 12 個指令 + 9 個子代理（需 cc-sdd@next） | `CLAUDE.md`, `.claude/agents/kiro/` |
+| **Claude Code SubAgents** | ✅ 完全支援 | 12 個指令 + 9 個子代理 | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
 | **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
 | **Codex CLI** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
-| **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `.windsurf/workflows/`, `AGENTS.md`（需 cc-sdd@next） |
+| **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `.windsurf/workflows/`, `AGENTS.md` |
 | 其他 | 📅 規劃中 | - | - |
 
 ## 📋 指令
@@ -207,7 +206,7 @@ project/
 
 ---
 
-**Beta 版本** - 可用且持續改進中。[回報問題](https://github.com/gotalab/cc-sdd/issues) | MIT License
+**穩定版 v2.0.0** - 生產環境就緒。[回報問題](https://github.com/gotalab/cc-sdd/issues) | MIT License
 
 ### 平台支援
 - 支援 OS：macOS / Linux / Windows（預設自動偵測）。

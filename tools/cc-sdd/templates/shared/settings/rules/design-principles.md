@@ -86,6 +86,7 @@ graph TB
   - ❌ `DnD[@dnd-kit/core]` → invalid ID (`@`).
   - ❌ `UI[KanbanBoard(React)]` → invalid label (`()`).
   - ✅ `DndKit[dnd-kit core]` → use plain text in labels, keep technology details in the accompanying description.
+  - ℹ️ Mermaid strict-mode will otherwise fail with errors like `Expecting 'SQE' ... got 'PS'`; remove punctuation from labels before rendering.
 - **Edges** – show data or control flow direction.
 - **Groups** – using Mermaid subgraphs to cluster related components is allowed; use it sparingly for clarity.
 

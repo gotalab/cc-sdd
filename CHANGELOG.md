@@ -8,26 +8,157 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.0] - 2025-11-09
+
+### 🎉 Major Release Highlights
+
+cc-sdd v2.0.0 is a major stable release that consolidates all features from the alpha series (2.0.0-alpha.1 through alpha.6). All features are now available via `npx cc-sdd@latest`.
+
+**Key Improvements:**
+- ✨ **11 Commands**: Expanded from 8 to 11 commands with 3 new validation commands for brownfield development
+- 🤖 **7 AI Agents**: Full support for Claude Code, Claude Code SubAgents, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf IDE
+- 🌍 **12 Languages**: Comprehensive internationalization (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar)
+- ⚡ **Parallel Task Analysis**: Automatic detection of parallelizable tasks with `(P)` markers
+- 📚 **Project Memory**: Enhanced steering system loading entire directories
+- 🎨 **Template Flexibility**: Unified cross-platform templates with customization support
+
 ### Added
-- Parallel task analysis by default in spec-tasks command ([#89](https://github.com/gotalab/cc-sdd/pull/89))
+
+#### Core Features
+- **Parallel task analysis** by default in spec-tasks command ([#89](https://github.com/gotalab/cc-sdd/pull/89))
   - Automatic `(P)` marker for parallel-executable tasks
   - New `--sequential` flag to opt-out of parallel analysis
   - New rule file: `tasks-parallel-analysis.md` for identifying parallel tasks
-- New `research.md` template for spec-driven workflow
+- **Research.md template** for spec-driven workflow
   - Separates discovery findings and architectural investigations from `design.md`
   - Captures research logs, architecture pattern evaluations, and design decisions
   - Provides structured format for documenting trade-offs and rationale
-- Guidelines for excluding agent tooling directories from steering docs
+- **Guidelines for excluding agent tooling directories** from steering docs
   - Prevents `.claude/`, `.cursor/`, `.codex/` etc. from being analyzed
 
-### Changed
-- Enhanced task generation guidelines with parallel execution criteria
-- Improved design template with discovery process guidelines
-- Updated spec-design workflow to leverage new research.md template
-- Streamlined tasks.md template structure
+#### Platform Support (from alpha releases)
+- **Claude Code SubAgents mode** for context optimization ([#74](https://github.com/gotalab/cc-sdd/pull/74))
+  - Delegate SDD commands to dedicated subagents to preserve main conversation context
+  - Improve session lifespan by isolating command-specific context
+  - Specialized system prompts for each command type
+  - 12 commands + 9 SubAgent definitions
+- **Windsurf IDE support** with complete workflow integration
+  - `.windsurf/workflows/` directory with 11 workflow files
+  - AGENTS.md configuration for optimization
+  - `--windsurf` CLI flag
+- **Codex CLI official support** with 11 prompts in `.codex/prompts/`
+- **GitHub Copilot official support** with 11 prompts in `.github/prompts/`
 
-**Related PRs:**
+#### Validation Commands (Brownfield Development)
+- **`/kiro:validate-gap`** - Analyze implementation gap between requirements and existing codebase
+- **`/kiro:validate-design`** - Validate design compatibility with existing architecture
+- **`/kiro:validate-impl`** - Validate implementation against requirements, design, and tasks
+
+#### Developer Experience
+- **Interactive CLI installer** with guided setup ([#70](https://github.com/gotalab/cc-sdd/pull/70))
+  - Organized file display by Commands / Project Memory / Settings categories
+  - Interactive project memory handling (overwrite/append/keep)
+- **Comprehensive documentation**
+  - Complete command reference with 11 `/kiro:*` commands ([#83](https://github.com/gotalab/cc-sdd/pull/83))
+  - Customization guide with 7 practical examples ([#83](https://github.com/gotalab/cc-sdd/pull/83))
+  - Migration guide for v1.x users
+- **npm badges** for version tracking ([#86](https://github.com/gotalab/cc-sdd/pull/86))
+
+### Changed
+
+#### Architecture & Structure
+- **Unified template structure** - removed `os-mac/os-windows` directories in favor of single `commands/` structure
+- **All templates now use actual extensions** (`.md`, `.prompt.md`, `.toml`)
+- **Steering now functions as project-wide rules/patterns/guidelines** (Project Memory)
+  - Enhanced steering system loading all documents under `steering/` directory
+- **Shared settings bundle** in `{{KIRO_DIR}}/settings` for cross-platform customization
+
+#### Commands & Workflow
+- **Redesigned all 11 Spec-Driven commands** (`spec-*`, `validate-*`, `steering*`) with improved context
+- **Enhanced task generation guidelines** with parallel execution criteria
+- **Improved design template** with discovery process guidelines
+- **Updated spec-design workflow** to leverage new research.md template
+- **Streamlined tasks.md template structure**
+
+#### Documentation & Formats
+- **Updated EARS format** to use lowercase syntax ([#88](https://github.com/gotalab/cc-sdd/pull/88))
+  - Changed from "WHILE/WHEN/WHERE/IF" to "while/when/where/if"
+  - Improved readability and consistency
+- **Clarified template customization instructions** ([#85](https://github.com/gotalab/cc-sdd/pull/85))
+- **Updated installation documentation** for better clarity ([#87](https://github.com/gotalab/cc-sdd/pull/87))
+- **Reorganized documentation structure**
+  - Renamed `docs/CHANGELOG/` to `docs/RELEASE_NOTES/`
+  - Separated technical changelog from marketing-focused release notes
+  - Added cross-references between CHANGELOG and Release Notes
+
+#### Project Management
+- **Automated GitHub issue lifecycle management** ([#80](https://github.com/gotalab/cc-sdd/pull/80))
+  - Auto-close stale issues after 10 days of inactivity
+  - Configurable stale detection workflow
+  - English-only workflow messaging ([#81](https://github.com/gotalab/cc-sdd/pull/81))
+- **Centralized agent metadata into registry** ([#72](https://github.com/gotalab/cc-sdd/pull/72))
+
+### Fixed
+- Template structure standardization across all agents
+- Manifest definitions for new directory layouts
+- Template parameter replacement across platforms
+- OS-specific command handling for Windows environments
+
+### Removed
+- OS-specific template directories (`os-mac`, `os-windows`)
+- Deprecated Claude documentation files
+- Duplicate CLAUDE.md files
+- Unused documentation artifacts
+
+### Breaking Changes
+
+⚠️ **Important**: Please review the [Migration Guide](docs/guides/migration-guide.md) when upgrading from v1.x.
+
+1. **Template Structure**: OS-specific directories removed. Use unified templates in `.kiro/settings/templates/`
+2. **Steering**: Now loads entire `steering/` directory instead of single file
+3. **File Extensions**: Templates use actual extensions (`.md`, `.prompt.md`, `.toml`)
+4. **Command Count**: Expanded from 8 to 11 commands (3 validation commands added)
+
+### Migration from v1.x
+
+See the comprehensive [Migration Guide](docs/guides/migration-guide.md) for detailed upgrade instructions, including:
+- Step-by-step migration procedures
+- Breaking changes explained
+- Template and steering migration
+- Troubleshooting common issues
+
+### Metrics
+
+- **Supported Platforms**: 7 AI agents (Claude Code, Claude Code SubAgents, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf IDE)
+- **Commands**: 11 (6 spec + 3 validate + 2 steering)
+- **Documentation Languages**: 12 (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar)
+
+### Related PRs (Consolidated from alpha releases)
+
 - [#89](https://github.com/gotalab/cc-sdd/pull/89) - Enable parallel task analysis by default
+- [#88](https://github.com/gotalab/cc-sdd/pull/88) - Update EARS format to lowercase syntax
+- [#87](https://github.com/gotalab/cc-sdd/pull/87) - Clarify installation
+- [#86](https://github.com/gotalab/cc-sdd/pull/86) - Add npm next badge to README files
+- [#85](https://github.com/gotalab/cc-sdd/pull/85) - Clarify template customization instructions
+- [#84](https://github.com/gotalab/cc-sdd/pull/84) - Customization guide review suggestions
+- [#83](https://github.com/gotalab/cc-sdd/pull/83) - Add customization guide and command reference
+- [#81](https://github.com/gotalab/cc-sdd/pull/81) - Make stale workflow messaging English-only
+- [#80](https://github.com/gotalab/cc-sdd/pull/80) - Automate GitHub issue lifecycle management
+- [#74](https://github.com/gotalab/cc-sdd/pull/74) - Add Claude Code SubAgents mode
+- [#73](https://github.com/gotalab/cc-sdd/pull/73) - Add CLAUDE.md documentation
+- [#72](https://github.com/gotalab/cc-sdd/pull/72) - Refactor agent metadata into central registry
+- [#71](https://github.com/gotalab/cc-sdd/pull/71) - Add alpha version info and improve language table
+- [#70](https://github.com/gotalab/cc-sdd/pull/70) - Release cc-sdd v2.0.0-alpha
+
+---
+
+## Previous Alpha Releases
+
+## [2.0.0-alpha.6] - 2025-11-09
+
+### Added
+- Parallel task analysis features (included in v2.0.0)
+- Research.md template (included in v2.0.0)
 
 ## [2.0.0-alpha.5] - 2025-11-05
 

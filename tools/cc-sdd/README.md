@@ -26,23 +26,22 @@ Run one command to install **AI-DLC** (AI Driven Development Lifecycle) with **S
 # Basic installation (defaults: English docs, Claude Code)
 npx cc-sdd@latest
 
-# Alpha version with major updates (v2.0.0-alpha.4)
-npx cc-sdd@next
-
 # With language options (default: --lang en)
 npx cc-sdd@latest --lang ja    # Japanese
 npx cc-sdd@latest --lang zh-TW # Traditional Chinese
 # Supported languages (12 total): en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 
 # With agent options (default: claude-code / --claude)
-npx cc-sdd@latest --claude --lang ja    # or @next for latest alpha
-npx cc-sdd@next --claude-agent --lang ja # Install Claude Code SubAgents (requires @next)
-npx cc-sdd@latest --gemini --lang ja    # or @next for latest alpha
-npx cc-sdd@latest --cursor --lang ja    # or @next for latest alpha
-npx cc-sdd@next --codex --lang ja       # Requires alpha version
-npx cc-sdd@next --copilot --lang ja     # Requires alpha version
-npx cc-sdd@latest --qwen --lang ja      # or @next for latest alpha
-npx cc-sdd@next --windsurf --lang ja    # Requires alpha version (Windsurf workflows)
+npx cc-sdd@latest --claude --lang ja        # Claude Code (11 commands)
+npx cc-sdd@latest --claude-agent --lang ja  # Claude Code SubAgents (12 commands + 9 subagents)
+npx cc-sdd@latest --cursor --lang ja        # Cursor IDE
+npx cc-sdd@latest --gemini --lang ja        # Gemini CLI
+npx cc-sdd@latest --codex --lang ja         # Codex CLI
+npx cc-sdd@latest --copilot --lang ja       # GitHub Copilot
+npx cc-sdd@latest --qwen --lang ja          # Qwen Code
+npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
+
+# Note: @next is now reserved for future alpha/beta versions
 ```
 
 ## 🌐 Supported Languages
@@ -110,13 +109,13 @@ npx cc-sdd@next --windsurf --lang ja    # Requires alpha version (Windsurf workf
 | Agent | Status | Commands |  |
 |-------|--------|----------|--------|
 | **Claude Code** | ✅ Full | 11 slash commands | `CLAUDE.md` |
-| **Claude Code SubAgents** | ✅ Full | 12 commands + 9 subagents (requires cc-sdd@next) | `CLAUDE.md`, `.claude/agents/kiro/` |
+| **Claude Code SubAgents** | ✅ Full | 12 commands + 9 subagents | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Cursor IDE** | ✅ Full | 11 commands | `AGENTS.md` |
 | **Gemini CLI** | ✅ Full | 11 commands | `GEMINI.md` |
 | **Codex CLI** | ✅ Full | 11 prompts | `AGENTS.md` |
 | **GitHub Copilot** | ✅ Full | 11 prompts | `AGENTS.md` |
 | **Qwen Code** | ✅ Full | 11 commands | `QWEN.md` |
-| **Windsurf IDE** | ✅ Full | 11 workflows | `.windsurf/workflows/`, `AGENTS.md` (requires cc-sdd@next) |
+| **Windsurf IDE** | ✅ Full | 11 workflows | `.windsurf/workflows/`, `AGENTS.md` |
 | Others | 📅 Planned | - | - |
  
 ## 📋 Commands
@@ -209,7 +208,7 @@ project/
 
 ---
 
-**Beta Release** - Ready to use, actively improving. [Report issues](https://github.com/gotalab/cc-sdd/issues) | MIT License
+**Stable Release v2.0.0** - Production-ready. [Report issues](https://github.com/gotalab/cc-sdd/issues) | MIT License
 
 ### Platform Support
 - Supported OS: macOS, Linux, Windows (auto-detected by default).

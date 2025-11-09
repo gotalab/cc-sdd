@@ -22,21 +22,20 @@ It also scaffolds team-aligned templates—requirements, design reviews, task pl
 # Basic installation (default: Claude Code)
 npx cc-sdd@latest
 
-# Alpha version with major updates (v2.0.0-alpha.4)
-npx cc-sdd@next
-
 # With language: --lang en|ja|zh-TW|zh|es|pt|de|fr|ru|it|ko|ar
 npx cc-sdd@latest --lang ja
 
-# With different agents: gemini, cursor, codex, copilot, qwen, windsurf
-npx cc-sdd@latest --claude    # or @next for latest alpha
-npx cc-sdd@next --claude-agent    # Installs Claude Code SubAgents (requires @next)
-npx cc-sdd@latest --gemini    # or @next for latest alpha
-npx cc-sdd@latest --cursor    # or @next for latest alpha
-npx cc-sdd@next --codex       # Requires alpha version
-npx cc-sdd@next --copilot     # Requires alpha version
-npx cc-sdd@latest --qwen      # or @next for latest alpha
-npx cc-sdd@next --windsurf    # Requires alpha version (Windsurf workflows)
+# With different agents: claude, claude-agent, cursor, gemini, codex, copilot, qwen, windsurf
+npx cc-sdd@latest --claude         # Claude Code (11 commands)
+npx cc-sdd@latest --claude-agent   # Claude Code SubAgents (12 commands + 9 subagents)
+npx cc-sdd@latest --cursor         # Cursor IDE
+npx cc-sdd@latest --gemini         # Gemini CLI
+npx cc-sdd@latest --codex          # Codex CLI
+npx cc-sdd@latest --copilot        # GitHub Copilot
+npx cc-sdd@latest --qwen           # Qwen Code
+npx cc-sdd@latest --windsurf       # Windsurf IDE
+
+# Note: @next is now reserved for future alpha/beta versions
 
 # Ready to go! Your chosen agent can now run `/kiro:spec-init <what-to-build>` and unlock the full SDD workflow
 ```
@@ -72,13 +71,13 @@ Edit templates in `{{KIRO_DIR}}/settings/templates/` to match your workflow. Kee
 | Agent | Flags you can pass | Installs |
 | --- | --- | --- |
 | Claude Code | `--claude-code`, `--claude` | `.claude/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `CLAUDE.md` |
-| Claude Code SubAgents | `--claude-code-agent`, `--claude-agent` | `.claude/commands/kiro/` (12 commands), `.claude/agents/kiro/` (9 subagents), `{{KIRO_DIR}}/settings/`, `CLAUDE.md` — requires `cc-sdd@next` |
+| Claude Code SubAgents | `--claude-code-agent`, `--claude-agent` | `.claude/commands/kiro/` (12 commands), `.claude/agents/kiro/` (9 subagents), `{{KIRO_DIR}}/settings/`, `CLAUDE.md` |
 | Codex CLI | `--codex`, `--codex-cli` | `.codex/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
 | Cursor IDE | `--cursor` | `.cursor/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
 | GitHub Copilot Chat | `--copilot`, `--github-copilot` | `.github/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
 | Gemini CLI | `--gemini-cli`, `--gemini` | `.gemini/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `GEMINI.md` |
 | Qwen Code | `--qwen-code`, `--qwen` | `.qwen/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `QWEN.md` |
-| Windsurf IDE | `--windsurf` | `.windsurf/workflows/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` — requires `cc-sdd@next` |
+| Windsurf IDE | `--windsurf` | `.windsurf/workflows/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
 
 *Claude Code remains the default agent when no flag is supplied.*
 

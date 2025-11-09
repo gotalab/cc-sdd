@@ -4,7 +4,7 @@ This guide covers the `--claude-agent` / `--claude-code-agent` installation targ
 
 ## Installation Recap
 
-- Install with `npx cc-sdd@next --claude-agent --lang <code>`.
+- Install with `npx cc-sdd@latest --claude-agent --lang <code>`.
 - Files are placed under:
   - `.claude/commands/kiro/` – 12 high-level commands (spec, steering, validation).
   - `.claude/agents/kiro/` – 9 SubAgent definitions used for deeper analysis, file expansion, and reporting.
@@ -59,7 +59,7 @@ The SubAgent is invoked through the Task Tool with curated file patterns, allowi
 
 ## Troubleshooting
 
-- **SubAgent not triggering** – ensure you are running the command from the @next channel and that `.claude/agents/kiro/` exists.
+- **SubAgent not triggering** – ensure you have installed with `--claude-agent` flag and that `.claude/agents/kiro/` exists.
 - **Too many files analysed** – edit the file pattern expansion step in the relevant SubAgent prompt to narrow the search.
 - **Outputs differ from templates** – update `{{KIRO_DIR}}/settings/templates` so that SubAgent summaries point to the latest document sections.
 
