@@ -157,7 +157,8 @@ describe('CLI entry edge cases', () => {
 
   it('handles empty argv array', async () => {
     const ctx = makeIO();
-    const code = await runCli([], runtime, ctx.io, {});
+    const cwd = await mkTmp();
+    const code = await runCli([], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0); // Actually succeeds if it can load default manifest
     // Will try to apply default manifest - may succeed or fail depending on templates
   });

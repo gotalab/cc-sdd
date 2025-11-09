@@ -6,33 +6,41 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ## 🔬 開発中 (Unreleased)
 
-### 🎯 ハイライト
-- **並列タスク分析のデフォルト化**：`spec-tasks`コマンドが並列実行可能なタスクを自動識別し、`(P)`マーカーで明示するようになりました。大規模な実装タスクを効率的に並列化できます。
-- **新しいリサーチテンプレート**：設計調査と詳細設計を分離する`research.md`テンプレートを追加。アーキテクチャパターンの評価、設計判断の根拠、トレードオフを体系的に文書化できます。
+現在、未リリースの機能はありません。最新の安定版はv2.0.0です。
 
-### ✨ 新機能
-- **並列タスク分析**（[#89](https://github.com/gotalab/cc-sdd/pull/89)）
-  - タスク生成時に並列実行可能性を自動分析
-  - `(P)`マーカーで並列化可能タスクを明示
-  - `--sequential`フラグで従来の逐次分析に切り替え可能
-  - 新ルールファイル：`tasks-parallel-analysis.md`で並列化基準を定義
-- **research.mdテンプレート**
-  - 調査・発見内容を`design.md`から分離
-  - リサーチログ、アーキテクチャパターン評価、設計判断を記録
-  - トレードオフと根拠を構造化して文書化
+---
 
-### 🔧 改善
-- タスク生成ガイドラインに並列実行基準を追加
-- 設計テンプレートに発見プロセスのガイドラインを追加
-- spec-designワークフローで新しいresearch.mdテンプレートを活用
-- tasks.mdテンプレート構造を整理
-- ステアリングドキュメントからエージェントツールディレクトリを除外
-  - `.claude/`、`.cursor/`、`.codex/`などを分析対象から自動除外
+## 🎉 Ver 2.0.0 (2025-11-09) - 安定版リリース
 
-### 📈 指標
-- **対応プラットフォーム**: 7（変更なし）
-- **新テンプレート**: research.md（調査・設計判断用）
-- **新ルールファイル**: tasks-parallel-analysis.md
+### ハイライト
+- **`npx cc-sdd@latest`で全機能開放**：alpha.1〜alpha.6で試験投入したResearch.md、検証コマンド、Subagents、Windsurf統合をすべてGA化。
+- **設計〜実装の一貫性強化**：要約表・Req Coverage・Supporting Referencesを備えた新designテンプレでSSoTを堅持。
+- **Brownfield向けガードレール**：`/kiro:validate-*`、並列タスク分析、Steeringプロジェクトメモリでデグレを未然に防止。
+- **グローバル対応**：7エージェント×12言語が同一テンプレートとコマンド体系を共有。
+
+### アップグレード要点
+1. 必ず [移行ガイド](../guides/migration-guide.md) を参照し、`.kiro/settings/templates/*` の再配置とSteeringのディレクトリ読込変更を反映。
+2. 自動化やREADMEの実行例を `npx cc-sdd@latest` 基準に統一（`@next`は今後のプレビュー専用）。
+3. steering / research / design / tasks テンプレートを再生成し、Research.md・Supporting References・(P)マーカーを取り込む。
+
+### 主な強化点
+- **並列タスク分析**：`(P)`マーカー自動付与と `--sequential` フラグ。
+- **Research.md**：調査ログと長文の意思決定を設計本編から切り離し、design.mdを一次情報として完結。
+- **Designテンプレ改訂**：コンポーネント要約表、Req Coverage、Supporting References、密度調整ルールを追加。
+- **エージェント/言語パリティ**：Claude Code + Subagents, Cursor, Gemini CLI, Codex CLI, Copilot, Qwen, Windsurf の11コマンドセットを統一提供。
+- **対話型インストーラー**：プロジェクトメモリ処理とnpmバッジ更新を含むガイド付きセットアップ。
+
+### リソース
+- 技術的な詳細: [CHANGELOG.md](../../CHANGELOG.md#200---2025-11-09)
+- 手順・回帰対策: [docs/guides/migration-guide.md](../guides/migration-guide.md)
+- リリース作業タスク: `docs/cc-sdd/v2.0.0/PLAN.md`
+- テンプレ改善タスク: `docs/cc-sdd/v2.0.0/PLAN2.md`
+
+v2.0.0へ移行後にテンプレートを再生成すれば、追加フラグなしで最新のSpec Driven Developmentワークフローが利用できます。
+
+---
+
+## 過去のAlphaリリース
 
 ---
 
@@ -124,7 +132,7 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 - **ドキュメント整備**：README（英語/日本語/繁体字）およびリポジトリ README を更新し、対応エージェント、コマンド数、ディレクトリ構造、CLI 例を最新状態に反映。
 
 ### 🔄 関連プルリクエスト
-- **[#74](https://github.com/gotalab/cc-sdd/pull/74)** - Claude Code SubAgentsモードの追加（実装中）
+- **[#74](https://github.com/gotalab/cc-sdd/pull/74)** - Claude Code Subagentsモードの追加（実装中）
   - コンテキスト最適化のため、SDD コマンドを専用サブエージェントへ委譲
   - メイン会話のコンテキストウィンドウを保護し、セッション寿命を延長
   - 各コマンド専用のシステムプロンプトによる品質向上

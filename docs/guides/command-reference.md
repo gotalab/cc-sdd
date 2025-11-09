@@ -1,5 +1,7 @@
 # Command Reference
 
+> 📖 **日本語ガイドはこちら:** [コマンドリファレンス (日本語)](ja/command-reference.md)
+
 Complete reference for all cc-sdd commands with detailed usage, examples, and troubleshooting.
 
 > **Note**: This reference is based on Claude Code command templates. While the core functionality is consistent across all supported agents (Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf), command syntax and features may vary slightly depending on your agent. Refer to your agent's specific documentation for platform-specific details.
@@ -38,9 +40,9 @@ Complete reference for all cc-sdd commands with detailed usage, examples, and tr
 | `/kiro:spec-init` | `<project-description>` | Create new spec folder & metadata | `/kiro:spec-requirements <feature>` |
 | `/kiro:spec-requirements` | `<feature-name>` | Generate EARS requirements | `/kiro:spec-design <feature>` |
 | `/kiro:validate-gap` | `<feature-name>` | (Optional) Analyze existing code gaps | `/kiro:spec-design <feature>` |
-| `/kiro:spec-design` | `<feature-name> [-y]` | Produce technical design & diagrams | `/kiro:spec-tasks <feature>` |
+| `/kiro:spec-design` | `<feature-name> [-y]` | Produce `research.md` (when needed) + technical design | `/kiro:spec-tasks <feature>` |
 | `/kiro:validate-design` | `<feature-name>` | (Optional) Review design quality | `/kiro:spec-tasks <feature>` |
-| `/kiro:spec-tasks` | `<feature-name> [-y]` | Break design into implementation tasks | `/kiro:spec-impl <feature> [tasks]` |
+| `/kiro:spec-tasks` | `<feature-name> [-y]` | Break design into implementation tasks w/ parallel-safe blocks (P#) | `/kiro:spec-impl <feature> [tasks]` |
 | `/kiro:spec-impl` | `<feature-name> [task-numbers]` | Execute tasks with TDD | `/kiro:validate-impl [feature] [tasks]` |
 | `/kiro:validate-impl` | `[feature-name] [task-numbers]` | Verify implementation quality | `/kiro:spec-status <feature>` |
 | `/kiro:spec-status` | `<feature-name>` | Summarize workflow progress | Resume with suggested command |
@@ -51,7 +53,7 @@ Complete reference for all cc-sdd commands with detailed usage, examples, and tr
 
 ### `/kiro:steering`
 
-**Purpose**: Create or update project memory to provide AI with persistent context about your codebase.
+**Purpose**: Create or update project memory (steering) so every command can reference shared rules, architecture guardrails, and product-wide guidelines. It is *not* for feature-specific implementation notes.
 
 **Parameters**: None
 
@@ -61,7 +63,7 @@ Complete reference for all cc-sdd commands with detailed usage, examples, and tr
 ```
 
 **What it does**:
-Analyzes your codebase and generates/updates three core steering documents:
+Analyzes your codebase and generates/updates three core steering documents that capture evergreen guidance (not per-feature minutiae):
 - `{{KIRO_DIR}}/steering/structure.md` - Architecture patterns, directory organization, naming conventions
 - `{{KIRO_DIR}}/steering/tech.md` - Technology stack, framework decisions, technical constraints
 - `{{KIRO_DIR}}/steering/product.md` - Business context, product purpose, core capabilities
@@ -112,6 +114,7 @@ Review and approve as Source of Truth.
 
 **Pro Tips**:
 - 💡 Run steering **before** creating specs for best results
+- 💡 Keep the content high-level: architecture rules, naming, UX principles. Store feature-specific details in spec/research/design instead.
 - 💡 Steering captures **patterns**, not file lists - keeps it maintainable
 - 💡 Review generated steering files and customize as needed
 - 💡 Re-run periodically to keep AI context fresh
@@ -124,7 +127,7 @@ Review and approve as Source of Truth.
 
 ### `/kiro:steering-custom`
 
-**Purpose**: Create specialized steering documents for domain-specific patterns (API standards, testing, security, etc.).
+**Purpose**: Create specialized steering documents for domain-specific patterns (API standards, testing initiatives, UI/UX playbooks, etc.).
 
 **Parameters**: None (interactive)
 
@@ -137,25 +140,27 @@ Review and approve as Source of Truth.
 Interactive command that helps you create custom steering files in `{{KIRO_DIR}}/steering/` for specialized areas beyond the core three files (structure/tech/product).
 
 **Available Templates**:
-1. **api-standards.md** - REST/GraphQL conventions, error handling, versioning
-2. **testing.md** - Test organization, mocking strategies, coverage requirements
+1. **api-standards.md** - REST/GraphQL conventions, error handling, versioning, company-wide contract formats
+2. **testing.md** - Test organization, mocking strategies, coverage requirements, “what to automate vs. what to verify manually” guidance
 3. **security.md** - Authentication patterns, input validation, secrets management
 4. **database.md** - Schema design, migrations, query patterns
 5. **error-handling.md** - Error types, logging, retry strategies
 6. **authentication.md** - Auth flows, permissions, session management
 7. **deployment.md** - CI/CD, environments, rollback procedures
+8. **ui-ux.md** (custom) - Component libraries, copy tone, accessibility rules, reviewer checklists
+9. **product-tests.md** (custom) - End-to-end validation scenarios specific to your QA org
 
 **When to use**:
-- ✅ Your project has **specific standards** not covered by core steering
-- ✅ Multiple features need **consistent domain knowledge** (e.g., all APIs follow same patterns)
-- ✅ You want to **enforce conventions** across the codebase
-- ✅ Complex systems need **specialized context** (microservices, event-driven, etc.)
+- ✅ Your project has **specific standards** not covered by core steering (API contracts, company-mandated test plans, UI copy tone)
+- ✅ Multiple features or sub-teams need **consistent domain knowledge** (QA playbooks, design audit checklists)
+- ✅ You want to **enforce conventions** across the entire product (design tokens, telemetry fields, accessibility heuristics)
+- ✅ Complex systems need **specialized context** (microservices, event-driven, regulated industries)
 
 **Workflow**:
 1. Command asks what domain you want to document
-2. Shows available templates or lets you create custom
+2. Shows available templates or lets you describe your own (e.g., “UI review checklist”, “API error contract”, “product test plan”)
 3. Analyzes codebase for existing patterns in that domain
-4. Generates custom steering file with project-specific examples
+4. Generates custom steering file with project-/company-specific examples and TODO markers for missing decisions
 
 <details>
 <summary><strong>Example Interaction</strong></summary>
@@ -427,12 +432,13 @@ THE <system> SHALL <action>
 **What it does**:
 1. **Validates** requirements are approved (or auto-approves with `-y`)
 2. **Discovers** appropriate architecture through research and analysis
-3. **Generates** technical design with components, interfaces, data models
-4. **Creates** Mermaid diagrams for complex architectures
-5. **Updates** `design.md` and metadata
+3. **Captures** findings in `research.md` (skipped automatically when no investigation is needed)
+4. **Generates** technical design with components, interfaces, data models
+5. **Creates** Mermaid diagrams for complex architectures
+6. **Updates** `design.md` and metadata
 
 **Discovery Process**:
-The command automatically determines research depth based on feature complexity:
+The command automatically determines research depth based on feature complexity (and only writes `research.md` when the phase produces new findings):
 - **Complex/New Features** → Full discovery (WebSearch for patterns, APIs, libraries)
 - **Extensions** → Light discovery (integration points, existing patterns)
 - **Simple Additions** → Minimal discovery (quick pattern check)
@@ -460,6 +466,7 @@ Executing full discovery process...
 ✓ Identified integration points: API routes, middleware, database
 
 ## Design Generated
+✓ Updated .kiro/specs/user-auth-oauth/research.md with discovery notes
 ✓ Created .kiro/specs/user-auth-oauth/design.md
 
 Summary:
@@ -550,7 +557,7 @@ Review design.md and approve to continue:
 
 ### `/kiro:spec-tasks`
 
-**Purpose**: Generate detailed, actionable implementation tasks that translate design into executable work items.
+**Purpose**: Generate detailed, actionable implementation tasks that translate design into executable work items, including parallel-friendly waves labeled `P0`, `P1`, etc.
 
 **Parameters**: `<feature-name> [-y]`
 
@@ -568,15 +575,18 @@ Review design.md and approve to continue:
 2. **Maps** all requirements to specific implementation tasks
 3. **Sizes** tasks to 1-3 hours each for manageable increments
 4. **Organizes** tasks with logical hierarchy and progression
-5. **Updates** `tasks.md` and metadata
+5. **Marks** execution waves with `P#` labels so teams know which tasks can run in parallel
+6. **Updates** `tasks.md` and metadata
 
 **Task Structure**:
 ```
-Major Task (sequential numbers: 1, 2, 3...)
-└── Sub-tasks (1.1, 1.2, 1.3...)
-    - Each sub-task: 1-3 hours
-    - Natural language descriptions
-    - Clear acceptance criteria
+P0 — Serial gate (must finish before P1)
+  Major Task (1, 2, 3...)
+    Sub-tasks (1.1, 1.2...) sized 1-3 hours, each with acceptance criteria
+
+P1 — Parallel wave (multiple majors can run concurrently)
+  Major Task (4, 5...)
+    Sub-tasks (4.1, 4.2...)
 ```
 
 **Example**:
@@ -616,18 +626,21 @@ Review tasks.md and start implementation:
 ```markdown
 # Implementation Tasks: User Auth OAuth
 
+P0 — Backend Foundation
 ## 1. Database Schema and Models
 - [ ] 1.1 Create User table with OAuth fields (email, provider, providerId, tokens)
 - [ ] 1.2 Create Session table for JWT token management
 - [ ] 1.3 Create RefreshToken table for token rotation
 - [ ] 1.4 Add database migrations and rollback scripts
 
+P1 — Service Integration
 ## 2. OAuth Provider Configuration
 - [ ] 2.1 Set up Google OAuth client credentials and redirect URLs
 - [ ] 2.2 Set up GitHub OAuth application and callback endpoints
 - [ ] 2.3 Implement environment variable configuration for OAuth secrets
 - [ ] 2.4 Create OAuth provider abstraction layer
 
+P1 — Service Integration
 ## 3. Authentication API Routes
 - [ ] 3.1 Implement /api/auth/[provider]/login endpoint
 - [ ] 3.2 Implement /api/auth/callback handler for OAuth flow
@@ -644,7 +657,8 @@ Review tasks.md and start implementation:
 - ✅ **Self-contained** - Each task stands alone with clear scope
 - ✅ **Incremental** - Each task integrates with system (no orphaned work)
 - ✅ **Testable** - Clear acceptance criteria for each task
-- ✅ **Sequential** - Proper dependencies (database before API, etc.)
+- ✅ **Parallel-aware** - `P0` for blocking work, same `P#` can execute concurrently
+- ✅ **Sequential where needed** - P0 before P1, major tasks still numbered for clarity
 
 **When to use**:
 - ✅ After design is **approved** (manually or with `-y`)
@@ -1721,7 +1735,7 @@ Legend: <f> = feature-name, [t] = task-numbers, [-y] = auto-approve
 ## Related Documentation
 
 - [Spec-Driven Development Workflow](spec-driven.md) - Conceptual overview and methodology
-- [Claude Code SubAgents](claude-subagents.md) - SubAgent workflow patterns
+- [Claude Code Subagents](claude-subagents.md) - Subagent workflow patterns
 - [Project README](../../README.md) - Installation and quick start
 
 ---

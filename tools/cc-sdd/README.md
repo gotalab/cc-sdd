@@ -1,22 +1,27 @@
 # cc-sdd: Customize spec-driven development for your team's workflow
 
-✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf from prototype to production-ready development, while customizing every spec and steering template so requirements, design docs, tasks, and project memory match your team workflow.**
-
-<!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
-[![npm (next)](https://img.shields.io/npm/v/cc-sdd/next?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=versions)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
-[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](../../LICENSE)
 
-<div align="center" style="margin-bottom: 1rem; font-size: 1.2rem;"><sub>
-English | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_zh-TW.md">繁體中文</a>
+<div align="center" style="margin-bottom: 1rem; font-size: 1.1rem;"><sub>
+English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf. **AI-native processes** with **minimal human approval gates**: AI drives execution while humans validate critical decisions at each phase.
+✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf from prototype to production-ready development, while customizing every spec and steering template so requirements, design docs, tasks, and project memory match your team workflow.**
 
-🎯 **Perfect for**: Escaping the 70% overhead trap of traditional development (meetings, documentation, ceremonies) to achieve **weeks-to-hours delivery** with AI-native execution and human quality gates.
+🇰 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
-> **Kiro compatible** — Same or even better proven workflow used in professional environments.
+**Key highlights (v2.0.0):**
+- **Design.md = detailed Design Doc** with Summary tables, Req Coverage, Supporting References, lean Components/Interfaces so reviewers spend less time parsing.
+- **Research.md + validate-gap/design/impl** – discovery notes live in Research.md while Design.md stays concise; validation gates keep both greenfield and brownfield work safe (parallel-task markers included).
+- **Customize once** via `.kiro/settings/templates/` & `.kiro/settings/rules/` — every agent shares the same outputs.
+- **7 agents × 12 languages** run the same 11-command workflow; mix Claude, Cursor, Codex, Gemini, Copilot, Qwen, Windsurf freely.
+
+---
+
+> Need the legacy flow? Use `npx cc-sdd@1.1.5 --claude-code`. Upgrading from v1.x?
+> See the Migration Guide: [English](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md).
 
 ## 🚀 Installation
 
@@ -26,23 +31,23 @@ Run one command to install **AI-DLC** (AI Driven Development Lifecycle) with **S
 # Basic installation (defaults: English docs, Claude Code)
 npx cc-sdd@latest
 
-# Alpha version with major updates (v2.0.0-alpha.4)
-npx cc-sdd@next
-
 # With language options (default: --lang en)
 npx cc-sdd@latest --lang ja    # Japanese
 npx cc-sdd@latest --lang zh-TW # Traditional Chinese
-# Supported languages (12 total): en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
+npx cc-sdd@latest --lang es    # Spanish
+... (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar supported)
 
 # With agent options (default: claude-code / --claude)
-npx cc-sdd@latest --claude --lang ja    # or @next for latest alpha
-npx cc-sdd@next --claude-agent --lang ja # Install Claude Code SubAgents (requires @next)
-npx cc-sdd@latest --gemini --lang ja    # or @next for latest alpha
-npx cc-sdd@latest --cursor --lang ja    # or @next for latest alpha
-npx cc-sdd@next --codex --lang ja       # Requires alpha version
-npx cc-sdd@next --copilot --lang ja     # Requires alpha version
-npx cc-sdd@latest --qwen --lang ja      # or @next for latest alpha
-npx cc-sdd@next --windsurf --lang ja    # Requires alpha version (Windsurf workflows)
+npx cc-sdd@latest --claude --lang en        # Claude Code (11 commands, en/ja/zh-TW/...)
+npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents (12 commands + 9 subagents)
+npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE (choose any supported lang)
+npx cc-sdd@latest --gemini --lang es        # Gemini CLI
+npx cc-sdd@latest --codex --lang fr         # Codex CLI
+npx cc-sdd@latest --copilot --lang pt       # GitHub Copilot
+npx cc-sdd@latest --qwen --lang de          # Qwen Code
+npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
+
+# Note: @next is now reserved for future alpha/beta versions
 ```
 
 ## 🌐 Supported Languages
@@ -95,6 +100,12 @@ npx cc-sdd@next --windsurf --lang ja    # Requires alpha version (Windsurf workf
 
 **30-second setup** → **AI-driven "bolts" (not sprints)** → **Hours-to-delivery results**
 
+### Why teams install cc-sdd
+1. **Single source specs** – requirements, design, tasks, and supporting references stay in sync, so reviewers approve faster.
+2. **Greenfield or brownfield** – net-new features boot in minutes, while validate gates and project memory keep legacy upgrades safe.
+3. **Mix any agent** – the same templates and rules power Claude, Cursor, Codex, Gemini, Copilot, Qwen, and Windsurf simultaneously.
+4. **Customize once** – edit `.kiro/settings/templates/` or `.kiro/settings/rules/` and every agent/slash command reflects your workflow.
+
 ## ✨ Key Features
 
 - **🚀 AI-DLC Methodology** - AI-native processes with human approval. Core pattern: AI executes, human validates
@@ -107,17 +118,17 @@ npx cc-sdd@next --windsurf --lang ja    # Requires alpha version (Windsurf workf
 
 ## 🤖 Supported AI Agents
 
-| Agent | Status | Commands |  |
-|-------|--------|----------|--------|
-| **Claude Code** | ✅ Full | 11 slash commands | `CLAUDE.md` |
-| **Claude Code SubAgents** | ✅ Full | 12 commands + 9 subagents (requires cc-sdd@next) | `CLAUDE.md`, `.claude/agents/kiro/` |
-| **Cursor IDE** | ✅ Full | 11 commands | `AGENTS.md` |
-| **Gemini CLI** | ✅ Full | 11 commands | `GEMINI.md` |
-| **Codex CLI** | ✅ Full | 11 prompts | `AGENTS.md` |
-| **GitHub Copilot** | ✅ Full | 11 prompts | `AGENTS.md` |
-| **Qwen Code** | ✅ Full | 11 commands | `QWEN.md` |
-| **Windsurf IDE** | ✅ Full | 11 workflows | `.windsurf/workflows/`, `AGENTS.md` (requires cc-sdd@next) |
-| Others | 📅 Planned | - | - |
+| Agent | Status | Commands |
+|-------|--------|----------|
+| **Claude Code** | ✅ Full | 11 slash commands |
+| **Claude Code Subagents** | ✅ Full | 12 commands + 9 subagents |
+| **Cursor IDE** | ✅ Full | 11 commands |
+| **Gemini CLI** | ✅ Full | 11 commands |
+| **Codex CLI** | ✅ Full | 11 prompts |
+| **GitHub Copilot** | ✅ Full | 11 prompts |
+| **Qwen Code** | ✅ Full | 11 commands |
+| **Windsurf IDE** | ✅ Full | 11 workflows |
+| Others (Factory AI Droid) | 📅 Planned | - |
  
 ## 📋 Commands
 
@@ -169,6 +180,7 @@ Edit templates in `{{KIRO_DIR}}/settings/templates/` to match your workflow. Kee
 
 📖 **[Customization Guide](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** — 7 practical examples with copy-paste snippets
 
+
 ## ⚙️ Configuration
 
 ```bash
@@ -199,17 +211,21 @@ project/
 └── CLAUDE.md (Claude Code)    # Project configuration
 ```
 
+> Note: only the directories for the agent(s) you install will be created. The tree above shows the full superset for reference.
+
 ## 📚 Documentation & Support
 
-- **[Complete Documentation](https://github.com/gotalab/cc-sdd/tree/main/docs)** - Setup guides and references
-- **[Command Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - All `/kiro:*` commands with detailed usage, parameters, examples
-- **[Customization Guide](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** - 7 practical examples: PRD requirements, frontend/backend designs, approval workflows, JIRA integration, domain steering
+- Command Reference: [English](../../docs/guides/command-reference.md) | [日本語](../../docs/guides/ja/command-reference.md)
+- Customization Guide: [English](../../docs/guides/customization-guide.md) | [日本語](../../docs/guides/ja/customization-guide.md)
+- Spec-Driven Guide: [English](../../docs/guides/spec-driven.md) | [日本語](../../docs/guides/ja/spec-driven.md)
+- Claude Subagents Guide: [English](../../docs/guides/claude-subagents.md) | [日本語](../../docs/guides/ja/claude-subagents.md)
+- Migration Guide: [English](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md)
 - **[Issues & Support](https://github.com/gotalab/cc-sdd/issues)** - Bug reports and questions
 - **[Kiro IDE](https://kiro.dev)**
 
 ---
 
-**Beta Release** - Ready to use, actively improving. [Report issues](https://github.com/gotalab/cc-sdd/issues) | MIT License
+**Stable Release v2.0.0** - Production-ready. [Report issues](https://github.com/gotalab/cc-sdd/issues) | MIT License
 
 ### Platform Support
 - Supported OS: macOS, Linux, Windows (auto-detected by default).

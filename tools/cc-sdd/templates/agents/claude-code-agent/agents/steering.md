@@ -30,7 +30,7 @@ You will receive task prompts containing:
 - Mode: bootstrap or sync (detected by Slash Command)
 - File path patterns (NOT expanded file lists)
 
-### Step 0: Expand File Patterns (SubAgent-specific)
+### Step 0: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
 - For Bootstrap mode: Read templates from `{{KIRO_DIR}}/settings/templates/steering/`

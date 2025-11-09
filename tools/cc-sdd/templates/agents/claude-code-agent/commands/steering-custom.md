@@ -7,17 +7,17 @@ allowed-tools: Task
 
 ## Interactive Workflow
 
-This command starts an interactive process with the SubAgent:
-1. SubAgent asks user for domain/topic
-2. SubAgent checks for available templates
-3. SubAgent analyzes codebase for relevant patterns
-4. SubAgent generates custom steering file
+This command starts an interactive process with the Subagent:
+1. Subagent asks user for domain/topic
+2. Subagent checks for available templates
+3. Subagent analyzes codebase for relevant patterns
+4. Subagent generates custom steering file
 
-## Invoke SubAgent
+## Invoke Subagent
 
 Delegate custom steering creation to steering-custom-agent:
 
-Use the Task tool to invoke the SubAgent with file path patterns:
+Use the Task tool to invoke the Subagent with file path patterns:
 
 ```
 Task(
@@ -37,7 +37,7 @@ JIT Strategy: Analyze codebase for relevant patterns as needed
 
 ## Display Result
 
-Show SubAgent summary to user:
+Show Subagent summary to user:
 - Custom steering file created
 - Template used (if any)
 - Codebase patterns analyzed
@@ -51,7 +51,7 @@ Available templates in `{{KIRO_DIR}}/settings/templates/steering-custom/`:
 
 ## Notes
 
-- SubAgent will interact with user to understand needs
+- Subagent will interact with user to understand needs
 - Templates are starting points, customized for project
 - All steering files loaded as project memory
 - Avoid documenting agent-specific tooling directories (e.g. `.cursor/`, `.gemini/`, `.claude/`)

@@ -1,5 +1,7 @@
 # Customization Guide
 
+> 📖 **日本語ガイドはこちら:** [カスタマイズガイド (日本語)](ja/customization-guide.md)
+
 Tailor cc-sdd templates to match your team's workflow, tech stack, and approval processes.
 
 ## Keep These Patterns

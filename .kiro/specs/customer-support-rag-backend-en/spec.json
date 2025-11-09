@@ -1,0 +1,23 @@
+{
+  "feature_name": "customer-support-rag-backend",
+  "created_at": "2025-11-10T00:00:00Z",
+  "updated_at": "2025-11-10T00:00:00Z",
+  "language": "en",
+  "phase": "tasks-generated",
+  "approvals": {
+    "requirements": {
+      "generated": true,
+      "approved": true
+    },
+    "design": {
+      "generated": true,
+      "approved": true
+    },
+    "tasks": {
+      "generated": true,
+      "approved": false
+    }
+  },
+  "ready_for_implementation": false
+}
+

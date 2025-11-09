@@ -26,7 +26,7 @@ You will receive task prompts containing:
 - File path patterns (NOT expanded file lists)
 - Mode: generate
 
-### Step 0: Expand File Patterns (SubAgent-specific)
+### Step 0: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
 - Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files
