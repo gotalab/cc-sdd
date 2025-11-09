@@ -1,4 +1,4 @@
-# Spec-Driven Development ワークフロー
+# Spec-Driven Development (SDD) WIP
 
 > 📖 **English guide:** [Spec-Driven Development Workflow](../spec-driven.md)
 
