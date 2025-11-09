@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { runCli } from '../src/index';
-import { mkdtemp, readFile, stat } from 'node:fs/promises';
+import { mkdtemp, readFile, stat, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -27,6 +27,17 @@ const makeIO = () => {
 const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-real-manifest-'));
 const exists = async (p: string) => { try { await stat(p); return true; } catch { return false; } };
 
+// Track temporary directories for cleanup
+const tmpDirs: string[] = [];
+
+afterEach(async () => {
+  // Clean up all temporary directories created during tests
+  await Promise.all(
+    tmpDirs.map(dir => rm(dir, { recursive: true, force: true }).catch(() => {}))
+  );
+  tmpDirs.length = 0;
+});
+
 // vitest runs in tools/cc-sdd; repoRoot is two levels up
 const repoRoot = join(process.cwd(), '..', '..');
 const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/claude-code.json');
@@ -45,6 +56,7 @@ describe('real claude-code manifest', () => {
 
   it('apply writes CLAUDE.md and command files to cwd', async () => {
     const cwd = await mkTmp();
+    tmpDirs.push(cwd);
     const ctx = makeIO();
     const code = await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0);
@@ -81,6 +93,7 @@ describe('real claude-code manifest (linux)', () => {
 
   it('apply writes CLAUDE.md and command files to cwd on linux', async () => {
     const cwd = await mkTmp();
+    tmpDirs.push(cwd);
     const ctx = makeIO();
     const code = await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force'], runtimeLinux, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0);
