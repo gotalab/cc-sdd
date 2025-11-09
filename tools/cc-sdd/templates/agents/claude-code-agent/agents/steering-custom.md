@@ -27,7 +27,7 @@ You will receive task prompts containing:
 - Domain/topic (e.g., "API standards", "testing approach")
 - File path patterns (NOT expanded file lists)
 
-### Step 0: Expand File Patterns (SubAgent-specific)
+### Step 0: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
 - Glob(`{{KIRO_DIR}}/settings/templates/steering-custom/*.md`) to find available templates

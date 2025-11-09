@@ -13,7 +13,7 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 ## 🎉 Ver 2.0.0 (2025-11-09) - 安定版リリース
 
 ### ハイライト
-- **`npx cc-sdd@latest`で全機能開放**：alpha.1〜alpha.6で試験投入したResearch.md、検証コマンド、SubAgents、Windsurf統合をすべてGA化。
+- **`npx cc-sdd@latest`で全機能開放**：alpha.1〜alpha.6で試験投入したResearch.md、検証コマンド、Subagents、Windsurf統合をすべてGA化。
 - **設計〜実装の一貫性強化**：要約表・Req Coverage・Supporting Referencesを備えた新designテンプレでSSoTを堅持。
 - **Brownfield向けガードレール**：`/kiro:validate-*`、並列タスク分析、Steeringプロジェクトメモリでデグレを未然に防止。
 - **グローバル対応**：7エージェント×12言語が同一テンプレートとコマンド体系を共有。
@@ -27,7 +27,7 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 - **並列タスク分析**：`(P)`マーカー自動付与と `--sequential` フラグ。
 - **Research.md**：調査ログと長文の意思決定を設計本編から切り離し、design.mdを一次情報として完結。
 - **Designテンプレ改訂**：コンポーネント要約表、Req Coverage、Supporting References、密度調整ルールを追加。
-- **エージェント/言語パリティ**：Claude Code + SubAgents, Cursor, Gemini CLI, Codex CLI, Copilot, Qwen, Windsurf の11コマンドセットを統一提供。
+- **エージェント/言語パリティ**：Claude Code + Subagents, Cursor, Gemini CLI, Codex CLI, Copilot, Qwen, Windsurf の11コマンドセットを統一提供。
 - **対話型インストーラー**：プロジェクトメモリ処理とnpmバッジ更新を含むガイド付きセットアップ。
 
 ### リソース
@@ -132,7 +132,7 @@ v2.0.0へ移行後にテンプレートを再生成すれば、追加フラグ�
 - **ドキュメント整備**：README（英語/日本語/繁体字）およびリポジトリ README を更新し、対応エージェント、コマンド数、ディレクトリ構造、CLI 例を最新状態に反映。
 
 ### 🔄 関連プルリクエスト
-- **[#74](https://github.com/gotalab/cc-sdd/pull/74)** - Claude Code SubAgentsモードの追加（実装中）
+- **[#74](https://github.com/gotalab/cc-sdd/pull/74)** - Claude Code Subagentsモードの追加（実装中）
   - コンテキスト最適化のため、SDD コマンドを専用サブエージェントへ委譲
   - メイン会話のコンテキストウィンドウを保護し、セッション寿命を延長
   - 各コマンド専用のシステムプロンプトによる品質向上

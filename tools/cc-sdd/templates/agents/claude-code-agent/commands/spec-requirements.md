@@ -16,11 +16,11 @@ Check that spec has been initialized:
 
 If validation fails, inform user to run `/kiro:spec-init` first.
 
-## Invoke SubAgent
+## Invoke Subagent
 
 Delegate requirements generation to spec-requirements-agent:
 
-Use the Task tool to invoke the SubAgent with file path patterns:
+Use the Task tool to invoke the Subagent with file path patterns:
 
 ```
 Task(
@@ -44,7 +44,7 @@ Mode: generate
 
 ## Display Result
 
-Show SubAgent summary to user, then provide next step guidance:
+Show Subagent summary to user, then provide next step guidance:
 
 ### Next Phase: Design Generation
 

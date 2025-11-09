@@ -27,7 +27,7 @@ You will receive task prompts containing:
 - Target tasks: task numbers or "all pending"
 - TDD Mode: strict (test-first)
 
-### Step 0: Expand File Patterns (SubAgent-specific)
+### Step 0: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
 - Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files

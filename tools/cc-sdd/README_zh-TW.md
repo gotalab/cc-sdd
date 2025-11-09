@@ -1,10 +1,27 @@
 # cc-sdd: 一鍵讓 AI 程式代理進入生產級規格開發
 
-✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf 從原型開發轉型為生產級開發，同時可將規格與指導模板調整為符合團隊流程。**
+[![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
+[![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
+[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+<div align="center" style="margin-bottom: 1rem; font-size: 1.1rem;"><sub>
+<a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README.md">English</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | 繁體中文
+</sub></div>
+
+✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
+
+🇰 **Kiro 相容** — 與 Kiro IDE 相同的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
+
+**v2.0.0 重點**
+- **Design.md = 詳細設計文件**：摘要表、Req Coverage、Supporting References、精簡的 Components/Interfaces，降低審查認知負荷。
+- **Research.md + validate 系**：調查筆記獨立在 Research.md，Design.md 保持精簡；`validate-gap/design/impl` 與平行任務分析讓 Greenfield / Brownfield 都安全。
+- **一次自訂即可套用**：`.kiro/settings/templates & rules` 集中調整，所有代理共享同一輸出。
+- **7 代理 × 12 語言**：Claude / Cursor / Codex / Gemini / Copilot / Qwen / Windsurf 共用 11 指令，混用也不用重建模板。
+
+> 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
-[![npm (next)](https://img.shields.io/npm/v/cc-sdd/next?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=versions)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
@@ -13,10 +30,6 @@
 </sub></div>
 
 將 **AI-DLC (AI 驅動開發生命週期)** 帶入 Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code 與 Windsurf。**AI 原生流程**與**最小限的人類批准關卡**：AI 驅動執行，人類在各階段驗證關鍵決策。
-
-🎯 **最佳用途**：脱離傳統開發 70% 的額外負擔（會議、文件、儀式），透過 AI 原生執行和人類品質關卡實現 **從週到小時的交付**。
-
-> **Kiro 相容** — 專業環境中使用的相同實證工作流程。
 
 ## 🚀 安裝
 
@@ -29,16 +42,17 @@ npx cc-sdd@latest
 # 語言選項（預設：--lang en）
 npx cc-sdd@latest --lang zh-TW # 繁體中文
 npx cc-sdd@latest --lang ja    # 日語
-# 支援語言（共12種）: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
+npx cc-sdd@latest --lang es    # 西班牙語
+...（支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar）
 
 # 代理選項（預設：claude-code / --claude）
-npx cc-sdd@latest --claude --lang zh-TW        # Claude Code（11 個指令）
-npx cc-sdd@latest --claude-agent --lang zh-TW  # Claude Code SubAgents（12 個指令 + 9 個子代理）
-npx cc-sdd@latest --cursor --lang zh-TW        # Cursor IDE
-npx cc-sdd@latest --gemini --lang zh-TW        # Gemini CLI
-npx cc-sdd@latest --codex --lang zh-TW         # Codex CLI
-npx cc-sdd@latest --copilot --lang zh-TW       # GitHub Copilot
-npx cc-sdd@latest --qwen --lang zh-TW          # Qwen Code
+npx cc-sdd@latest --claude --lang en           # Claude Code（11 個指令，語言可任選）
+npx cc-sdd@latest --claude-agent --lang zh-TW  # Claude Code Subagents（12 個指令 + 9 個子代理）
+npx cc-sdd@latest --cursor --lang ja           # Cursor IDE
+npx cc-sdd@latest --gemini --lang es           # Gemini CLI
+npx cc-sdd@latest --codex --lang fr            # Codex CLI
+npx cc-sdd@latest --copilot --lang pt          # GitHub Copilot
+npx cc-sdd@latest --qwen --lang de             # Qwen Code
 npx cc-sdd@latest --windsurf --lang zh-TW      # Windsurf IDE
 
 # 注意：@next 現已保留給未來的 alpha/beta 版本
@@ -94,6 +108,12 @@ npx cc-sdd@latest --windsurf --lang zh-TW      # Windsurf IDE
 
 **30 秒設定** → **AI 驅動「快速衝刺」（非衝刺）** → **小時交付結果**
 
+### 為何團隊選擇 cc-sdd
+1. **規格是單一真實來源** — 需求、設計、任務、Supporting References 同步產出，審查更快。
+2. **Greenfield / Brownfield 皆適用** — 新功能快速起步；既有系統靠 validate 系列與 Project Memory 保持安全。
+3. **可同時使用多個代理** — Claude、Cursor、Codex、Gemini、Copilot、Qwen、Windsurf 共用同一套模板/規則。
+4. **自訂只要一次** — 編輯 `.kiro/settings/templates/` 或 `.kiro/settings/rules/`，所有代理立即套用。
+
 ## ✨ 主要功能
 
 - **🚀 AI-DLC 方法論** - 具人類批准的 AI 原生流程。核心模式：AI 執行，人類驗證
@@ -109,14 +129,14 @@ npx cc-sdd@latest --windsurf --lang zh-TW      # Windsurf IDE
 | 代理 | 狀態 | 指令 | 設定 |
 |------|------|------|------|
 | **Claude Code** | ✅ 完全支援 | 11 個斜線指令 | `CLAUDE.md` |
-| **Claude Code SubAgents** | ✅ 完全支援 | 12 個指令 + 9 個子代理 | `CLAUDE.md`, `.claude/agents/kiro/` |
+| **Claude Code Subagents** | ✅ 完全支援 | 12 個指令 + 9 個子代理 | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
 | **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
 | **Codex CLI** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
-| **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
-| **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `.windsurf/workflows/`, `AGENTS.md` |
-| 其他 | 📅 規劃中 | - | - |
+| **Qwen Code** | ✅ 完全支援 | 11 個指令 |
+| **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 |
+| 其他（Factory AI Droid） | 📅 規劃中 | - |
 
 ## 📋 指令
 
@@ -165,6 +185,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW      # Windsurf IDE
 - **領域指導** - API 標準、測試慣例、編碼指南
 
 📖 **[自訂指南](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** — 7 個實用範例與可複製程式碼片段
+
 
 ## ⚙️ 設定
 

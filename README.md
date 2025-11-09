@@ -6,7 +6,6 @@
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
-[![npm (next)](https://img.shields.io/npm/v/cc-sdd/next?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=versions)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](tools/cc-sdd/LICENSE)
 
@@ -27,7 +26,7 @@ npx cc-sdd@latest --lang ja
 
 # With different agents: claude, claude-agent, cursor, gemini, codex, copilot, qwen, windsurf
 npx cc-sdd@latest --claude         # Claude Code (11 commands)
-npx cc-sdd@latest --claude-agent   # Claude Code SubAgents (12 commands + 9 subagents)
+npx cc-sdd@latest --claude-agent   # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor         # Cursor IDE
 npx cc-sdd@latest --gemini         # Gemini CLI
 npx cc-sdd@latest --codex          # Codex CLI
@@ -71,7 +70,7 @@ Edit templates in `{{KIRO_DIR}}/settings/templates/` to match your workflow. Kee
 | Agent | Flags you can pass | Installs |
 | --- | --- | --- |
 | Claude Code | `--claude-code`, `--claude` | `.claude/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `CLAUDE.md` |
-| Claude Code SubAgents | `--claude-code-agent`, `--claude-agent` | `.claude/commands/kiro/` (12 commands), `.claude/agents/kiro/` (9 subagents), `{{KIRO_DIR}}/settings/`, `CLAUDE.md` |
+| Claude Code Subagents | `--claude-code-agent`, `--claude-agent` | `.claude/commands/kiro/` (12 commands), `.claude/agents/kiro/` (9 subagents), `{{KIRO_DIR}}/settings/`, `CLAUDE.md` |
 | Codex CLI | `--codex`, `--codex-cli` | `.codex/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
 | Cursor IDE | `--cursor` | `.cursor/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
 | GitHub Copilot Chat | `--copilot`, `--github-copilot` | `.github/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
@@ -111,6 +110,7 @@ Edit templates in `{{KIRO_DIR}}/settings/templates/` to match your workflow. Kee
 
 > **Command Reference**
 - [Command Reference Guide](docs/guides/command-reference.md) - Complete reference for all `/kiro:*` commands with detailed usage, parameters, examples, and troubleshooting
+- Migration Guide: [English](docs/guides/migration-guide.md) | [日本語](docs/guides/ja/migration-guide.md)
 
 ---
 

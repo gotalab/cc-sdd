@@ -31,11 +31,11 @@ All notable changes to this project will be documented in this file.
   - Prevents `.claude/`, `.cursor/`, `.codex/` etc. from being analyzed
 
 #### Platform Support (from alpha releases)
-- **Claude Code SubAgents mode** for context optimization ([#74](https://github.com/gotalab/cc-sdd/pull/74))
+- **Claude Code Subagents mode** for context optimization ([#74](https://github.com/gotalab/cc-sdd/pull/74))
   - Delegate SDD commands to dedicated subagents to preserve main conversation context
   - Improve session lifespan by isolating command-specific context
   - Specialized system prompts for each command type
-  - 12 commands + 9 SubAgent definitions
+  - 12 commands + 9 Subagent definitions
 - **Windsurf IDE support** with complete workflow integration
   - `.windsurf/workflows/` directory with 11 workflow files
   - AGENTS.md configuration for optimization
@@ -199,7 +199,7 @@ See the comprehensive [Migration Guide](docs/guides/migration-guide.md) for deta
 ## [2.0.0-alpha.2] - 2025-10-13
 
 ### Added
-- Claude Code SubAgents mode for context optimization ([#74](https://github.com/gotalab/cc-sdd/pull/74))
+- Claude Code Subagents mode for context optimization ([#74](https://github.com/gotalab/cc-sdd/pull/74))
   - Delegate SDD commands to dedicated subagents to preserve main conversation context
   - Improve session lifespan by isolating command-specific context
   - Specialized system prompts for each command type
@@ -223,7 +223,7 @@ See the comprehensive [Migration Guide](docs/guides/migration-guide.md) for deta
 - Unused documentation artifacts
 
 **Related PRs:**
-- [#74](https://github.com/gotalab/cc-sdd/pull/74) - Add Claude Code SubAgents mode
+- [#74](https://github.com/gotalab/cc-sdd/pull/74) - Add Claude Code Subagents mode
 - [#73](https://github.com/gotalab/cc-sdd/pull/73) - Add CLAUDE.md documentation
 - [#72](https://github.com/gotalab/cc-sdd/pull/72) - Refactor agent metadata into central registry
 

@@ -1,381 +1,111 @@
-# cc-sdd v1.x → v2.0.0 移行ガイド
+# cc-sdd Migration Guide
 
-このガイドでは、cc-sdd v1.xからv2.0.0への移行方法について説明します。
-
-## 目次
-
-1. [概要](#概要)
-2. [主な変更点](#主な変更点)
-3. [破壊的変更](#破壊的変更)
-4. [移行手順](#移行手順)
-5. [新機能の利用方法](#新機能の利用方法)
-6. [トラブルシューティング](#トラブルシューティング)
+cc-sdd 1.x (especially 1.1.5) and 2.0.0 share the same AI-DLC philosophy and command list, but the **design artifacts, templates, and steering structure were rebuilt from the ground up**. Use this guide to pick one of two clear paths—either keep running 1.1.5 as-is, or accept the discontinuity and move to 2.0.0 where templates/rules make customization instant.
 
 ---
 
-## 概要
+## TL;DR – choose your path
 
-cc-sdd v2.0.0は、v1.xから大幅に機能強化されたメジャーリリースです。以下の主要な改善が含まれます:
+| Goal | Recommended action |
+| --- | --- |
+| Keep the legacy 1.x workflow untouched | Run `npx cc-sdd@1.1.5` whenever you install/refresh files. Continue editing agent-specific prompt folders (only the original 8 spec/steering commands exist). |
+| Adopt unified templates, research/design split, and consistent behavior across all 7 supported agents | Reinstall with `npx cc-sdd@latest` (=2.0.0) and customize only `.kiro/settings/templates/*` plus `.kiro/settings/rules/` (full 11-command set, including validate-*). |
 
-- **11コマンド体制**: 8コマンドから11コマンドへ拡張（3つの検証コマンド追加）
-- **マルチプラットフォーム**: 7つのAIエージェントをサポート（Windsurf、SubAgentsモード追加）
-- **12言語サポート**: 国際化対応の大幅強化
-- **並列タスク分析**: タスクの並列実行可能性を自動検出
-- **プロジェクトメモリ**: Steering機能の強化
+> ⚠️ Mixing 1.x and 2.x layouts in the same `.kiro` tree is not supported. Pick one path per repo/branch.
 
-**重要**: v2.0.0以降、すべての機能は`npx cc-sdd@latest`でインストール可能です。`@next`は次期alpha/beta版用になります。
+### What carries over unchanged
 
----
-
-## 主な変更点
-
-### 新機能
-
-#### 1. 検証コマンド（Brownfield開発向け）
-既存プロジェクトへの機能追加時に使用できる3つの検証コマンドが追加されました:
-
-```bash
-/kiro:validate-gap <feature_name>       # 要件と既存実装のギャップ分析
-/kiro:validate-design <feature_name>    # 設計と既存アーキテクチャの互換性検証
-/kiro:validate-impl <feature_name>      # 実装の品質検証
-```
-
-#### 2. Claude Code SubAgentsモード
-コンテキスト最適化のため、専用SubAgentにコマンドを委譲:
-
-```bash
-# インストール
-npx cc-sdd@latest --claude-agent
-
-# 12のコマンド + 9つのSubAgent定義がインストールされます
-# - .claude/commands/kiro/ (12コマンド)
-# - .claude/agents/kiro/ (9 SubAgents)
-```
-
-#### 3. Windsurf IDEサポート
-Windsurf IDE用の完全なワークフロー統合:
-
-```bash
-npx cc-sdd@latest --windsurf
-# .windsurf/workflows/ にワークフローファイルがインストールされます
-```
-
-#### 4. 並列タスク分析
-タスク生成時に並列実行可能なタスクを自動的に`(P)`マークで識別:
-
-```bash
-/kiro:spec-tasks <feature_name>  # デフォルトで並列分析が有効
-/kiro:spec-tasks <feature_name> --sequential  # 並列分析を無効化
-```
-
-#### 5. Research.mdテンプレート
-発見事項とアーキテクチャ調査を`design.md`から分離:
-
-- `.kiro/specs/<feature>/research.md` - 調査ログ、アーキテクチャパターン評価
-- `.kiro/specs/<feature>/design.md` - 技術設計ドキュメント
-
-#### 6. インタラクティブCLIインストーラー
-プロジェクトメモリ（Steering）の取り扱いを対話的に選択可能:
-
-```bash
-npx cc-sdd@latest
-# → 上書き / 追記 / 保持 を選択できます
-```
+- `.kiro/specs/<feature>/` directories you already authored remain valid inputs; simply regenerate newer templates when you are ready.
+- `.kiro/steering/` (or a single `steering.md`) can be reused as-is—the content is still consumed verbatim as project memory.
+- The 11 AI-DLC commands (`spec-*`, `validate-*`, `steering*`) and the high-level spec→design→tasks→impl flow stay identical; only the template internals have moved to a just-in-time, agentic style.
 
 ---
 
-## 破壊的変更
+## 1. Staying on cc-sdd 1.1.5 (fallback option)
 
-### 1. テンプレート構造の統一
-
-**v1.x:**
-```
-.kiro/
-├── templates/
-│   ├── os-mac/
-│   └── os-windows/
-```
-
-**v2.0.0:**
-```
-.kiro/
-└── settings/
-    ├── templates/     # 統一テンプレート（OS別不要）
-    └── rules/         # プロジェクト全体のルール
-```
-
-**対応方法:**
-- 既存のカスタムテンプレートがある場合、`.kiro/settings/templates/`に移行してください
-- OS固有の分岐は不要になりました（コマンド側で自動調整）
-
-### 2. Steering機能の変更
-
-**v1.x:** 単一のステアリングファイル
-
-**v2.0.0:** ディレクトリ全体をプロジェクトメモリとして読み込み
+1.1.5 is no longer on `@latest`, but you can pin it explicitly:
 
 ```bash
-# v2.0.0では以下のディレクトリ全体が読み込まれます
-.kiro/steering/
-├── project-context.md
-├── architecture.md
-└── domain-knowledge.md
+npx cc-sdd@1.1.5 --claude-code   # legacy flag name (use --cursor / --gemini / etc. for others)
+npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 ```
 
-**対応方法:**
-- 既存のステアリングファイルを`.kiro/steering/`ディレクトリに移動
-- 複数のファイルに分割することで、より構造化されたプロジェクトメモリを構築可能
-
-### 3. テンプレートファイル拡張子
-
-**v1.x:** 拡張子なし（例: `spec-requirements`）
-
-**v2.0.0:** 実際の拡張子を使用（例: `spec-requirements.md`、`config.toml`）
-
-**対応方法:**
-- 新規インストールでは自動的に正しい拡張子が使用されます
-- カスタムテンプレートは適切な拡張子を付与してください
-
-### 4. コマンド数の拡張
-
-**v1.x:** 8コマンド
-```bash
-spec-init, spec-requirements, spec-design, spec-tasks,
-spec-impl, spec-status, steering, steering-custom
-```
-
-**v2.0.0:** 11コマンド（3つの検証コマンド追加）
-```bash
-# 既存8コマンド + 以下3つ
-validate-gap, validate-design, validate-impl
-```
+- You can keep editing `.claude/commands/*`, `.cursor/prompts/*`, `.codex/prompts/*` などのエージェント別フォルダを直接編集するスタイルで運用できます。
+- Agent-specific directory layouts stay exactly as they were in v1.
+- No new features will land here—future work targets `@latest` only.
+- The validate commands (`/kiro:validate-gap`, `-design`, `-impl`) do **not** exist in 1.1.5. If you rely on those gates, migrate to v2.
 
 ---
 
-## 移行手順
+## 2. Why 2.0.0 is worth the jump
 
-### 既存プロジェクトのアップグレード
+> The AI-DLC workflow (spec-init → design → tasks → impl, with validation gates) and the 11 command entry points are unchanged. What changed is **where you customize and how much structure the resulting docs provide.**
 
-#### ステップ1: バックアップ
-
-```bash
-# 既存の設定をバックアップ
-cp -r .kiro .kiro.backup
-cp -r .claude .claude.backup  # または .cursor, .gemini など
-```
-
-#### ステップ2: v2.0.0のインストール
-
-```bash
-# 基本インストール（Claude Code）
-npx cc-sdd@latest
-
-# またはエージェントを指定
-npx cc-sdd@latest --claude-agent  # SubAgentsモード
-npx cc-sdd@latest --cursor
-npx cc-sdd@latest --windsurf
-npx cc-sdd@latest --gemini
-npx cc-sdd@latest --codex
-npx cc-sdd@latest --copilot
-npx cc-sdd@latest --qwen
-```
-
-#### ステップ3: カスタムテンプレートの移行
-
-v1.xでテンプレートをカスタマイズしていた場合:
-
-```bash
-# 1. バックアップからカスタム内容を確認
-cat .kiro.backup/templates/os-mac/spec-requirements.md
-
-# 2. 新しいテンプレート構造にマージ
-# .kiro/settings/templates/spec-requirements.md を編集
-```
-
-#### ステップ4: Steeringファイルの整理
-
-```bash
-# v1.xの単一ステアリングファイルがある場合
-mkdir -p .kiro/steering
-mv .kiro/steering-old.md .kiro/steering/project-context.md
-
-# 必要に応じて複数ファイルに分割
-# 例:
-# - .kiro/steering/architecture.md
-# - .kiro/steering/coding-standards.md
-# - .kiro/steering/domain-knowledge.md
-```
-
-#### ステップ5: 動作確認
-
-```bash
-# 新しいコマンドが利用可能か確認
-/kiro:spec-status
-
-# 新しい検証コマンドを試す
-/kiro:validate-gap <existing-feature>
-```
+- **Template & rules driven customization** – stop patching commands; edit `.kiro/settings/templates/` and `.kiro/settings/rules/` once and every agent picks it up.
+- **Spec fidelity** – Research.md captures discovery logs while Design.md becomes reviewer friendly with Summary tables, Req Coverage, Supporting References, and lighter Components/Interfaces blocks.
+- **Steering = Project Memory** – drop structured knowledge across `.kiro/steering/*.md` files and every command consumes it.
+- **Brownfield guardrails** – `/kiro:validate-gap`, `validate-design`, `validate-impl` plus the research/design split make gap analysis and existing-system upgrades much safer.
+- **Unified coverage** – all 7 supported agents (Claude Code, Claude Subagents, Cursor, Codex CLI, Gemini CLI, GitHub Copilot, Qwen Code, Windsurf) run the same 11-command workflow, so mixing agents (e.g., Cursor + Claude) requires zero spec rewrites.
 
 ---
 
-## 新機能の利用方法
+## 3. Recommended migration steps
 
-### 1. 検証コマンドの活用（Brownfield開発）
+1. **Backup**
+   ```bash
+   cp -r .kiro .kiro.backup
+   cp -r .claude .claude.backup   # repeat for .cursor, .codex, …
+   ```
 
-既存プロジェクトに新機能を追加する場合:
+2. **Install v2 cleanly (reuse interactive choices)**
+   ```bash
+   npx cc-sdd@latest                 # default (Claude Code)
+   npx cc-sdd@latest --cursor        # other agents
+   npx cc-sdd@latest --claude-agent  # Subagents mode
+   ```
+   - The installer now prompts per file group (overwrite / append / keep). You can choose “append” for steering/specs to merge existing documents, or “keep” to skip untouched assets.
 
-```bash
-# ステップ1: プロジェクトコンテキストを構築
-/kiro:steering
+3. **Regenerate + merge templates/rules**
+   - New layout: `.kiro/settings/templates/` (centralized) + `.kiro/settings/rules/`.
+   - Compare the new templates with any custom logic you previously kept inside agent prompt folders and move the reusable parts into templates/rules.
 
-# ステップ2: 新機能の仕様を作成
-/kiro:spec-init OAuth機能の追加
-/kiro:spec-requirements oauth-feature
+4. **Move custom rules**
+   - Place Markdown files under `.kiro/settings/rules/`. Every spec/design/tasks command reads them.
+   - Anything you previously hard-coded into prompts becomes a rule entry (“DO/DO NOT …”).
 
-# ステップ3: 既存実装とのギャップを分析
-/kiro:validate-gap oauth-feature
+5. **Rebuild steering (optional)**
+   - Split project memory into files such as `project-context.md`, `architecture.md`, `domain-knowledge.md`.
+   - Research/design templates reference this folder, so migrate existing notes here.
 
-# ステップ4: 設計を作成
-/kiro:spec-design oauth-feature
-
-# ステップ5: 既存アーキテクチャとの互換性を検証
-/kiro:validate-design oauth-feature
-
-# ステップ6: タスク化と実装
-/kiro:spec-tasks oauth-feature
-/kiro:spec-impl oauth-feature 1.1,1.2
-```
-
-### 2. SubAgentsモードの活用
-
-大規模プロジェクトでコンテキストを最適化:
-
-```bash
-# インストール
-npx cc-sdd@latest --claude-agent
-
-# spec-quickコマンドで全フェーズを一気に実行
-/kiro:spec-quick ユーザー認証機能
-
-# 各フェーズでSubAgentが自動起動し、詳細分析を実施
-# メイン会話のコンテキストは保護されます
-```
-
-### 3. 並列タスクの活用
-
-```bash
-# タスク生成時に並列実行可能なタスクが自動識別されます
-/kiro:spec-tasks auth-feature
-
-# tasks.mdに以下のようなマークが付きます:
-# - [ ] 1.1 (P) データベーススキーマ設計
-# - [ ] 1.2 (P) APIエンドポイント設計
-# - [ ] 1.3 統合テスト作成（1.1, 1.2に依存）
-
-# (P)マークのタスクは並列実行可能
-```
-
-### 4. Research.mdの活用
-
-設計フェーズでの調査と設計を分離:
-
-```bash
-/kiro:spec-design auth-feature
-
-# 以下の2ファイルが生成されます:
-# - .kiro/specs/auth-feature/research.md  # 調査ログ、パターン評価
-# - .kiro/specs/auth-feature/design.md   # 最終的な技術設計
-```
+6. **Update automation**
+   - Point all scripts/docs to `npx cc-sdd@latest`; retire `@next` usage.
+   - Map old manual command invocations to the 11 supported ones (`spec-*`, `validate-*`, `steering*`).
 
 ---
 
-## トラブルシューティング
+## 4. Mapping legacy edits to v2
 
-### Q1: v2.0.0インストール後、既存のカスタムテンプレートが反映されない
-
-**原因:** テンプレートパスが変更されました
-
-**解決方法:**
-```bash
-# v1.xのカスタムテンプレートを新しいパスにコピー
-cp .kiro.backup/templates/os-mac/*.md .kiro/settings/templates/
-```
-
-### Q2: Steeringが読み込まれない
-
-**原因:** v2.0.0ではディレクトリ全体を読み込みます
-
-**解決方法:**
-```bash
-# Steeringファイルを.kiro/steering/ディレクトリに配置
-mkdir -p .kiro/steering
-mv <your-steering-file>.md .kiro/steering/
-```
-
-### Q3: 新しい検証コマンドが見つからない
-
-**原因:** インストールが完了していない可能性
-
-**解決方法:**
-```bash
-# 再インストール（既存ファイルは上書き確認あり）
-npx cc-sdd@latest --overwrite prompt
-
-# コマンド一覧を確認
-ls .claude/commands/kiro/  # Claude Codeの場合
-```
-
-### Q4: `@next`でインストールしたSubAgentsが動作しない
-
-**原因:** v2.0.0では`@latest`で全機能が利用可能です
-
-**解決方法:**
-```bash
-# @latestで再インストール
-npx cc-sdd@latest --claude-agent
-```
-
-### Q5: 多言語対応のドキュメントが生成されない
-
-**原因:** 言語オプションが指定されていない
-
-**解決方法:**
-```bash
-# 言語を明示的に指定
-npx cc-sdd@latest --lang ja  # 日本語
-npx cc-sdd@latest --lang zh-TW  # 繁体中国語
-# 対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
-```
-
-### Q6: テンプレートの`{{KIRO_DIR}}`変数が展開されない
-
-**原因:** 古いバージョンのテンプレートを使用している可能性
-
-**解決方法:**
-```bash
-# 最新のテンプレートを再インストール
-npx cc-sdd@latest --overwrite force --backup
-```
+| Legacy touchpoint | v2 replacement | Notes |
+| --- | --- | --- |
+| `.claude/commands/spec-design.prompt.md` などエージェント別コマンドファイル | `.kiro/settings/templates/specs/design.md` | Templates now live in `.kiro/settings/templates/` and generate Summary/Supporting References automatically. |
+| `.claude/commands/<cmd>.prompt`, `.cursor/prompts/*` | `.kiro/settings/rules/*.md` | Replace prompt edits with shared rule statements so every agent receives identical guidance. |
+| `.kiro/steering/` (single file or not) | `.kiro/steering/*.md` with clearer principles/guides | Same folder path; v2 simply encourages breaking content into focused project-memory guides. |
+| Research notes interleaved in design.md | `.kiro/specs/<feature>/research.md` + Supporting References section | Design stays reviewer friendly; research keeps raw findings without cluttering the main body. |
 
 ---
 
-## サポート
+## 5. FAQ / troubleshooting
 
-問題が解決しない場合:
+**Can I reuse old templates inside v2?** – Technically yes, but you lose Req Coverage and Supporting References, so generation quality drops. Prefer porting content into the new templates/rules.
 
-- **GitHub Issues**: [https://github.com/gotalab/cc-sdd/issues](https://github.com/gotalab/cc-sdd/issues)
-- **ドキュメント**: [https://github.com/gotalab/cc-sdd](https://github.com/gotalab/cc-sdd)
-- **コマンドリファレンス**: [command-reference.md](./command-reference.md)
-- **カスタマイズガイド**: [customization-guide.md](./customization-guide.md)
+**Can I switch between 1.1.5 and 2.0.0 in one repo?** – Only if you isolate `.kiro` per branch or automate swapping directories; the layouts conflict.
+
+**After editing templates, which commands should I run?** – At minimum: `/kiro:steering`, `/kiro:spec-init`, `/kiro:spec-design` to regenerate Research/Design/Tasks with the new format.
 
 ---
 
-## 関連リソース
+## 6. Takeaways
 
-- [CHANGELOG.md](../../CHANGELOG.md) - 詳細な変更履歴
-- [リリースノート（日本語）](../RELEASE_NOTES/RELEASE_NOTES_ja.md)
-- [リリースノート（英語）](../RELEASE_NOTES/RELEASE_NOTES_en.md)
-- [コマンドリファレンス](./command-reference.md)
-- [カスタマイズガイド](./customization-guide.md)
-- [Claude SubAgentsガイド](./claude-subagents.md)
-- [Spec-Driven開発ワークフロー](./spec-driven.md)
+- **Stay on 1.1.5** if you just need the legacy workflow—pin the version and continue as before.
+- **Move to 2.0.0** if you want unified templates, Supporting References, research/design separation, and minimal maintenance via rules.
+- Future features and fixes target v2+, so upgrading unlocks the full spec-driven development experience.

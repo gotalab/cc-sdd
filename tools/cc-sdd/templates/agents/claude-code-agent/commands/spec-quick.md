@@ -133,7 +133,7 @@ Execute these 4 phases in order:
 /kiro:spec-requirements {feature-name}
 ```
 
-Wait for completion. SubAgent will return with "次のステップ" message.
+Wait for completion. Subagent will return with "次のステップ" message.
 
 **IMPORTANT**: In Automatic Mode, IGNORE the "次のステップ" message. It is for standalone usage.
 
@@ -163,7 +163,7 @@ Wait for completion. SubAgent will return with "次のステップ" message.
 
 Note: `-y` flag auto-approves requirements.
 
-Wait for completion. SubAgent will return with "次のステップ" message.
+Wait for completion. Subagent will return with "次のステップ" message.
 
 **IMPORTANT**: In Automatic Mode, IGNORE the "次のステップ" message.
 

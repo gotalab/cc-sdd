@@ -13,7 +13,7 @@ No unreleased features at this time. The latest stable release is v2.0.0.
 ## 🎉 Ver 2.0.0 (2025-11-09) – Stable Release
 
 ### Highlights at a Glance
-- **`npx cc-sdd@latest` = full stack SDD**: all alpha capabilities (research.md, validation commands, SubAgents, Windsurf) are now GA.
+- **`npx cc-sdd@latest` = full stack SDD**: all alpha capabilities (research.md, validation commands, Subagents, Windsurf) are now GA.
 - **Spec-to-impl fidelity**: Research/Design/Tasks templates now enforce requirement IDs, component density rules, and Supporting References for long-form details.
 - **Brownfield guardrails**: `/kiro:validate-*` commands, parallel-task analysis, and steering-wide project memory reduce drift before any code change.
 - **Global parity**: 7 AI agents × 12 languages share the same templates, prompts, and installation flow.
@@ -27,7 +27,7 @@ No unreleased features at this time. The latest stable release is v2.0.0.
 - **Parallel Task Analysis** – automatic `(P)` markers + `--sequential` escape hatch.
 - **Research.md Template** – isolates discovery logs and architectural trade-offs from the design SSOT.
 - **Design Template Overhaul** – summary tables, requirement coverage, Supporting References, and heavy component blocks only where they matter.
-- **Agent Coverage** – Claude Code + SubAgents, Cursor, Gemini CLI, Codex CLI, Copilot, Qwen, Windsurf with matching 11-command workflows.
+- **Agent Coverage** – Claude Code + Subagents, Cursor, Gemini CLI, Codex CLI, Copilot, Qwen, Windsurf with matching 11-command workflows.
 - **Interactive Installer** – guided setup with project-memory handling, npm badges, and improved documentation navigation.
 
 ### Resources
