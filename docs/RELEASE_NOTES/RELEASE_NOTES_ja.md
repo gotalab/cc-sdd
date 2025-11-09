@@ -12,95 +12,31 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ## 🎉 Ver 2.0.0 (2025-11-09) - 安定版リリース
 
-### 🎯 メジャーリリースのハイライト
+### ハイライト
+- **`npx cc-sdd@latest`で全機能開放**：alpha.1〜alpha.6で試験投入したResearch.md、検証コマンド、SubAgents、Windsurf統合をすべてGA化。
+- **設計〜実装の一貫性強化**：要約表・Req Coverage・Supporting Referencesを備えた新designテンプレでSSoTを堅持。
+- **Brownfield向けガードレール**：`/kiro:validate-*`、並列タスク分析、Steeringプロジェクトメモリでデグレを未然に防止。
+- **グローバル対応**：7エージェント×12言語が同一テンプレートとコマンド体系を共有。
 
-cc-sdd v2.0.0は、alphaシリーズのすべての機能を統合したメジャー安定版リリースです。**すべての機能が`npx cc-sdd@latest`で利用可能になりました。**
+### アップグレード要点
+1. 必ず [移行ガイド](../guides/migration-guide.md) を参照し、`.kiro/settings/templates/*` の再配置とSteeringのディレクトリ読込変更を反映。
+2. 自動化やREADMEの実行例を `npx cc-sdd@latest` 基準に統一（`@next`は今後のプレビュー専用）。
+3. steering / research / design / tasks テンプレートを再生成し、Research.md・Supporting References・(P)マーカーを取り込む。
 
-**新機能:**
-- ✨ **11コマンド** - brownfield開発向け検証コマンド追加で8から11に拡張
-- 🤖 **7つのAIエージェント** - Claude Code、SubAgents、Cursor、Gemini CLI、Codex、Copilot、Qwen、Windsurf
-- 🌍 **12言語** - 完全な国際化対応
-- ⚡ **並列タスク** - `(P)`マーカーによる自動検出
-- 📚 **プロジェクトメモリ** - ディレクトリ全体を読み込む強化されたSteering
-- 🎨 **統一テンプレート** - カスタマイズ可能なクロスプラットフォーム対応
+### 主な強化点
+- **並列タスク分析**：`(P)`マーカー自動付与と `--sequential` フラグ。
+- **Research.md**：調査ログと長文の意思決定を設計本編から切り離し、design.mdを一次情報として完結。
+- **Designテンプレ改訂**：コンポーネント要約表、Req Coverage、Supporting References、密度調整ルールを追加。
+- **エージェント/言語パリティ**：Claude Code + SubAgents, Cursor, Gemini CLI, Codex CLI, Copilot, Qwen, Windsurf の11コマンドセットを統一提供。
+- **対話型インストーラー**：プロジェクトメモリ処理とnpmバッジ更新を含むガイド付きセットアップ。
 
-### ✨ 新機能
+### リソース
+- 技術的な詳細: [CHANGELOG.md](../../CHANGELOG.md#200---2025-11-09)
+- 手順・回帰対策: [docs/guides/migration-guide.md](../guides/migration-guide.md)
+- リリース作業タスク: `docs/cc-sdd/v2.0.0/PLAN.md`
+- テンプレ改善タスク: `docs/cc-sdd/v2.0.0/PLAN2.md`
 
-**コア機能**
-- **並列タスク分析**（[#89](https://github.com/gotalab/cc-sdd/pull/89)）
-  - 並列実行可能タスクに自動的に`(P)`マーカー付与
-  - `--sequential`フラグでオプトアウト可能
-  - 新ルール：`tasks-parallel-analysis.md`
-- **Research.mdテンプレート**
-  - 調査と設計ドキュメントを分離
-  - トレードオフと設計判断の構造化フォーマット
-- **エージェントツール除外**
-  - `.claude/`、`.cursor/`、`.codex/`をSteering分析から自動除外
-
-**プラットフォーム対応**
-- **Claude Code SubAgents**（[#74](https://github.com/gotalab/cc-sdd/pull/74)）
-  - コンテキスト最適化のための12コマンド + 9 SubAgents
-  - コマンド毎の専用システムプロンプト
-- **Windsurf IDE** - 11ワークフローによる完全統合
-- **Codex CLI** - `.codex/prompts/`に11プロンプト
-- **GitHub Copilot** - `.github/prompts/`に11プロンプト
-
-**検証コマンド**（Brownfield開発向け）
-- `/kiro:validate-gap` - 要件と既存コードのギャップ分析
-- `/kiro:validate-design` - 設計の互換性検証
-- `/kiro:validate-impl` - 実装品質の検証
-
-**開発者体験**
-- **対話型CLIインストーラー**（[#70](https://github.com/gotalab/cc-sdd/pull/70)）
-  - 整理されたファイル表示
-  - 対話的なプロジェクトメモリ処理
-- **包括的ドキュメント**
-  - 11コマンドすべてのコマンドリファレンス（[#83](https://github.com/gotalab/cc-sdd/pull/83)）
-  - 7つの実例を含むカスタマイズガイド（[#83](https://github.com/gotalab/cc-sdd/pull/83)）
-  - v1.xユーザー向け移行ガイド
-
-### 🔧 改善
-
-**アーキテクチャ**
-- 統一テンプレート構造（os-mac/os-windows削除）
-- すべてのテンプレートが実際の拡張子を使用（.md、.prompt.md、.toml）
-- プロジェクト全体のProject MemoryとしてのSteering
-- `{{KIRO_DIR}}/settings`の共有設定
-
-**ワークフロー**
-- 改善されたコンテキストで全11コマンドを再設計
-- 並列基準を含む強化されたタスク生成
-- 発見ガイドライン付き改善された設計テンプレート
-- research.mdを活用した更新されたspec-designワークフロー
-- 整理されたtasks.md構造
-
-**ドキュメント**
-- EARS形式の小文字構文（[#88](https://github.com/gotalab/cc-sdd/pull/88)）
-- 明確化されたカスタマイズ手順（[#85](https://github.com/gotalab/cc-sdd/pull/85)）
-- 更新されたインストールドキュメント（[#87](https://github.com/gotalab/cc-sdd/pull/87)）
-- ドキュメント構造の再編成（CHANGELOG → RELEASE_NOTES）
-
-**プロジェクト管理**
-- 自動化されたissueライフサイクル（[#80](https://github.com/gotalab/cc-sdd/pull/80)）
-- 一元化されたエージェントメタデータ（[#72](https://github.com/gotalab/cc-sdd/pull/72)）
-
-### 🔄 破壊的変更
-
-⚠️ **移行が必要** - [移行ガイド](../guides/migration-guide.md)を参照
-
-1. **テンプレート構造** - `.kiro/settings/templates/`の統一テンプレートを使用
-2. **Steering** - `steering/`ディレクトリ全体を読み込み
-3. **ファイル拡張子** - テンプレートが実際の拡張子を使用
-4. **コマンド** - 8から11に拡張
-
-### 📈 主要指標
-- **プラットフォーム**: 7つのAIエージェント
-- **コマンド**: 11（6 spec + 3 validate + 2 steering）
-- **言語**: 12
-- **テンプレート**: 統一クロスプラットフォーム
-
-### 📚 関連PR
-[#89](https://github.com/gotalab/cc-sdd/pull/89)、[#88](https://github.com/gotalab/cc-sdd/pull/88)、[#87](https://github.com/gotalab/cc-sdd/pull/87)、[#86](https://github.com/gotalab/cc-sdd/pull/86)、[#85](https://github.com/gotalab/cc-sdd/pull/85)、[#84](https://github.com/gotalab/cc-sdd/pull/84)、[#83](https://github.com/gotalab/cc-sdd/pull/83)、[#81](https://github.com/gotalab/cc-sdd/pull/81)、[#80](https://github.com/gotalab/cc-sdd/pull/80)、[#74](https://github.com/gotalab/cc-sdd/pull/74)、[#73](https://github.com/gotalab/cc-sdd/pull/73)、[#72](https://github.com/gotalab/cc-sdd/pull/72)、[#71](https://github.com/gotalab/cc-sdd/pull/71)、[#70](https://github.com/gotalab/cc-sdd/pull/70)
+v2.0.0へ移行後にテンプレートを再生成すれば、追加フラグなしで最新のSpec Driven Developmentワークフローが利用できます。
 
 ---
 

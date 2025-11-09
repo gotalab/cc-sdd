@@ -10,17 +10,11 @@ All notable changes to this project will be documented in this file.
 
 ## [2.0.0] - 2025-11-09
 
-### 🎉 Major Release Highlights
+### Summary
 
-cc-sdd v2.0.0 is a major stable release that consolidates all features from the alpha series (2.0.0-alpha.1 through alpha.6). All features are now available via `npx cc-sdd@latest`.
-
-**Key Improvements:**
-- ✨ **11 Commands**: Expanded from 8 to 11 commands with 3 new validation commands for brownfield development
-- 🤖 **7 AI Agents**: Full support for Claude Code, Claude Code SubAgents, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf IDE
-- 🌍 **12 Languages**: Comprehensive internationalization (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar)
-- ⚡ **Parallel Task Analysis**: Automatic detection of parallelizable tasks with `(P)` markers
-- 📚 **Project Memory**: Enhanced steering system loading entire directories
-- 🎨 **Template Flexibility**: Unified cross-platform templates with customization support
+- Consolidates every feature shipped in 2.0.0-alpha.1〜alpha.6 and promotes them to `npx cc-sdd@latest`.
+- Adds validation commands, Research.md, steering/memory upgrades, and 7-agent / 12-language parity.
+- For migration steps, see `docs/guides/migration-guide.md` (referenced from release notes as well).
 
 ### Added
 
@@ -127,28 +121,7 @@ See the comprehensive [Migration Guide](docs/guides/migration-guide.md) for deta
 - Template and steering migration
 - Troubleshooting common issues
 
-### Metrics
-
-- **Supported Platforms**: 7 AI agents (Claude Code, Claude Code SubAgents, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf IDE)
-- **Commands**: 11 (6 spec + 3 validate + 2 steering)
-- **Documentation Languages**: 12 (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar)
-
-### Related PRs (Consolidated from alpha releases)
-
-- [#89](https://github.com/gotalab/cc-sdd/pull/89) - Enable parallel task analysis by default
-- [#88](https://github.com/gotalab/cc-sdd/pull/88) - Update EARS format to lowercase syntax
-- [#87](https://github.com/gotalab/cc-sdd/pull/87) - Clarify installation
-- [#86](https://github.com/gotalab/cc-sdd/pull/86) - Add npm next badge to README files
-- [#85](https://github.com/gotalab/cc-sdd/pull/85) - Clarify template customization instructions
-- [#84](https://github.com/gotalab/cc-sdd/pull/84) - Customization guide review suggestions
-- [#83](https://github.com/gotalab/cc-sdd/pull/83) - Add customization guide and command reference
-- [#81](https://github.com/gotalab/cc-sdd/pull/81) - Make stale workflow messaging English-only
-- [#80](https://github.com/gotalab/cc-sdd/pull/80) - Automate GitHub issue lifecycle management
-- [#74](https://github.com/gotalab/cc-sdd/pull/74) - Add Claude Code SubAgents mode
-- [#73](https://github.com/gotalab/cc-sdd/pull/73) - Add CLAUDE.md documentation
-- [#72](https://github.com/gotalab/cc-sdd/pull/72) - Refactor agent metadata into central registry
-- [#71](https://github.com/gotalab/cc-sdd/pull/71) - Add alpha version info and improve language table
-- [#70](https://github.com/gotalab/cc-sdd/pull/70) - Release cc-sdd v2.0.0-alpha
+> For release storytelling, refer to `docs/RELEASE_NOTES/*`. This changelog keeps the technical diff only.
 
 ---
 

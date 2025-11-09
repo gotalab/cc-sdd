@@ -10,97 +10,32 @@ No unreleased features at this time. The latest stable release is v2.0.0.
 
 ---
 
-## 🎉 Ver 2.0.0 (2025-11-09) - Stable Release
+## 🎉 Ver 2.0.0 (2025-11-09) – Stable Release
 
-### 🎯 Major Release Highlights
+### Highlights at a Glance
+- **`npx cc-sdd@latest` = full stack SDD**: all alpha capabilities (research.md, validation commands, SubAgents, Windsurf) are now GA.
+- **Spec-to-impl fidelity**: Research/Design/Tasks templates now enforce requirement IDs, component density rules, and Supporting References for long-form details.
+- **Brownfield guardrails**: `/kiro:validate-*` commands, parallel-task analysis, and steering-wide project memory reduce drift before any code change.
+- **Global parity**: 7 AI agents × 12 languages share the same templates, prompts, and installation flow.
 
-cc-sdd v2.0.0 is a major stable release consolidating all features from the alpha series. **All features are now available via `npx cc-sdd@latest`**.
+### Upgrade Essentials
+1. Follow the [Migration Guide](../guides/migration-guide.md) for template layout changes (`.kiro/settings/templates/*`) and new steering behavior (directory-wide load).
+2. Update automation/scripts to call `npx cc-sdd@latest` (the `@next` tag is reserved for future previews).
+3. Regenerate steering + spec templates once to pick up Research.md, the new design rules, and tasks parallel markers.
 
-**What's New:**
-- ✨ **11 Commands** - Expanded from 8 to 11 with validation commands for brownfield development
-- 🤖 **7 AI Agents** - Claude Code, SubAgents, Cursor, Gemini CLI, Codex, Copilot, Qwen, Windsurf
-- 🌍 **12 Languages** - Full internationalization support
-- ⚡ **Parallel Tasks** - Automatic detection with `(P)` markers
-- 📚 **Project Memory** - Enhanced steering loading entire directories
-- 🎨 **Unified Templates** - Cross-platform compatibility with customization
+### Key Capabilities in this release
+- **Parallel Task Analysis** – automatic `(P)` markers + `--sequential` escape hatch.
+- **Research.md Template** – isolates discovery logs and architectural trade-offs from the design SSOT.
+- **Design Template Overhaul** – summary tables, requirement coverage, Supporting References, and heavy component blocks only where they matter.
+- **Agent Coverage** – Claude Code + SubAgents, Cursor, Gemini CLI, Codex CLI, Copilot, Qwen, Windsurf with matching 11-command workflows.
+- **Interactive Installer** – guided setup with project-memory handling, npm badges, and improved documentation navigation.
 
-### ✨ New Features
+### Resources
+- Full technical diff: see [CHANGELOG.md](../../CHANGELOG.md#200---2025-11-09).
+- Migration specifics: [docs/guides/migration-guide.md](../guides/migration-guide.md).
+- PLAN references: `docs/cc-sdd/v2.0.0/PLAN.md` for release tasks, `docs/cc-sdd/v2.0.0/PLAN2.md` for design-template scope.
 
-**Core Features**
-- **Parallel Task Analysis** ([#89](https://github.com/gotalab/cc-sdd/pull/89))
-  - Automatic `(P)` markers for parallel-executable tasks
-  - `--sequential` flag to opt-out
-  - New rule: `tasks-parallel-analysis.md`
-- **Research.md Template**
-  - Separates discovery from design documentation
-  - Structured format for trade-offs and design decisions
-- **Agent Tooling Exclusion**
-  - Automatically excludes `.claude/`, `.cursor/`, `.codex/` from steering analysis
-
-**Platform Support**
-- **Claude Code SubAgents** ([#74](https://github.com/gotalab/cc-sdd/pull/74))
-  - 12 commands + 9 SubAgents for context optimization
-  - Specialized system prompts per command
-- **Windsurf IDE** - Complete workflow integration with 11 workflows
-- **Codex CLI** - 11 prompts in `.codex/prompts/`
-- **GitHub Copilot** - 11 prompts in `.github/prompts/`
-
-**Validation Commands** (Brownfield Development)
-- `/kiro:validate-gap` - Gap analysis between requirements and existing code
-- `/kiro:validate-design` - Design compatibility verification
-- `/kiro:validate-impl` - Implementation quality validation
-
-**Developer Experience**
-- **Interactive CLI Installer** ([#70](https://github.com/gotalab/cc-sdd/pull/70))
-  - Organized file display
-  - Interactive project memory handling
-- **Comprehensive Documentation**
-  - Command reference with all 11 commands ([#83](https://github.com/gotalab/cc-sdd/pull/83))
-  - Customization guide with 7 examples ([#83](https://github.com/gotalab/cc-sdd/pull/83))
-  - Migration guide for v1.x users
-
-### 🔧 Improvements
-
-**Architecture**
-- Unified template structure (removed os-mac/os-windows)
-- All templates use actual extensions (.md, .prompt.md, .toml)
-- Steering as project-wide Project Memory
-- Shared settings in `{{KIRO_DIR}}/settings`
-
-**Workflow**
-- Redesigned all 11 commands with improved context
-- Enhanced task generation with parallel criteria
-- Improved design template with discovery guidelines
-- Updated spec-design workflow with research.md
-- Streamlined tasks.md structure
-
-**Documentation**
-- EARS format lowercase syntax ([#88](https://github.com/gotalab/cc-sdd/pull/88))
-- Clarified customization instructions ([#85](https://github.com/gotalab/cc-sdd/pull/85))
-- Updated installation docs ([#87](https://github.com/gotalab/cc-sdd/pull/87))
-- Reorganized docs structure (CHANGELOG → RELEASE_NOTES)
-
-**Project Management**
-- Automated issue lifecycle ([#80](https://github.com/gotalab/cc-sdd/pull/80))
-- Centralized agent metadata ([#72](https://github.com/gotalab/cc-sdd/pull/72))
-
-### 🔄 Breaking Changes
-
-⚠️ **Migration Required** - See [Migration Guide](../guides/migration-guide.md)
-
-1. **Template Structure** - Use unified templates in `.kiro/settings/templates/`
-2. **Steering** - Loads entire `steering/` directory
-3. **File Extensions** - Templates use actual extensions
-4. **Commands** - Expanded from 8 to 11
-
-### 📈 Key Metrics
-- **Platforms**: 7 AI agents
-- **Commands**: 11 (6 spec + 3 validate + 2 steering)
-- **Languages**: 12
-- **Templates**: Unified cross-platform
-
-### 📚 Related PRs
-[#89](https://github.com/gotalab/cc-sdd/pull/89), [#88](https://github.com/gotalab/cc-sdd/pull/88), [#87](https://github.com/gotalab/cc-sdd/pull/87), [#86](https://github.com/gotalab/cc-sdd/pull/86), [#85](https://github.com/gotalab/cc-sdd/pull/85), [#84](https://github.com/gotalab/cc-sdd/pull/84), [#83](https://github.com/gotalab/cc-sdd/pull/83), [#81](https://github.com/gotalab/cc-sdd/pull/81), [#80](https://github.com/gotalab/cc-sdd/pull/80), [#74](https://github.com/gotalab/cc-sdd/pull/74), [#73](https://github.com/gotalab/cc-sdd/pull/73), [#72](https://github.com/gotalab/cc-sdd/pull/72), [#71](https://github.com/gotalab/cc-sdd/pull/71), [#70](https://github.com/gotalab/cc-sdd/pull/70)
+Once your project templates are regenerated on v2.0.0, all spec/todo automation should operate without additional flags.
 
 ---
 
