@@ -2,10 +2,10 @@
 
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
-[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](../../LICENSE)
 
 <div align="center" style="margin-bottom: 1rem; font-size: 1.1rem;"><sub>
-<a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README.md">English</a> | 日本語 | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_zh-TW.md">繁體中文</a>
+<a href="./README.md">English</a> | 日本語 | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
 ✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf をプロトタイプから本番仕様駆動へ。要件・設計・タスク・プロジェクトメモリをチームのワークフローに沿うようカスタマイズできます。**
@@ -17,6 +17,7 @@
 - **Research.md + validate 系** — 調査メモは Research.md に切り出し、Design.md は要点のみ。validate-gap/design/impl と並列タスク分析で新規機能も既存拡張も安全。
 - **カスタマイズは `.kiro/settings/templates & rules` に集約** — 1回の編集で全エージェントの出力が揃う。
 - **7エージェント × 12言語** — Claude / Cursor / Codex / Gemini / Copilot / Qwen / Windsurf が同じ11コマンドを共有。
+
 
 > インストール手順だけ知りたい場合は [インストール](#-インストール) へジャンプ。v1.1.5 維持なら `npx cc-sdd@1.1.5 --claude-code ...`、v2 移行は [Migration Guide](../../docs/guides/migration-guide.md) / [日本語版](../../docs/guides/ja/migration-guide.md) を参照。
 
@@ -207,6 +208,8 @@ project/
 ├── .kiro/steering/          # AI指導ルール
 └── CLAUDE.md (Claude Code)    # プロジェクト設定
 ```
+
+> 補足: 実際に作成されるのはインストールしたエージェントに対応するディレクトリのみです。上記のツリーは全エージェント分を示しています。
 
 ## 📚 ドキュメント & サポート
 

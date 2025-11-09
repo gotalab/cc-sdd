@@ -2,10 +2,10 @@
 
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
-[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](../../LICENSE)
 
 <div align="center" style="margin-bottom: 1rem; font-size: 1.1rem;"><sub>
-<a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README.md">English</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | 繁體中文
+<a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
 ✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
@@ -106,7 +106,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW      # Windsurf IDE
 ## ✨ 主要功能
 
 - **🚀 AI-DLC 方法論** - 具人類批准的 AI 原生流程。核心模式：AI 執行，人類驗證
-- **📋 規格優先開發** - 全面性規格作為唱一信息源驅動整個生命週期
+- **📋 規格優先開發** - 全面性規格作為單一資訊源驅動整個生命週期
 - **⚡ 「快速衝刺」非衝刺** - [AI-DLC 術語](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)，強度小時/天周期取代數周衝刺。脱離 70% 管理額外負擔
 - **🧠 持久專案記憶** - AI 透過指導文件在所有會話間維持全面上下文（架構、模式、規則、領域知識）
 - **🛠 模板彈性** - 自訂 `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks），符合團隊慣用的文件格式
@@ -123,8 +123,8 @@ npx cc-sdd@latest --windsurf --lang zh-TW      # Windsurf IDE
 | **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
 | **Codex CLI** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
-| **Qwen Code** | ✅ 完全支援 | 11 個指令 |
-| **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 |
+| **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
+| **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `AGENTS.md` |
 | 其他（Factory AI Droid） | 📅 規劃中 | - |
 
 ## 📋 指令
@@ -205,6 +205,8 @@ project/
 ├── .kiro/steering/          # AI 指導規則
 └── CLAUDE.md (Claude Code)    # 專案設定
 ```
+
+> 提醒：實際只會建立所選代理需要的目錄，上方樹狀圖僅示範整個超集合。
 
 ## 📚 文件與支援
 

@@ -3,7 +3,7 @@
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
-[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](tools/cc-sdd/LICENSE)
+[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 <div align="center" style="font-size: 1.1rem; margin-bottom: 1rem;"><sub>
 <a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
@@ -30,12 +30,12 @@ Stop losing 70% of development time to meetings, documentation ceremonies, and s
 ```bash
 # Run in your project root directory
 cd your-project
-npx cc-sdd@latest --claude --lang en
+npx cc-sdd@latest --claude --lang en ## Claude Code
 
 # ✅ That's it! Now run: /kiro:spec-init <what-to-build>
 ```
 
-**Installation takes 30 seconds.** Supports 7 agents (Claude, Cursor, Gemini, Codex, Copilot, Qwen, Windsurf) × 12 languages.
+**Installation takes 30 seconds.** Supports 7 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, Windsurf) × 12 languages.
 
 📖 **Next steps:** [All installation options](#-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
@@ -50,12 +50,10 @@ npx cc-sdd@latest --claude --lang en
 /kiro:spec-tasks photo-albums-en -y
 ```
 
-**Generated in 5 minutes:**
+**Generated in 10 minutes:**
 - ✅ [requirements.md](.kiro/specs/photo-albums-en/requirements.md) — 15 EARS-format requirements
 - ✅ [design.md](.kiro/specs/photo-albums-en/design.md) — Architecture with Mermaid diagrams
 - ✅ [tasks.md](.kiro/specs/photo-albums-en/tasks.md) — 12 implementation tasks with dependencies
-
-📁 [View complete example →](.kiro/specs/photo-albums-en/)
 
 ![Example: design.md System Flow](assets/design-system_flow.png)
 

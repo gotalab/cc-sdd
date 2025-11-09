@@ -2,10 +2,10 @@
 
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
-[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](../../LICENSE)
 
 <div align="center" style="margin-bottom: 1rem; font-size: 1.1rem;"><sub>
-English | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_zh-TW.md">繁體中文</a>
+English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
 ✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf from prototype to production-ready development, while customizing every spec and steering template so requirements, design docs, tasks, and project memory match your team workflow.**
@@ -18,7 +18,10 @@ English | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/READ
 - **Customize once** via `.kiro/settings/templates/` & `.kiro/settings/rules/` — every agent shares the same outputs.
 - **7 agents × 12 languages** run the same 11-command workflow; mix Claude, Cursor, Codex, Gemini, Copilot, Qwen, Windsurf freely.
 
-> Ready? Jump to [Installation](#-installation). Need the legacy flow? Use `npx cc-sdd@1.1.5 --claude-code`. Upgrading from v1.x? See the [Migration Guide](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md).
+---
+
+> Need the legacy flow? Use `npx cc-sdd@1.1.5 --claude-code`. Upgrading from v1.x?
+> See the Migration Guide: [English](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md).
 
 ## 🚀 Installation
 
@@ -207,6 +210,8 @@ project/
 ├── .kiro/steering/           # AI guidance rules
 └── CLAUDE.md (Claude Code)    # Project configuration
 ```
+
+> Note: only the directories for the agent(s) you install will be created. The tree above shows the full superset for reference.
 
 ## 📚 Documentation & Support
 
