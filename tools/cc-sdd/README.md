@@ -10,7 +10,7 @@ English | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/READ
 
 ✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf from prototype to production-ready development, while customizing every spec and steering template so requirements, design docs, tasks, and project memory match your team workflow.**
 
-🇰 **Kiro-inspired** — Same Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
+🇰 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
 **Key highlights (v2.0.0):**
 - **Design.md = detailed Design Doc** with Summary tables, Req Coverage, Supporting References, lean Components/Interfaces so reviewers spend less time parsing.
@@ -18,24 +18,7 @@ English | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/READ
 - **Customize once** via `.kiro/settings/templates/` & `.kiro/settings/rules/` — every agent shares the same outputs.
 - **7 agents × 12 languages** run the same 11-command workflow; mix Claude, Cursor, Codex, Gemini, Copilot, Qwen, Windsurf freely.
 
-> Ready? Jump to [Installation](#-installation). Need the legacy flow? Use `npx cc-sdd@1.1.5 --claude-code`. Upgrading from v1.x? See the [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日本語版](../../docs/guides/ja/migration-guide.md).
-
-> Need to stay on 1.1.5? Run `npx cc-sdd@1.1.5 --claude-code ...`. Ready for v2.0.0? Jump to the [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日本語版](../../docs/guides/ja/migration-guide.md).
-
-<!-- npm badges -->
-[![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
-[![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
-[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-
-<div align="center" style="margin-bottom: 1rem; font-size: 1.2rem;"><sub>
-English | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_zh-TW.md">繁體中文</a>
-</sub></div>
-
-Brings **AI-DLC (AI Driven Development Lifecycle)** to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf. **AI-native processes** with **minimal human approval gates**: AI drives execution while humans validate critical decisions at each phase.
-
-🎯 **Perfect for**: Escaping the 70% overhead trap of traditional development (meetings, documentation, ceremonies) to achieve **weeks-to-hours delivery** with AI-native execution and human quality gates.
-
-> **Kiro compatible** — Same or even better proven workflow used in professional environments.
+> Ready? Jump to [Installation](#-installation). Need the legacy flow? Use `npx cc-sdd@1.1.5 --claude-code`. Upgrading from v1.x? See the [Migration Guide](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md).
 
 ## 🚀 Installation
 
@@ -227,10 +210,11 @@ project/
 
 ## 📚 Documentation & Support
 
-- **[Complete Documentation](https://github.com/gotalab/cc-sdd/tree/main/docs)** - Setup guides and references
+- Command Reference: [English](../../docs/guides/command-reference.md) | [日本語](../../docs/guides/ja/command-reference.md)
+- Customization Guide: [English](../../docs/guides/customization-guide.md) | [日本語](../../docs/guides/ja/customization-guide.md)
+- Spec-Driven Guide: [English](../../docs/guides/spec-driven.md) | [日本語](../../docs/guides/ja/spec-driven.md)
+- Claude Subagents Guide: [English](../../docs/guides/claude-subagents.md) | [日本語](../../docs/guides/ja/claude-subagents.md)
 - Migration Guide: [English](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md)
-- **[Command Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - All `/kiro:*` commands with detailed usage, parameters, examples
-- **[Customization Guide](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** - 7 practical examples: PRD requirements, frontend/backend designs, approval workflows, JIRA integration, domain steering
 - **[Issues & Support](https://github.com/gotalab/cc-sdd/issues)** - Bug reports and questions
 - **[Kiro IDE](https://kiro.dev)**
 

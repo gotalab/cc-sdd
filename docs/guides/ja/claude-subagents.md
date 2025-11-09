@@ -1,5 +1,7 @@
 # Claude Code Subagents ワークフロー（spec-quick 特化）
 
+> 📖 **English guide:** [Claude Code Subagents Workflow](../claude-subagents.md)
+
 このガイドでは、`npx cc-sdd@latest --claude-agent`（または `--claude-code-agent`）で提供される **Claude Code Subagents** の中で、独自の制御ロジックを持つ `spec-quick` コマンドに焦点を当てて解説する。その他の `/kiro:*` コマンドも同じ Subagent を再利用するが、動作は標準版と変わらないため、ここでの説明は省略する。
 
 ## インストールの確認

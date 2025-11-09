@@ -10,7 +10,7 @@
 
 ✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
 
-🇰 **Kiro 相容** — 與 Kiro IDE 相同的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
+🇰 **Kiro 相容** — 與 Kiro IDE 相似的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
 
 **v2.0.0 重點**
 - **Design.md = 詳細設計文件**：摘要表、Req Coverage、Supporting References、精簡的 Components/Interfaces，降低審查認知負荷。
@@ -19,17 +19,6 @@
 - **7 代理 × 12 語言**：Claude / Cursor / Codex / Gemini / Copilot / Qwen / Windsurf 共用 11 指令，混用也不用重建模板。
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
-
-<!-- npm badges -->
-[![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
-[![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
-[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-
-<div align="center" style="margin-bottom: 1rem; font-size: 1.2rem;"><sub>
-<a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README.md">English</a> | <a href="https://github.com/gotalab/cc-sdd/blob/main/tools/cc-sdd/README_ja.md">日本語</a> | 繁體中文
-</sub></div>
-
-將 **AI-DLC (AI 驅動開發生命週期)** 帶入 Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code 與 Windsurf。**AI 原生流程**與**最小限的人類批准關卡**：AI 驅動執行，人類在各階段驗證關鍵決策。
 
 ## 🚀 安裝
 
@@ -219,9 +208,11 @@ project/
 
 ## 📚 文件與支援
 
-- **[完整文件](https://github.com/gotalab/cc-sdd/tree/main/docs/README)** - 完整設定指南
-- **[指令參考](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - 所有 `/kiro:*` 指令的詳細使用方法、參數、範例
-- **[自訂指南](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** - 7 個實用範例：PRD 需求、前端/後端設計、批准工作流程、JIRA 整合、領域指導
+- 指令參考: [English](../../docs/guides/command-reference.md) | [日本語](../../docs/guides/ja/command-reference.md)
+- 自訂指南: [English](../../docs/guides/customization-guide.md) | [日本語](../../docs/guides/ja/customization-guide.md)
+- 規格驅動開發指南: [English](../../docs/guides/spec-driven.md) | [日本語](../../docs/guides/ja/spec-driven.md)
+- Claude 子代理指南: [English](../../docs/guides/claude-subagents.md) | [日本語](../../docs/guides/ja/claude-subagents.md)
+- 遷移指南: [English](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md)
 - **[問題與支援](https://github.com/gotalab/cc-sdd/issues)** - 問題回報與提問
 - **[Kiro IDE](https://kiro.dev)**
 

@@ -1,5 +1,7 @@
 # Spec-Driven Development ワークフロー
 
+> 📖 **English guide:** [Spec-Driven Development Workflow](../spec-driven.md)
+
 このドキュメントは、cc-sddがAI駆動開発ライフサイクル（AI-Driven Development Life Cycle, AI-DLC）において、仕様駆動開発（Spec-Driven Development, SDD）をどのように実践しているかを日本語で解説するものである。どのスラッシュコマンドを実行し、どの成果物をレビューし、開発者による確認（ゲート）をどの段階に設けるべきかを迅速に判断するためのリファレンスとして利用できる。
 
 ## ライフサイクル概要

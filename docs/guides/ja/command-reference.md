@@ -1,5 +1,7 @@
 # コマンドリファレンス
 
+> 📖 **English guide:** [Command Reference](../command-reference.md)
+
 cc-sdd が提供する11個のAI-DLCコマンドについて、その役割、入力、出力を一覧にしたリファレンスである。各フェーズで確認すべき成果物と次のアクションをすぐに把握できるよう、英語版の `docs/guides/command-reference.md` を基に日本語で要約している。
 
 > **補足**: コマンドのテンプレートは Claude Code を基準にしているが、Cursor、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code、Windsurf など、他のエージェントでも同じ11個のコマンドが利用可能である（UIの詳細は各エージェントのドキュメントを参照すること）。

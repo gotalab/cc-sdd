@@ -1,5 +1,7 @@
 # カスタマイズガイド
 
+> 📖 **English guide:** [Customization Guide](../customization-guide.md)
+
 cc-sdd のテンプレートとルールを編集して、チーム固有のワークフローに適合させる方法を解説します。
 
 ## はじめに

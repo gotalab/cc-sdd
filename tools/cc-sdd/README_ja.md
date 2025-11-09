@@ -10,7 +10,7 @@
 
 ✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf をプロトタイプから本番仕様駆動へ。要件・設計・タスク・プロジェクトメモリをチームのワークフローに沿うようカスタマイズできます。**
 
-🇰 **Kiro互換** — Kiro IDE と同じ Spec-Driven / AI-DLC スタイルで、既存の Kiro 仕様書もそのまま扱えます。
+🇰 **Kiro互換** — Kiro IDE に似た Spec-Driven / AI-DLC スタイルで、既存の Kiro 仕様書もそのまま扱えます。
 
 **v2.0.0 主な強化点**
 - **Design.md = 詳細設計書** — 要約表 / Req Coverage / Supporting References / 軽量化した Components & Interfaces でレビューの認知負荷を削減。
@@ -210,10 +210,11 @@ project/
 
 ## 📚 ドキュメント & サポート
 
-- **[完全ドキュメント](https://github.com/gotalab/cc-sdd/tree/main/docs/README)** - 完全セットアップガイド
-- マイグレーションガイド: [英語](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md)
-- **[コマンドリファレンス](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - すべての `/kiro:*` コマンドの詳細な使い方、パラメータ、例
-- **[カスタマイズガイド](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** - 7つの実践例：PRD要件、フロントエンド/バックエンド設計、承認ワークフロー、JIRA統合、ドメインステアリング
+- コマンドリファレンス: [日本語](../../docs/guides/ja/command-reference.md) | [English](../../docs/guides/command-reference.md)
+- カスタマイズガイド: [日本語](../../docs/guides/ja/customization-guide.md) | [English](../../docs/guides/customization-guide.md)
+- 仕様駆動開発ガイド: [日本語](../../docs/guides/ja/spec-driven.md) | [English](../../docs/guides/spec-driven.md)
+- Claude サブエージェントガイド: [日本語](../../docs/guides/ja/claude-subagents.md) | [English](../../docs/guides/claude-subagents.md)
+- マイグレーションガイド: [日本語](../../docs/guides/ja/migration-guide.md) | [English](../../docs/guides/migration-guide.md)
 - **[問題 & サポート](https://github.com/gotalab/cc-sdd/issues)** - バグ報告と質問
 - **[Kiro IDE](https://kiro.dev)**
 

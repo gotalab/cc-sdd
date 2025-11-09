@@ -1,5 +1,7 @@
 # Spec-Driven Development Workflow (WIP)
 
+> 📖 **日本語ガイドはこちら:** [仕様駆動開発ガイド (日本語)](ja/spec-driven.md)
+
 This document explains how cc-sdd implements Spec-Driven Development (SDD) inside the AI-Driven Development Life Cycle (AI-DLC). Use it as a reference when deciding which slash command to run, what artifact to review, and how to adapt the workflow to your team.
 
 ## Lifecycle Overview

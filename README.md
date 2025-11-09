@@ -1,7 +1,3 @@
-<div align="center" style="font-size: 1.2rem; margin-bottom: 1rem;"><sub>
-<a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
-</sub></div>
-
 # cc-sdd: Customize spec-driven development for your team's workflow
 
 <!-- npm badges -->
@@ -9,48 +5,67 @@
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](tools/cc-sdd/LICENSE)
 
-✨ **Transform Claude Code / Codex / Cursor / Gemini CLI / GitHub Copilot / Qwen Code / Windsurf from prototype to production-ready development, while customizing every spec and steering template so the generated requirements, design docs, tasks, and project memory match your team's workflow from day one.**
+<div align="center" style="font-size: 1.1rem; margin-bottom: 1rem;"><sub>
+<a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
+</sub></div>
+
+## Transform AI coding agents into production-ready spec-driven development
+
+**One command. Hours instead of weeks. Requirements → Design → Tasks → Implementation.**
+
+🇰 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
+
+Stop losing 70% of development time to meetings, documentation ceremonies, and scattered context. cc-sdd brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf.
+
+### What you get:
+- ✅ **Spec-first guarantees** — Approve requirements/design upfront, then AI implements exactly as specified
+- ✅ **Parallel execution ready** — Tasks decomposed for concurrent implementation with dependency tracking
+- ✅ **Team-aligned templates** — Customize once, all agents output docs that fit your approval process
+- ✅ **Project Memory** — AI remembers your architecture, patterns, and standards across sessions
+- ✅ **7 agents, unified workflow** — Same spec-driven process across Claude, Cursor, Gemini, Codex, Copilot, Qwen, Windsurf
+- ✅ **Hours instead of weeks** — Feature planning goes from days to hours with AI-assisted specs
 
 ## 🚀 Quick Start
-One command installs **AI-DLC** (AI-Driven Development Life Cycle) with **SDD** (Spec-Driven Development) workflows for Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf IDE.
-It also scaffolds team-aligned templates—requirements, design reviews, task plans, and steering docs—so every slash command outputs documentation that fits your existing approval process.
 
 ```bash
-# Installation is on a per-project basis. Run the below installation command in the root of your project.
+# Run in your project root directory
+cd your-project
+npx cc-sdd@latest --claude --lang en
 
-# Basic installation (default: Claude Code)
-npx cc-sdd@latest
-
-# With language: --lang en|ja|zh-TW|zh|es|pt|de|fr|ru|it|ko|ar
-npx cc-sdd@latest --lang ja
-
-# With different agents: claude, claude-agent, cursor, gemini, codex, copilot, qwen, windsurf
-npx cc-sdd@latest --claude         # Claude Code (11 commands)
-npx cc-sdd@latest --claude-agent   # Claude Code Subagents (12 commands + 9 subagents)
-npx cc-sdd@latest --cursor         # Cursor IDE
-npx cc-sdd@latest --gemini         # Gemini CLI
-npx cc-sdd@latest --codex          # Codex CLI
-npx cc-sdd@latest --copilot        # GitHub Copilot
-npx cc-sdd@latest --qwen           # Qwen Code
-npx cc-sdd@latest --windsurf       # Windsurf IDE
-
-# Note: @next is now reserved for future alpha/beta versions
-
-# Ready to go! Your chosen agent can now run `/kiro:spec-init <what-to-build>` and unlock the full SDD workflow
+# ✅ That's it! Now run: /kiro:spec-init <what-to-build>
 ```
 
-## ✨ What You Get
+**Installation takes 30 seconds.** Supports 7 agents (Claude, Cursor, Gemini, Codex, Copilot, Qwen, Windsurf) × 12 languages.
 
-After running cc-sdd, you'll have:
+📖 **Next steps:** [All installation options](#-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
-- **Team workflow alignment** — tailor requirements, design, task, and steering templates so outputs fit your review and approval process
-- **11 powerful slash commands** (`/kiro:steering`, `/kiro:spec-requirements`, `/kiro:validate-gap`, etc.)
-- **Project Memory (steering)** - AI learns your codebase, patterns, and preferences
-- **Structured AI-DLC workflow** with quality gates and approvals
-- **Spec-Driven Development** methodology built-in
-- **Kiro IDE compatibility** for seamless spec management
+## 📋 See It In Action
 
-**Perfect for**: Feature development, code reviews, technical planning, and maintaining development standards across your team.
+### Example: Building a new Photo Albums Feature
+
+```bash
+/kiro:spec-init Photo albums with upload, tagging, and sharing
+/kiro:spec-requirements photo-albums-en
+/kiro:spec-design photo-albums-en -y
+/kiro:spec-tasks photo-albums-en -y
+```
+
+**Generated in 5 minutes:**
+- ✅ [requirements.md](.kiro/specs/photo-albums-en/requirements.md) — 15 EARS-format requirements
+- ✅ [design.md](.kiro/specs/photo-albums-en/design.md) — Architecture with Mermaid diagrams
+- ✅ [tasks.md](.kiro/specs/photo-albums-en/tasks.md) — 12 implementation tasks with dependencies
+
+📁 [View complete example →](.kiro/specs/photo-albums-en/)
+
+![Example: design.md System Flow](assets/design-system_flow.png)
+
+## 🎯 Use Cases
+
+| Scenario | Workflow |
+|----------|----------|
+| **New feature (greenfield)** | `spec-init` → `spec-requirements` → `spec-design` → `spec-tasks` → `spec-impl` |
+| **Enhance existing code (brownfield)** | `steering` → `spec-init` → (`validate-gap` →) `spec-design` → (`validate-design` →) `spec-tasks` → `spec-impl` |
+| **Team process alignment** | Customize templates once in `.kiro/settings/templates/` → all agents follow same format |
 
 ## 🎨 Customization
 
@@ -65,141 +80,68 @@ Edit templates in `{{KIRO_DIR}}/settings/templates/` to match your workflow. Kee
 
 📖 **[Customization Guide](docs/guides/customization-guide.md)** — 7 practical examples with copy-paste snippets
 
-## 🤖 Supported Coding Agents
+## ⚙️ Advanced Installation
 
-| Agent | Flags you can pass | Installs |
-| --- | --- | --- |
-| Claude Code | `--claude-code`, `--claude` | `.claude/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `CLAUDE.md` |
-| Claude Code Subagents | `--claude-code-agent`, `--claude-agent` | `.claude/commands/kiro/` (12 commands), `.claude/agents/kiro/` (9 subagents), `{{KIRO_DIR}}/settings/`, `CLAUDE.md` |
-| Codex CLI | `--codex`, `--codex-cli` | `.codex/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
-| Cursor IDE | `--cursor` | `.cursor/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
-| GitHub Copilot Chat | `--copilot`, `--github-copilot` | `.github/prompts/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
-| Gemini CLI | `--gemini-cli`, `--gemini` | `.gemini/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `GEMINI.md` |
-| Qwen Code | `--qwen-code`, `--qwen` | `.qwen/commands/kiro/`, `{{KIRO_DIR}}/settings/`, `QWEN.md` |
-| Windsurf IDE | `--windsurf` | `.windsurf/workflows/`, `{{KIRO_DIR}}/settings/`, `AGENTS.md` |
+### Choose Your Agent
 
-*Claude Code remains the default agent when no flag is supplied.*
-
-## 🌐 Supported Languages
-
-| Language | Code |  |
-|----------|------|------|
-| English | `en` | 🇬🇧 |
-| Japanese | `ja` | 🇯🇵 |
-| Traditional Chinese | `zh-TW` | 🇹🇼 |
-| Simplified Chinese | `zh` | 🇨🇳 |
-| Spanish | `es` | 🇪🇸 |
-| Portuguese | `pt` | 🇵🇹 |
-| German | `de` | 🇩🇪 |
-| French | `fr` | 🇫🇷 |
-| Russian | `ru` | 🇷🇺 |
-| Italian | `it` | 🇮🇹 |
-| Korean | `ko` | 🇰🇷 |
-| Arabic | `ar` | 🇸🇦 |
-
-**Usage**: `npx cc-sdd@latest --lang <code>` (e.g., `--lang ja` for Japanese)
-
----
-
-## 📖 Documentation
-
-> **Project Overview** (Spec-Driven Development workflow)
-- English: [README.md](tools/cc-sdd/README.md)
-- 日本語: [README_ja.md](tools/cc-sdd/README_ja.md)
-- 繁體中文: [README_zh-TW.md](tools/cc-sdd/README_zh-TW.md)
-
-> **Command Reference**
-- [Command Reference Guide](docs/guides/command-reference.md) - Complete reference for all `/kiro:*` commands with detailed usage, parameters, examples, and troubleshooting
-- Migration Guide: [English](docs/guides/migration-guide.md) | [日本語](docs/guides/ja/migration-guide.md)
-
----
-
-## About
-
-**cc-sdd brings Spec-Driven Development to Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf.**
-
-Provides your project context, Project Memory (steering), and development patterns following the workflow: **requirements → design → tasks → implementation**. 
-
-**Kiro IDE compatible** — Reuse Kiro-style SDD specs and workflows seamlessly.
-
----
-
-ワンライナーで **AI-DLC（AI-Driven Development Life Cycle）** と **Spec-Driven Development（仕様駆動開発）** のワークフローを導入。プロジェクト直下に **11個のSlash / Prompt Commands** 一式と設定ファイル（Claude Code用 **CLAUDE.md** / Cursor IDE・Codex CLI・GitHub Copilot・Windsurf用 **AGENTS.md** / Gemini CLI用 **GEMINI.md** / Qwen Code用 **QWEN.md**）を配置、プロジェクトの文脈と開発パターン（**要件 → 設計 → タスク → 実装**）、**プロジェクトメモリ（ステアリング）** を含む。
-
-**関連記事**: [Kiroの仕様書駆動開発プロセスをClaude Codeで徹底的に再現した](https://zenn.dev/gotalab/articles/3db0621ce3d6d2) (Zenn)
-
----
-
- 
-## 📋 AI-DLC Workflow
-
-### For New Projects
 ```bash
-# Start spec-driven development immediately
-/kiro:spec-init User authentication with OAuth and 2FA
-/kiro:spec-requirements user-auth
-/kiro:spec-design user-auth -y
-/kiro:spec-tasks user-auth -y
-/kiro:spec-impl user-auth 1.1,1.2,1.3
+npx cc-sdd@latest --claude         # Claude Code (11 commands) [default]
+npx cc-sdd@latest --claude-agent   # Claude Code Subagents (12 commands + 9 subagents)
+npx cc-sdd@latest --cursor         # Cursor IDE
+npx cc-sdd@latest --gemini         # Gemini CLI
+npx cc-sdd@latest --codex          # Codex CLI
+npx cc-sdd@latest --copilot        # GitHub Copilot
+npx cc-sdd@latest --qwen           # Qwen Code
+npx cc-sdd@latest --windsurf       # Windsurf IDE
 ```
 
-📁 **Example Spec**: See [photo-albums-en](.kiro/specs/photo-albums-en/) for a complete spec-driven development example with requirements, design, and tasks.
+### Choose Your Language
 
-![design.md - System Flow Diagram](assets/design-system_flow.png)
-
-### For Existing Projects (Recommended)
 ```bash
-# First establish project context
-/kiro:steering                                    # AI learns existing project context
-
-# Then proceed with development
-/kiro:spec-init Add OAuth to existing auth system
-/kiro:spec-requirements oauth-enhancement
-/kiro:validate-gap oauth-enhancement              # Optional: analyze existing vs requirements
-/kiro:spec-design oauth-enhancement -y
-/kiro:validate-design oauth-enhancement           # Optional: validate design integration
-/kiro:spec-tasks oauth-enhancement -y
-/kiro:spec-impl oauth-enhancement 1.1,1.2,1.3
+npx cc-sdd@latest --lang ja        # Japanese
+npx cc-sdd@latest --lang zh-TW     # Traditional Chinese
+npx cc-sdd@latest --lang es        # Spanish
+# Supports: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
 ```
 
-**Quality Gates**: Each phase requires human approval before proceeding (use `-y` to auto-approve).
-
-**Specs as Foundation**: Based on [Kiro's proven methodology](https://kiro.dev/docs/specs/) - specs transform ad-hoc development into systematic workflows. Created specs are portable to [Kiro IDE](https://kiro.dev) for enhanced implementation guardrails and team collaboration.
-
-
-## 🎯 Advanced Options
+### Advanced Options
 
 ```bash
-# Choose language and OS
-npx cc-sdd@latest --lang ja --os mac
-
 # Preview changes before applying
 npx cc-sdd@latest --dry-run
-
-# Safe update with backup
-npx cc-sdd@latest --backup --overwrite force
 
 # Custom specs directory
 npx cc-sdd@latest --kiro-dir docs/specs
 ```
 
-## Features
+---
 
-✅ **AI-DLC Integration** - Complete AI-Driven Development Life Cycle  
-✅ **Team-process ready templates** - Requirements, design, task, and steering outputs stay aligned with your company's workflow  
-✅ **Project Memory** - Steering documents that maintain comprehensive context (architecture, patterns, rules, domain knowledge) across all sessions  
-✅ **Spec-Driven Development** - Structured requirements → design → tasks → implementation  
-✅ **Cross-Platform** - macOS, Linux, and Windows support with auto-detection (Linux reuses mac templates)  
-✅ **Multi-Language** - 12 languages (English, Japanese, Traditional Chinese, Simplified Chinese, Spanish, Portuguese, German, French, Russian, Italian, Korean, Arabic)  
-✅ **Safe Updates** - Interactive prompts with backup options  
+## 📚 Documentation & Support
+
+### 📖 Complete Guides (English | 日本語)
+
+| Guide | What You'll Learn | Links |
+|-------|-------------------|-------|
+| **Command Reference** | All 11 `/kiro:*` commands with detailed usage, parameters, and examples | [English](docs/guides/command-reference.md) \| [日本語](docs/guides/ja/command-reference.md) |
+| **Customization Guide** | 7 practical examples: PRD requirements, frontend/backend designs, JIRA integration | [English](docs/guides/customization-guide.md) \| [日本語](docs/guides/ja/customization-guide.md) |
+| **Spec-Driven Guide** | Complete workflow methodology from requirements to implementation | [English](docs/guides/spec-driven.md) \| [日本語](docs/guides/ja/spec-driven.md) |
+| **Claude Subagents** | Advanced: Using 9 specialized subagents for complex projects | [English](docs/guides/claude-subagents.md) \| [日本語](docs/guides/ja/claude-subagents.md) |
+| **Migration Guide** | Upgrading from v1.x to v2.0.0 | [English](docs/guides/migration-guide.md) \| [日本語](docs/guides/ja/migration-guide.md) |
+
+### Package Documentation
+- English: [tools/cc-sdd/README.md](tools/cc-sdd/README.md)
+- 日本語: [tools/cc-sdd/README_ja.md](tools/cc-sdd/README_ja.md)
+- 繁體中文: [tools/cc-sdd/README_zh-TW.md](tools/cc-sdd/README_zh-TW.md)
+
+---
 
 ## 📚 Related Resources
 
-� **Articles & Presentations**  
+📝 **Articles & Presentations**
 - [Kiroの仕様書駆動開発プロセスをClaude Codeで徹底的に再現した](https://zenn.dev/gotalab/articles/3db0621ce3d6d2) - Zenn Article (Japanese)
 - [Claude Codeは仕様駆動の夢を見ない](https://speakerdeck.com/gotalab555/claude-codehashi-yang-qu-dong-nomeng-wojian-nai) - Speaker Deck Presentation (Japanese)
 
-🔗 **External Resources**  
+🔗 **External Resources**
 - [Kiro IDE](https://kiro.dev) - Enhanced spec management and team collaboration
 - [Kiro's Spec Methodology](https://kiro.dev/docs/specs/) - Proven spec-driven development methodology
 
@@ -210,20 +152,6 @@ This repository contains the **cc-sdd** NPM package located in [`tools/cc-sdd/`]
 For detailed documentation, installation instructions, and usage examples, see:
 - [**Tool Documentation**](tools/cc-sdd/README.md) - Complete cc-sdd tool guide
 - [**Japanese Documentation**](tools/cc-sdd/README_ja.md) - 日本語版ツール説明
-
-## Project Structure
-
-```
-cc-sdd/
-├── tools/cc-sdd/              # Main cc-sdd NPM package
-│   ├── src/                   # TypeScript source code
-│   ├── templates/             # Agent templates (Claude Code, Cursor IDE, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf)
-│   ├── package.json           # Package configuration
-│   └── README.md              # Tool documentation
-├── docs/                      # Documentation
-├── .claude/                   # Example Claude Code commands
-└── README.md                  # This file
-```
 
 
 ## License
