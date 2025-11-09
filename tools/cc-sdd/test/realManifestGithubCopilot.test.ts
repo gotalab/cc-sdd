@@ -1,6 +1,6 @@
-import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { runCli } from '../src/index';
-import { mkdtemp, readFile, stat, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -34,17 +34,6 @@ const exists = async (p: string) => {
   }
 };
 
-// Track temporary directories for cleanup
-const tmpDirs: string[] = [];
-
-afterEach(async () => {
-  // Clean up all temporary directories created during tests
-  await Promise.all(
-    tmpDirs.map(dir => rm(dir, { recursive: true, force: true }).catch(() => {}))
-  );
-  tmpDirs.length = 0;
-});
-
 // vitest runs in tools/cc-sdd; repoRoot is two levels up
 const repoRoot = join(process.cwd(), '..', '..');
 const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/github-copilot.json');
@@ -68,7 +57,6 @@ describe('real github-copilot manifest', () => {
 
   it('apply writes AGENTS.md, prompts, and shared settings', async () => {
     const cwd = await mkTmp();
-    tmpDirs.push(cwd);
     const ctx = makeIO();
     const code = await runCli(
       ['--lang', 'en', '--agent', 'github-copilot', '--manifest', manifestPath, '--overwrite=force'],
