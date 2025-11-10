@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.1] - 2025-11-10
+
+### Changed
+- Improve README clarity and visual consistency ([#93](https://github.com/gotalab/cc-sdd/pull/93), [#94](https://github.com/gotalab/cc-sdd/pull/94))
+
 ## [2.0.0] - 2025-11-09
 
 ### Summary
