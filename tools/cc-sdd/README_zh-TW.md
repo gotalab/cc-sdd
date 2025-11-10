@@ -10,13 +10,14 @@
 
 ✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
 
-🇰 **Kiro 相容** — 與 Kiro IDE 相似的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
+👻 **Kiro 相容** — 與 Kiro IDE 相似的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
 
-**v2.0.0 重點**
-- **Design.md = 詳細設計文件**：摘要表、Req Coverage、Supporting References、精簡的 Components/Interfaces，降低審查認知負荷。
-- **Research.md + validate 系**：調查筆記獨立在 Research.md，Design.md 保持精簡；`validate-gap/design/impl` 與平行任務分析讓 Greenfield / Brownfield 都安全。
-- **一次自訂即可套用**：`.kiro/settings/templates & rules` 集中調整，所有代理共享同一輸出。
-- **7 代理 × 12 語言**：Claude / Cursor / Codex / Gemini / Copilot / Qwen / Windsurf 共用 11 指令，混用也不用重建模板。
+**v2.0.0 新功能：**
+- ✅ **易於審查的設計** — 結構化格式與摘要表讓審查速度提升 5 倍
+- ✅ **分離研究** — 將探索筆記（Research.md）與最終設計（Design.md）分開管理
+- ✅ **品質關卡** — validate-gap/design/impl 指令在編碼前捕捉整合問題
+- ✅ **一次自訂** — 將模板適應至團隊流程；所有代理遵循相同工作流程
+- ✅ **統一工作流程** — 7 代理 × 12 語言共享相同的 11 指令流程
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
 
@@ -35,14 +36,14 @@ npx cc-sdd@latest --lang es    # 西班牙語
 ...（支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar）
 
 # 代理選項（預設：claude-code / --claude）
-npx cc-sdd@latest --claude --lang en           # Claude Code（11 個指令，語言可任選）
-npx cc-sdd@latest --claude-agent --lang zh-TW  # Claude Code Subagents（12 個指令 + 9 個子代理）
-npx cc-sdd@latest --cursor --lang ja           # Cursor IDE
-npx cc-sdd@latest --gemini --lang es           # Gemini CLI
-npx cc-sdd@latest --codex --lang fr            # Codex CLI
-npx cc-sdd@latest --copilot --lang pt          # GitHub Copilot
-npx cc-sdd@latest --qwen --lang de             # Qwen Code
-npx cc-sdd@latest --windsurf --lang zh-TW      # Windsurf IDE
+npx cc-sdd@latest --claude --lang zh-TW           # Claude Code（11 個指令，語言可任選）
+npx cc-sdd@latest --claude-agent --lang zh-TW     # Claude Code Subagents（12 個指令 + 9 個子代理）
+npx cc-sdd@latest --cursor --lang zh-TW           # Cursor IDE
+npx cc-sdd@latest --gemini --lang zh-TW           # Gemini CLI
+npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI
+npx cc-sdd@latest --copilot --lang zh-TW          # GitHub Copilot
+npx cc-sdd@latest --qwen --lang zh-TW             # Qwen Code
+npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 
 # 注意：@next 現已保留給未來的 alpha/beta 版本
 ```

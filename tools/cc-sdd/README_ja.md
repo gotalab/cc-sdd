@@ -10,13 +10,14 @@
 
 ✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf をプロトタイプから本番仕様駆動へ。要件・設計・タスク・プロジェクトメモリをチームのワークフローに沿うようカスタマイズできます。**
 
-🇰 **Kiro互換** — Kiro IDE に似た Spec-Driven / AI-DLC スタイルで、既存の Kiro 仕様書もそのまま扱えます。
+👻 **Kiro互換** — Kiro IDE に似た Spec-Driven / AI-DLC スタイルで、既存の Kiro 仕様書もそのまま扱えます。
 
-**v2.0.0 主な強化点**
-- **Design.md = 詳細設計書** — 要約表 / Req Coverage / Supporting References / 軽量化した Components & Interfaces でレビューの認知負荷を削減。
-- **Research.md + validate 系** — 調査メモは Research.md に切り出し、Design.md は要点のみ。validate-gap/design/impl と並列タスク分析で新規機能も既存拡張も安全。
-- **カスタマイズは `.kiro/settings/templates & rules` に集約** — 1回の編集で全エージェントの出力が揃う。
-- **7エージェント × 12言語** — Claude / Cursor / Codex / Gemini / Copilot / Qwen / Windsurf が同じ11コマンドを共有。
+**v2.0.0 の新機能：**
+- ✅ **レビューしやすい設計書** — 構造化フォーマットと要約表でレビュー時間を5倍高速化
+- ✅ **Research の分離** — 調査メモ（Research.md）と最終設計（Design.md）を分けて管理
+- ✅ **品質ゲート** — validate-gap/design/impl コマンドでコーディング前に統合問題を検出
+- ✅ **一度だけカスタマイズ** — テンプレートをチームプロセスに適応、全エージェントが同じワークフローに従う
+- ✅ **統一ワークフロー** — 7エージェント × 12言語で同じ11コマンドプロセスを共有
 
 
 > インストール手順だけ知りたい場合は [インストール](#-インストール) へジャンプ。v1.1.5 維持なら `npx cc-sdd@1.1.5 --claude-code ...`、v2 移行は [Migration Guide](../../docs/guides/migration-guide.md) / [日本語版](../../docs/guides/ja/migration-guide.md) を参照。
@@ -38,13 +39,13 @@ npx cc-sdd@latest --lang es    # スペイン語
 ...（対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar）
 
 # エージェントオプション（デフォルト: claude-code / --claude）
-npx cc-sdd@latest --claude --lang en        # Claude Code（11コマンド、対応言語は任意）
+npx cc-sdd@latest --claude --lang ja        # Claude Code（11コマンド、対応言語は任意）
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents（12コマンド + 9サブエージェント）
-npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE
-npx cc-sdd@latest --gemini --lang es        # Gemini CLI
-npx cc-sdd@latest --codex --lang fr         # Codex CLI
-npx cc-sdd@latest --copilot --lang pt       # GitHub Copilot
-npx cc-sdd@latest --qwen --lang de          # Qwen Code
+npx cc-sdd@latest --cursor --lang ja        # Cursor IDE
+npx cc-sdd@latest --gemini --lang ja        # Gemini CLI
+npx cc-sdd@latest --codex --lang ja         # Codex CLI
+npx cc-sdd@latest --copilot --lang ja       # GitHub Copilot
+npx cc-sdd@latest --qwen --lang ja          # Qwen Code
 npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 # 注: @nextは今後のアルファ/ベータ版用に予約されています

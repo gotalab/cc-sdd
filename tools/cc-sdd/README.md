@@ -1,4 +1,4 @@
-# cc-sdd: Customize spec-driven development for your team's workflow
+# cc-sdd: Spec-driven development for your team's workflow
 
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
@@ -8,19 +8,20 @@
 English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf from prototype to production-ready development, while customizing every spec and steering template so requirements, design docs, tasks, and project memory match your team workflow.**
+✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf from prototype to production-ready development.**
 
-🇰 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
+👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
-**Key highlights (v2.0.0):**
-- **Design.md = detailed Design Doc** with Summary tables, Req Coverage, Supporting References, lean Components/Interfaces so reviewers spend less time parsing.
-- **Research.md + validate-gap/design/impl** – discovery notes live in Research.md while Design.md stays concise; validation gates keep both greenfield and brownfield work safe (parallel-task markers included).
-- **Customize once** via `.kiro/settings/templates/` & `.kiro/settings/rules/` — every agent shares the same outputs.
-- **7 agents × 12 languages** run the same 11-command workflow; mix Claude, Cursor, Codex, Gemini, Copilot, Qwen, Windsurf freely.
+**What's New in v2.0.0:**
+- ✅ **Fast-to-Review Designs** — Structured format with summary tables makes reviews 5x faster
+- ✅ **Separate Research** — Keep discovery notes (Research.md) separate from final design (Design.md)
+- ✅ **Quality Gates** — validate-gap/design/impl commands catch integration issues before coding
+- ✅ **Customize Once** — Adapt templates to your team's process; all agents follow the same workflow
+- ✅ **Universal Workflow** — 7 agents × 12 languages share the same 11-command process
 
 ---
 
-> Need the legacy flow? Use `npx cc-sdd@1.1.5 --claude-code`. Upgrading from v1.x?
+> Need the legacy flow? Use `npx cc-sdd@1.1.5`. Upgrading from v1.x?
 > See the Migration Guide: [English](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md).
 
 ## 🚀 Installation
@@ -38,7 +39,7 @@ npx cc-sdd@latest --lang es    # Spanish
 ... (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar supported)
 
 # With agent options (default: claude-code / --claude)
-npx cc-sdd@latest --claude --lang en        # Claude Code (11 commands, en/ja/zh-TW/...)
+npx cc-sdd@latest --claude        # Claude Code (11 commands, en/ja/zh-TW/...)
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE (choose any supported lang)
 npx cc-sdd@latest --gemini --lang es        # Gemini CLI

@@ -1,4 +1,4 @@
-# cc-sdd: Customize spec-driven development for your team's workflow
+# cc-sdd: Spec-driven development for your team's workflow
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -13,7 +13,7 @@
 
 **One command. Hours instead of weeks. Requirements → Design → Tasks → Implementation.**
 
-🇰 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
+👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
 Stop losing 70% of development time to meetings, documentation ceremonies, and scattered context. cc-sdd brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf.
 
@@ -37,7 +37,7 @@ npx cc-sdd@latest --claude --lang en ## Claude Code
 
 **Installation takes 30 seconds.** Supports 7 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, Windsurf) × 12 languages.
 
-📖 **Next steps:** [All installation options](#-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
+📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
 ## 📋 See It In Action
 
