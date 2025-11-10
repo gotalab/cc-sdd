@@ -6,7 +6,29 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v2.0.0.
+No unreleased features at this time. The latest stable release is v2.0.1.
+
+---
+
+## 📝 Ver 2.0.1 (2025-11-10) – Documentation Update
+
+### Highlights at a Glance
+- **Improved README clarity**: Updated all README files (English, Japanese, Traditional Chinese) for better first-time user experience
+- **Visual consistency**: Added ✅ checkmarks and 👻 ghost icon to align with Kiro IDE branding
+- **Better value communication**: Restructured v2.0.0 highlights to emphasize structured format and team process customization
+
+### Changes
+- Replace 🇰 with 👻 ghost icon across all READMEs to match Kiro IDE's branding
+- Restructure "What's New in v2.0.0" section with clearer, more actionable highlights
+- Add visual checkmarks (✅) for improved readability
+- Emphasize core benefits: structured format, team process customization, and 5x faster reviews
+- Improve npm package page appeal for first-time viewers
+
+### Resources
+- PR: [#93](https://github.com/gotalab/cc-sdd/pull/93)
+- Full technical diff: see [CHANGELOG.md](../../CHANGELOG.md#201---2025-11-10)
+
+This is a documentation-only release with no functional changes to the codebase.
 
 ---
 

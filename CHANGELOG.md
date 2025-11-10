@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.1] - 2025-11-10
+
+### Changed
+- **Documentation improvements** ([#93](https://github.com/gotalab/cc-sdd/pull/93))
+  - Replace 🇰 with 👻 ghost icon to align with Kiro IDE's branding
+  - Restructure v2.0.0 highlights section for better first-time user comprehension
+  - Add visual consistency with ✅ checkmarks across all language versions (English, Japanese, Traditional Chinese)
+  - Emphasize structured format and team process customization benefits
+  - Improve clarity of key value propositions in README files
+
 ## [2.0.0] - 2025-11-09
 
 ### Summary
