@@ -6,7 +6,18 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v2.0.0.
+No unreleased features at this time. The latest stable release is v2.0.1.
+
+---
+
+## 📝 Ver 2.0.1 (2025-11-10) – Documentation Update
+
+### Summary
+Documentation-only release improving README clarity and visual consistency.
+
+### Resources
+- PRs: [#93](https://github.com/gotalab/cc-sdd/pull/93), [#94](https://github.com/gotalab/cc-sdd/pull/94)
+- [CHANGELOG.md](../../CHANGELOG.md#201---2025-11-10)
 
 ---
 
