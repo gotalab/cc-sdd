@@ -1,6 +1,6 @@
 # Customization Guide
 
-> 📖 **Japanese guide:** [カスタマイゼーションガイド](ja/customization-guide.md)
+> 📖 日本語版はこちら: [カスタマイゼーションガイド](ja/customization-guide.md)
 
 This guide explains how to edit cc-sdd's templates and rules to adapt to your team's specific workflow.
 
@@ -79,7 +79,7 @@ requirements.md is very flexible for customization:
 **Heading names can be freely changed**. AI learns the structure from the template:
 
 - ✅ **English**: `### Requirement 1:` / `#### Acceptance Criteria`
-- ✅ **Japanese**: `### 要件 1:` / `#### 受け入れ基準`
+- ✅ **Localized**: `### Requirement 1:` / `#### Acceptance Criteria` (any language supported)
 - ✅ **Custom**: `### REQ-1:` / `#### Verification Criteria`
 
 **Key Points**:
@@ -107,12 +107,12 @@ requirements.md is very flexible for customization:
 
 ### 🎯 requirements.md Customization Examples
 
-#### Example 1: Japanese Headings + EARS Format (Recommended)
+#### Example 1: Localized Headings + EARS Format
 
 ```markdown
-### 要件 1: User Authentication
+### Requirement 1: User Authentication
 
-#### 受け入れ基準
+#### Acceptance Criteria
 1. WHEN user clicks login button THEN system displays authentication screen
 2. IF invalid credentials are entered THEN system displays error message
 3. WHILE authentication is in progress THEN system displays loading indicator
@@ -121,9 +121,11 @@ requirements.md is very flexible for customization:
 **Template Setting**:
 ```markdown
 # templates/specs/requirements.md
-### 要件 1: {{REQUIREMENT_AREA_1}}
-#### 受け入れ基準
+### Requirement 1: {{REQUIREMENT_AREA_1}}
+#### Acceptance Criteria
 ```
+
+**Note**: Headings can be in any language (English, Japanese, etc.) as AI learns the structure pattern from the template.
 
 #### Example 2: English Headings + BDD Format
 
@@ -171,7 +173,7 @@ requirements.md is very flexible for customization:
 
 **design.md has almost no content constraints**. You can freely customize it to match your team's review process and analysis tools:
 
-- ✅ **Heading names are free**: `## Architecture` → `## システム設計`, `## System Design`, etc. can be changed
+- ✅ **Heading names are free**: `## Architecture`, `## System Design`, `## Technical Design`, etc. can be changed to any language or style
 - ✅ **Heading order is also free**: Place requirement traceability at the top, data model near architecture, etc.
 - ✅ **Add/remove sections**: Add team-specific review items, remove unnecessary sections
 - ✅ **Format changes**: Tables, bullet points, diagrams, etc. can be freely chosen
@@ -206,16 +208,18 @@ requirements.md is very flexible for customization:
 ...
 ```
 
-#### Example 3: Japanese Headings
+#### Example 3: Localized Headings
 
 ```markdown
-## 概要
-## システム構成
-## モジュール設計
-## データ構造
-## エラー処理
-## テスト方針
+## Overview
+## System Architecture
+## Module Design
+## Data Structure
+## Error Handling
+## Testing Strategy
 ```
+
+**Note**: Headings can be in any language. The structure is what matters, not the specific wording.
 
 **✅ All these customizations are valid.** Commands are not affected.
 
@@ -279,8 +283,8 @@ We present 3 representative customization scenarios tailored to team-specific ne
 **File to Edit**: `{{KIRO_DIR}}/settings/templates/specs/requirements.md`
 
 **🔒 Structure to Maintain**:
-- Numbered heading pattern (e.g., `### Requirement N:`, `### 要件 N:`, `### REQ-N:`)
-- Criteria section heading (e.g., `#### Acceptance Criteria`, `#### 受け入れ基準`)
+- Numbered heading pattern (e.g., `### Requirement N:`, `### REQ-N:`, or localized equivalents)
+- Criteria section heading (e.g., `#### Acceptance Criteria`, or localized equivalents)
 - Numbered criteria (`1.`, `2.`, `3.`...)
 
 **💡 Heading names are free**: If defined in the template, AI generates using the same pattern.
@@ -2041,7 +2045,7 @@ npx cc-sdd@latest --overwrite=force
 
 **Cause**: Heading pattern in template doesn't match existing files
 
-**Solution**: Unify pattern defined in template (e.g., `### 要件 N:`) across all existing files
+**Solution**: Unify pattern defined in template (e.g., `### Requirement N:`) across all existing files
 
 ### Different Templates Across Teams
 
