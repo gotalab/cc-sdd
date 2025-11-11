@@ -764,6 +764,32 @@ graph TB
 
 ---
 
+## Caching Strategy
+
+### Cache Layers
+
+1. **Application Cache** (Redis)
+   - Key pattern: `{{key_pattern}}`
+   - TTL: {{TTL}}
+   - Invalidation: {{INVALIDATION_STRATEGY}}
+
+2. **Database Query Cache**
+   - Cached queries: {{QUERY_LIST}}
+   - TTL: {{TTL}}
+
+3. **CDN Cache** (if applicable)
+   - Cached assets: {{ASSET_LIST}}
+   - TTL: {{TTL}}
+
+### Cache Invalidation
+
+**Strategies**:
+- Time-based: {{DESCRIPTION}}
+- Event-based: {{DESCRIPTION}}
+- Manual: {{DESCRIPTION}}
+
+---
+
 ## Security
 
 ### Authentication & Authorization
@@ -1387,6 +1413,137 @@ See "List Response" in Request/Response Format section above.
 
 ---
 
+## Filtering & Sorting
+
+### Filter Syntax
+
+**Simple Filter**:
+```
+GET /api/v1/users?status=active
+```
+
+**Advanced Filter**:
+```
+GET /api/v1/users?filter[status]=active&filter[createdAt][gte]=2024-01-01
+```
+
+**Operators**:
+- `eq`: Equals
+- `ne`: Not equals
+- `gt`: Greater than
+- `gte`: Greater than or equal
+- `lt`: Less than
+- `lte`: Less than or equal
+- `in`: In array
+- `contains`: String contains
+
+### Sort Syntax
+
+```
+GET /api/v1/users?sort=createdAt,-updatedAt
+```
+
+**Rules**:
+- Prefix `-` for descending order
+- Multiple fields comma-separated
+- Default: ascending order
+
+---
+
+## Field Selection
+
+**Sparse Fieldsets**:
+```
+GET /api/v1/users?fields=id,name,email
+```
+
+**Include Related Resources**:
+```
+GET /api/v1/users?include=profile,orders
+```
+
+---
+
+## Webhooks
+
+### Event Naming
+
+**Format**: `{{resource}}.{{action}}`
+
+**Examples**:
+- `user.created`
+- `user.updated`
+- `user.deleted`
+- `order.created`
+- `payment.succeeded`
+
+### Webhook Payload
+
+```json
+{
+  "event": "user.created",
+  "timestamp": "2024-01-01T00:00:00Z",
+  "data": {
+    "id": "uuid",
+    "...": "..."
+  },
+  "webhookId": "uuid"
+}
+```
+
+### Security
+
+**HMAC Signature**:
+```http
+X-Webhook-Signature: sha256={{signature}}
+```
+
+**Verification**:
+```javascript
+const signature = crypto
+  .createHmac('sha256', secret)
+  .update(JSON.stringify(payload))
+  .digest('hex');
+```
+
+---
+
+## Idempotency
+
+### Idempotency Keys
+
+**Header**:
+```http
+Idempotency-Key: {{uuid}}
+```
+
+**Usage**: POST, PATCH requests for critical operations
+
+**Behavior**:
+- Same key within 24 hours → return cached response
+- Different key → process as new request
+
+---
+
+## Deprecation Strategy
+
+### Deprecation Headers
+
+```http
+X-API-Deprecated: true
+X-API-Sunset: 2024-12-31
+X-API-Replacement: /api/v2/users
+```
+
+### Timeline
+
+1. **Announcement**: 3 months before deprecation
+2. **Warning Period**: Headers added, documentation updated
+3. **Deprecation**: Old version marked deprecated
+4. **Sunset**: Old version removed (6 months after new version)
+
+---
+
 ## Documentation
 
 ### OpenAPI/Swagger
@@ -1456,6 +1613,366 @@ See "List Response" in Request/Response Format section above.
   "traceId": "uuid"
 }
 ```
+
+---
+
+## Compliance
+
+### GDPR
+
+- Provide data export endpoints
+- Implement data deletion endpoints
+- Log consent changes
+- Include privacy-related headers
+
+### Security
+
+- TLS 1.3 only
+- HSTS headers
+- CORS configuration
+- Input validation
+- SQL injection prevention
+- XSS prevention
+
+---
+
+## Change Management
+
+### Breaking Changes
+
+**Definition**:
+- Removing fields
+- Changing field types
+- Changing URL structure
+- Removing endpoints
+
+**Process**:
+1. Announce via changelog
+2. Add deprecation headers
+3. Provide migration guide
+4. Support old version for 6 months
+
+### Non-Breaking Changes
+
+**Examples**:
+- Adding optional fields
+- Adding new endpoints
+- Adding new query parameters
+
+**Process**: Can deploy immediately, document in changelog
+```
+
+</details>
+
+#### Step 2: Other Domain Steering Examples
+
+<details>
+<summary><strong>Authentication Standards</strong></summary>
+
+`{{KIRO_DIR}}/steering/authentication.md`
+
+```markdown
+# Authentication Standards
+
+## Password Policy
+
+**Minimum Requirements**:
+- Length: 12 characters
+- Complexity: Upper, lower, number, special character
+- History: Cannot reuse last 5 passwords
+- Expiration: 90 days (for privileged accounts)
+
+## Multi-Factor Authentication (MFA)
+
+**Required For**:
+- Admin accounts
+- Production access
+- Financial operations
+
+**Supported Methods**:
+- TOTP (Google Authenticator, Authy)
+- SMS (fallback only)
+- Hardware tokens (YubiKey)
+
+## Session Management
+
+**Session Timeout**:
+- Inactive: 30 minutes
+- Absolute: 12 hours
+
+**Session Storage**: Redis with encryption
+
+**Session Invalidation**:
+- On password change
+- On permission change
+- On explicit logout
+
+## OAuth 2.0 Flows
+
+**Authorization Code**: Web applications
+
+**Client Credentials**: Server-to-server
+
+**Refresh Token**: Mobile applications
+
+## JWT Best Practices
+
+**Token Expiration**:
+- Access: 15 minutes
+- Refresh: 7 days
+
+**Claims**:
+```json
+{
+  "sub": "user_id",
+  "exp": 1640000000,
+  "iat": 1639999000,
+  "iss": "api.example.com",
+  "aud": "client_id",
+  "roles": ["admin"],
+  "permissions": ["read:users"]
+}
+```
+
+**Signing Algorithm**: RS256 (asymmetric)
+
+## API Key Management
+
+**Generation**: Cryptographically secure random
+
+**Storage**: Hashed (bcrypt)
+
+**Rotation**: Every 90 days
+
+**Revocation**: Immediate upon compromise
+
+## Single Sign-On (SSO)
+
+**Protocols**: SAML 2.0, OpenID Connect
+
+**Identity Providers**: Okta, Auth0, Azure AD
+
+**Logout**: Implement SLO (Single Logout)
+```
+
+</details>
+
+<details>
+<summary><strong>Testing Standards</strong></summary>
+
+`{{KIRO_DIR}}/steering/testing.md`
+
+```markdown
+# Testing Standards
+
+## Test Coverage Requirements
+
+**Minimum Coverage**:
+- Unit Tests: 80%
+- Integration Tests: 60%
+- E2E Tests: Critical paths only
+
+## Unit Testing
+
+**Framework**: Jest / Vitest / pytest
+
+**Naming Convention**: `{{function_name}}.test.{{ext}}`
+
+**Structure**:
+```javascript
+describe('ComponentName', () => {
+  describe('methodName', () => {
+    it('should return expected value when condition', () => {
+      // Arrange
+      const input = ...;
+
+      // Act
+      const result = method(input);
+
+      // Assert
+      expect(result).toBe(expected);
+    });
+  });
+});
+```
+
+**Mocking Strategy**:
+- Mock external dependencies
+- Use test doubles for databases
+- Avoid mocking internal code
+
+## Integration Testing
+
+**Scope**: Multiple components together
+
+**Database**: Use test database or containers
+
+**External Services**: Use mocks or test endpoints
+
+## E2E Testing
+
+**Framework**: Playwright / Cypress
+
+**Test Data**: Use factories and fixtures
+
+**Parallel Execution**: Yes
+
+**Critical Paths**:
+- User registration and login
+- Core business workflows
+- Payment flows
+
+## Test Data Management
+
+**Factories**: Use Factory pattern for test data
+
+**Fixtures**: JSON files for complex data
+
+**Database Seeding**: Automated via migration scripts
+
+## Continuous Integration
+
+**CI Pipeline**:
+1. Lint
+2. Unit tests
+3. Integration tests
+4. E2E tests (on PR)
+5. Build
+6. Deploy to staging
+
+**Failure Handling**: Block merge on failure
+
+**Test Reporting**: Publish coverage reports
+```
+
+</details>
+
+<details>
+<summary><strong>Error Handling Standards</strong></summary>
+
+`{{KIRO_DIR}}/steering/error-handling.md`
+
+```markdown
+# Error Handling Standards
+
+## Error Classification
+
+### User Errors (4xx)
+- Input validation failures
+- Authentication failures
+- Permission denials
+- Resource not found
+
+**Handling**: Return helpful error message
+
+### System Errors (5xx)
+- Database connection failures
+- External service timeouts
+- Unexpected exceptions
+
+**Handling**: Log detailed error, return generic message to user
+
+## Error Response Format
+
+**Structure**:
+```json
+{
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "User-friendly message",
+    "details": {...},
+    "traceId": "uuid"
+  }
+}
+```
+
+## Error Logging
+
+**Log Levels**:
+- DEBUG: Diagnostic information
+- INFO: Normal operations
+- WARN: Recoverable issues
+- ERROR: Failures requiring attention
+- FATAL: Critical failures
+
+**Structured Logging**:
+```json
+{
+  "timestamp": "ISO 8601",
+  "level": "ERROR",
+  "message": "...",
+  "context": {
+    "userId": "...",
+    "requestId": "...",
+    "traceId": "..."
+  },
+  "error": {
+    "message": "...",
+    "stack": "..."
+  }
+}
+```
+
+## Exception Handling
+
+**Try-Catch Blocks**:
+- Catch specific exceptions
+- Avoid empty catch blocks
+- Always log errors
+
+**Error Boundaries** (React):
+```javascript
+class ErrorBoundary extends React.Component {
+  componentDidCatch(error, errorInfo) {
+    logError(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <FallbackUI />;
+    }
+    return this.props.children;
+  }
+}
+```
+
+## Retry Logic
+
+**Retry Policy**:
+- Transient failures: Retry with exponential backoff
+- Non-transient: Fail immediately
+
+**Retryable Errors**:
+- Network timeouts
+- 5xx server errors
+- Rate limit errors (429)
+
+**Non-Retryable**:
+- 4xx client errors (except 429)
+- Authentication failures
+
+## Circuit Breaker
+
+**Configuration**:
+- Failure threshold: 50%
+- Timeout: 30 seconds
+- Reset timeout: 60 seconds
+
+**States**:
+- Closed: Normal operation
+- Open: Fail fast
+- Half-Open: Test recovery
+
+## Error Monitoring
+
+**Tools**: Sentry, Datadog, New Relic
+
+**Alerts**:
+- Error rate > 1%
+- Critical errors (payment, auth)
+- Repeated failures
+
+**On-Call**: PagerDuty integration
 ```
 
 </details>
