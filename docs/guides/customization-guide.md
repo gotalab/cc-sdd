@@ -255,7 +255,7 @@ cat {{KIRO_DIR}}/specs/test-customization/tasks.md
 
 ## Practical Scenarios
 
-We present 5 representative customization scenarios tailored to team-specific needs. Each scenario includes complete copy-paste code and testing methods.
+We present 3 representative customization scenarios tailored to team-specific needs. Each scenario includes complete copy-paste code and testing methods.
 
 ---
 

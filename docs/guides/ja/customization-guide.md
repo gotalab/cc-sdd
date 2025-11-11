@@ -255,7 +255,7 @@ cat {{KIRO_DIR}}/specs/test-customization/tasks.md
 
 ## 実践シナリオ
 
-チーム固有のニーズに合わせた5つの代表的なカスタマイズシナリオを紹介します。各シナリオは完全なコピペ可能なコードと、テスト方法を含みます。
+チーム固有のニーズに合わせた3つの代表的なカスタマイズシナリオを紹介します。各シナリオは完全なコピペ可能なコードと、テスト方法を含みます。
 
 ---
 
@@ -1222,16 +1222,6 @@ grep -A 10 "## Security" {{KIRO_DIR}}/specs/user-api/design.md
 ---
 
 ## シナリオ3: ドメイン固有ルール（Steering Customization）
-
-### 📋 カスタマイズ対象
-
-- **作成**: `/kiro:steering-custom` コマンドで新規作成
-- **保存先**: `{{KIRO_DIR}}/steering/{{domain-name}}.md`
-- **ルール調整**: `{{KIRO_DIR}}/settings/rules/steering-principles.md` (オプション)
-
-### 🎯 適用ケース
-
-- API標準、認証方式、エラーハンドリングなどのドメイン固有ルールをプロジェクト全体で統一
 
 ### 📋 カスタマイズ対象
 
