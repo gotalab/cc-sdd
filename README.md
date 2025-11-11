@@ -69,16 +69,14 @@ Want to inspect a complex, large-scale requirements set? Jump to the advanced [c
 
 ## 🎨 Customization
 
-Edit templates in `{{KIRO_DIR}}/settings/templates/` to match your workflow. Keep the core structure (requirement numbers, checkboxes, headings) and add your team's context—AI adapts automatically.
+Customize templates and rules in `{{KIRO_DIR}}/settings/` to match your team's workflow:
 
-**Common customizations**:
-- **PRD-style requirements** with business context and success metrics
-- **Frontend/Backend designs** optimized for React components or API specs
-- **Approval gates** for security, architecture, or compliance reviews
-- **JIRA/Linear-ready tasks** with estimation, priority, and labels
-- **Domain steering** for API standards, testing conventions, or coding guidelines
+- **templates/** - Define document structure (requirements, design, tasks)
+- **rules/** - Define AI generation principles and judgment criteria
 
-📖 **[Customization Guide](docs/guides/customization-guide.md)** — 7 practical examples with copy-paste snippets
+Common use cases: PRD-style requirements, API/database schemas, approval gates, JIRA integration, domain-specific standards.
+
+📖 **[Customization Guide](docs/guides/customization-guide.md)** — Complete guide with practical examples
 
 ## ⚙️ Advanced Installation
 
