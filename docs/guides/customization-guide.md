@@ -1,6 +1,6 @@
 # Customization Guide
 
-> 📖 **Japanese guide:** [カスタマイゼーションガイド](ja/customization-guide.md)
+> 📖 **Japanese version:** [Available here](ja/customization-guide.md)
 
 This guide explains how to edit cc-sdd's templates and rules to adapt to your team's specific workflow.
 
