@@ -69,36 +69,14 @@ Want to inspect a complex, large-scale requirements set? Jump to the advanced [c
 
 ## 🎨 Customization
 
-cc-sdd provides two powerful customization points:
+Customize templates and rules in `{{KIRO_DIR}}/settings/` to match your team's workflow:
 
-### 📄 templates/ - Customize Output Format
-**Location**: `{{KIRO_DIR}}/settings/templates/specs/`
+- **templates/** - Define document structure (requirements, design, tasks)
+- **rules/** - Define AI generation principles and judgment criteria
 
-Defines the **document structure** that AI generates. Sections and fields added to templates are automatically filled in by AI.
+Common use cases: PRD-style requirements, API/database schemas, approval gates, JIRA integration, domain-specific standards.
 
-**Edit these files**:
-- `requirements.md` - Requirements document structure
-- `design.md` - Design document structure
-- `tasks.md` - Task breakdown structure
-
-### 📋 rules/ - Customize AI Judgment Criteria
-**Location**: `{{KIRO_DIR}}/settings/rules/`
-
-Defines AI's **generation rules and principles**. Editing rules changes AI's judgment criteria and generation style.
-
-**Edit these files**:
-- `ears-format.md` - EARS format requirement rules
-- `design-principles.md` - Design principles and standards
-- `tasks-generation.md` - Task granularity and structure rules
-
-**Common customization scenarios**:
-- ✅ **PRD-style requirements** with business context and success metrics
-- ✅ **Backend/API designs** with endpoint specs, database schemas, and security sections
-- ✅ **Approval gates** for security, architecture, or compliance reviews
-- ✅ **JIRA/Linear-ready tasks** with estimation, priority, and labels
-- ✅ **Domain steering** for API standards, testing conventions, or coding guidelines
-
-📖 **[Customization Guide](docs/guides/customization-guide.md)** — Complete guide with 3 detailed scenarios and copy-paste snippets
+📖 **[Customization Guide](docs/guides/customization-guide.md)** — Complete guide with practical examples
 
 ## ⚙️ Advanced Installation
 
