@@ -69,16 +69,36 @@ Want to inspect a complex, large-scale requirements set? Jump to the advanced [c
 
 ## 🎨 Customization
 
-Edit templates in `{{KIRO_DIR}}/settings/templates/` to match your workflow. Keep the core structure (requirement numbers, checkboxes, headings) and add your team's context—AI adapts automatically.
+cc-sdd provides two powerful customization points:
 
-**Common customizations**:
-- **PRD-style requirements** with business context and success metrics
-- **Frontend/Backend designs** optimized for React components or API specs
-- **Approval gates** for security, architecture, or compliance reviews
-- **JIRA/Linear-ready tasks** with estimation, priority, and labels
-- **Domain steering** for API standards, testing conventions, or coding guidelines
+### 📄 templates/ - Customize Output Format
+**Location**: `{{KIRO_DIR}}/settings/templates/specs/`
 
-📖 **[Customization Guide](docs/guides/customization-guide.md)** — 7 practical examples with copy-paste snippets
+Defines the **document structure** that AI generates. Sections and fields added to templates are automatically filled in by AI.
+
+**Edit these files**:
+- `requirements.md` - Requirements document structure
+- `design.md` - Design document structure
+- `tasks.md` - Task breakdown structure
+
+### 📋 rules/ - Customize AI Judgment Criteria
+**Location**: `{{KIRO_DIR}}/settings/rules/`
+
+Defines AI's **generation rules and principles**. Editing rules changes AI's judgment criteria and generation style.
+
+**Edit these files**:
+- `ears-format.md` - EARS format requirement rules
+- `design-principles.md` - Design principles and standards
+- `tasks-generation.md` - Task granularity and structure rules
+
+**Common customization scenarios**:
+- ✅ **PRD-style requirements** with business context and success metrics
+- ✅ **Backend/API designs** with endpoint specs, database schemas, and security sections
+- ✅ **Approval gates** for security, architecture, or compliance reviews
+- ✅ **JIRA/Linear-ready tasks** with estimation, priority, and labels
+- ✅ **Domain steering** for API standards, testing conventions, or coding guidelines
+
+📖 **[Customization Guide](docs/guides/customization-guide.md)** — Complete guide with 3 detailed scenarios and copy-paste snippets
 
 ## ⚙️ Advanced Installation
 
