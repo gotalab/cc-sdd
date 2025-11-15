@@ -21,7 +21,7 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 - **推奨モデル名の更新**  
   Codex CLI / Cursor / GitHub Copilot / Windsurf 向け OpenAI 推奨モデルを `GPT-5-Codex` から `GPT-5.1 high or medium` に更新。
 
-- リソース: [CHANGELOG.md](../../CHANGELOG.md#202---2025-11-15)
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#202---2025-11-15), PR: [#102](https://github.com/gotalab/cc-sdd/pull/102)
 
 ---
 

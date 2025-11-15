@@ -17,7 +17,7 @@ No unreleased features at this time. The latest stable release is v2.0.2.
 - Clarified EARS rules: keep trigger phrases (`When/If/While/Where/The system shall/The [system] shall`) in English as atomic fragments and localize only the variable parts into the target language.
 - Refreshed OpenAI model recommendations to `GPT-5.1 high or medium` for Codex CLI, Cursor, GitHub Copilot, and Windsurf.
 
-- Resources: [CHANGELOG.md](../../CHANGELOG.md#202---2025-11-15)
+- Resources: [CHANGELOG.md](../../CHANGELOG.md#202---2025-11-15), PR: [#102](https://github.com/gotalab/cc-sdd/pull/102)
 
 ---
 

@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
   - Define EARS as a language-agnostic logical structure (condition + subject + response).
   - Require acceptance criteria to be written in the target language while keeping EARS trigger keywords and fixed phrases (`When`, `If`, `While`, `Where`, `The system shall`, `The [system] shall`) in English and treating them as atomic fragments (do not interleave target-language words inside these phrases).
  - Update recommended OpenAI model names for Codex CLI, Cursor, GitHub Copilot, and Windsurf agents to `GPT-5.1 high or medium`.
+ - PRs: [#102](https://github.com/gotalab/cc-sdd/pull/102)
 
 ## [2.0.1] - 2025-11-10
 
