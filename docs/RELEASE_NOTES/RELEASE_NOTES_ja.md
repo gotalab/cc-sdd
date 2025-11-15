@@ -6,7 +6,22 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ## 🔬 開発中 (Unreleased)
 
-現在、未リリースの機能はありません。最新の安定版はv2.0.1です。
+現在、未リリースの機能はありません。最新の安定版はv2.0.2です。
+
+---
+
+## 📝 Ver 2.0.2 (2025-11-15) - 言語設定とEARS挙動の改善
+
+- **DEVガイドラインの強化**  
+  requirements/design/tasks/research/validation など、生成されるMarkdownは必ずその spec のターゲット言語（`spec.json.language`）で記述するように統一。
+- **言語未設定時のフォールバック統一**  
+  `spec.json.language` が未設定の場合は、すべてのエージェントで英語（`en`）をデフォルトに変更（従来は日本語）。
+- **EARSルールの明確化**  
+  EARSを「言語非依存の構造」と定義しつつ、受入条件本文はターゲット言語で書き、`When/If/While/Where/The system shall/The [system] shall` といったトリガー句は英語のまま原子的フレーズとして扱うように整理（内部に他言語を挟まない）。
+- **推奨モデル名の更新**  
+  Codex CLI / Cursor / GitHub Copilot / Windsurf 向け OpenAI 推奨モデルを `GPT-5-Codex` から `GPT-5.1 high or medium` に更新。
+
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#202---2025-11-15)
 
 ---
 

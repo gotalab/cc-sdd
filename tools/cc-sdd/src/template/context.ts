@@ -19,18 +19,19 @@ export type TemplateContext = {
 };
 
 const guidelinesMap: Record<SupportedLanguage, string> = {
-  en: '- Think in English, generate responses in English',
-  ja: '- Think in English, but generate responses in Japanese (思考は英語、回答の生成は日本語で行うように)',
-  'zh-TW': '- 以英文思考，但以繁體中文生成回應（Think in English, generate in Traditional Chinese）',
-  zh: '- 以英文思考，但以简体中文生成回复（Think in English, generate in Simplified Chinese）',
-  es: '- Think in English, generate responses in Spanish (Piensa en inglés, genera respuestas en español)',
-  pt: '- Think in English, generate responses in Portuguese (Pense em inglês, gere respostas em português)',
-  de: '- Think in English, generate responses in German (Denke auf Englisch, formuliere Antworten auf Deutsch)',
-  fr: '- Think in English, generate responses in French (Pensez en anglais, générez des réponses en français)',
-  ru: '- Think in English, generate responses in Russian (Думай по-английски, отвечай по-русски)',
-  it: '- Think in English, generate responses in Italian (Pensa in inglese, genera risposte in italiano)',
-  ko: '- Think in English, generate responses in Korean (영어로 사고하고, 한국어로 응답을 생성하세요)',
-  ar: '- Think in English, generate responses in Arabic (فكر بالإنجليزية وأجب بالعربية)',
+  en: '- Think in English, generate responses in English. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  ja: '- Think in English, generate responses in Japanese. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  'zh-TW':
+    '- Think in English, generate responses in Traditional Chinese. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  zh: '- Think in English, generate responses in Simplified Chinese. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  es: '- Think in English, generate responses in Spanish. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  pt: '- Think in English, generate responses in Portuguese. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  de: '- Think in English, generate responses in German. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  fr: '- Think in English, generate responses in French. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  ru: '- Think in English, generate responses in Russian. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  it: '- Think in English, generate responses in Italian. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  ko: '- Think in English, generate responses in Korean. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  ar: '- Think in English, generate responses in Arabic. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
 };
 
 export const getDevGuidelines = (lang: SupportedLanguage): string => guidelinesMap[lang];

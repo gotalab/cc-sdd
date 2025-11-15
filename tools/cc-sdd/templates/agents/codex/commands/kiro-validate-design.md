@@ -76,7 +76,7 @@ Provide output in the language specified in spec.json with:
 - **Missing Design**: If design.md doesn't exist, stop with message: "Run `/prompts:kiro-spec-design $1` first to generate design document"
 - **Design Not Generated**: If design phase not marked as generated in spec.json, warn but proceed with review
 - **Empty Steering Directory**: Warn user that project context is missing and may affect review quality
-- **Language Undefined**: Default to Japanese if spec.json doesn't specify language
+- **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 
 ### Next Phase: Task Generation
 
@@ -91,4 +91,3 @@ Provide output in the language specified in spec.json with:
 - Re-validate with `/prompts:kiro-validate-design $1`
 
 **Note**: Design validation is recommended but optional. Quality review helps catch issues early.
-

@@ -93,7 +93,7 @@ Provide output in the language specified in spec.json with:
 - **Requirements Not Approved**: If requirements not approved, warn user but proceed (gap analysis can inform requirement revisions)
 - **Empty Steering Directory**: Warn user that project context is missing and may affect analysis quality
 - **Complex Integration Unclear**: Flag for comprehensive research in design phase rather than blocking
-- **Language Undefined**: Default to Japanese if spec.json doesn't specify language
+- **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
 think hard

@@ -1,6 +1,6 @@
 {
   "name": "cc-sdd",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Transform your coding workflow with AI-DLC and Spec-Driven Development. One command installs 11 powerful slash commands, Project Memory, and structured development workflows for 7 AI coding agents.",
   "keywords": ["claude-code", "cursor", "windsurf", "gemini-cli", "codex", "github-copilot", "qwen-code", "sdd", "spec-driven-development", "kiro", "steering", "ai-development", "tdd", "ai-dlc", "agentic-sdlc", "subagents", "parallel-tasks"],
   "author": "Gota",

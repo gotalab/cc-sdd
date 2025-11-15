@@ -6,11 +6,22 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v2.0.1.
+No unreleased features at this time. The latest stable release is v2.0.2.
 
 ---
 
-## 📝 Ver 2.0.1 (2025-11-10) – Documentation Update
+## 📝 Ver 2.0.2 (2025-11-15) – Language & EARS behavior
+
+- Tightened `DEV_GUIDELINES` so all generated Markdown (requirements, design, tasks, research, validation) uses the spec’s target language (`spec.json.language`).
+- Normalized language fallback so agents default to English (`en`) when `spec.json.language` is missing (was Japanese).
+- Clarified EARS rules: keep trigger phrases (`When/If/While/Where/The system shall/The [system] shall`) in English as atomic fragments and localize only the variable parts into the target language.
+- Refreshed OpenAI model recommendations to `GPT-5.1 high or medium` for Codex CLI, Cursor, GitHub Copilot, and Windsurf.
+
+- Resources: [CHANGELOG.md](../../CHANGELOG.md#202---2025-11-15)
+
+---
+
+## 📝 Ver 2.0.1 (2025-11-10) – Documentation update
 
 ### Summary
 Documentation-only release improving README clarity and visual consistency.
