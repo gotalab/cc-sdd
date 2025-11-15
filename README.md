@@ -109,7 +109,7 @@ npx cc-sdd@latest --lang es        # Spanish
 npx cc-sdd@latest --dry-run
 
 # Custom specs directory
-npx cc-sdd@latest --kiro-dir docs/specs
+npx cc-sdd@latest --kiro-dir docs
 ```
 
 ---
