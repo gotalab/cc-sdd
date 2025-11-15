@@ -83,7 +83,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.codex/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--codex', '--codex-cli'],
-    recommendedModels: ['GPT-5.1 high or medium'],
+    recommendedModels: ['gpt-5.1-codex medium/high', 'gpt-5.1 medium/high'],
     layout: {
       commandsDir: '.codex/prompts',
       agentDir: '.codex',
@@ -104,7 +104,11 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.cursor/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--cursor'],
-    recommendedModels: ['Claude 4.5 Sonnet thinking mode or newer', 'GPT-5.1 high or medium'],
+    recommendedModels: [
+      'Claude 4.5 Sonnet thinking mode or newer',
+      'gpt-5.1-codex medium/high',
+      'gpt-5.1 medium/high',
+    ],
     layout: {
       commandsDir: '.cursor/commands/kiro',
       agentDir: '.cursor',
@@ -122,7 +126,11 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.github/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--copilot', '--github-copilot'],
-    recommendedModels: ['Claude 4.5 Sonnet thinking mode or newer', 'GPT-5.1 high or medium'],
+    recommendedModels: [
+      'Claude 4.5 Sonnet thinking mode or newer',
+      'gpt-5.1-codex medium/high',
+      'gpt-5.1 medium/high',
+    ],
     layout: {
       commandsDir: '.github/prompts',
       agentDir: '.github',
@@ -158,7 +166,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro workflows in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--windsurf'],
-    recommendedModels: ['Claude 4.5 Sonnet or newer', 'GPT-5.1 high or medium'],
+    recommendedModels: ['Claude 4.5 Sonnet or newer', 'gpt-5.1-codex medium/high', 'gpt-5.1 medium/high'],
     layout: {
       commandsDir: '.windsurf/workflows',
       agentDir: '.windsurf',
