@@ -6,7 +6,16 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v2.0.2.
+No unreleased features at this time. The latest stable release is v2.0.3.
+
+---
+
+## 📝 Ver 2.0.3 (2025-11-15) – GPT-5.1 Codex tuning
+
+- Refined recommended OpenAI models for Codex CLI, Cursor, GitHub Copilot, and Windsurf to explicitly include `gpt-5.1-codex medium/high` as the primary code-focused option, with `gpt-5.1 medium/high` as a general-purpose fallback.
+- Updated DEV_GUIDELINES-related tests so they match the stricter language-handling rules introduced in v2.0.2, keeping runtime behavior unchanged while ensuring `npm test` passes cleanly for v2.0.3.
+
+- Resources: [CHANGELOG.md](../../CHANGELOG.md#203---2025-11-15), PR: [#104](https://github.com/gotalab/cc-sdd/pull/104)
 
 ---
 
