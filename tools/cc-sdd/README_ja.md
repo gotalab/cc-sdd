@@ -191,7 +191,7 @@ npx cc-sdd@latest --lang ja --os mac   # 旧来のフラグとして任意指定
 npx cc-sdd@latest --dry-run --backup
 
 # カスタムディレクトリ
-npx cc-sdd@latest --kiro-dir docs/specs
+npx cc-sdd@latest --kiro-dir docs
 ```
 
 ## 📁 プロジェクト構造

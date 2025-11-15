@@ -193,7 +193,7 @@ npx cc-sdd@latest --lang ja --os mac   # Optional explicit override (legacy flag
 npx cc-sdd@latest --dry-run --backup
 
 # Custom directory
-npx cc-sdd@latest --kiro-dir docs/specs
+npx cc-sdd@latest --kiro-dir docs
 ```
 
 ## 📁 Project Structure

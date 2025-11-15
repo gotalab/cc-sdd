@@ -188,7 +188,7 @@ npx cc-sdd@latest --lang zh-TW --os mac    # 保留的可選覆寫
 npx cc-sdd@latest --dry-run --backup
 
 # 自訂目錄
-npx cc-sdd@latest --kiro-dir docs/specs
+npx cc-sdd@latest --kiro-dir docs
 ```
 
 ## 📁 專案結構
