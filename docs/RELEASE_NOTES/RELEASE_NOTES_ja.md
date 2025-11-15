@@ -6,7 +6,17 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ## 🔬 開発中 (Unreleased)
 
-現在、未リリースの機能はありません。最新の安定版はv2.0.1です。
+現在、未リリースの機能はありません。最新の安定版はv2.0.2です。
+
+---
+
+## 📝 Ver 2.0.2 (2025-11-15) - GPT-5.1対応と出力安定性の向上
+
+- Codex CLI / Cursor / GitHub Copilot / Windsurf 向けの推奨モデルを `GPT-5.1 high or medium` に更新し、GPT-5.1 前提でのワークフロー最適化を実施。
+- requirements/design/tasks/research/validation などのMarkdown出力について、`spec.json.language` の言語を必ず用い、未設定時は英語（`en`）に統一。
+- EARSパターンとトレース性の一貫性を高めるため、EARSのトリガー句（`When/If/While/Where/The system shall/The [system] shall`）は英語固定とし可変部分のみターゲット言語で生成しつつ、`Requirement 1`, `1.1`, `2.3` のような数値IDだけを許可して requirements → design → tasks の対応関係を安定化。
+
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#202---2025-11-15), PR: [#102](https://github.com/gotalab/cc-sdd/pull/102)
 
 ---
 

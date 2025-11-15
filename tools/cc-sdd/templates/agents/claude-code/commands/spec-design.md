@@ -109,6 +109,7 @@ Generate technical design document for feature **$1** based on approved requirem
 - **Steering Alignment**: Respect existing architecture patterns from steering context
 - **Template Adherence**: Follow specs/design.md template structure and generation instructions strictly
 - **Design Focus**: Architecture and interfaces ONLY, no implementation code
+- **Requirements Traceability IDs**: Use numeric requirement IDs only (e.g. "1.1", "1.2", "3.1", "3.3") exactly as defined in requirements.md. Do not invent new IDs or use alphabetic labels.
 </instructions>
 
 ## Tool Guidance
@@ -159,6 +160,8 @@ Provide brief summary in the language specified in spec.json:
 **Discovery Complexity Unclear**:
 - **Default**: Use full discovery process (`{{KIRO_DIR}}/settings/rules/design-discovery-full.md`)
 - **Rationale**: Better to over-research than miss critical context
+- **Invalid Requirement IDs**:
+  - **Stop Execution**: If requirements.md is missing numeric IDs or uses non-numeric headings (for example, "Requirement A"), stop and instruct the user to fix requirements.md before continuing.
 
 ### Next Phase: Task Generation
 

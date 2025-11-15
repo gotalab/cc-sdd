@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.2] - 2025-11-15
+
+### Changed
+- Align templates, rules, and prompts with GPT-5.1 by updating recommended OpenAI model names for Codex CLI, Cursor, GitHub Copilot, and Windsurf agents to `GPT-5.1 high or medium`.
+- Tighten language handling so all generated Markdown (requirements, design, tasks, research, validation) uses the spec’s target language (`spec.json.language`) and defaults to English (`en`) when unspecified.
+- Make EARS patterns and requirements traceability more consistent by keeping EARS trigger phrases (`When`, `If`, `While`, `Where`, `The system shall`, `The [system] shall`) as fixed English fragments, localizing only the variable slots, and enforcing numeric requirement IDs across all phases (e.g. `Requirement 1`, `1.1`, `2.3`) with fast failure when IDs are missing or invalid instead of falling back to free-form labels.
+- PRs: [#102](https://github.com/gotalab/cc-sdd/pull/102)
+
 ## [2.0.1] - 2025-11-10
 
 ### Changed

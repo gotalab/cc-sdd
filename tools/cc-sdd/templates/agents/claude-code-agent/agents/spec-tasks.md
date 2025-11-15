@@ -64,7 +64,7 @@ Generate implementation tasks for the feature based on approved requirements and
 
 **Generate task list following all rules**:
 - Use language specified in spec.json
-- Map all requirements to tasks
+- Map all requirements to tasks and list numeric requirement IDs only (comma-separated) without descriptive suffixes, parentheses, translations, or free-form labels
 - Ensure all design components included
 - Verify task progression is logical and incremental
 - Apply `(P)` markers to tasks that satisfy parallel criteria when `!sequential`
@@ -134,6 +134,8 @@ Provide brief summary in the language specified in spec.json:
 - **User Message**: "Template or rules files missing in `{{KIRO_DIR}}/settings/`"
 - **Fallback**: Use inline basic structure with warning
 - **Suggested Action**: "Check repository setup or restore template files"
+- **Missing Numeric Requirement IDs**:
+  - **Stop Execution**: All requirements in requirements.md MUST have numeric IDs. If any requirement lacks a numeric ID, stop and request that requirements.md be fixed before generating tasks.
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
 think deeply

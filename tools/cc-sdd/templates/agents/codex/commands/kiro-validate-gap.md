@@ -77,7 +77,7 @@ Provide output in the language specified in spec.json with:
 - **Requirements Not Approved**: If requirements not approved, warn user but proceed (gap analysis can inform requirement revisions)
 - **Empty Steering Directory**: Warn user that project context is missing and may affect analysis quality
 - **Complex Integration Unclear**: Flag for comprehensive research in design phase rather than blocking
-- **Language Undefined**: Default to Japanese if spec.json doesn't specify language
+- **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 
 ### Next Phase: Design Generation
 
@@ -87,4 +87,3 @@ Provide output in the language specified in spec.json with:
 - Or `/prompts:kiro-spec-design $1 -y` to auto-approve requirements and proceed directly
 
 **Note**: Gap analysis is optional but recommended for brownfield projects to inform design decisions.
-

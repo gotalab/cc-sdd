@@ -3,6 +3,10 @@
 ## Overview
 EARS (Easy Approach to Requirements Syntax) is the standard format for acceptance criteria in spec-driven development.
 
+EARS patterns describe the logical structure of a requirement (condition + subject + response) and are not tied to any particular natural language.  
+All acceptance criteria should be written in the target language configured for the specification (for example, `spec.json.language` / `{{LANG_CODE}}`).  
+Keep EARS trigger keywords and fixed phrases in English (`When`, `If`, `While`, `Where`, `The system shall`, `The [system] shall`) and localize only the variable parts (`[event]`, `[precondition]`, `[trigger]`, `[feature is included]`, `[response/action]`) into the target language. Do not interleave target-language text inside the trigger or fixed English phrases themselves.
+
 ## Primary EARS Patterns
 
 ### 1. Event-Driven Requirements
