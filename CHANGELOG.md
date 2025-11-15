@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.3] - 2025-11-15
+
+### Changed
+- Refine recommended OpenAI models for Codex CLI, Cursor, GitHub Copilot, and Windsurf agents to prioritize `gpt-5.1-codex medium/high`, keeping `gpt-5.1 medium/high` as a general-purpose fallback.
+
+### Fixed
+- Align DEV_GUIDELINES-related tests with the stricter language-handling rules introduced in v2.0.2 so `npm test` passes cleanly for v2.0.3.
+
+- PRs: [#104](https://github.com/gotalab/cc-sdd/pull/104)
+
 ## [2.0.2] - 2025-11-15
 
 ### Changed

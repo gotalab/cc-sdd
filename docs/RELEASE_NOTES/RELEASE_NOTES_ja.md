@@ -6,7 +6,16 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ## 🔬 開発中 (Unreleased)
 
-現在、未リリースの機能はありません。最新の安定版はv2.0.2です。
+現在、未リリースの機能はありません。最新の安定版はv2.0.3です。
+
+---
+
+## 📝 Ver 2.0.3 (2025-11-15) - GPT-5.1 Codex向けの推奨モデル調整
+
+- Codex CLI / Cursor / GitHub Copilot / Windsurf 向けの推奨モデルに `gpt-5.1-codex medium/high` を明示的に追加し、コード中心のワークロードでは Codex 系モデルを優先しつつ、`gpt-5.1 medium/high` を汎用用途のフォールバックとして維持しました。
+- DEV_GUIDELINES 関連のテスト期待値を v2.0.2 で導入した厳密な言語ハンドリング仕様に合わせて修正し、ランタイム挙動を変えずに `npm test` がクリーンに通るようにしました。
+
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#203---2025-11-15), PR: [#104](https://github.com/gotalab/cc-sdd/pull/104)
 
 ---
 
