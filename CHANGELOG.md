@@ -11,13 +11,10 @@ All notable changes to this project will be documented in this file.
 ## [2.0.2] - 2025-11-15
 
 ### Changed
-- Strengthen `DEV_GUIDELINES` so that all Markdown content written to project files (requirements, design, tasks, research, validation reports) must use the target language configured for each spec (`spec.json.language` / `{{LANG_CODE}}`).
-- Normalize language fallback behavior across all agents so that when `spec.json.language` is undefined, English (`en`) is used as the default instead of Japanese.
-- Clarify EARS format rules in `templates/shared/settings/rules/ears-format.md`:
-  - Define EARS as a language-agnostic logical structure (condition + subject + response).
-  - Require acceptance criteria to be written in the target language while keeping EARS trigger keywords and fixed phrases (`When`, `If`, `While`, `Where`, `The system shall`, `The [system] shall`) in English and treating them as atomic fragments (do not interleave target-language words inside these phrases).
- - Update recommended OpenAI model names for Codex CLI, Cursor, GitHub Copilot, and Windsurf agents to `GPT-5.1 high or medium`.
- - PRs: [#102](https://github.com/gotalab/cc-sdd/pull/102)
+- Align templates, rules, and prompts with GPT-5.1 by updating recommended OpenAI model names for Codex CLI, Cursor, GitHub Copilot, and Windsurf agents to `GPT-5.1 high or medium`.
+- Tighten language handling so all generated Markdown (requirements, design, tasks, research, validation) uses the spec’s target language (`spec.json.language`) and defaults to English (`en`) when unspecified.
+- Make EARS patterns and requirements traceability more consistent by keeping EARS trigger phrases (`When`, `If`, `While`, `Where`, `The system shall`, `The [system] shall`) as fixed English fragments, localizing only the variable slots, and enforcing numeric requirement IDs across all phases (e.g. `Requirement 1`, `1.1`, `2.3`) with fast failure when IDs are missing or invalid instead of falling back to free-form labels.
+- PRs: [#102](https://github.com/gotalab/cc-sdd/pull/102)
 
 ## [2.0.1] - 2025-11-10
 

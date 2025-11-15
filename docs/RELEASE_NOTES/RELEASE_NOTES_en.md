@@ -10,12 +10,11 @@ No unreleased features at this time. The latest stable release is v2.0.2.
 
 ---
 
-## 📝 Ver 2.0.2 (2025-11-15) – Language & EARS behavior
+## 📝 Ver 2.0.2 (2025-11-15) – GPT-5.1 & spec stability
 
-- Tightened `DEV_GUIDELINES` so all generated Markdown (requirements, design, tasks, research, validation) uses the spec’s target language (`spec.json.language`).
-- Normalized language fallback so agents default to English (`en`) when `spec.json.language` is missing (was Japanese).
-- Clarified EARS rules: keep trigger phrases (`When/If/While/Where/The system shall/The [system] shall`) in English as atomic fragments and localize only the variable parts into the target language.
-- Refreshed OpenAI model recommendations to `GPT-5.1 high or medium` for Codex CLI, Cursor, GitHub Copilot, and Windsurf.
+- Optimized prompts and agent defaults for GPT-5.1 by recommending `GPT-5.1 high or medium` for Codex CLI, Cursor, GitHub Copilot, and Windsurf.
+- Tightened language handling so all generated Markdown (requirements, design, tasks, research, validation) uses the spec’s target language and falls back to English (`en`) when `spec.json.language` is not set.
+- Made EARS patterns and traceability more consistent by keeping EARS trigger phrases in English, localizing only the variable slots, and enforcing numeric requirement IDs (e.g. `Requirement 1`, `1.1`, `2.3`) so requirements → design → tasks mappings are stable and fail fast when IDs are missing or invalid.
 
 - Resources: [CHANGELOG.md](../../CHANGELOG.md#202---2025-11-15), PR: [#102](https://github.com/gotalab/cc-sdd/pull/102)
 

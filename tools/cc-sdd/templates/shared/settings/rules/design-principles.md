@@ -71,8 +71,9 @@
 
 ### Requirement IDs
 - Reference requirements as `2.1, 2.3` without prefixes (no “Requirement 2.1”).
-- When a requirement lacks numeric ID, reuse the exact label from `requirements.md`.
-- Every component, task, and traceability row must reference the same canonical ID.
+- All requirements MUST have numeric IDs. If a requirement lacks a numeric ID, stop and fix `requirements.md` before continuing.
+- Use `N.M`-style numeric IDs where `N` is the top-level requirement number from requirements.md (for example, Requirement 1 → 1.1, 1.2; Requirement 2 → 2.1, 2.2).
+- Every component, task, and traceability row must reference the same canonical numeric ID.
 
 ### Technology Stack
 - Include ONLY layers impacted by this feature (frontend, backend, data, messaging, infra).

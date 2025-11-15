@@ -52,6 +52,7 @@ Generate complete requirements for feature **$1** based on the project descripti
 - Requirements must be testable and verifiable
 - Choose appropriate subject for EARS statements (system/service name for software)
 - Generate initial version first, then iterate with user feedback (no sequential questions upfront)
+- Requirement headings in requirements.md MUST include a leading numeric ID only (for example: "Requirement 1", "1.", "2 Feature ..."); do not use alphabetic IDs like "Requirement A".
 </instructions>
 
 ## Tool Guidance
@@ -80,6 +81,7 @@ Provide output in the language specified in spec.json with:
 - **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 - **Incomplete Requirements**: After generation, explicitly ask user if requirements cover all expected functionality
 - **Steering Directory Empty**: Warn user that project context is missing and may affect requirement quality
+- **Non-numeric Requirement Headings**: If existing headings do not include a leading numeric ID (for example, they use "Requirement A"), normalize them to numeric IDs and keep that mapping consistent (never mix numeric and alphabetic labels).
 
 ### Next Phase: Design Generation
 

@@ -61,7 +61,7 @@ Instruction highlights:
 **Generate task list following all rules**:
 - Use language specified in spec.json
 - Map all requirements to tasks
-- When documenting requirement coverage, list IDs only (comma-separated) without descriptive suffixes or parentheses
+- When documenting requirement coverage, list numeric requirement IDs only (comma-separated) without descriptive suffixes, parentheses, translations, or free-form labels
 - Ensure all design components included
 - Verify task progression is logical and incremental
 - Collapse single-subtask structures by promoting them to major tasks and avoid duplicating details on container-only major tasks (use template patterns accordingly)
@@ -132,6 +132,8 @@ Provide brief summary in the language specified in spec.json:
 - **User Message**: "Template or rules files missing in `{{KIRO_DIR}}/settings/`"
 - **Fallback**: Use inline basic structure with warning
 - **Suggested Action**: "Check repository setup or restore template files"
+- **Missing Numeric Requirement IDs**:
+  - **Stop Execution**: All requirements in requirements.md MUST have numeric IDs. If any requirement lacks a numeric ID, stop and request that requirements.md be fixed before generating tasks.
 
 ### Next Phase: Implementation
 
@@ -150,5 +152,4 @@ Provide brief summary in the language specified in spec.json:
 - Existing tasks used as reference (merge mode)
 
 **Note**: The implementation phase will guide you through executing tasks with appropriate context and validation.
-
 
