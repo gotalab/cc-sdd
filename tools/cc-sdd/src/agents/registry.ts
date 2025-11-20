@@ -29,7 +29,7 @@ export interface AgentDefinition {
 
 const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/prompts by running:
     mkdir -p ~/.codex/prompts \
-      && cp -Ri ./.codex/prompts/* ~/.codex/prompts/ \
+      && cp -Ri ./.codex/prompts/. ~/.codex/prompts/ \
       && printf '\n==== COPY PHASE DONE ====\n' \
       && printf 'Remove original ./.codex/prompts ? [y/N]: ' \
       && IFS= read -r a \
