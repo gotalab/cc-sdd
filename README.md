@@ -142,6 +142,7 @@ npx cc-sdd@latest --kiro-dir docs
 🔗 **External Resources**
 - [Kiro IDE](https://kiro.dev) - Enhanced spec management and team collaboration
 - [Kiro's Spec Methodology](https://kiro.dev/docs/specs/) - Proven spec-driven development methodology
+- [AI-Assisted SDD: Spec-Driven Development with Gemini, Claude, and cc-sdd](https://www.amazon.com/dp/B0CW19YX9R) - Comprehensive book available on Amazon
 
 ## 📦 Package Information
 
