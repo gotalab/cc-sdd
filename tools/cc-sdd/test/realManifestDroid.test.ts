@@ -47,7 +47,7 @@ describe('real droid manifest', () => {
     expect(out).toMatch(/Plan \(dry-run\)/);
     expect(out).toContain('[templateDir] commands: templates/agents/droid/commands -> .factory/commands');
     expect(out).toContain('[templateDir] droids_library: templates/agents/droid/droids -> .factory/droids');
-    expect(out).toContain('[templateFile] doc_main: templates/agents/droid/docs/DROID.md -> .factory/DROID.md');
+    expect(out).toContain('[templateFile] doc_main: templates/agents/droid/docs/DROID.md -> ./DROID.md');
     expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
 
@@ -63,7 +63,7 @@ describe('real droid manifest', () => {
     );
     expect(code).toBe(0);
 
-    const doc = join(cwd, '.factory/DROID.md');
+    const doc = join(cwd, 'DROID.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
     expect(text).toMatch(/Droid \+ Kiro Spec Workflow/);

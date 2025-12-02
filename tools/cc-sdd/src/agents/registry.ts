@@ -204,7 +204,7 @@ export const agentDefinitions = {
     layout: {
       commandsDir: '.factory/commands',
       agentDir: '.factory/droids',
-      docFile: '.factory/DROID.md',
+      docFile: 'DROID.md',
     },
     commands: {
       spec: '`/kiro:spec-quick <what-to-build>`',

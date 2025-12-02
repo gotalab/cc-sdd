@@ -24,7 +24,7 @@
       "source": {
         "type": "templateFile",
         "from": "templates/agents/{{AGENT}}/docs/DROID.md",
-        "toDir": ".factory",
+        "toDir": ".",
         "rename": "{{AGENT_DOC}}"
       },
       "when": { "agent": "droid" }
