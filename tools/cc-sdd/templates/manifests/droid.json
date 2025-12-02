@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "artifacts": [
+    {
+      "id": "commands",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/commands",
+        "toDir": "{{AGENT_COMMANDS_DIR}}"
+      },
+      "when": { "agent": "droid" }
+    },
+    {
+      "id": "droids_library",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/droids",
+        "toDir": "{{AGENT_DIR}}"
+      },
+      "when": { "agent": "droid" }
+    },
+    {
+      "id": "doc_main",
+      "source": {
+        "type": "templateFile",
+        "from": "templates/agents/{{AGENT}}/docs/DROID.md",
+        "toDir": ".factory",
+        "rename": "{{AGENT_DOC}}"
+      },
+      "when": { "agent": "droid" }
+    },
+    {
+      "id": "settings_common",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/shared/settings",
+        "toDir": "{{KIRO_DIR}}/settings"
+      },
+      "when": { "agent": "droid" }
+    }
+  ]
+}
