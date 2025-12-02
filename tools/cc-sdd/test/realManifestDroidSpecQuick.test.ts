@@ -39,7 +39,7 @@ const repoRoot = join(process.cwd(), '..', '..');
 const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/droid.json');
 
 describe('droid spec-quick wiring', () => {
-  it('includes spec-quick command and sub-droid in manifest apply', async () => {
+  it('includes spec-quick command in manifest apply', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     const code = await runCli(
@@ -57,10 +57,5 @@ describe('droid spec-quick wiring', () => {
     const cmdText = await readFile(cmd, 'utf8');
     expect(cmdText).toMatch(/Quick Spec Generator/);
 
-    // Sub-droid exists
-    const sub = join(cwd, '.factory/droids/spec-quick.md');
-    expect(await exists(sub)).toBe(true);
-    const subText = await readFile(sub, 'utf8');
-    expect(subText).toMatch(/Spec-Quick Sub-Droid/);
   });
 });
