@@ -196,6 +196,23 @@ export const agentDefinitions = {
     },
     manifestId: 'qwen-code',
   },
+  'opencode': {
+    label: 'OpenCode',
+    description:
+      'Installs kiro prompts in `.opencode/command/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--opencode'],
+    layout: {
+      commandsDir: '.opencode/command',
+      agentDir: '.opencode',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-init <what-to-build>`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'opencode',
+  },
 } as const satisfies Record<string, AgentDefinition>;
 
 export type AgentType = keyof typeof agentDefinitions;
