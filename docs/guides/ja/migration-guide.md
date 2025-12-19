@@ -11,7 +11,7 @@ v1系（特に1.1.5）とv2.0.0は、**AI-DLCのコマンドや基本思想は�
 | 目的 | 推奨アクション |
 | --- | --- |
 | 既存の1.x系ワークフローを維持したい | `npx cc-sdd@1.1.5` を明示的に指定し、旧バージョンのCLIを継続利用する。エージェント固有のプロンプトを直接編集する従来のスタイルを維持できるが、利用可能なコマンドは旧来の8つに限られる。 |
-| 7種類のエージェントで共通のテンプレートや、調査（Research）と設計（Design）の分離といった新機能を利用したい | `npx cc-sdd@latest`（v2.0.0相当）を再インストールし、`.kiro/settings/templates/*` と `rules/` のみをカスタマイズする。これにより、`validate-*` コマンド群を含む全11コマンドが利用可能になる。 |
+| 8種類のエージェントで共通のテンプレートや、調査（Research）と設計（Design）の分離といった新機能を利用したい | `npx cc-sdd@latest`（v2.0.0相当）を再インストールし、`.kiro/settings/templates/*` と `rules/` のみをカスタマイズする。これにより、`validate-*` コマンド群を含む全11コマンドが利用可能になる。 |
 
 > ⚠️ 1.x系と2.x系の `.kiro` ディレクトリ構成の混在は推奨されない。リポジトリやブランチ単位で、使用するバージョンをどちらか一方に固定すること。
 
@@ -47,7 +47,7 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 - **仕様駆動開発（Spec-Driven Development）の一貫性向上**: `research.md` が調査ログ、`design.md` がレビュー可能な一次情報（要約、要件カバレッジ、参考文献、適切な粒度に調整されたコンポーネント定義など）として、それぞれの役割を明確に担う。
 - **プロジェクトメモリとしてのステアリング**: `.kiro/steering/*.md` のように、ドメイン知識を複数のファイルに分割して体系的に管理できるようになった。
 - **既存プロジェクト（Brownfield）への安全な機能追加**: `/kiro:validate-gap`、`validate-design`、`validate-impl` といった検証コマンドや、調査と設計の分離により、既存機能の追加・改修時の安全性が向上する。
-- **7種類のエージェントで共通の体験**: Claude Code、Subagents、Cursor、Codex CLI、Gemini CLI、GitHub Copilot、Qwen Code、Windsurfが同じ11個のコマンドを共有する。これにより、例えばClaudeとCursorを併用する場合でも、追加のテンプレート修正は不要である。
+- **8種類のエージェントで共通の体験**: Claude Code、Subagents、Cursor、Codex CLI、Gemini CLI、GitHub Copilot、Qwen Code、OpenCode、Windsurfが同じ11個のコマンドを共有する。これにより、例えばClaudeとCursorを併用する場合でも、追加のテンプレート修正は不要である。
 
 ---
 

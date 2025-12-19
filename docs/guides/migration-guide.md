@@ -11,7 +11,7 @@ cc-sdd 1.x (especially 1.1.5) and 2.0.0 share the same AI-DLC philosophy and com
 | Goal | Recommended action |
 | --- | --- |
 | Keep the legacy 1.x workflow untouched | Run `npx cc-sdd@1.1.5` whenever you install/refresh files. Continue editing agent-specific prompt folders (only the original 8 spec/steering commands exist). |
-| Adopt unified templates, research/design split, and consistent behavior across all 7 supported agents | Reinstall with `npx cc-sdd@latest` (=2.0.0) and customize only `.kiro/settings/templates/*` plus `.kiro/settings/rules/` (full 11-command set, including validate-*). |
+| Adopt unified templates, research/design split, and consistent behavior across all 8 supported agents | Reinstall with `npx cc-sdd@latest` (=2.0.0) and customize only `.kiro/settings/templates/*` plus `.kiro/settings/rules/` (full 11-command set, including validate-*). |
 
 > ⚠️ Mixing 1.x and 2.x layouts in the same `.kiro` tree is not supported. Pick one path per repo/branch.
 
@@ -47,7 +47,7 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 - **Spec fidelity** – Research.md captures discovery logs while Design.md becomes reviewer friendly with Summary tables, Req Coverage, Supporting References, and lighter Components/Interfaces blocks.
 - **Steering = Project Memory** – drop structured knowledge across `.kiro/steering/*.md` files and every command consumes it.
 - **Brownfield guardrails** – `/kiro:validate-gap`, `validate-design`, `validate-impl` plus the research/design split make gap analysis and existing-system upgrades much safer.
-- **Unified coverage** – all 7 supported agents (Claude Code, Claude Subagents, Cursor, Codex CLI, Gemini CLI, GitHub Copilot, Qwen Code, Windsurf) run the same 11-command workflow, so mixing agents (e.g., Cursor + Claude) requires zero spec rewrites.
+- **Unified coverage** – all 8 supported agents (Claude Code, Claude Subagents, Cursor, Codex CLI, Gemini CLI, GitHub Copilot, Qwen Code, OpenCode, Windsurf) run the same 11-command workflow, so mixing agents (e.g., Cursor + Claude) requires zero spec rewrites.
 
 ---
 
