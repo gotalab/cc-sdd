@@ -55,7 +55,7 @@ describe('real opencode manifest', () => {
     expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
-    const cmd = join(cwd, '.opencode/command/spec-init.md');
+    const cmd = join(cwd, '.opencode/command/kiro-spec-init.md');
     expect(await exists(cmd)).toBe(true);
 
     const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
@@ -91,7 +91,7 @@ describe('real opencode manifest (linux)', () => {
     expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
-    const cmd = join(cwd, '.opencode/command/spec-init.md');
+    const cmd = join(cwd, '.opencode/command/kiro-spec-init.md');
     expect(await exists(cmd)).toBe(true);
 
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');
