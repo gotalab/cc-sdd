@@ -50,4 +50,13 @@ describe('resolveAgentLayout', () => {
     });
   });
 
+  it('returns opencode defaults', () => {
+    const res = resolveAgentLayout('opencode');
+    expect(res).toEqual({
+      commandsDir: '.opencode/command',
+      agentDir: '.opencode',
+      docFile: 'AGENTS.md',
+    });
+  });
+
 });

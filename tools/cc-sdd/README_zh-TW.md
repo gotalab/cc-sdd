@@ -8,7 +8,7 @@
 <a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
-✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
+✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
 
 👻 **Kiro 相容** — 與 Kiro IDE 相似的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
 
@@ -43,6 +43,7 @@ npx cc-sdd@latest --gemini --lang zh-TW           # Gemini CLI
 npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI
 npx cc-sdd@latest --copilot --lang zh-TW          # GitHub Copilot
 npx cc-sdd@latest --qwen --lang zh-TW             # Qwen Code
+npx cc-sdd@latest --opencode --lang zh-TW          # OpenCode
 npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 
 # 注意：@next 現已保留給未來的 alpha/beta 版本
@@ -101,7 +102,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 ### 為何團隊選擇 cc-sdd
 1. **規格是單一真實來源** — 需求、設計、任務、Supporting References 同步產出，審查更快。
 2. **Greenfield / Brownfield 皆適用** — 新功能快速起步；既有系統靠 validate 系列與 Project Memory 保持安全。
-3. **可同時使用多個代理** — Claude、Cursor、Codex、Gemini、Copilot、Qwen、Windsurf 共用同一套模板/規則。
+3. **可同時使用多個代理** — Claude、Cursor、Codex、Gemini、Copilot、Qwen、OpenCode、Windsurf 共用同一套模板/規則。
 4. **自訂只要一次** — 編輯 `.kiro/settings/templates/` 或 `.kiro/settings/rules/`，所有代理立即套用。
 
 ## ✨ 主要功能
