@@ -196,6 +196,23 @@ export const agentDefinitions = {
     },
     manifestId: 'qwen-code',
   },
+  droid: {
+    label: 'Droid CLI',
+    description:
+      'Installs kiro prompts in `.factory/commands/`, droid subagents in `.factory/droids/`, shared settings in `{{KIRO_DIR}}/settings/`, and a DROID.md quickstart.',
+    aliasFlags: ['--droid', '--droid-cli'],
+    layout: {
+      commandsDir: '.factory/commands',
+      agentDir: '.factory/droids',
+      docFile: 'DROID.md',
+    },
+    commands: {
+      spec: '`/kiro:spec-quick <what-to-build>`',
+      steering: '`/kiro:steering`',
+      steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'droid',
+  },
 } as const satisfies Record<string, AgentDefinition>;
 
 export type AgentType = keyof typeof agentDefinitions;
