@@ -1,5 +1,5 @@
 ---
-mode: 'agent'
+agent: 'agent'
 description: Validate implementation against requirements, design, and tasks
 ---
 <meta>
