@@ -1,5 +1,5 @@
 ---
-mode: 'agent'
+agent: 'agent'
 description: Initialize a new specification with detailed project description
 ---
 <meta>

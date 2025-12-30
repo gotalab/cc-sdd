@@ -1,5 +1,5 @@
 ---
-mode: 'agent'
+agent: 'agent'
 description: Generate implementation tasks for a specification
 ---
 <meta>
