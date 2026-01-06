@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.4] - 2026-01-07
+
+### Fixed
+- Update GitHub Copilot prompt files to replace deprecated `mode` attribute with `agent` ([#118](https://github.com/gotalab/cc-sdd/pull/118))
+- Fix registry.ts with review improvements ([#107](https://github.com/gotalab/cc-sdd/pull/107))
+
+### Documentation
+- Add AI-Assisted SDD book reference to documentation ([#109](https://github.com/gotalab/cc-sdd/pull/109))
+
 ## [2.0.3] - 2025-11-15
 
 ### Changed
