@@ -6,7 +6,25 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ## 🔬 開発中 (Unreleased)
 
-現在、未リリースの機能はありません。最新の安定版はv2.0.3です。
+現在、未リリースの機能はありません。最新の安定版はv2.0.4です。
+
+---
+
+## 📝 Ver 2.0.4 (2026-01-07) - バグ修正 & ドキュメント更新
+
+### 修正
+- GitHub Copilotのプロンプトファイルで非推奨の`mode`属性を`agent`に置換し、最新のCopilot仕様に対応。
+- registry.tsのレビュー改善を反映。
+
+### ドキュメント
+- AI-Assisted SDDの書籍参照をドキュメントに追加。
+
+### 新規コントリビューター
+* @irisTa56 が #118 で初コントリビュート
+* @leosamp が #109 で初コントリビュート
+* @Kakenyan が #107 で初コントリビュート
+
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#204---2026-01-07), PR: [#118](https://github.com/gotalab/cc-sdd/pull/118), [#109](https://github.com/gotalab/cc-sdd/pull/109), [#107](https://github.com/gotalab/cc-sdd/pull/107)
 
 ---
 
