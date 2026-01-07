@@ -17,7 +17,7 @@
 - ✅ **分離研究** — 將探索筆記（Research.md）與最終設計（Design.md）分開管理
 - ✅ **品質關卡** — validate-gap/design/impl 指令在編碼前捕捉整合問題
 - ✅ **一次自訂** — 將模板適應至團隊流程；所有代理遵循相同工作流程
-- ✅ **統一工作流程** — 7 代理 × 12 語言共享相同的 11 指令流程
+- ✅ **統一工作流程** — 7 代理 × 13 語言共享相同的 11 指令流程
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
 
@@ -33,7 +33,7 @@ npx cc-sdd@latest
 npx cc-sdd@latest --lang zh-TW # 繁體中文
 npx cc-sdd@latest --lang ja    # 日語
 npx cc-sdd@latest --lang es    # 西班牙語
-...（支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar）
+...（支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el）
 
 # 代理選項（預設：claude-code / --claude）
 npx cc-sdd@latest --claude --lang zh-TW           # Claude Code（11 個指令，語言可任選）
@@ -64,6 +64,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 | 義大利語 | `it` | 🇮🇹 |
 | 韓語 | `ko` | 🇰🇷 |
 | 阿拉伯語 | `ar` | 🇸🇦 |
+| 希臘語 | `el` | 🇬🇷 |
 
 **使用方法**: `npx cc-sdd@latest --lang <代碼>` (例如繁體中文使用 `--lang zh-TW`)
 

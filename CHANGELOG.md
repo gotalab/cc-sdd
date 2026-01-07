@@ -45,7 +45,7 @@ All notable changes to this project will be documented in this file.
 ### Summary
 
 - Consolidates every feature shipped in 2.0.0-alpha.1〜alpha.6 and promotes them to `npx cc-sdd@latest`.
-- Adds validation commands, Research.md, steering/memory upgrades, and 7-agent / 12-language parity.
+- Adds validation commands, Research.md, steering/memory upgrades, and 7-agent / 13-language parity.
 - For migration steps, see `docs/guides/migration-guide.md` (referenced from release notes as well).
 
 ### Added
