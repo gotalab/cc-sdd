@@ -17,7 +17,7 @@ English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">�
 - ✅ **Separate Research** — Keep discovery notes (Research.md) separate from final design (Design.md)
 - ✅ **Quality Gates** — validate-gap/design/impl commands catch integration issues before coding
 - ✅ **Customize Once** — Adapt templates to your team's process; all agents follow the same workflow
-- ✅ **Universal Workflow** — 7 agents × 12 languages share the same 11-command process
+- ✅ **Universal Workflow** — 7 agents × 13 languages share the same 11-command process
 
 ---
 
@@ -36,7 +36,7 @@ npx cc-sdd@latest
 npx cc-sdd@latest --lang ja    # Japanese
 npx cc-sdd@latest --lang zh-TW # Traditional Chinese
 npx cc-sdd@latest --lang es    # Spanish
-... (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar supported)
+... (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el supported)
 
 # With agent options (default: claude-code / --claude)
 npx cc-sdd@latest --claude        # Claude Code (11 commands, en/ja/zh-TW/...)
@@ -67,6 +67,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 | Italian | `it` | 🇮🇹 |
 | Korean | `ko` | 🇰🇷 |
 | Arabic | `ar` | 🇸🇦 |
+| Greek | `el` | 🇬🇷 |
 
 **Usage**: `npx cc-sdd@latest --lang <code>` (e.g., `--lang ja` for Japanese)
 
@@ -115,7 +116,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 - **🧠 Persistent Project Memory** - AI maintains comprehensive context (architecture, patterns, rules, domain knowledge) across all sessions via steering documents  
 - **🛠 Template flexibility** - Tweak `{{KIRO_DIR}}/settings/templates` (steering, requirements, design, tasks) to mirror your team's deliverables
 - **🔄 AI-Native + Human Gates** - AI Plans → AI Asks → Human Validates → AI Implements (rapid cycles with quality control)
-- **🌍 Team-Ready** - 12-language support, cross-platform, standardized workflows with quality gates
+- **🌍 Team-Ready** - 13-language support, cross-platform, standardized workflows with quality gates
 
 ## 🤖 Supported AI Agents
 

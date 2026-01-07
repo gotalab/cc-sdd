@@ -35,7 +35,7 @@ npx cc-sdd@latest --claude --lang en ## Claude Code
 # ✅ That's it! Now run: /kiro:spec-init <what-to-build>
 ```
 
-**Installation takes 30 seconds.** Supports 7 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, Windsurf) × 12 languages.
+**Installation takes 30 seconds.** Supports 7 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, Windsurf) × 13 languages.
 
 📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
@@ -99,7 +99,7 @@ npx cc-sdd@latest --windsurf       # Windsurf IDE
 npx cc-sdd@latest --lang ja        # Japanese
 npx cc-sdd@latest --lang zh-TW     # Traditional Chinese
 npx cc-sdd@latest --lang es        # Spanish
-# Supports: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar
+# Supports: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el
 ```
 
 ### Advanced Options
