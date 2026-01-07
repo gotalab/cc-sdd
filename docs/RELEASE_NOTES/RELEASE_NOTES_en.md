@@ -6,7 +6,19 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v2.0.4.
+No unreleased features at this time. The latest stable release is v2.0.5.
+
+---
+
+## 🌍 Ver 2.0.5 (2026-01-08) – Greek Language Support
+
+### Added
+- Added Greek (el) language support, bringing the total to 13 supported languages.
+
+### New Contributors
+* @tpapamichail made their first contribution in #121
+
+- Resources: [CHANGELOG.md](../../CHANGELOG.md#205---2026-01-08), PR: [#121](https://github.com/gotalab/cc-sdd/pull/121)
 
 ---
 

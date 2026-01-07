@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.5] - 2026-01-08
+
+### Added
+- Add Greek (el) language support, bringing total to 13 languages ([#121](https://github.com/gotalab/cc-sdd/pull/121))
+
 ## [2.0.4] - 2026-01-07
 
 ### Fixed
