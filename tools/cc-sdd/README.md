@@ -116,7 +116,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 - **🧠 Persistent Project Memory** - AI maintains comprehensive context (architecture, patterns, rules, domain knowledge) across all sessions via steering documents  
 - **🛠 Template flexibility** - Tweak `{{KIRO_DIR}}/settings/templates` (steering, requirements, design, tasks) to mirror your team's deliverables
 - **🔄 AI-Native + Human Gates** - AI Plans → AI Asks → Human Validates → AI Implements (rapid cycles with quality control)
-- **🌍 Team-Ready** - 12-language support, cross-platform, standardized workflows with quality gates
+- **🌍 Team-Ready** - 13-language support, cross-platform, standardized workflows with quality gates
 
 ## 🤖 Supported AI Agents
 

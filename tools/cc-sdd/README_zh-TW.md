@@ -113,7 +113,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 - **🧠 持久專案記憶** - AI 透過指導文件在所有會話間維持全面上下文（架構、模式、規則、領域知識）
 - **🛠 模板彈性** - 自訂 `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks），符合團隊慣用的文件格式
 - **🔄 AI 原生+人類關卡** - AI 計劃 → AI 提問 → 人類驗證 → AI 實作（具品質控制的快速循環）
-- **🌍 團隊就緒** - 具品質關卡的12語言跨平台標準化工作流程
+- **🌍 團隊就緒** - 具品質關卡的13語言跨平台標準化工作流程
 
 ## 🤖 支援的 AI 代理
 
