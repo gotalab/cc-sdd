@@ -22,7 +22,7 @@ arguments: {{args}}
 - **Sync**: Все основные файлы существуют
 
 ## Bootstrap
-1. Загрузить шаблоны из `{{KIRO_DIR}}/settings/templates/steering/`
+1. Загрузить шаблоны из `{{KIRO_DIR}}/settings/templates/steering/ru/`
 2. Анализировать кодовую базу: glob, read, grep
 3. Извлечь паттерны (НЕ списки): Product, Tech, Structure
 4. Сгенерировать файлы steering

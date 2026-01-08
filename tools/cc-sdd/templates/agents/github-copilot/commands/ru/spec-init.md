@@ -22,8 +22,8 @@ argument-hint: <описание-проекта>
 1. **Проверить уникальность**: Проверить `{{KIRO_DIR}}/specs/` на конфликты имён (добавить числовой суффикс при необходимости)
 2. **Создать каталог**: `{{KIRO_DIR}}/specs/[имя-функции]/`
 3. **Инициализировать файлы по шаблонам**:
-   - Прочитать `{{KIRO_DIR}}/settings/templates/specs/init.json`
-   - Прочитать `{{KIRO_DIR}}/settings/templates/specs/requirements-init.md`
+   - Прочитать `{{KIRO_DIR}}/settings/templates/specs/ru/init.json`
+   - Прочитать `{{KIRO_DIR}}/settings/templates/specs/ru/requirements-init.md`
    - Заменить placeholder'ы:
      - `{{FEATURE_NAME}}` → сгенерированное имя функции
      - `{{TIMESTAMP}}` → текущая метка времени ISO 8601

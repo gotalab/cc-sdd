@@ -30,7 +30,7 @@ arguments: {{args}}
 
 2. **Прочитать руководства**:
    - Прочитать `{{KIRO_DIR}}/settings/rules/ears-format.md` для правил синтаксиса EARS
-   - Прочитать `{{KIRO_DIR}}/settings/templates/specs/requirements.md` для структуры документа
+   - Прочитать `{{KIRO_DIR}}/settings/templates/specs/ru/requirements.md` для структуры документа
 
 3. **Сгенерировать требования**:
    - Создать начальные требования на основе описания проекта

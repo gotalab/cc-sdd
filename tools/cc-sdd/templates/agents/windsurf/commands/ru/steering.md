@@ -31,7 +31,7 @@ allowed-tools: Bash, Read, Write, Edit, MultiEdit, Glob, Grep, LS
 
 ## Процесс Bootstrap
 
-1. Загрузить шаблоны из `{{KIRO_DIR}}/settings/templates/steering/`
+1. Загрузить шаблоны из `{{KIRO_DIR}}/settings/templates/steering/ru/`
 2. Анализировать кодовую базу (JIT):
    - `glob_file_search` для исходных файлов
    - `read_file` для README, package.json и т.д.

@@ -26,9 +26,9 @@ argument-hint: <имя-функции> [-y]
 **Прочитать весь необходимый контекст**:
 - `{{KIRO_DIR}}/specs/$1/spec.json`, `requirements.md`, `design.md` (если существует)
 - **Весь каталог `{{KIRO_DIR}}/steering/`** для полной памяти проекта
-- `{{KIRO_DIR}}/settings/templates/specs/design.md` для структуры документа
+- `{{KIRO_DIR}}/settings/templates/specs/ru/design.md` для структуры документа
 - `{{KIRO_DIR}}/settings/rules/design-principles.md` для принципов дизайна
-- `{{KIRO_DIR}}/settings/templates/specs/research.md` для структуры лога исследований
+- `{{KIRO_DIR}}/settings/templates/specs/ru/research.md` для структуры лога исследований
 
 **Проверить утверждение требований**:
 - Если указан флаг `-y` ($2 == "-y"): Авто-утвердить требования в spec.json
@@ -81,7 +81,7 @@ argument-hint: <имя-функции> [-y]
 ### Шаг 3: Сгенерировать документ дизайна
 
 1. **Загрузить шаблон дизайна и правила**:
-- Прочитать `{{KIRO_DIR}}/settings/templates/specs/design.md` для структуры
+- Прочитать `{{KIRO_DIR}}/settings/templates/specs/ru/design.md` для структуры
 - Прочитать `{{KIRO_DIR}}/settings/rules/design-principles.md` для принципов
 
 2. **Сгенерировать документ дизайна**:
@@ -132,7 +132,7 @@ argument-hint: <имя-функции> [-y]
 
 **Формат**: Краткий Markdown (менее 200 слов) - это вывод команды, НЕ сам документ дизайна
 
-**Примечание**: Фактический документ дизайна следует структуре `{{KIRO_DIR}}/settings/templates/specs/design.md`.
+**Примечание**: Фактический документ дизайна следует структуре `{{KIRO_DIR}}/settings/templates/specs/ru/design.md`.
 
 ## Безопасность и Fallback
 
@@ -149,7 +149,7 @@ argument-hint: <имя-функции> [-y]
 - **Предложенное действие**: "Запустите `/kiro:spec-requirements $1` для генерации требований сначала"
 
 **Отсутствует шаблон**:
-- **Сообщение пользователю**: "Файл шаблона отсутствует в `{{KIRO_DIR}}/settings/templates/specs/design.md`"
+- **Сообщение пользователю**: "Файл шаблона отсутствует в `{{KIRO_DIR}}/settings/templates/specs/ru/design.md`"
 - **Предложенное действие**: "Проверьте настройку репозитория или восстановите файл шаблона"
 - **Fallback**: Использовать встроенную базовую структуру с предупреждением
 

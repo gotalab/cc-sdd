@@ -26,7 +26,7 @@ arguments: {{args}}
 ### Шаг 1: Загрузить контекст
 - `{{KIRO_DIR}}/specs/$1/spec.json`, `requirements.md`, `design.md` (если существует)
 - **Весь каталог `{{KIRO_DIR}}/steering/`**
-- `{{KIRO_DIR}}/settings/templates/specs/design.md`
+- `{{KIRO_DIR}}/settings/templates/specs/ru/design.md`
 - `{{KIRO_DIR}}/settings/rules/design-principles.md`
 
 ### Шаг 2: Исследование и анализ

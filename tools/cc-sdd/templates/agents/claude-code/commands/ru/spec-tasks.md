@@ -38,7 +38,7 @@ argument-hint: <имя-функции> [-y] [--sequential]
 **Загрузить правила генерации и шаблон**:
 - Прочитать `{{KIRO_DIR}}/settings/rules/tasks-generation.md` для принципов
 - Если `sequential` равен **false**: Прочитать `{{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md` для критериев параллельности
-- Прочитать `{{KIRO_DIR}}/settings/templates/specs/tasks.md` для формата (поддерживает маркеры `(P)`)
+- Прочитать `{{KIRO_DIR}}/settings/templates/specs/ru/tasks.md` для формата (поддерживает маркеры `(P)`)
 
 **Сгенерировать список задач, следуя всем правилам**:
 - Использовать язык, указанный в spec.json
