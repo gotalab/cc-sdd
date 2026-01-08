@@ -153,6 +153,8 @@ This repository contains the **cc-sdd** NPM package located in [`tools/cc-sdd/`]
 For detailed documentation, installation instructions, and usage examples, see:
 - [**Tool Documentation**](tools/cc-sdd/README.md) - Complete cc-sdd tool guide
 - [**Japanese Documentation**](tools/cc-sdd/README_ja.md) - 日本語版ツール説明
+- [**Chinese Documentation**](tools/cc-sdd/README_zh-TW.md) - 繁體中文版工具說明
+- [**Russian Documentation**](tools/cc-sdd/README_ru.md) - Документация на русском
 
 
 ## License
