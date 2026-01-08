@@ -117,15 +117,15 @@ npx cc-sdd@latest --kiro-dir docs
 
 ## 📚 Documentation & Support
 
-### 📖 Complete Guides (English | 日本語)
+### 📖 Complete Guides (English | 日本語 | Русский)
 
 | Guide | What You'll Learn | Links |
 |-------|-------------------|-------|
-| **Command Reference** | All 11 `/kiro:*` commands with detailed usage, parameters, and examples | [English](docs/guides/command-reference.md) \| [日本語](docs/guides/ja/command-reference.md) |
-| **Customization Guide** | 7 practical examples: PRD requirements, frontend/backend designs, JIRA integration | [English](docs/guides/customization-guide.md) \| [日本語](docs/guides/ja/customization-guide.md) |
-| **Spec-Driven Guide** | Complete workflow methodology from requirements to implementation | [English](docs/guides/spec-driven.md) \| [日本語](docs/guides/ja/spec-driven.md) |
-| **Claude Subagents** | Advanced: Using 9 specialized subagents for complex projects | [English](docs/guides/claude-subagents.md) \| [日本語](docs/guides/ja/claude-subagents.md) |
-| **Migration Guide** | Upgrading from v1.x to v2.0.0 | [English](docs/guides/migration-guide.md) \| [日本語](docs/guides/ja/migration-guide.md) |
+| **Command Reference** | All 11 `/kiro:*` commands with detailed usage, parameters, and examples | [English](docs/guides/command-reference.md) \| [日本語](docs/guides/ja/command-reference.md) \| [Русский](docs/guides/ru/command-reference.md) |
+| **Customization Guide** | 7 practical examples: PRD requirements, frontend/backend designs, JIRA integration | [English](docs/guides/customization-guide.md) \| [日本語](docs/guides/ja/customization-guide.md) \| [Русский](docs/guides/ru/customization-guide.md) |
+| **Spec-Driven Guide** | Complete workflow methodology from requirements to implementation | [English](docs/guides/spec-driven.md) \| [日本語](docs/guides/ja/spec-driven.md) \| [Русский](docs/guides/ru/spec-driven.md) |
+| **Claude Subagents** | Advanced: Using 9 specialized subagents for complex projects | [English](docs/guides/claude-subagents.md) \| [日本語](docs/guides/ja/claude-subagents.md) \| [Русский](docs/guides/ru/claude-subagents.md) |
+| **Migration Guide** | Upgrading from v1.x to v2.0.0 | [English](docs/guides/migration-guide.md) \| [日本語](docs/guides/ja/migration-guide.md) \| [Русский](docs/guides/ru/migration-guide.md) |
 
 ### Package Documentation
 - English: [tools/cc-sdd/README.md](tools/cc-sdd/README.md)
