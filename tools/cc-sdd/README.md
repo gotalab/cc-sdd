@@ -35,6 +35,7 @@ npx cc-sdd@latest
 # With language options (default: --lang en)
 npx cc-sdd@latest --lang ja    # Japanese
 npx cc-sdd@latest --lang zh-TW # Traditional Chinese
+npx cc-sdd@latest --lang ru    # Russian
 npx cc-sdd@latest --lang es    # Spanish
 ... (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el supported)
 
