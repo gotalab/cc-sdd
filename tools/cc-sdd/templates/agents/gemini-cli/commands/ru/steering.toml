@@ -1,0 +1,50 @@
+description = "Управление steering как постоянной памятью проекта"
+prompt = """
+<meta>
+description: Управление {{KIRO_DIR}}/steering/ как постоянной памятью проекта
+arguments: {{args}}
+</meta>
+
+# Управление Kiro Steering
+
+<background_information>
+**Роль**: Поддерживать `{{KIRO_DIR}}/steering/` как постоянную память проекта.
+
+**Миссия**:
+- Bootstrap: Сгенерировать основной steering из кодовой базы
+- Sync: Поддерживать синхронизацию steering и кодовой базы
+- Preserve: Пользовательские настройки священны
+</background_information>
+
+<instructions>
+## Сценарий
+- **Bootstrap**: Пустой ИЛИ отсутствуют product.md, tech.md, structure.md
+- **Sync**: Все основные файлы существуют
+
+## Bootstrap
+1. Загрузить шаблоны из `{{KIRO_DIR}}/settings/templates/steering/`
+2. Анализировать кодовую базу: glob, read, grep
+3. Извлечь паттерны (НЕ списки): Product, Tech, Structure
+4. Сгенерировать файлы steering
+
+## Sync
+1. Загрузить все `{{KIRO_DIR}}/steering/*.md`
+2. Анализировать кодовую базу на изменения
+3. Обнаружить дрифт, предложить обновления
+4. Отчёт: Обновления, предупреждения, рекомендации
+
+## Принцип гранулярности
+> "Если новый код следует существующим паттернам, steering не должен требовать обновления."
+
+Документировать паттерны, а не исчерпывающие списки.
+</instructions>
+
+## Описание вывода
+### Bootstrap:
+✅ Steering создан: product.md, tech.md, structure.md
+
+### Sync:
+✅ Steering обновлён: [изменения], [дрифт], [рекомендации]
+
+arguments: {{args}}
+"""
