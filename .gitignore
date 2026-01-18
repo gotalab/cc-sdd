@@ -87,3 +87,9 @@ docs/kiro/
 .gemini/
 # GEMINI.md
 # AGENTS.md
+
+# System and IDE exclusions
+**/.DS_Store
+.AppleDouble
+.LSOverride
+*.pyc
