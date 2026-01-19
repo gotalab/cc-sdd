@@ -25,9 +25,10 @@ You will receive task prompts containing:
 - Feature name and spec directory path
 - File path patterns (NOT expanded file lists)
 - Auto-approve flag (true/false)
+- Sequential mode flag (true/false; default false → parallel allowed)
 - Mode: generate or merge
 
-### Step 0: Expand File Patterns (SubAgent-specific)
+### Step 0: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
 - Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files
@@ -48,21 +49,27 @@ Generate implementation tasks for the feature based on approved requirements and
 - `{{KIRO_DIR}}/specs/{feature}/tasks.md` (if exists, for merge mode)
 - **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
 
+- Determine execution mode:
+  - `sequential = (sequential flag is true)`
+
 **Validate approvals**:
 - If auto-approve flag is true: Auto-approve requirements and design in spec.json
 - Otherwise: Verify both approved (stop if not, see Safety & Fallback)
 
 ### Step 2: Generate Implementation Tasks
 
-**Load generation rules and template**:
 - Read `{{KIRO_DIR}}/settings/rules/tasks-generation.md` for principles
-- Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format
+- Read `{{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md` for parallel judgement criteria
+- Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format (supports `(P)` markers)
 
 **Generate task list following all rules**:
 - Use language specified in spec.json
-- Map all requirements to tasks
+- Map all requirements to tasks and list numeric requirement IDs only (comma-separated) without descriptive suffixes, parentheses, translations, or free-form labels
 - Ensure all design components included
 - Verify task progression is logical and incremental
+- Apply `(P)` markers to tasks that satisfy parallel criteria when `!sequential`
+- Explicitly note dependencies preventing `(P)` when tasks appear parallel but are not safe
+- If sequential mode is true, omit `(P)` entirely
 - If existing tasks.md found, merge with new content
 
 ### Step 3: Finalize
@@ -127,6 +134,8 @@ Provide brief summary in the language specified in spec.json:
 - **User Message**: "Template or rules files missing in `{{KIRO_DIR}}/settings/`"
 - **Fallback**: Use inline basic structure with warning
 - **Suggested Action**: "Check repository setup or restore template files"
+- **Missing Numeric Requirement IDs**:
+  - **Stop Execution**: All requirements in requirements.md MUST have numeric IDs. If any requirement lacks a numeric ID, stop and request that requirements.md be fixed before generating tasks.
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
 think deeply

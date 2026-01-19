@@ -1,7 +1,7 @@
 ---
 description: Generate implementation tasks for a specification
 allowed-tools: Read, Write, Edit, MultiEdit, Glob, Grep
-argument-hint: <feature-name> [-y]
+argument-hint: <feature-name> [-y] [--sequential]
 ---
 
 # Implementation Tasks Generator
@@ -31,18 +31,24 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 **Validate approvals**:
 - If `-y` flag provided ($2 == "-y"): Auto-approve requirements and design in spec.json
 - Otherwise: Verify both approved (stop if not, see Safety & Fallback)
+- Determine sequential mode based on presence of `--sequential`
 
 ### Step 2: Generate Implementation Tasks
 
 **Load generation rules and template**:
 - Read `{{KIRO_DIR}}/settings/rules/tasks-generation.md` for principles
-- Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format
+- If `sequential` is **false**: Read `{{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md` for parallel judgement criteria
+- Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format (supports `(P)` markers)
 
 **Generate task list following all rules**:
 - Use language specified in spec.json
 - Map all requirements to tasks
+- When documenting requirement coverage, list numeric requirement IDs only (comma-separated) without descriptive suffixes, parentheses, translations, or free-form labels
 - Ensure all design components included
 - Verify task progression is logical and incremental
+- Collapse single-subtask structures by promoting them to major tasks and avoid duplicating details on container-only major tasks (use template patterns accordingly)
+- Apply `(P)` markers to tasks that satisfy parallel criteria (omit markers in sequential mode)
+- Mark optional test coverage subtasks with `- [ ]*` only when they strictly cover acceptance criteria already satisfied by core implementation and can be deferred post-MVP
 - If existing tasks.md found, merge with new content
 
 ### Step 3: Finalize
@@ -108,6 +114,8 @@ Provide brief summary in the language specified in spec.json:
 - **User Message**: "Template or rules files missing in `{{KIRO_DIR}}/settings/`"
 - **Fallback**: Use inline basic structure with warning
 - **Suggested Action**: "Check repository setup or restore template files"
+- **Missing Numeric Requirement IDs**:
+  - **Stop Execution**: All requirements in requirements.md MUST have numeric IDs. If any requirement lacks a numeric ID, stop and request that requirements.md be fixed before generating tasks.
 
 ### Next Phase: Implementation
 
@@ -128,4 +136,3 @@ Provide brief summary in the language specified in spec.json:
 **Note**: The implementation phase will guide you through executing tasks with appropriate context and validation.
 
 think
-

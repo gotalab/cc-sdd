@@ -27,7 +27,7 @@ You will receive task prompts containing:
 - Domain/topic (e.g., "API standards", "testing approach")
 - File path patterns (NOT expanded file lists)
 
-### Step 0: Expand File Patterns (SubAgent-specific)
+### Step 0: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
 - Glob(`{{KIRO_DIR}}/settings/templates/steering-custom/*.md`) to find available templates
@@ -140,6 +140,8 @@ Review and customize as needed.
 - Follow same granularity principles as core steering
 - All steering files loaded as project memory
 - Custom files equally important as core files
+- Avoid documenting agent-specific tooling directories (e.g. `.cursor/`, `.gemini/`, `.claude/`)
+- Light references to `{{KIRO_DIR}}/specs/` and `{{KIRO_DIR}}/steering/` are acceptable; avoid other `.kiro/` directories
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
 think deeply

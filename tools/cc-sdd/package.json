@@ -1,8 +1,26 @@
 {
   "name": "cc-sdd",
-  "version": "2.0.0-alpha.3",
-  "description": "Transform your coding workflow with AI-DLC and Spec-Driven Development. One command installs 11 powerful slash commands, Project Memory, and structured development workflows for Claude Code.",
-  "keywords": ["claude-code", "spec-driven-development", "kiro", "steering", "ai-development", "tdd", "ai-dlc", "ai-driven-development-life-cycle"],
+  "version": "2.0.5",
+  "description": "Transform your coding workflow with AI-DLC and Spec-Driven Development. One command installs 11 powerful slash commands, Project Memory, and structured development workflows for 7 AI coding agents.",
+  "keywords": [
+    "claude-code",
+    "cursor",
+    "windsurf",
+    "gemini-cli",
+    "codex",
+    "github-copilot",
+    "qwen-code",
+    "sdd",
+    "spec-driven-development",
+    "kiro",
+    "steering",
+    "ai-development",
+    "tdd",
+    "ai-dlc",
+    "agentic-sdlc",
+    "subagents",
+    "parallel-tasks"
+  ],
   "author": "Gota",
   "license": "MIT",
   "repository": {
@@ -10,7 +28,6 @@
     "url": "https://github.com/gotalab/cc-sdd.git",
     "directory": "tools/cc-sdd"
   },
-  
   "type": "module",
   "bin": {
     "cc-sdd": "./dist/cli.js"

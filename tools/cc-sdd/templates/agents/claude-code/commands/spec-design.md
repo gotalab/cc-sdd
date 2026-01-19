@@ -28,6 +28,7 @@ Generate technical design document for feature **$1** based on approved requirem
 - **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
 - `{{KIRO_DIR}}/settings/templates/specs/design.md` for document structure
 - `{{KIRO_DIR}}/settings/rules/design-principles.md` for design principles
+- `{{KIRO_DIR}}/settings/templates/specs/research.md` for discovery log structure
 
 **Validate requirements approval**:
 - If `-y` flag provided ($2 == "-y"): Auto-approve requirements in spec.json
@@ -62,30 +63,40 @@ Generate technical design document for feature **$1** based on approved requirem
    - Skip formal discovery, quick pattern check only
 
 3. **Retain Discovery Findings for Step 3**:
-   - External API contracts and constraints
-   - Technology decisions with rationale
-   - Existing patterns to follow or extend
-   - Integration points and dependencies
-   - Identified risks and mitigation strategies
+- External API contracts and constraints
+- Technology decisions with rationale
+- Existing patterns to follow or extend
+- Integration points and dependencies
+- Identified risks and mitigation strategies
+- Potential architecture patterns and boundary options (note details in `research.md`)
+- Parallelization considerations for future tasks (capture dependencies in `research.md`)
+
+4. **Persist Findings to Research Log**:
+- Create or update `{{KIRO_DIR}}/specs/$1/research.md` using the shared template
+- Summarize discovery scope and key findings (Summary section)
+- Record investigations in Research Log topics with sources and implications
+- Document architecture pattern evaluation, design decisions, and risks using the template sections
+- Use the language specified in spec.json when writing or updating `research.md`
 
 ### Step 3: Generate Design Document
 
 1. **Load Design Template and Rules**:
-   - Read `{{KIRO_DIR}}/settings/templates/specs/design.md` for structure
-   - Read `{{KIRO_DIR}}/settings/rules/design-principles.md` for principles
+- Read `{{KIRO_DIR}}/settings/templates/specs/design.md` for structure
+- Read `{{KIRO_DIR}}/settings/rules/design-principles.md` for principles
 
 2. **Generate Design Document**:
-   - **Follow specs/design.md template structure and generation instructions strictly**
-   - **Integrate all discovery findings**: Use researched information (APIs, patterns, technologies) throughout component definitions, architecture decisions, and integration points
-   - If existing design.md found in Step 1, use it as reference context (merge mode)
-   - Apply design rules: Type Safety, Visual Communication, Formal Tone
-   - Use language specified in spec.json
+- **Follow specs/design.md template structure and generation instructions strictly**
+- **Integrate all discovery findings**: Use researched information (APIs, patterns, technologies) throughout component definitions, architecture decisions, and integration points
+- If existing design.md found in Step 1, use it as reference context (merge mode)
+- Apply design rules: Type Safety, Visual Communication, Formal Tone
+- Use language specified in spec.json
+- Ensure sections reflect updated headings ("Architecture Pattern & Boundary Map", "Technology Stack & Alignment", "Components & Interface Contracts") and reference supporting details from `research.md`
 
 3. **Update Metadata** in spec.json:
-   - Set `phase: "design-generated"`
-   - Set `approvals.design.generated: true, approved: false`
-   - Set `approvals.requirements.approved: true`
-   - Update `updated_at` timestamp
+- Set `phase: "design-generated"`
+- Set `approvals.design.generated: true, approved: false`
+- Set `approvals.requirements.approved: true`
+- Update `updated_at` timestamp
 
 ## Critical Constraints
  - **Type Safety**:
@@ -98,6 +109,7 @@ Generate technical design document for feature **$1** based on approved requirem
 - **Steering Alignment**: Respect existing architecture patterns from steering context
 - **Template Adherence**: Follow specs/design.md template structure and generation instructions strictly
 - **Design Focus**: Architecture and interfaces ONLY, no implementation code
+- **Requirements Traceability IDs**: Use numeric requirement IDs only (e.g. "1.1", "1.2", "3.1", "3.3") exactly as defined in requirements.md. Do not invent new IDs or use alphabetic labels.
 </instructions>
 
 ## Tool Guidance
@@ -114,8 +126,9 @@ Provide brief summary in the language specified in spec.json:
 
 1. **Status**: Confirm design document generated at `{{KIRO_DIR}}/specs/$1/design.md`
 2. **Discovery Type**: Which discovery process was executed (full/light/minimal)
-3. **Key Findings**: 2-3 critical insights from discovery that shaped the design
+3. **Key Findings**: 2-3 critical insights from `research.md` that shaped the design
 4. **Next Action**: Approval workflow guidance (see Safety & Fallback)
+5. **Research Log**: Confirm `research.md` updated with latest decisions
 
 **Format**: Concise Markdown (under 200 words) - this is the command output, NOT the design document itself
 
@@ -147,6 +160,8 @@ Provide brief summary in the language specified in spec.json:
 **Discovery Complexity Unclear**:
 - **Default**: Use full discovery process (`{{KIRO_DIR}}/settings/rules/design-discovery-full.md`)
 - **Rationale**: Better to over-research than miss critical context
+- **Invalid Requirement IDs**:
+  - **Stop Execution**: If requirements.md is missing numeric IDs or uses non-numeric headings (for example, "Requirement A"), stop and instruct the user to fix requirements.md before continuing.
 
 ### Next Phase: Task Generation
 

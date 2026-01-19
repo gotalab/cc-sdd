@@ -7,7 +7,7 @@ allowed-tools: Read, Task, Glob
 
 ## Mode Detection
 
-**Perform detection before invoking SubAgent**:
+**Perform detection before invoking Subagent**:
 
 Check `{{KIRO_DIR}}/steering/` status:
 - **Bootstrap Mode**: Empty OR missing core files (product.md, tech.md, structure.md)
@@ -15,11 +15,11 @@ Check `{{KIRO_DIR}}/steering/` status:
 
 Use Glob to check for existing steering files.
 
-## Invoke SubAgent
+## Invoke Subagent
 
 Delegate steering management to steering-agent:
 
-Use the Task tool to invoke the SubAgent with file path patterns:
+Use the Task tool to invoke the Subagent with file path patterns:
 
 ```
 Task(
@@ -40,7 +40,7 @@ JIT Strategy: Fetch codebase files when needed, not upfront
 
 ## Display Result
 
-Show SubAgent summary to user:
+Show Subagent summary to user:
 
 ### Bootstrap:
 - Generated steering files: product.md, tech.md, structure.md
@@ -57,3 +57,6 @@ Show SubAgent summary to user:
 - Templates and principles are external for customization
 - Focus on patterns, not catalogs
 - "Golden Rule": New code following patterns shouldn't require steering updates
+- Avoid documenting agent-specific tooling directories (e.g. `.cursor/`, `.gemini/`, `.claude/`)
+- `{{KIRO_DIR}}/settings/` content should NOT be documented in steering files (settings are metadata, not project knowledge)
+- Light references to `{{KIRO_DIR}}/specs/` and `{{KIRO_DIR}}/steering/` are acceptable; avoid other `.kiro/` directories

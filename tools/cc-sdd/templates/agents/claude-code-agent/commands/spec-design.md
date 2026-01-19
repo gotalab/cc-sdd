@@ -17,16 +17,16 @@ Check that requirements have been completed:
 
 If validation fails, inform user to complete requirements phase first.
 
-## Invoke SubAgent
+## Invoke Subagent
 
 Delegate design generation to spec-design-agent:
 
-Use the Task tool to invoke the SubAgent with file path patterns:
+Use the Task tool to invoke the Subagent with file path patterns:
 
 ```
 Task(
   subagent_type="spec-design-agent",
-  description="Generate technical design",
+  description="Generate technical design and update research log",
   prompt="""
 Feature: $1
 Spec directory: {{KIRO_DIR}}/specs/$1/
@@ -37,16 +37,18 @@ File patterns to read:
 - {{KIRO_DIR}}/steering/*.md
 - {{KIRO_DIR}}/settings/rules/design-*.md
 - {{KIRO_DIR}}/settings/templates/specs/design.md
+- {{KIRO_DIR}}/settings/templates/specs/research.md
 
 Discovery: auto-detect based on requirements
 Mode: {generate or merge based on design.md existence}
+Language: respect spec.json language for design.md/research.md outputs
 """
 )
 ```
 
 ## Display Result
 
-Show SubAgent summary to user, then provide next step guidance:
+Show Subagent summary to user, then provide next step guidance:
 
 ### Next Phase: Task Generation
 

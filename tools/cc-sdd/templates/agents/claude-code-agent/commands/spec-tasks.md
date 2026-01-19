@@ -1,7 +1,7 @@
 ---
 description: Generate implementation tasks for a specification
 allowed-tools: Read, Task
-argument-hint: <feature-name> [-y]
+argument-hint: <feature-name> [-y] [--sequential]
 ---
 
 # Implementation Tasks Generator
@@ -9,19 +9,21 @@ argument-hint: <feature-name> [-y]
 ## Parse Arguments
 - Feature name: `$1`
 - Auto-approve flag: `$2` (optional, "-y")
+- Sequential mode flag: `$3` (optional, "--sequential")
 
 ## Validate
 Check that design has been completed:
 - Verify `{{KIRO_DIR}}/specs/$1/` exists
 - Verify `{{KIRO_DIR}}/specs/$1/design.md` exists
+- Determine `sequential = ($3 == "--sequential")`
 
 If validation fails, inform user to complete design phase first.
 
-## Invoke SubAgent
+## Invoke Subagent
 
 Delegate task generation to spec-tasks-agent:
 
-Use the Task tool to invoke the SubAgent with file path patterns:
+Use the Task tool to invoke the Subagent with file path patterns:
 
 ```
 Task(
@@ -31,21 +33,28 @@ Task(
 Feature: $1
 Spec directory: {{KIRO_DIR}}/specs/$1/
 Auto-approve: {true if $2 == "-y", else false}
+Sequential mode: {true if sequential else false}
 
 File patterns to read:
 - {{KIRO_DIR}}/specs/$1/*.{json,md}
 - {{KIRO_DIR}}/steering/*.md
 - {{KIRO_DIR}}/settings/rules/tasks-generation.md
+- {{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md (include only when sequential mode is false)
 - {{KIRO_DIR}}/settings/templates/specs/tasks.md
 
 Mode: {generate or merge based on tasks.md existence}
+Instruction highlights:
+- Map all requirements to tasks and list requirement IDs only (comma-separated) without extra narration
+- Promote single actionable sub-tasks to major tasks and keep container summaries concise
+- Apply `(P)` markers only when parallel criteria met (omit in sequential mode)
+- Mark optional acceptance-criteria-focused test coverage subtasks with `- [ ]*` only when deferrable post-MVP
 """
 )
 ```
 
 ## Display Result
 
-Show SubAgent summary to user, then provide next step guidance:
+Show Subagent summary to user, then provide next step guidance:
 
 ### Next Phase: Implementation
 

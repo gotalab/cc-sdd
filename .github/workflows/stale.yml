@@ -1,9 +1,9 @@
 name: Auto Close Stale Issues
 
 on:
-  schedule:
-    # Run every day at 00:00 UTC
-    - cron: '0 0 * * *'
+  # schedule:
+  #   # Run every day at 00:00 UTC
+  #   - cron: '0 0 * * *'
   workflow_dispatch: # Allow manual execution
 
 permissions:

@@ -21,15 +21,15 @@ If validation fails, inform user to complete tasks generation first.
 
 ## Task Selection Logic
 
-**Parse task numbers from `$2`** (perform this in Slash Command before invoking SubAgent):
+**Parse task numbers from `$2`** (perform this in Slash Command before invoking Subagent):
 - If `$2` provided: Parse task numbers (e.g., "1.1", "1,2,3")
 - Otherwise: Read `{{KIRO_DIR}}/specs/$1/tasks.md` and find all unchecked tasks (`- [ ]`)
 
-## Invoke SubAgent
+## Invoke Subagent
 
 Delegate TDD implementation to spec-tdd-impl-agent:
 
-Use the Task tool to invoke the SubAgent with file path patterns:
+Use the Task tool to invoke the Subagent with file path patterns:
 
 ```
 Task(
@@ -51,7 +51,7 @@ TDD Mode: strict (test-first)
 
 ## Display Result
 
-Show SubAgent summary to user, then provide next step guidance:
+Show Subagent summary to user, then provide next step guidance:
 
 ### Task Execution
 

@@ -4,6 +4,159 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ---
 
+## 🔬 開発中 (Unreleased)
+
+現在、未リリースの機能はありません。最新の安定版はv2.0.5です。
+
+---
+
+## 🌍 Ver 2.0.5 (2026-01-08) - ギリシャ語サポート追加
+
+### 追加
+- ギリシャ語（el）サポートを追加し、対応言語数が13言語になりました。
+
+### 新規コントリビューター
+* @tpapamichail が #121 で初コントリビュート
+
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#205---2026-01-08), PR: [#121](https://github.com/gotalab/cc-sdd/pull/121)
+
+---
+
+## 📝 Ver 2.0.4 (2026-01-07) - バグ修正 & ドキュメント更新
+
+### 修正
+- GitHub Copilotのプロンプトファイルで非推奨の`mode`属性を`agent`に置換し、最新のCopilot仕様に対応。
+- registry.tsのレビュー改善を反映。
+
+### ドキュメント
+- AI-Assisted SDDの書籍参照をドキュメントに追加。
+
+### 新規コントリビューター
+* @irisTa56 が #118 で初コントリビュート
+* @leosamp が #109 で初コントリビュート
+* @Kakenyan が #107 で初コントリビュート
+
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#204---2026-01-07), PR: [#118](https://github.com/gotalab/cc-sdd/pull/118), [#109](https://github.com/gotalab/cc-sdd/pull/109), [#107](https://github.com/gotalab/cc-sdd/pull/107)
+
+---
+
+## 📝 Ver 2.0.3 (2025-11-15) - GPT-5.1 Codex向けの推奨モデル調整
+
+- Codex CLI / Cursor / GitHub Copilot / Windsurf 向けの推奨モデルに `gpt-5.1-codex medium/high` を明示的に追加し、コード中心のワークロードでは Codex 系モデルを優先しつつ、`gpt-5.1 medium/high` を汎用用途のフォールバックとして維持しました。
+- DEV_GUIDELINES 関連のテスト期待値を v2.0.2 で導入した厳密な言語ハンドリング仕様に合わせて修正し、ランタイム挙動を変えずに `npm test` がクリーンに通るようにしました。
+
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#203---2025-11-15), PR: [#104](https://github.com/gotalab/cc-sdd/pull/104)
+
+---
+
+## 📝 Ver 2.0.2 (2025-11-15) - GPT-5.1対応と出力安定性の向上
+
+- Codex CLI / Cursor / GitHub Copilot / Windsurf 向けの推奨モデルを `GPT-5.1 high or medium` に更新し、GPT-5.1 前提でのワークフロー最適化を実施。
+- requirements/design/tasks/research/validation などのMarkdown出力について、`spec.json.language` の言語を必ず用い、未設定時は英語（`en`）に統一。
+- EARSパターンとトレース性の一貫性を高めるため、EARSのトリガー句（`When/If/While/Where/The system shall/The [system] shall`）は英語固定とし可変部分のみターゲット言語で生成しつつ、`Requirement 1`, `1.1`, `2.3` のような数値IDだけを許可して requirements → design → tasks の対応関係を安定化。
+
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#202---2025-11-15), PR: [#102](https://github.com/gotalab/cc-sdd/pull/102)
+
+---
+
+## 📝 Ver 2.0.1 (2025-11-10) - ドキュメント更新
+
+### 概要
+ドキュメントのみの更新。READMEの明確性と視覚的一貫性を改善。
+
+### リソース
+- PR: [#93](https://github.com/gotalab/cc-sdd/pull/93), [#94](https://github.com/gotalab/cc-sdd/pull/94)
+- [CHANGELOG.md](../../CHANGELOG.md#201---2025-11-10)
+
+---
+
+## 🎉 Ver 2.0.0 (2025-11-09) - 安定版リリース
+
+### ハイライト
+- **`npx cc-sdd@latest`で全機能開放**：alpha.1〜alpha.6で試験投入したResearch.md、検証コマンド、Subagents、Windsurf統合をすべてGA化。
+- **設計〜実装の一貫性強化**：要約表・Req Coverage・Supporting Referencesを備えた新designテンプレでSSoTを堅持。
+- **Brownfield向けガードレール**：`/kiro:validate-*`、並列タスク分析、Steeringプロジェクトメモリでデグレを未然に防止。
+- **グローバル対応**：7エージェント×12言語が同一テンプレートとコマンド体系を共有。
+
+### アップグレード要点
+1. 必ず [移行ガイド](../guides/migration-guide.md) を参照し、`.kiro/settings/templates/*` の再配置とSteeringのディレクトリ読込変更を反映。
+2. 自動化やREADMEの実行例を `npx cc-sdd@latest` 基準に統一（`@next`は今後のプレビュー専用）。
+3. steering / research / design / tasks テンプレートを再生成し、Research.md・Supporting References・(P)マーカーを取り込む。
+
+### 主な強化点
+- **並列タスク分析**：`(P)`マーカー自動付与と `--sequential` フラグ。
+- **Research.md**：調査ログと長文の意思決定を設計本編から切り離し、design.mdを一次情報として完結。
+- **Designテンプレ改訂**：コンポーネント要約表、Req Coverage、Supporting References、密度調整ルールを追加。
+- **エージェント/言語パリティ**：Claude Code + Subagents, Cursor, Gemini CLI, Codex CLI, Copilot, Qwen, Windsurf の11コマンドセットを統一提供。
+- **対話型インストーラー**：プロジェクトメモリ処理とnpmバッジ更新を含むガイド付きセットアップ。
+
+### リソース
+- 技術的な詳細: [CHANGELOG.md](../../CHANGELOG.md#200---2025-11-09)
+- 手順・回帰対策: [docs/guides/migration-guide.md](../guides/migration-guide.md)
+- リリース作業タスク: `docs/cc-sdd/v2.0.0/PLAN.md`
+- テンプレ改善タスク: `docs/cc-sdd/v2.0.0/PLAN2.md`
+
+v2.0.0へ移行後にテンプレートを再生成すれば、追加フラグなしで最新のSpec Driven Developmentワークフローが利用できます。
+
+---
+
+## 過去のAlphaリリース
+
+---
+
+## 🚀 Ver 2.0.0-alpha.5 (2025-11-05)
+
+### 🎯 ハイライト
+- **EARS形式の改善**：要件定義で使用するEARS形式を小文字構文に統一し、可読性が向上しました。
+- **ドキュメント充実**：インストール手順の明確化とnpmバッジの追加で、ユーザー体験が改善されました。
+
+### 🔧 改善
+- EARS形式を小文字構文に更新（[#88](https://github.com/gotalab/cc-sdd/pull/88)）
+  - "WHILE/WHEN/WHERE/IF" → "while/when/where/if"
+  - より自然で読みやすい要件記述が可能に
+- インストールドキュメントの明確化（[#87](https://github.com/gotalab/cc-sdd/pull/87)）
+- npm `next`バージョンバッジをREADMEに追加（[#86](https://github.com/gotalab/cc-sdd/pull/86)）
+
+---
+
+## 📚 Ver 2.0.0-alpha.4 (2025-10-30)
+
+### 🎯 ハイライト
+- **包括的なカスタマイズガイド**：7つの実践例を含むカスタマイズガイドと完全なコマンドリファレンスを追加し、プロジェクトに合わせたテンプレート調整が容易になりました。
+
+### 📖 新ドキュメント
+- **カスタマイズガイド**（[#83](https://github.com/gotalab/cc-sdd/pull/83)）
+  - テンプレートカスタマイズパターン
+  - エージェント固有のワークフロー例
+  - プロジェクト固有のルール例
+  - 7つの実践的なカスタマイズ例
+- **コマンドリファレンス**（[#83](https://github.com/gotalab/cc-sdd/pull/83)）
+  - 全11個の`/kiro:*`コマンドの詳細な使用方法
+  - パラメータ説明と実例
+
+### 🔧 改善
+- テンプレートカスタマイズ手順の明確化（[#85](https://github.com/gotalab/cc-sdd/pull/85)）
+- カスタマイズガイドのレビュー改善（[#84](https://github.com/gotalab/cc-sdd/pull/84)）
+
+---
+
+## 🤖 Ver 2.0.0-alpha.3.1 (2025-10-24)
+
+### 🎯 ハイライト
+- **GitHub Issue自動管理**：10日間非アクティブなissueを自動クローズし、プロジェクト管理が効率化されました。
+
+### ⚙️ 自動化
+- GitHub issueライフサイクル管理の自動化（[#80](https://github.com/gotalab/cc-sdd/pull/80)）
+  - 10日間非アクティブなissueを自動クローズ
+  - 設定可能なstale検出ワークフロー
+  - 英語専用ワークフローメッセージング（[#81](https://github.com/gotalab/cc-sdd/pull/81)）
+
+### 🔧 改善
+- stale検出期間を10日に更新
+- GitHub Actionsワークフローの改善
+
+---
+
 ## 🚀 Ver 2.0.0-alpha.3 (2025-10-22)
 
 ### 🎯 ハイライト
@@ -39,7 +192,7 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 - **ドキュメント整備**：README（英語/日本語/繁体字）およびリポジトリ README を更新し、対応エージェント、コマンド数、ディレクトリ構造、CLI 例を最新状態に反映。
 
 ### 🔄 関連プルリクエスト
-- **[#74](https://github.com/gotalab/cc-sdd/pull/74)** - Claude Code SubAgentsモードの追加（実装中）
+- **[#74](https://github.com/gotalab/cc-sdd/pull/74)** - Claude Code Subagentsモードの追加（実装中）
   - コンテキスト最適化のため、SDD コマンドを専用サブエージェントへ委譲
   - メイン会話のコンテキストウィンドウを保護し、セッション寿命を延長
   - 各コマンド専用のシステムプロンプトによる品質向上

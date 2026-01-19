@@ -29,7 +29,7 @@ export interface AgentDefinition {
 
 const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/prompts by running:
     mkdir -p ~/.codex/prompts \
-      && cp -Ri ./.codex/prompts/ ~/.codex/prompts/ \
+      && cp -Ri ./.codex/prompts/. ~/.codex/prompts/ \
       && printf '\n==== COPY PHASE DONE ====\n' \
       && printf 'Remove original ./.codex/prompts ? [y/N]: ' \
       && IFS= read -r a \
@@ -83,7 +83,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.codex/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--codex', '--codex-cli'],
-    recommendedModels: ['GPT-5-Codex (e.g. gpt-5-codex medium, gpt-5-codex high)'],
+    recommendedModels: ['gpt-5.1-codex medium/high', 'gpt-5.1 medium/high'],
     layout: {
       commandsDir: '.codex/prompts',
       agentDir: '.codex',
@@ -104,7 +104,11 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.cursor/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--cursor'],
-    recommendedModels: ['Claude 4.5 Sonnet thinking mode or newer', 'GPT-5-Codex'],
+    recommendedModels: [
+      'Claude 4.5 Sonnet thinking mode or newer',
+      'gpt-5.1-codex medium/high',
+      'gpt-5.1 medium/high',
+    ],
     layout: {
       commandsDir: '.cursor/commands/kiro',
       agentDir: '.cursor',
@@ -122,7 +126,11 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.github/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--copilot', '--github-copilot'],
-    recommendedModels: ['Claude 4.5 Sonnet thinking mode or newer', 'GPT-5-Codex'],
+    recommendedModels: [
+      'Claude 4.5 Sonnet thinking mode or newer',
+      'gpt-5.1-codex medium/high',
+      'gpt-5.1 medium/high',
+    ],
     layout: {
       commandsDir: '.github/prompts',
       agentDir: '.github',
@@ -158,7 +166,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro workflows in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--windsurf'],
-    recommendedModels: ['Claude 4.5 Sonnet or newer', 'GPT-5-Codex'],
+    recommendedModels: ['Claude 4.5 Sonnet or newer', 'gpt-5.1-codex medium/high', 'gpt-5.1 medium/high'],
     layout: {
       commandsDir: '.windsurf/workflows',
       agentDir: '.windsurf',

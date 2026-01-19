@@ -16,7 +16,9 @@ describe('contextFromResolved', () => {
     expect(ctx.AGENT_DIR).toBe('.claude');
     expect(ctx.AGENT_DOC).toBe('CLAUDE.md');
     expect(ctx.AGENT_COMMANDS_DIR).toBe('.claude/commands/kiro');
-    expect(ctx.DEV_GUIDELINES).toBe('- Think in English, generate responses in English');
+    expect(ctx.DEV_GUIDELINES).toBe(
+      '- Think in English, generate responses in English. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+    );
   });
 
   it('creates template context with custom configuration', () => {
@@ -34,7 +36,9 @@ describe('contextFromResolved', () => {
     expect(ctx.AGENT_DIR).toBe('.gemini');
     expect(ctx.AGENT_DOC).toBe('GEMINI.md');
     expect(ctx.AGENT_COMMANDS_DIR).toBe('.custom/commands');
-    expect(ctx.DEV_GUIDELINES).toBe('- Think in English, but generate responses in Japanese (思考は英語、回答の生成は日本語で行うように)');
+    expect(ctx.DEV_GUIDELINES).toBe(
+      '- Think in English, generate responses in Japanese. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+    );
   });
 
   it('creates template context for qwen-code agent', () => {
@@ -47,7 +51,9 @@ describe('contextFromResolved', () => {
     expect(ctx.AGENT_DIR).toBe('.qwen');
     expect(ctx.AGENT_DOC).toBe('QWEN.md');
     expect(ctx.AGENT_COMMANDS_DIR).toBe('.qwen/commands/kiro');
-    expect(ctx.DEV_GUIDELINES).toBe('- 以英文思考，但以繁體中文生成回應（Think in English, generate in Traditional Chinese）');
+    expect(ctx.DEV_GUIDELINES).toBe(
+      '- Think in English, generate responses in Traditional Chinese. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+    );
   });
 
   it('preserves all layout properties correctly', () => {
@@ -69,6 +75,8 @@ describe('contextFromResolved', () => {
     expect(ctx.AGENT_DIR).toBe('.custom-agent');
     expect(ctx.AGENT_DOC).toBe('CUSTOM-DOC.md');
     expect(ctx.AGENT_COMMANDS_DIR).toBe('.custom/commands/path');
-    expect(ctx.DEV_GUIDELINES).toBe('- Think in English, generate responses in English');
+    expect(ctx.DEV_GUIDELINES).toBe(
+      '- Think in English, generate responses in English. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+    );
   });
 });

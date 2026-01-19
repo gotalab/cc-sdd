@@ -11,7 +11,7 @@ arguments:
 - **Mission**: Generate comprehensive, testable requirements in EARS format based on the project description from spec initialization
 - **Success Criteria**:
   - Create complete requirements document aligned with steering context
-  - Use proper EARS syntax for all acceptance criteria
+  - Follow the project's EARS patterns and constraints for all acceptance criteria
   - Focus on core functionality without implementation details
   - Update metadata to track generation status
 </background_information>
@@ -47,10 +47,10 @@ Generate complete requirements for feature **$1** based on the project descripti
 
 ## Important Constraints
 - Focus on WHAT, not HOW (no implementation details)
-- All acceptance criteria MUST use proper EARS syntax
 - Requirements must be testable and verifiable
 - Choose appropriate subject for EARS statements (system/service name for software)
 - Generate initial version first, then iterate with user feedback (no sequential questions upfront)
+- Requirement headings in requirements.md MUST include a leading numeric ID only (for example: "Requirement 1", "1.", "2 Feature ..."); do not use alphabetic IDs like "Requirement A".
 </instructions>
 
 ## Tool Guidance
@@ -76,9 +76,10 @@ Provide output in the language specified in spec.json with:
 - **Missing Project Description**: If requirements.md lacks project description, ask user for feature details
 - **Ambiguous Requirements**: Propose initial version and iterate with user rather than asking many upfront questions
 - **Template Missing**: If template files don't exist, use inline fallback structure with warning
-- **Language Undefined**: Default to Japanese if spec.json doesn't specify language
+- **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 - **Incomplete Requirements**: After generation, explicitly ask user if requirements cover all expected functionality
 - **Steering Directory Empty**: Warn user that project context is missing and may affect requirement quality
+- **Non-numeric Requirement Headings**: If existing headings do not include a leading numeric ID (for example, they use "Requirement A"), normalize them to numeric IDs and keep that mapping consistent (never mix numeric and alphabetic labels).
 
 ### Next Phase: Design Generation
 
@@ -94,4 +95,3 @@ Provide output in the language specified in spec.json with:
 - Provide feedback and re-run `/prompts:kiro-spec-requirements $1`
 
 **Note**: Approval is mandatory before proceeding to design phase.
-
