@@ -15,14 +15,14 @@
 
 👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
-Stop losing 70% of development time to meetings, documentation ceremonies, and scattered context. cc-sdd brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, and Windsurf.
+Stop losing 70% of development time to meetings, documentation ceremonies, and scattered context. cc-sdd brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, OpenCode, and Windsurf.
 
 ### What you get:
 - ✅ **Spec-first guarantees** — Approve requirements/design upfront, then AI implements exactly as specified
 - ✅ **Parallel execution ready** — Tasks decomposed for concurrent implementation with dependency tracking
 - ✅ **Team-aligned templates** — Customize once, all agents output docs that fit your approval process
 - ✅ **Project Memory** — AI remembers your architecture, patterns, and standards across sessions
-- ✅ **7 agents, unified workflow** — Same spec-driven process across Claude, Cursor, Gemini, Codex, Copilot, Qwen, Windsurf
+- ✅ **8 agents, unified workflow** — Same spec-driven process across Claude, Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf
 - ✅ **Hours instead of weeks** — Feature planning goes from days to hours with AI-assisted specs
 
 ## 🚀 Quick Start
@@ -35,7 +35,7 @@ npx cc-sdd@latest --claude --lang en ## Claude Code
 # ✅ That's it! Now run: /kiro:spec-init <what-to-build>
 ```
 
-**Installation takes 30 seconds.** Supports 7 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, Windsurf) × 13 languages.
+**Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages.
 
 📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
@@ -90,6 +90,7 @@ npx cc-sdd@latest --gemini         # Gemini CLI
 npx cc-sdd@latest --codex          # Codex CLI
 npx cc-sdd@latest --copilot        # GitHub Copilot
 npx cc-sdd@latest --qwen           # Qwen Code
+npx cc-sdd@latest --opencode       # OpenCode
 npx cc-sdd@latest --windsurf       # Windsurf IDE
 ```
 

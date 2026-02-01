@@ -8,7 +8,7 @@
 English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / Windsurf from prototype to production-ready development.**
+✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf from prototype to production-ready development.**
 
 👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
@@ -17,7 +17,7 @@ English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">�
 - ✅ **Separate Research** — Keep discovery notes (Research.md) separate from final design (Design.md)
 - ✅ **Quality Gates** — validate-gap/design/impl commands catch integration issues before coding
 - ✅ **Customize Once** — Adapt templates to your team's process; all agents follow the same workflow
-- ✅ **Universal Workflow** — 7 agents × 13 languages share the same 11-command process
+- ✅ **Universal Workflow** — 8 agents × 13 languages share the same 11-command process
 
 ---
 
