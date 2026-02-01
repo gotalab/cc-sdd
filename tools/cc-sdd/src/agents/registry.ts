@@ -199,10 +199,10 @@ export const agentDefinitions = {
   'opencode': {
     label: 'OpenCode',
     description:
-      'Installs kiro prompts in `.opencode/command/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro prompts in `.opencode/commands/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode'],
     layout: {
-      commandsDir: '.opencode/command',
+      commandsDir: '.opencode/commands',
       agentDir: '.opencode',
       docFile: 'AGENTS.md',
     },
