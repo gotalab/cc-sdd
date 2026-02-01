@@ -213,6 +213,26 @@ export const agentDefinitions = {
     },
     manifestId: 'opencode',
   },
+  'opencode-agent': {
+    label: 'OpenCode Agents',
+    description:
+      'Installs kiro commands in `.opencode/commands/`, a kiro agent library in `.opencode/agents/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--opencode-agent'],
+    layout: {
+      commandsDir: '.opencode/commands',
+      agentDir: '.opencode',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-quick <what-to-build>`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    templateFallbacks: {
+      'AGENTS.md': '../../AGENTS.md',
+    },
+    manifestId: 'opencode-agent',
+  },
 } as const satisfies Record<string, AgentDefinition>;
 
 export type AgentType = keyof typeof agentDefinitions;
