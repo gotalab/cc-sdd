@@ -46,7 +46,8 @@ npx cc-sdd@latest --gemini --lang ja        # Gemini CLI
 npx cc-sdd@latest --codex --lang ja         # Codex CLI
 npx cc-sdd@latest --copilot --lang ja       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang ja          # Qwen Code
-npx cc-sdd@latest --opencode --lang ja      # OpenCode
+npx cc-sdd@latest --opencode --lang ja      # OpenCode（11コマンド）
+npx cc-sdd@latest --opencode-agent --lang ja # OpenCode Subagents（12コマンド + 9サブエージェント）
 npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 # 注: @nextは今後のアルファ/ベータ版用に予約されています

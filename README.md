@@ -90,7 +90,8 @@ npx cc-sdd@latest --gemini         # Gemini CLI
 npx cc-sdd@latest --codex          # Codex CLI
 npx cc-sdd@latest --copilot        # GitHub Copilot
 npx cc-sdd@latest --qwen           # Qwen Code
-npx cc-sdd@latest --opencode       # OpenCode
+npx cc-sdd@latest --opencode       # OpenCode (11 commands)
+npx cc-sdd@latest --opencode-agent # OpenCode Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --windsurf       # Windsurf IDE
 ```
 

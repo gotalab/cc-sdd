@@ -43,7 +43,8 @@ npx cc-sdd@latest --gemini --lang zh-TW           # Gemini CLI
 npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI
 npx cc-sdd@latest --copilot --lang zh-TW          # GitHub Copilot
 npx cc-sdd@latest --qwen --lang zh-TW             # Qwen Code
-npx cc-sdd@latest --opencode --lang zh-TW          # OpenCode
+npx cc-sdd@latest --opencode --lang zh-TW         # OpenCode（11 個指令）
+npx cc-sdd@latest --opencode-agent --lang zh-TW   # OpenCode Subagents（12 個指令 + 9 個子代理）
 npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 
 # 注意：@next 現已保留給未來的 alpha/beta 版本
