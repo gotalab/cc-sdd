@@ -6,7 +6,22 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v2.1.0.
+No unreleased features at this time. The latest stable release is v2.1.1.
+
+---
+
+## 🔧 Ver 2.1.1 (2026-02-02) – Bug Fixes & Security
+
+### Fixed
+- Fixed OpenCode agent slash command frontmatter to use full agent path for proper command execution.
+
+### Security
+- Updated vitest to v4 to resolve security vulnerabilities.
+
+### New Contributors
+* @hiiamkazuto made their first contribution in #134
+
+- Resources: [CHANGELOG.md](../../CHANGELOG.md#211---2026-02-02), PRs: [#134](https://github.com/gotalab/cc-sdd/pull/134), [#135](https://github.com/gotalab/cc-sdd/pull/135)
 
 ---
 

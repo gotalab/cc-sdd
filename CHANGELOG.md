@@ -8,6 +8,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-02-02
+
+### Fixed
+- Fix OpenCode agent slash command frontmatter to use full agent path ([#134](https://github.com/gotalab/cc-sdd/pull/134))
+
+### Security
+- Update vitest to v4 to resolve security vulnerabilities ([#135](https://github.com/gotalab/cc-sdd/pull/135))
+
+### New Contributors
+* @hiiamkazuto made their first contribution in #134
+
 ## [2.1.0] - 2026-02-01
 
 ### Added
