@@ -133,5 +133,3 @@ Provide brief summary in the language specified in spec.json:
 - Existing tasks used as reference (merge mode)
 
 **Note**: The implementation phase will guide you through executing tasks with appropriate context and validation.
-
-think

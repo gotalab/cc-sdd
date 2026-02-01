@@ -171,4 +171,3 @@ Provide brief summary in the language specified in spec.json:
   - **Stop Execution**: If requirements.md is missing numeric IDs or uses non-numeric headings (for example, "Requirement A"), stop and instruct the user to fix requirements.md before continuing.
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
-think

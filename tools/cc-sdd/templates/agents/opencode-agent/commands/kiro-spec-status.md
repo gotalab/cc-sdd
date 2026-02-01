@@ -81,5 +81,3 @@ Provide status report in the language specified in spec.json:
 To see all available specs:
 - Run with no argument or use wildcard
 - Shows all specs in `{{KIRO_DIR}}/specs/` with their status
-
-think

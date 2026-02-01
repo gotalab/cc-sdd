@@ -94,5 +94,3 @@ Provide output in the language specified in spec.json with:
 - Provide feedback and re-run `/kiro:spec-requirements $1`
 
 **Note**: Approval is mandatory before proceeding to design phase.
-
-think
