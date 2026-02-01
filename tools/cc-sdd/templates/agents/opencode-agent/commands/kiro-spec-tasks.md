@@ -1,5 +1,7 @@
 ---
 description: Generate implementation tasks for a specification
+agent: spec-tasks
+subtask: true
 ---
 
 # Implementation Tasks Generator
@@ -17,17 +19,8 @@ Check that design has been completed:
 
 If validation fails, inform user to complete design phase first.
 
-## Invoke Subagent
+## Subagent Context
 
-Delegate task generation to spec-tasks-agent:
-
-Use the Task tool to invoke the Subagent with file path patterns:
-
-```
-Task(
-  subagent_type="spec-tasks-agent",
-  description="Generate implementation tasks",
-  prompt="""
 Feature: $1
 Spec directory: {{KIRO_DIR}}/specs/$1/
 Auto-approve: {true if $2 == "-y", else false}
@@ -46,9 +39,6 @@ Instruction highlights:
 - Promote single actionable sub-tasks to major tasks and keep container summaries concise
 - Apply `(P)` markers only when parallel criteria met (omit in sequential mode)
 - Mark optional acceptance-criteria-focused test coverage subtasks with `- [ ]*` only when deferrable post-MVP
-"""
-)
-```
 
 ## Display Result
 

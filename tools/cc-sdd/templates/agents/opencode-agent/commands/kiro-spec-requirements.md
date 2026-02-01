@@ -1,5 +1,7 @@
 ---
 description: Generate comprehensive requirements for a specification
+agent: spec-requirements
+subtask: true
 ---
 
 # Requirements Generation
@@ -14,17 +16,8 @@ Check that spec has been initialized:
 
 If validation fails, inform user to run `/kiro-spec-init` first.
 
-## Invoke Subagent
+## Subagent Context
 
-Delegate requirements generation to spec-requirements-agent:
-
-Use the Task tool to invoke the Subagent with file path patterns:
-
-```
-Task(
-  subagent_type="spec-requirements-agent",
-  description="Generate EARS requirements",
-  prompt="""
 Feature: $1
 Spec directory: {{KIRO_DIR}}/specs/$1/
 
@@ -36,9 +29,6 @@ File patterns to read:
 - {{KIRO_DIR}}/settings/templates/specs/requirements.md
 
 Mode: generate
-"""
-)
-```
 
 ## Display Result
 

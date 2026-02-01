@@ -1,5 +1,7 @@
 ---
 description: Interactive technical design quality review and validation
+agent: validate-design
+subtask: true
 ---
 
 # Technical Design Validation
@@ -14,17 +16,8 @@ Check that design has been completed:
 
 If validation fails, inform user to complete design phase first.
 
-## Invoke Subagent
+## Subagent Context
 
-Delegate design validation to validate-design-agent:
-
-Use the Task tool to invoke the Subagent with file path patterns:
-
-```
-Task(
-  subagent_type="validate-design-agent",
-  description="Interactive design review",
-  prompt="""
 Feature: $1
 Spec directory: {{KIRO_DIR}}/specs/$1/
 
@@ -34,9 +27,6 @@ File patterns to read:
 - {{KIRO_DIR}}/specs/$1/design.md
 - {{KIRO_DIR}}/steering/*.md
 - {{KIRO_DIR}}/settings/rules/design-review.md
-"""
-)
-```
 
 ## Display Result
 

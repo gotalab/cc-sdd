@@ -160,4 +160,3 @@ Review and approve as Source of Truth.
 - `{{KIRO_DIR}}/settings/` content should NOT be documented in steering files (settings are metadata, not project knowledge)
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
-think deeply

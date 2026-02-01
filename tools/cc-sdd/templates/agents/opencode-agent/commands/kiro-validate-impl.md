@@ -1,5 +1,7 @@
 ---
 description: Validate implementation against requirements, design, and tasks
+agent: validate-impl
+subtask: true
 ---
 
 # Implementation Validation
@@ -24,17 +26,8 @@ description: Validate implementation against requirements, design, and tasks
 **If both provided** (`$1` and `$2` present):
 - Pass directly to Subagent without detection
 
-## Invoke Subagent
+## Subagent Context
 
-Delegate validation to validate-impl-agent:
-
-Use the Task tool to invoke the Subagent with file path patterns:
-
-```
-Task(
-  subagent_type="validate-impl-agent",
-  description="Validate implementation",
-  prompt="""
 Feature: {$1 or auto-detected}
 Target tasks: {$2 or auto-detected}
 Mode: {auto-detect, feature-all, or explicit}
@@ -44,9 +37,6 @@ File patterns to read:
 - {{KIRO_DIR}}/steering/*.md
 
 Validation scope: {based on detection results}
-"""
-)
-```
 
 ## Display Result
 

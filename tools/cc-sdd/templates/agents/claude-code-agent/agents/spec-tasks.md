@@ -138,4 +138,3 @@ Provide brief summary in the language specified in spec.json:
   - **Stop Execution**: All requirements in requirements.md MUST have numeric IDs. If any requirement lacks a numeric ID, stop and request that requirements.md be fixed before generating tasks.
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
-think deeply
