@@ -41,7 +41,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.claude/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/` (default `.kiro/settings/`), and an AGENTS.md quickstart.',
     aliasFlags: ['--claude-code', '--claude'],
-    recommendedModels: ['Claude 4.5 Sonnet or newer'],
+    recommendedModels: ['Claude Opus 4.5 or newer'],
     layout: {
       commandsDir: '.claude/commands/kiro',
       agentDir: '.claude',
@@ -62,7 +62,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.claude/commands/kiro/`, a Claude agent library in `.claude/agents/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and a CLAUDE.md quickstart.',
     aliasFlags: ['--claude-code-agent', '--claude-agent'],
-    recommendedModels: ['Claude 4.5 Sonnet or newer'],
+    recommendedModels: ['Claude Opus 4.5 or newer'],
     layout: {
       commandsDir: '.claude/commands/kiro',
       agentDir: '.claude',
@@ -83,7 +83,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.codex/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--codex', '--codex-cli'],
-    recommendedModels: ['gpt-5.1-codex medium/high', 'gpt-5.1 medium/high'],
+    recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
     layout: {
       commandsDir: '.codex/prompts',
       agentDir: '.codex',
@@ -104,11 +104,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.cursor/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--cursor'],
-    recommendedModels: [
-      'Claude 4.5 Sonnet thinking mode or newer',
-      'gpt-5.1-codex medium/high',
-      'gpt-5.1 medium/high',
-    ],
+    recommendedModels: ['Claude Opus 4.5 or newer', 'gpt-5.2-codex', 'gpt-5.2'],
     layout: {
       commandsDir: '.cursor/commands/kiro',
       agentDir: '.cursor',
@@ -126,11 +122,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.github/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--copilot', '--github-copilot'],
-    recommendedModels: [
-      'Claude 4.5 Sonnet thinking mode or newer',
-      'gpt-5.1-codex medium/high',
-      'gpt-5.1 medium/high',
-    ],
+    recommendedModels: ['Claude Opus 4.5 or newer', 'gpt-5.2-codex', 'gpt-5.2'],
     layout: {
       commandsDir: '.github/prompts',
       agentDir: '.github',
@@ -166,7 +158,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro workflows in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--windsurf'],
-    recommendedModels: ['Claude 4.5 Sonnet or newer', 'gpt-5.1-codex medium/high', 'gpt-5.1 medium/high'],
+    recommendedModels: ['Claude Opus 4.5 or newer', 'gpt-5.2-codex', 'gpt-5.2'],
     layout: {
       commandsDir: '.windsurf/workflows',
       agentDir: '.windsurf',
@@ -201,6 +193,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.opencode/commands/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode'],
+    recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
     layout: {
       commandsDir: '.opencode/commands',
       agentDir: '.opencode',
@@ -218,6 +211,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro commands in `.opencode/commands/`, a kiro agent library in `.opencode/agents/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode-agent'],
+    recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
     layout: {
       commandsDir: '.opencode/commands',
       agentDir: '.opencode',
