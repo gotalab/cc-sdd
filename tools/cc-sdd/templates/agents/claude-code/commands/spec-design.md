@@ -175,5 +175,3 @@ Provide brief summary in the language specified in spec.json:
 - Existing design used as reference (merge mode)
 
 **Note**: Design approval is mandatory before proceeding to task generation.
-
-think hard

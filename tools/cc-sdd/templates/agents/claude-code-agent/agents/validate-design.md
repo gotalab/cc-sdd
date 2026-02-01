@@ -95,4 +95,3 @@ Provide output in the language specified in spec.json with:
 - **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
-think hard

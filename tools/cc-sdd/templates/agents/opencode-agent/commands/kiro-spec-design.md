@@ -1,5 +1,7 @@
 ---
 description: Create comprehensive technical design for a specification
+agent: spec-design
+subtask: true
 ---
 
 # Technical Design Generator
@@ -15,17 +17,8 @@ Check that requirements have been completed:
 
 If validation fails, inform user to complete requirements phase first.
 
-## Invoke Subagent
+## Subagent Context
 
-Delegate design generation to spec-design-agent:
-
-Use the Task tool to invoke the Subagent with file path patterns:
-
-```
-Task(
-  subagent_type="spec-design-agent",
-  description="Generate technical design and update research log",
-  prompt="""
 Feature: $1
 Spec directory: {{KIRO_DIR}}/specs/$1/
 Auto-approve: {true if $2 == "-y", else false}
@@ -40,9 +33,6 @@ File patterns to read:
 Discovery: auto-detect based on requirements
 Mode: {generate or merge based on design.md existence}
 Language: respect spec.json language for design.md/research.md outputs
-"""
-)
-```
 
 ## Display Result
 

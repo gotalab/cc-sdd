@@ -99,4 +99,3 @@ Provide output in the language specified in spec.json with:
 - **Non-numeric Requirement Headings**: If existing headings do not include a leading numeric ID (for example, they use "Requirement A"), normalize them to numeric IDs and keep that mapping consistent (never mix numeric and alphabetic labels).
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
-think deeply

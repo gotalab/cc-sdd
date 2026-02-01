@@ -1,5 +1,7 @@
 ---
 description: Create custom steering documents for specialized project contexts
+agent: steering-custom
+subtask: true
 ---
 
 # Kiro Custom Steering Creation
@@ -12,17 +14,8 @@ This command starts an interactive process with the Subagent:
 3. Subagent analyzes codebase for relevant patterns
 4. Subagent generates custom steering file
 
-## Invoke Subagent
+## Subagent Context
 
-Delegate custom steering creation to steering-custom-agent:
-
-Use the Task tool to invoke the Subagent with file path patterns:
-
-```
-Task(
-  subagent_type="steering-custom-agent",
-  description="Create custom steering",
-  prompt="""
 Interactive Mode: Ask user for domain/topic
 
 File patterns to read:
@@ -30,9 +23,6 @@ File patterns to read:
 - {{KIRO_DIR}}/settings/rules/steering-principles.md
 
 JIT Strategy: Analyze codebase for relevant patterns as needed
-"""
-)
-```
 
 ## Display Result
 

@@ -1,5 +1,7 @@
 ---
 description: Analyze implementation gap between requirements and existing codebase
+agent: validate-gap
+subtask: true
 ---
 
 # Implementation Gap Validation
@@ -14,17 +16,8 @@ Check that requirements have been completed:
 
 If validation fails, inform user to complete requirements phase first.
 
-## Invoke Subagent
+## Subagent Context
 
-Delegate gap analysis to validate-gap-agent:
-
-Use the Task tool to invoke the Subagent with file path patterns:
-
-```
-Task(
-  subagent_type="validate-gap-agent",
-  description="Analyze implementation gap",
-  prompt="""
 Feature: $1
 Spec directory: {{KIRO_DIR}}/specs/$1/
 
@@ -33,9 +26,6 @@ File patterns to read:
 - {{KIRO_DIR}}/specs/$1/requirements.md
 - {{KIRO_DIR}}/steering/*.md
 - {{KIRO_DIR}}/settings/rules/gap-analysis.md
-"""
-)
-```
 
 ## Display Result
 

@@ -1,5 +1,7 @@
 ---
 description: Manage {{KIRO_DIR}}/steering/ as persistent project knowledge
+agent: steering
+subtask: true
 ---
 
 # Kiro Steering Management
@@ -14,17 +16,8 @@ Check `{{KIRO_DIR}}/steering/` status:
 
 Use Glob to check for existing steering files.
 
-## Invoke Subagent
+## Subagent Context
 
-Delegate steering management to steering-agent:
-
-Use the Task tool to invoke the Subagent with file path patterns:
-
-```
-Task(
-  subagent_type="steering-agent",
-  description="Manage steering files",
-  prompt="""
 Mode: {bootstrap or sync based on detection}
 
 File patterns to read:
@@ -33,9 +26,6 @@ File patterns to read:
 - {{KIRO_DIR}}/settings/rules/steering-principles.md
 
 JIT Strategy: Fetch codebase files when needed, not upfront
-"""
-)
-```
 
 ## Display Result
 
