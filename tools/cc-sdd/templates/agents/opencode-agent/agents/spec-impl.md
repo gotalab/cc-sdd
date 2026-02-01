@@ -115,4 +115,3 @@ Provide brief summary in the language specified in spec.json:
 - **Action**: Debug and fix, then re-run
 
 **Note**: You execute tasks autonomously. Return final report only when complete.
-think
