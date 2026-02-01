@@ -140,7 +140,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.gemini/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--gemini-cli', '--gemini'],
-    recommendedModels: ['Gemini 2.5 Pro or newer'],
+    recommendedModels: ['Gemini 3 Flash or newer'],
     layout: {
       commandsDir: '.gemini/commands/kiro',
       agentDir: '.gemini',
