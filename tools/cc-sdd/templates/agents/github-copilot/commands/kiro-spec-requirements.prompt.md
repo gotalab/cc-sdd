@@ -1,5 +1,5 @@
 ---
-mode: 'agent'
+agent: 'agent'
 description: Generate comprehensive requirements for a specification
 ---
 <meta>

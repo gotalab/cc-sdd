@@ -1,5 +1,5 @@
 ---
-mode: 'agent'
+agent: 'agent'
 description: 'Generate comprehensive technical design for a specification'
 ---
 <meta>

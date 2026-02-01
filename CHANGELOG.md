@@ -8,6 +8,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.5] - 2026-01-08
+
+### Added
+- Add Greek (el) language support, bringing total to 13 languages ([#121](https://github.com/gotalab/cc-sdd/pull/121))
+
+## [2.0.4] - 2026-01-07
+
+### Fixed
+- Update GitHub Copilot prompt files to replace deprecated `mode` attribute with `agent` ([#118](https://github.com/gotalab/cc-sdd/pull/118))
+- Fix registry.ts with review improvements ([#107](https://github.com/gotalab/cc-sdd/pull/107))
+
+### Documentation
+- Add AI-Assisted SDD book reference to documentation ([#109](https://github.com/gotalab/cc-sdd/pull/109))
+
 ## [2.0.3] - 2025-11-15
 
 ### Changed
@@ -36,7 +50,7 @@ All notable changes to this project will be documented in this file.
 ### Summary
 
 - Consolidates every feature shipped in 2.0.0-alpha.1〜alpha.6 and promotes them to `npx cc-sdd@latest`.
-- Adds validation commands, Research.md, steering/memory upgrades, and 7-agent / 12-language parity.
+- Adds validation commands, Research.md, steering/memory upgrades, and 7-agent / 13-language parity.
 - For migration steps, see `docs/guides/migration-guide.md` (referenced from release notes as well).
 
 ### Added

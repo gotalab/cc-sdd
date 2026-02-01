@@ -17,7 +17,7 @@
 - ✅ **Research の分離** — 調査メモ（Research.md）と最終設計（Design.md）を分けて管理
 - ✅ **品質ゲート** — validate-gap/design/impl コマンドでコーディング前に統合問題を検出
 - ✅ **一度だけカスタマイズ** — テンプレートをチームプロセスに適応、全エージェントが同じワークフローに従う
-- ✅ **統一ワークフロー** — 8エージェント × 12言語で同じ11コマンドプロセスを共有
+- ✅ **統一ワークフロー** — 8エージェント × 13言語で同じ11コマンドプロセスを共有
 
 
 > インストール手順だけ知りたい場合は [インストール](#-インストール) へジャンプ。v1.1.5 維持なら `npx cc-sdd@1.1.5 --claude-code ...`、v2 移行は [Migration Guide](../../docs/guides/migration-guide.md) / [日本語版](../../docs/guides/ja/migration-guide.md) を参照。
@@ -36,7 +36,7 @@ npx cc-sdd@latest
 npx cc-sdd@latest --lang ja    # 日本語
 npx cc-sdd@latest --lang zh-TW # 繁体字中国語
 npx cc-sdd@latest --lang es    # スペイン語
-...（対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar）
+...（対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el）
 
 # エージェントオプション（デフォルト: claude-code / --claude）
 npx cc-sdd@latest --claude --lang ja        # Claude Code（11コマンド、対応言語は任意）
@@ -68,6 +68,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 | イタリア語 | `it` | 🇮🇹 |
 | 韓国語 | `ko` | 🇰🇷 |
 | アラビア語 | `ar` | 🇸🇦 |
+| ギリシャ語 | `el` | 🇬🇷 |
 
 **使用方法**: `npx cc-sdd@latest --lang <コード>` (例: 日本語の場合は `--lang ja`)
 
@@ -116,7 +117,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 - **🧠 永続的プロジェクトメモリ** - AIがステアリング文書を通じて全セッション間で包括的コンテキスト（アーキテクチャ、パターン、ルール、ドメイン知識）を維持
 - **🛠 テンプレート柔軟性** - `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks）をチームのドキュメント形式に合わせてカスタマイズ可能
 - **🔄 AIネイティブ+人間ゲート** - AI計画 → AI質問 → 人間検証 → AI実装（品質管理付き高速サイクル）
-- **🌍 チーム対応** - 品質ゲート付き12言語対応のクロスプラットフォーム標準ワークフロー
+- **🌍 チーム対応** - 品質ゲート付き13言語対応のクロスプラットフォーム標準ワークフロー
 
 ## 🤖 対応AIエージェント
 

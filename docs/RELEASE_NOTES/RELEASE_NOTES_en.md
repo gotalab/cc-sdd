@@ -6,7 +6,37 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v2.0.3.
+No unreleased features at this time. The latest stable release is v2.0.5.
+
+---
+
+## 🌍 Ver 2.0.5 (2026-01-08) – Greek Language Support
+
+### Added
+- Added Greek (el) language support, bringing the total to 13 supported languages.
+
+### New Contributors
+* @tpapamichail made their first contribution in #121
+
+- Resources: [CHANGELOG.md](../../CHANGELOG.md#205---2026-01-08), PR: [#121](https://github.com/gotalab/cc-sdd/pull/121)
+
+---
+
+## 📝 Ver 2.0.4 (2026-01-07) – Bug fixes & Documentation
+
+### Fixed
+- Updated GitHub Copilot prompt files to replace deprecated `mode` attribute with `agent` for compatibility with latest Copilot specifications.
+- Fixed registry.ts with review improvements.
+
+### Documentation
+- Added AI-Assisted SDD book reference to cc-sdd documentation.
+
+### New Contributors
+* @irisTa56 made their first contribution in #118
+* @leosamp made their first contribution in #109
+* @Kakenyan made their first contribution in #107
+
+- Resources: [CHANGELOG.md](../../CHANGELOG.md#204---2026-01-07), PRs: [#118](https://github.com/gotalab/cc-sdd/pull/118), [#109](https://github.com/gotalab/cc-sdd/pull/109), [#107](https://github.com/gotalab/cc-sdd/pull/107)
 
 ---
 
@@ -46,7 +76,7 @@ Documentation-only release improving README clarity and visual consistency.
 - **`npx cc-sdd@latest` = full stack SDD**: all alpha capabilities (research.md, validation commands, Subagents, Windsurf) are now GA.
 - **Spec-to-impl fidelity**: Research/Design/Tasks templates now enforce requirement IDs, component density rules, and Supporting References for long-form details.
 - **Brownfield guardrails**: `/kiro:validate-*` commands, parallel-task analysis, and steering-wide project memory reduce drift before any code change.
-- **Global parity**: 7 AI agents × 12 languages share the same templates, prompts, and installation flow.
+- **Global parity**: 7 AI agents × 13 languages share the same templates, prompts, and installation flow.
 
 ### Upgrade Essentials
 1. Follow the [Migration Guide](../guides/migration-guide.md) for template layout changes (`.kiro/settings/templates/*`) and new steering behavior (directory-wide load).
