@@ -6,7 +6,39 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ## 🔬 開発中 (Unreleased)
 
-現在、未リリースの機能はありません。最新の安定版はv2.0.5です。
+現在、未リリースの機能はありません。最新の安定版はv2.1.0です。
+
+---
+
+## 🚀 Ver 2.1.0 (2026-02-01) - OpenCodeサポート
+
+### 🎯 ハイライト
+- **OpenCodeサポート**: 8番目のエージェントとして、完全なSpec-Driven Developmentワークフローを統合。
+- **推奨モデル更新**: Opus 4.5、GPT-5.2、Gemini 3 Flashに更新し、パフォーマンスを向上。
+
+### ✨ 追加
+- **OpenCode** ([#117](https://github.com/gotalab/cc-sdd/pull/117), [#127](https://github.com/gotalab/cc-sdd/pull/127))
+  - `.opencode/commands/` に全11個のkiroコマンド
+  - `.opencode/agents/` にOpenCode Agents（サブエージェント版）
+  - OPENCODE.md プロジェクトメモリテンプレート
+  - インストール: `npx cc-sdd@latest --opencode` または `--opencode-agent`
+
+### 🔧 変更
+- 推奨モデルを更新 ([#128](https://github.com/gotalab/cc-sdd/pull/128), [#129](https://github.com/gotalab/cc-sdd/pull/129))
+  - Claude: Opus 4.5
+  - OpenAI: GPT-5.2
+  - Google: Gemini 3 Flash
+- テンプレートからthinkキーワードを削除し、プロンプトをクリーンに
+
+### 📈 主要メトリクス
+- **対応エージェント**: 8 (Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf, **OpenCode**)
+- **コマンド数**: 各エージェント11
+- **対応言語**: 13
+
+### 🙏 新規コントリビューター
+* @inovue が #117 で初コントリビュート
+
+- リソース: [CHANGELOG.md](../../CHANGELOG.md#210---2026-02-01), PR: [#117](https://github.com/gotalab/cc-sdd/pull/117), [#127](https://github.com/gotalab/cc-sdd/pull/127), [#128](https://github.com/gotalab/cc-sdd/pull/128), [#129](https://github.com/gotalab/cc-sdd/pull/129)
 
 ---
 

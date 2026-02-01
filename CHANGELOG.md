@@ -8,6 +8,25 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-02-01
+
+### Added
+- **OpenCode support** - 8th supported agent with full SDD workflow integration ([#117](https://github.com/gotalab/cc-sdd/pull/117), [#127](https://github.com/gotalab/cc-sdd/pull/127))
+  - `.opencode/commands/` with 11 kiro commands
+  - OpenCode Agents (subagent version) in `.opencode/agents/`
+  - OPENCODE.md project memory template
+  - Installation via `npx cc-sdd@latest --opencode` or `--opencode-agent`
+
+### Changed
+- Update recommended models to latest versions ([#128](https://github.com/gotalab/cc-sdd/pull/128), [#129](https://github.com/gotalab/cc-sdd/pull/129))
+  - Claude: Opus 4.5
+  - OpenAI: GPT-5.2
+  - Google: Gemini 3 Flash
+- Remove think keywords from templates for cleaner prompts ([#128](https://github.com/gotalab/cc-sdd/pull/128))
+
+### New Contributors
+* @inovue made their first contribution in #117
+
 ## [2.0.5] - 2026-01-08
 
 ### Added

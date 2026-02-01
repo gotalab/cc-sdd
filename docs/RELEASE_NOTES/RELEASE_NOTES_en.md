@@ -6,7 +6,39 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v2.0.5.
+No unreleased features at this time. The latest stable release is v2.1.0.
+
+---
+
+## 🚀 Ver 2.1.0 (2026-02-01) – OpenCode Support
+
+### 🎯 Highlights
+- **OpenCode Support**: Added the 8th supported agent with full Spec-Driven Development workflow integration.
+- **Model Updates**: Updated recommended models to Opus 4.5, GPT-5.2, and Gemini 3 Flash for improved performance.
+
+### ✨ Added
+- **OpenCode** ([#117](https://github.com/gotalab/cc-sdd/pull/117), [#127](https://github.com/gotalab/cc-sdd/pull/127))
+  - `.opencode/commands/` with all 11 kiro commands
+  - OpenCode Agents (subagent version) in `.opencode/agents/`
+  - OPENCODE.md project memory template
+  - Installation: `npx cc-sdd@latest --opencode` or `--opencode-agent`
+
+### 🔧 Changed
+- Updated recommended models ([#128](https://github.com/gotalab/cc-sdd/pull/128), [#129](https://github.com/gotalab/cc-sdd/pull/129))
+  - Claude: Opus 4.5
+  - OpenAI: GPT-5.2
+  - Google: Gemini 3 Flash
+- Removed think keywords from templates for cleaner prompts
+
+### 📈 Key Metrics
+- **Supported Agents**: 8 (Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf, **OpenCode**)
+- **Commands**: 11 per agent
+- **Languages**: 13
+
+### 🙏 New Contributors
+* @inovue made their first contribution in #117
+
+- Resources: [CHANGELOG.md](../../CHANGELOG.md#210---2026-02-01), PRs: [#117](https://github.com/gotalab/cc-sdd/pull/117), [#127](https://github.com/gotalab/cc-sdd/pull/127), [#128](https://github.com/gotalab/cc-sdd/pull/128), [#129](https://github.com/gotalab/cc-sdd/pull/129)
 
 ---
 
