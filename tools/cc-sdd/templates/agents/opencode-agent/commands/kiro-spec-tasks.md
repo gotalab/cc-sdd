@@ -1,6 +1,6 @@
 ---
 description: Generate implementation tasks for a specification
-agent: spec-tasks
+agent: kiro/spec-tasks
 subtask: true
 ---
 

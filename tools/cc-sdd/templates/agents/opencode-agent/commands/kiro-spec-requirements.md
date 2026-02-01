@@ -1,6 +1,6 @@
 ---
 description: Generate comprehensive requirements for a specification
-agent: spec-requirements
+agent: kiro/spec-requirements
 subtask: true
 ---
 

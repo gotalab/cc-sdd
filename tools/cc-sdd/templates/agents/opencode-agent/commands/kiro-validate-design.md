@@ -1,6 +1,6 @@
 ---
 description: Interactive technical design quality review and validation
-agent: validate-design
+agent: kiro/validate-design
 subtask: true
 ---
 

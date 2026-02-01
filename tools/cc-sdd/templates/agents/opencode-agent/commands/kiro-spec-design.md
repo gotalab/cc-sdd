@@ -1,6 +1,6 @@
 ---
 description: Create comprehensive technical design for a specification
-agent: spec-design
+agent: kiro/spec-design
 subtask: true
 ---
 
