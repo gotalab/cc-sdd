@@ -43,7 +43,8 @@ npx cc-sdd@latest --claude --lang ja        # Claude Code（11コマンド、対
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents（12コマンド + 9サブエージェント）
 npx cc-sdd@latest --cursor --lang ja        # Cursor IDE
 npx cc-sdd@latest --gemini --lang ja        # Gemini CLI
-npx cc-sdd@latest --codex --lang ja         # Codex CLI
+npx cc-sdd@latest --codex-skills --lang ja  # Codex CLI（Skills）[推奨]
+npx cc-sdd@latest --codex --lang ja         # Codex CLI（非推奨: Custom prompts）
 npx cc-sdd@latest --copilot --lang ja       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang ja          # Qwen Code
 npx cc-sdd@latest --opencode --lang ja      # OpenCode（11コマンド）

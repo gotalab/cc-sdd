@@ -32,6 +32,15 @@ describe('resolveAgentLayout', () => {
       docFile: 'GEMINI.md',
     });
   });
+
+  it('returns defaults for codex-skills', () => {
+    const res = resolveAgentLayout('codex-skills');
+    expect(res).toEqual({
+      commandsDir: '.codex/skills',
+      agentDir: '.codex',
+      docFile: 'AGENTS.md',
+    });
+  });
   it('returns defaults for cursor', () => {
     const res = resolveAgentLayout('cursor');
     expect(res).toEqual({

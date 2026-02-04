@@ -40,7 +40,8 @@ npx cc-sdd@latest --claude --lang zh-TW           # Claude Code（11 個指令�
 npx cc-sdd@latest --claude-agent --lang zh-TW     # Claude Code Subagents（12 個指令 + 9 個子代理）
 npx cc-sdd@latest --cursor --lang zh-TW           # Cursor IDE
 npx cc-sdd@latest --gemini --lang zh-TW           # Gemini CLI
-npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI
+npx cc-sdd@latest --codex-skills --lang zh-TW     # Codex CLI (Skills) [recommended]
+npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI (deprecated Custom prompts)
 npx cc-sdd@latest --copilot --lang zh-TW          # GitHub Copilot
 npx cc-sdd@latest --qwen --lang zh-TW             # Qwen Code
 npx cc-sdd@latest --opencode --lang zh-TW         # OpenCode（11 個指令）

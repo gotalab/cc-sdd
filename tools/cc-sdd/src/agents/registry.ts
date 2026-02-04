@@ -35,6 +35,14 @@ const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/pr
       && IFS= read -r a \
       && case "$a" in [yY]) rm -rf ./.codex/prompts && echo 'Removed.' ;; *) echo 'Kept original.' ;; esac`;
 
+const codexSkillsCopyInstruction = String.raw`Move Codex Skills to ~/.codex/skills by running:
+    mkdir -p ~/.codex/skills \
+      && cp -Ri ./.codex/skills/. ~/.codex/skills/ \
+      && printf '\n==== COPY PHASE DONE ====\n' \
+      && printf 'Remove original ./.codex/skills ? [y/N]: ' \
+      && IFS= read -r a \
+      && case "$a" in [yY]) rm -rf ./.codex/skills && echo 'Removed.' ;; *) echo 'Kept original.' ;; esac`;
+
 export const agentDefinitions = {
   'claude-code': {
     label: 'Claude Code',
@@ -81,7 +89,7 @@ export const agentDefinitions = {
   codex: {
     label: 'Codex CLI',
     description:
-      'Installs kiro prompts in `.codex/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro prompts in `.codex/prompts/` (deprecated Custom prompts mode), shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--codex', '--codex-cli'],
     recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
     layout: {
@@ -98,6 +106,28 @@ export const agentDefinitions = {
       prependSteps: [codexCopyInstruction],
     },
     manifestId: 'codex',
+  },
+  'codex-skills': {
+    label: 'Codex CLI (Skills)',
+    description:
+      'Installs kiro Skills in `.codex/skills/` (recommended), shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--codex-skills'],
+    recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
+    layout: {
+      commandsDir: '.codex/skills',
+      agentDir: '.codex',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`$kiro-spec-init <what-to-build>`',
+      steering: '`$kiro-steering`',
+      steeringCustom: '`$kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [codexSkillsCopyInstruction],
+      appendSteps: ['In Codex, use `$kiro-*` Skills to run the spec-driven workflow (try `$kiro-spec-init`).'],
+    },
+    manifestId: 'codex-skills',
   },
   cursor: {
     label: 'Cursor IDE',

@@ -87,7 +87,8 @@ npx cc-sdd@latest --claude         # Claude Code (11 commands) [default]
 npx cc-sdd@latest --claude-agent   # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor         # Cursor IDE
 npx cc-sdd@latest --gemini         # Gemini CLI
-npx cc-sdd@latest --codex          # Codex CLI
+npx cc-sdd@latest --codex-skills   # Codex CLI (Skills) [recommended]
+npx cc-sdd@latest --codex          # Codex CLI (deprecated Custom prompts)
 npx cc-sdd@latest --copilot        # GitHub Copilot
 npx cc-sdd@latest --qwen           # Qwen Code
 npx cc-sdd@latest --opencode       # OpenCode (11 commands)

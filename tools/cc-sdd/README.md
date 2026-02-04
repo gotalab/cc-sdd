@@ -43,7 +43,8 @@ npx cc-sdd@latest --claude        # Claude Code (11 commands, en/ja/zh-TW/...)
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE (choose any supported lang)
 npx cc-sdd@latest --gemini --lang es        # Gemini CLI
-npx cc-sdd@latest --codex --lang fr         # Codex CLI
+npx cc-sdd@latest --codex-skills --lang fr  # Codex CLI (Skills) [recommended]
+npx cc-sdd@latest --codex --lang fr         # Codex CLI (deprecated Custom prompts)
 npx cc-sdd@latest --copilot --lang pt       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang de          # Qwen Code
 npx cc-sdd@latest --opencode --lang en      # OpenCode (11 commands)

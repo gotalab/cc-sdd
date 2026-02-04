@@ -44,9 +44,11 @@ describe('parseArgs', () => {
     expect(parseArgs(['--claude-agent']).agent).toBe('claude-code-agent');
     expect(parseArgs(['--claude-code-agent']).agent).toBe('claude-code-agent');
     expect(parseArgs(['--windsurf']).agent).toBe('windsurf');
+    expect(parseArgs(['--codex-skills']).agent).toBe('codex-skills');
 
     expect(() => parseArgs(['--agent', 'qwen-code', '--gemini-cli'])).toThrowError(/agent.*conflict/i);
     expect(() => parseArgs(['--gemini-cli', '--qwen-code'])).toThrowError(/agent.*conflict/i);
+    expect(() => parseArgs(['--agent', 'codex', '--codex-skills'])).toThrowError(/agent.*conflict/i);
   });
 
   it('validates enum values for os/lang/overwrite/agent', () => {
