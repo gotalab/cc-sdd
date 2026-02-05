@@ -1,43 +1,38 @@
-name: Auto Close Stale Issues
+name: Auto Close Follow-up Issues
 
 on:
-  # schedule:
-  #   # Run every day at 00:00 UTC
-  #   - cron: '0 0 * * *'
-  workflow_dispatch: # Allow manual execution
+  schedule:
+    # Run every day at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 permissions:
   issues: write
-  pull-requests: write
 
 jobs:
-  stale:
+  close-follow-up-issues:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/stale@v9
         with:
-          # Number of days of inactivity before marking as stale
-          days-before-stale: 10
-          # Number of days after the stale label before closing
+          # Do not automatically mark issues as stale.
+          # Maintainers manually add the label when follow-up is needed.
+          days-before-stale: -1
+
+          # Automatically close labeled issues after 7 days.
           days-before-close: 7
 
-          # Comment posted when applying the stale label
-          stale-issue-message: |
-            This issue has been labeled as "stale" due to no activity for 10 days.
-            It will be closed automatically in 7 days if there is no response.
+          # Process only issues with this label.
+          only-issue-labels: 'awaiting-response'
 
-          # Comment posted when closing the issue
+          # Keep pull requests out of scope for this workflow.
+          days-before-pr-stale: -1
+          days-before-pr-close: -1
+
+          # Comment posted when closing an issue.
           close-issue-message: |
-            This issue has been closed due to inactivity.
-            If the problem persists, please reopen this issue or create a new one.
+            Closing this issue because it has been marked as "awaiting-response" and no follow-up was received within 7 days.
+            If you still need help, please comment and we can reopen it.
 
-          # Labels that will be applied
-          stale-issue-label: 'stale'
-          stale-pr-label: 'stale'
-
-          # Labels that exempt issues from being marked as stale
-          exempt-issue-labels: 'pinned,security,help-wanted'
-
-          # To disable stale processing for PRs, uncomment the following lines
-          # days-before-pr-stale: -1
-          # days-before-pr-close: -1
+          # Minimum operation set for predictable behavior.
+          operations-per-run: 100
