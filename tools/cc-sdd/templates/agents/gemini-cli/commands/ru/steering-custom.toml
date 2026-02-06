@@ -1,0 +1,33 @@
+description = "Создать кастомные steering документы"
+prompt = """
+<meta>
+description: Создать кастомные steering документы для специализированных контекстов
+arguments: {{args}}
+</meta>
+
+# Создание кастомного Steering
+
+<background_information>
+**Роль**: Создавать специализированные steering документы помимо основных.
+**Миссия**: Специфичная для домена память проекта.
+</background_information>
+
+<instructions>
+## Рабочий процесс
+1. Спросить пользователя о потребностях: домен/тема, паттерны
+2. Проверить шаблон в `{{KIRO_DIR}}/settings/templates/steering-custom/`
+3. Анализировать кодовую базу для релевантных паттернов
+4. Сгенерировать: 100-200 строк, фокус на паттернах
+5. Создать файл в `{{KIRO_DIR}}/steering/{name}.md`
+
+## Доступные шаблоны
+- api-standards.md, testing.md, security.md
+- database.md, error-handling.md, authentication.md, deployment.md
+</instructions>
+
+## Описание вывода
+✅ Кастомный Steering создан: {{KIRO_DIR}}/steering/{name}.md
+Основано на: шаблон, анализ, извлечённые паттерны
+
+arguments: {{args}}
+"""

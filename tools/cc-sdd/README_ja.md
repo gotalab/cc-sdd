@@ -5,7 +5,7 @@
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](../../LICENSE)
 
 <div align="center" style="margin-bottom: 1rem; font-size: 1.1rem;"><sub>
-<a href="./README.md">English</a> | 日本語 | <a href="./README_zh-TW.md">繁體中文</a>
+<a href="./README.md">English</a> | 日本語 | <a href="./README_zh-TW.md">繁體中文</a> | <a href="./README_ru.md">Русский</a>
 </sub></div>
 
 ✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf をプロトタイプから本番仕様駆動へ。要件・設計・タスク・プロジェクトメモリをチームのワークフローに沿うようカスタマイズできます。**

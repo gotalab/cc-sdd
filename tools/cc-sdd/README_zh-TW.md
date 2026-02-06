@@ -5,7 +5,7 @@
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](../../LICENSE)
 
 <div align="center" style="margin-bottom: 1rem; font-size: 1.1rem;"><sub>
-<a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文
+<a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文 | <a href="./README_ru.md">Русский</a>
 </sub></div>
 
 ✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**

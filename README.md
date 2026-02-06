@@ -6,7 +6,7 @@
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 <div align="center" style="font-size: 1.1rem; margin-bottom: 1rem;"><sub>
-<a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
+<a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a> | <a href="./tools/cc-sdd/README_ru.md">Русский</a>
 </sub></div>
 
 ## Transform AI coding agents into production-ready spec-driven development
@@ -100,6 +100,7 @@ npx cc-sdd@latest --windsurf       # Windsurf IDE
 ```bash
 npx cc-sdd@latest --lang ja        # Japanese
 npx cc-sdd@latest --lang zh-TW     # Traditional Chinese
+npx cc-sdd@latest --lang ru        # Russian
 npx cc-sdd@latest --lang es        # Spanish
 # Supports: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el
 ```
@@ -118,20 +119,21 @@ npx cc-sdd@latest --kiro-dir docs
 
 ## 📚 Documentation & Support
 
-### 📖 Complete Guides (English | 日本語)
+### 📖 Complete Guides (English | 日本語 | Русский)
 
 | Guide | What You'll Learn | Links |
 |-------|-------------------|-------|
-| **Command Reference** | All 11 `/kiro:*` commands with detailed usage, parameters, and examples | [English](docs/guides/command-reference.md) \| [日本語](docs/guides/ja/command-reference.md) |
-| **Customization Guide** | 7 practical examples: PRD requirements, frontend/backend designs, JIRA integration | [English](docs/guides/customization-guide.md) \| [日本語](docs/guides/ja/customization-guide.md) |
-| **Spec-Driven Guide** | Complete workflow methodology from requirements to implementation | [English](docs/guides/spec-driven.md) \| [日本語](docs/guides/ja/spec-driven.md) |
-| **Claude Subagents** | Advanced: Using 9 specialized subagents for complex projects | [English](docs/guides/claude-subagents.md) \| [日本語](docs/guides/ja/claude-subagents.md) |
-| **Migration Guide** | Upgrading from v1.x to v2.0.0 | [English](docs/guides/migration-guide.md) \| [日本語](docs/guides/ja/migration-guide.md) |
+| **Command Reference** | All 11 `/kiro:*` commands with detailed usage, parameters, and examples | [English](docs/guides/command-reference.md) \| [日本語](docs/guides/ja/command-reference.md) \| [Русский](docs/guides/ru/command-reference.md) |
+| **Customization Guide** | 7 practical examples: PRD requirements, frontend/backend designs, JIRA integration | [English](docs/guides/customization-guide.md) \| [日本語](docs/guides/ja/customization-guide.md) \| [Русский](docs/guides/ru/customization-guide.md) |
+| **Spec-Driven Guide** | Complete workflow methodology from requirements to implementation | [English](docs/guides/spec-driven.md) \| [日本語](docs/guides/ja/spec-driven.md) \| [Русский](docs/guides/ru/spec-driven.md) |
+| **Claude Subagents** | Advanced: Using 9 specialized subagents for complex projects | [English](docs/guides/claude-subagents.md) \| [日本語](docs/guides/ja/claude-subagents.md) \| [Русский](docs/guides/ru/claude-subagents.md) |
+| **Migration Guide** | Upgrading from v1.x to v2.0.0 | [English](docs/guides/migration-guide.md) \| [日本語](docs/guides/ja/migration-guide.md) \| [Русский](docs/guides/ru/migration-guide.md) |
 
 ### Package Documentation
 - English: [tools/cc-sdd/README.md](tools/cc-sdd/README.md)
 - 日本語: [tools/cc-sdd/README_ja.md](tools/cc-sdd/README_ja.md)
 - 繁體中文: [tools/cc-sdd/README_zh-TW.md](tools/cc-sdd/README_zh-TW.md)
+- Русский: [tools/cc-sdd/README_ru.md](tools/cc-sdd/README_ru.md)
 
 ---
 
@@ -153,6 +155,8 @@ This repository contains the **cc-sdd** NPM package located in [`tools/cc-sdd/`]
 For detailed documentation, installation instructions, and usage examples, see:
 - [**Tool Documentation**](tools/cc-sdd/README.md) - Complete cc-sdd tool guide
 - [**Japanese Documentation**](tools/cc-sdd/README_ja.md) - 日本語版ツール説明
+- [**Chinese Documentation**](tools/cc-sdd/README_zh-TW.md) - 繁體中文版工具說明
+- [**Russian Documentation**](tools/cc-sdd/README_ru.md) - Документация на русском
 
 
 ## License
