@@ -43,6 +43,7 @@ describe('parseArgs', () => {
     expect(parseArgs(['--claude-code']).agent).toBe('claude-code');
     expect(parseArgs(['--claude-agent']).agent).toBe('claude-code-agent');
     expect(parseArgs(['--claude-code-agent']).agent).toBe('claude-code-agent');
+    expect(parseArgs(['--codex-skills']).agent).toBe('codex-skills');
     expect(parseArgs(['--windsurf']).agent).toBe('windsurf');
 
     expect(() => parseArgs(['--agent', 'qwen-code', '--gemini-cli'])).toThrowError(/agent.*conflict/i);

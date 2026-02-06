@@ -50,6 +50,15 @@ describe('resolveAgentLayout', () => {
     });
   });
 
+  it('returns codex-skills defaults', () => {
+    const res = resolveAgentLayout('codex-skills');
+    expect(res).toEqual({
+      commandsDir: '.codex/skills',
+      agentDir: '.codex',
+      docFile: 'AGENTS.md',
+    });
+  });
+
   it('returns opencode defaults', () => {
     const res = resolveAgentLayout('opencode');
     expect(res).toEqual({

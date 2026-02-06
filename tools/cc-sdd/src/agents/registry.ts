@@ -35,6 +35,14 @@ const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/pr
       && IFS= read -r a \
       && case "$a" in [yY]) rm -rf ./.codex/prompts && echo 'Removed.' ;; *) echo 'Kept original.' ;; esac`;
 
+const codexSkillsCopyInstruction = String.raw`Move Codex Skills to ~/.codex/skills by running:
+    mkdir -p ~/.codex/skills \
+      && cp -Ri ./.codex/skills/. ~/.codex/skills/ \
+      && printf '\n==== COPY PHASE DONE ====\n' \
+      && printf 'Remove original ./.codex/skills ? [y/N]: ' \
+      && IFS= read -r a \
+      && case "$a" in [yY]) rm -rf ./.codex/skills && echo 'Removed.' ;; *) echo 'Kept original.' ;; esac`;
+
 export const agentDefinitions = {
   'claude-code': {
     label: 'Claude Code',
@@ -98,6 +106,27 @@ export const agentDefinitions = {
       prependSteps: [codexCopyInstruction],
     },
     manifestId: 'codex',
+  },
+  'codex-skills': {
+    label: 'Codex Skills',
+    description:
+      'Installs only the kiro skills library in `.codex/skills/` for Codex custom skills setup.',
+    aliasFlags: ['--codex-skills'],
+    recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
+    layout: {
+      commandsDir: '.codex/skills',
+      agentDir: '.codex',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/prompts:kiro-spec-init <what-to-build>`',
+      steering: '`/prompts:kiro-steering`',
+      steeringCustom: '`/prompts:kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [codexSkillsCopyInstruction],
+    },
+    manifestId: 'codex-skills',
   },
   cursor: {
     label: 'Cursor IDE',

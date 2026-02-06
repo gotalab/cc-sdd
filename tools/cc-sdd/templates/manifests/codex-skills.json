@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "artifacts": [
+    {
+      "id": "skills_library",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/skills",
+        "toDir": "{{AGENT_DIR}}/skills"
+      },
+      "when": { "agent": "codex-skills" }
+    }
+  ]
+}
