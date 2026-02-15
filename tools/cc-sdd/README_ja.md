@@ -8,7 +8,7 @@
 <a href="./README.md">English</a> | 日本語 | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf をプロトタイプから本番仕様駆動へ。要件・設計・タスク・プロジェクトメモリをチームのワークフローに沿うようカスタマイズできます。**
+✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI（Prompts/Skills 対応） / GitHub Copilot / Qwen Code / OpenCode / Windsurf をプロトタイプから本番仕様駆動へ。要件・設計・タスク・プロジェクトメモリをチームのワークフローに沿うようカスタマイズできます。**
 
 👻 **Kiro互換** — Kiro IDE に似た Spec-Driven / AI-DLC スタイルで、既存の Kiro 仕様書もそのまま扱えます。
 
@@ -18,11 +18,13 @@
 - ✅ **品質ゲート** — validate-gap/design/impl コマンドでコーディング前に統合問題を検出
 - ✅ **一度だけカスタマイズ** — テンプレートをチームプロセスに適応、全エージェントが同じワークフローに従う
 - ✅ **統一ワークフロー** — 8エージェント × 13言語で同じ11コマンドプロセスを共有
+- ✅ **Codex Skills対応** — `--codex-skills` で `.agents/skills/` に 11 個の `SKILL.md` を展開
+- ⚠️ **Codex promptsはレガシー** — `--codex` は互換性維持のため残しており、新規導入では非推奨（`--codex-skills` 推奨）
 
 
 > インストール手順だけ知りたい場合は [インストール](#-インストール) へジャンプ。v1.1.5 維持なら `npx cc-sdd@1.1.5 --claude-code ...`、v2 移行は [Migration Guide](../../docs/guides/migration-guide.md) / [日本語版](../../docs/guides/ja/migration-guide.md) を参照。
 
-Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code、OpenCode、Windsurfを **AI-DLC (AI駆動開発ライフサイクル)**へ。**AIネイティブプロセス**と**最小限の人間承認ゲート**：AIが実行を駆動し、人間が各フェーズで重要な決定を検証。
+Claude Code、Cursor IDE、Gemini CLI、Codex CLI（Prompts/Skills）、GitHub Copilot、Qwen Code、OpenCode、Windsurfを **AI-DLC (AI駆動開発ライフサイクル)**へ。**AIネイティブプロセス**と**最小限の人間承認ゲート**：AIが実行を駆動し、人間が各フェーズで重要な決定を検証。
 
 ## 🚀 インストール
 
@@ -43,7 +45,8 @@ npx cc-sdd@latest --claude --lang ja        # Claude Code（11コマンド、対
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents（12コマンド + 9サブエージェント）
 npx cc-sdd@latest --cursor --lang ja        # Cursor IDE
 npx cc-sdd@latest --gemini --lang ja        # Gemini CLI
-npx cc-sdd@latest --codex --lang ja         # Codex CLI
+npx cc-sdd@latest --codex --lang ja         # Codex CLI の prompts モード（レガシー、非推奨）
+npx cc-sdd@latest --codex-skills --lang ja  # Codex CLI の Skills モード（推奨、11スキル）
 npx cc-sdd@latest --copilot --lang ja       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang ja          # Qwen Code
 npx cc-sdd@latest --opencode --lang ja      # OpenCode（11コマンド）
@@ -107,7 +110,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 ### cc-sdd を選ぶ理由
 1. **仕様が単一情報源** — 要件・設計・タスク・Supporting References まで1セットで揃い、承認が早い。
 2. **Greenfield / Brownfield 両対応** — 新機能は minutes で起動、既存システムは validate 系コマンドと Project Memory で安全に拡張。
-3. **複数エージェントを同時に活用** — Claude / Cursor / Codex / Gemini / Copilot / Qwen / Windsurf が同じテンプレ/ルールを共有。
+3. **複数エージェントを同時に活用** — Claude / Cursor / Codex（Prompts/Skills） / Gemini / Copilot / Qwen / Windsurf が同じテンプレ/ルールを共有。
 4. **カスタマイズは一度だけ** — `.kiro/settings/templates/` と `.kiro/settings/rules/` を編集すれば全エージェントへ即反映。
 
 ## ✨ 主要機能
@@ -128,7 +131,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 | **Claude Code Subagents** | ✅ 完全対応 | 12 コマンド + 9 サブエージェント |
 | **Cursor IDE** | ✅ 完全対応 | 11 コマンド |
 | **Gemini CLI** | ✅ 完全対応 | 11 コマンド |
-| **Codex CLI** | ✅ 完全対応 | 11 プロンプト |
+| **Codex CLI** | ✅ 完全対応 | 11 プロンプト（レガシー） + Skillsモード 11スキル（推奨） |
 | **GitHub Copilot** | ✅ 完全対応 | 11 プロンプト |
 | **Qwen Code** | ✅ 完全対応 | 11 コマンド |
 | **Windsurf IDE** | ✅ 完全対応 | 11 ワークフロー |
@@ -203,8 +206,9 @@ npx cc-sdd@latest --kiro-dir docs
 
 ```
 project/
+├── .agents/skills/          # 11のスキル（Codex CLI Skills モード）
 ├── .claude/commands/kiro/    # 11のスラッシュコマンド
-├── .codex/prompts/           # 11のプロンプトコマンド（Codex CLI）
+├── .codex/prompts/           # 11のプロンプトコマンド（Codex CLIレガシーモード）
 ├── .github/prompts/          # 11のプロンプトコマンド（GitHub Copilot）
 ├── .windsurf/workflows/      # 11のワークフローファイル（Windsurf IDE）
 ├── .kiro/settings/           # 共通ルールとテンプレート（{{KIRO_DIR}} を展開）

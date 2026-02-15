@@ -8,7 +8,7 @@
 English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf from prototype to production-ready development.**
+✨ **Transform Claude Code / Cursor IDE / Gemini CLI / Codex CLI (Prompts/Skills) / GitHub Copilot / Qwen Code / OpenCode / Windsurf from prototype to production-ready development.**
 
 👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
@@ -18,6 +18,8 @@ English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">�
 - ✅ **Quality Gates** — validate-gap/design/impl commands catch integration issues before coding
 - ✅ **Customize Once** — Adapt templates to your team's process; all agents follow the same workflow
 - ✅ **Universal Workflow** — 8 agents × 13 languages share the same 11-command process
+- ✅ **Codex Skills support** — `--codex-skills` installs 11 `SKILL.md` packages into `.agents/skills/`
+- ⚠️ **Codex prompts are legacy** — `--codex` is kept for compatibility and is non-recommended for new projects
 
 ---
 
@@ -43,7 +45,8 @@ npx cc-sdd@latest --claude        # Claude Code (11 commands, en/ja/zh-TW/...)
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE (choose any supported lang)
 npx cc-sdd@latest --gemini --lang es        # Gemini CLI
-npx cc-sdd@latest --codex --lang fr         # Codex CLI
+npx cc-sdd@latest --codex --lang fr         # Codex CLI prompts mode (legacy, non-recommended)
+npx cc-sdd@latest --codex-skills --lang fr  # Codex CLI skills mode (recommended, 11 skills)
 npx cc-sdd@latest --copilot --lang pt       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang de          # Qwen Code
 npx cc-sdd@latest --opencode --lang en      # OpenCode (11 commands)
@@ -107,7 +110,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 ### Why teams install cc-sdd
 1. **Single source specs** – requirements, design, tasks, and supporting references stay in sync, so reviewers approve faster.
 2. **Greenfield or brownfield** – net-new features boot in minutes, while validate gates and project memory keep legacy upgrades safe.
-3. **Mix any agent** – the same templates and rules power Claude, Cursor, Codex, Gemini, Copilot, Qwen, and Windsurf simultaneously.
+3. **Mix any agent** – the same templates and rules power Claude, Cursor, Codex (Prompts/Skills), Gemini, Copilot, Qwen, and Windsurf simultaneously.
 4. **Customize once** – edit `.kiro/settings/templates/` or `.kiro/settings/rules/` and every agent/slash command reflects your workflow.
 
 ## ✨ Key Features
@@ -128,7 +131,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 | **Claude Code Subagents** | ✅ Full | 12 commands + 9 subagents |
 | **Cursor IDE** | ✅ Full | 11 commands |
 | **Gemini CLI** | ✅ Full | 11 commands |
-| **Codex CLI** | ✅ Full | 11 prompts |
+| **Codex CLI** | ✅ Full | 11 prompts (legacy) + 11 skills mode (recommended) |
 | **GitHub Copilot** | ✅ Full | 11 prompts |
 | **Qwen Code** | ✅ Full | 11 commands |
 | **Windsurf IDE** | ✅ Full | 11 workflows |
@@ -205,8 +208,9 @@ After installation, your project gets:
 
 ```
 project/
+├── .agents/skills/          # 11 skills (Codex CLI skills mode)
 ├── .claude/commands/kiro/    # 11 slash commands
-├── .codex/prompts/           # 11 prompt commands (Codex CLI)
+├── .codex/prompts/           # 11 prompt commands (Codex CLI legacy mode)
 ├── .github/prompts/          # 11 prompt commands (GitHub Copilot)
 ├── .windsurf/workflows/      # 11 workflow files (Windsurf IDE)
 ├── .kiro/settings/           # Shared rules & templates (variables resolved with {{KIRO_DIR}})
