@@ -18,8 +18,9 @@
 - ✅ **品質關卡** — validate-gap/design/impl 指令在編碼前捕捉整合問題
 - ✅ **一次自訂** — 將模板適應至團隊流程；所有代理遵循相同工作流程
 - ✅ **統一工作流程** — 8 代理 × 13 語言共享相同的 11 指令流程
-- ✅ **Codex Skills 支援** — 使用 `--codex-skills` 可在 `.agents/skills/` 產生 11 個 `SKILL.md` 套件
+- ✅ **Codex Skills 支援** — 使用 `--codex-skills` 可在 `.agents/skills/` 產生 12 個 `SKILL.md` 套件
 - ⚠️ **Codex prompts 為 legacy 模式** — `--codex` 保留相容性用途，不建議新專案使用（建議改用 `--codex-skills`）
+- ✅ **Codex collaboration modes 可用** — 建議在 `~/.codex/config.toml` 設定 `features.collaboration_modes = true` 以提升長任務協作執行
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
 
@@ -43,7 +44,7 @@ npx cc-sdd@latest --claude-agent --lang zh-TW     # Claude Code Subagents（12 �
 npx cc-sdd@latest --cursor --lang zh-TW           # Cursor IDE
 npx cc-sdd@latest --gemini --lang zh-TW           # Gemini CLI
 npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI prompts 模式（legacy，不建議）
-npx cc-sdd@latest --codex-skills --lang zh-TW     # Codex CLI Skills 模式（建議，11 個技能）
+npx cc-sdd@latest --codex-skills --lang zh-TW     # Codex CLI Skills 模式（建議，12 個技能）
 npx cc-sdd@latest --copilot --lang zh-TW          # GitHub Copilot
 npx cc-sdd@latest --qwen --lang zh-TW             # Qwen Code
 npx cc-sdd@latest --opencode --lang zh-TW         # OpenCode（11 個指令）
@@ -128,7 +129,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 | **Claude Code Subagents** | ✅ 完全支援 | 12 個指令 + 9 個子代理 | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
 | **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
-| **Codex CLI** | ✅ 完全支援 | 11 個提示（legacy） + Skills 模式 11 個技能（建議） | `AGENTS.md`, `.agents/skills/` |
+| **Codex CLI** | ✅ 完全支援 | 11 個提示（legacy） + Skills 模式 12 個技能（建議） | `AGENTS.md`, `.agents/skills/` |
 | **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
 | **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `AGENTS.md` |
@@ -203,7 +204,7 @@ npx cc-sdd@latest --kiro-dir docs
 
 ```
 project/
-├── .agents/skills/          # 11 個技能（Codex CLI Skills 模式）
+├── .agents/skills/          # 12 個技能（Codex CLI Skills 模式）
 ├── .claude/commands/kiro/    # 11 個斜線指令
 ├── .codex/prompts/           # 11 個提示指令（Codex CLI legacy 模式）
 ├── .github/prompts/          # 11 個提示指令（GitHub Copilot）

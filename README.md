@@ -23,7 +23,8 @@ Stop losing 70% of development time to meetings, documentation ceremonies, and s
 - ✅ **Team-aligned templates** — Customize once, all agents output docs that fit your approval process
 - ✅ **Project Memory** — AI remembers your architecture, patterns, and standards across sessions
 - ✅ **8 agents, unified workflow** — Same spec-driven process across Claude, Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf
-- ✅ **Codex Skills support** — Use `--codex-skills` to install 11 `SKILL.md` packages under `.agents/skills/`
+- ✅ **Codex Skills support** — Use `--codex-skills` to install 12 `SKILL.md` packages under `.agents/skills/`
+- ✅ **Codex collaboration modes ready** — Enable `features.collaboration_modes = true` in `~/.codex/config.toml`
 - ⚠️ **Codex prompts are legacy** — `--codex` remains for compatibility; prefer `--codex-skills` for new setups
 - ✅ **Hours instead of weeks** — Feature planning goes from days to hours with AI-assisted specs
 
@@ -90,7 +91,7 @@ npx cc-sdd@latest --claude-agent   # Claude Code Subagents (12 commands + 9 suba
 npx cc-sdd@latest --cursor         # Cursor IDE
 npx cc-sdd@latest --gemini         # Gemini CLI
 npx cc-sdd@latest --codex          # Codex CLI prompts mode (legacy, non-recommended)
-npx cc-sdd@latest --codex-skills   # Codex CLI skills mode (recommended, 11 skills)
+npx cc-sdd@latest --codex-skills   # Codex CLI skills mode (recommended, 12 skills)
 npx cc-sdd@latest --copilot        # GitHub Copilot
 npx cc-sdd@latest --qwen           # Qwen Code
 npx cc-sdd@latest --opencode       # OpenCode (11 commands)

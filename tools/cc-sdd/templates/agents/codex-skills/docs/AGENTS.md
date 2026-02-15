@@ -29,6 +29,7 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
 
 ## Minimal Workflow
 - Phase 0 (optional): `$kiro-steering`, `$kiro-steering-custom`
+- Fast path (single command): `$kiro-spec-quick "description" [--auto]`
 - Phase 1 (Specification):
   - `$kiro-spec-init "description"`
   - `$kiro-spec-requirements {feature}`
@@ -45,6 +46,14 @@ Skills are located in `.agents/skills/kiro-*/SKILL.md`
 - Each skill is a directory with a `SKILL.md` file
 - Use `/skills` to inspect currently available skills
 - Invoke a skill directly with `$kiro-<skill-name>`
+
+## Collaboration Modes (Optional)
+Enable collaboration modes in `~/.codex/config.toml` to let Codex choose focused execution modes for longer tasks:
+
+```toml
+[features]
+collaboration_modes = true
+```
 
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation

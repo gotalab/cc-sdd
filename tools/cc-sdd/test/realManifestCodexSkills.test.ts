@@ -80,13 +80,19 @@ describe('real codex-skills manifest', () => {
     expect(skillSpecInitText).toMatch(/name: kiro-spec-init/);
     expect(skillSpecInitText).toContain('$kiro-spec-requirements');
 
+    const skillSpecQuick = join(cwd, '.agents/skills/kiro-spec-quick/SKILL.md');
+    expect(await exists(skillSpecQuick)).toBe(true);
+    const skillSpecQuickText = await readFile(skillSpecQuick, 'utf8');
+    expect(skillSpecQuickText).toMatch(/name: kiro-spec-quick/);
+    expect(skillSpecQuickText).toContain('$kiro-spec-impl');
+
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');
     expect(await exists(settingsTemplate)).toBe(true);
 
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });
 
-  it('generates exactly 11 skill directories', async () => {
+  it('generates exactly 12 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(
@@ -99,6 +105,7 @@ describe('real codex-skills manifest', () => {
 
     const expectedSkills = [
       'kiro-spec-init',
+      'kiro-spec-quick',
       'kiro-spec-requirements',
       'kiro-spec-design',
       'kiro-spec-tasks',

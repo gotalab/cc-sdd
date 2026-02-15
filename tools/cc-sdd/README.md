@@ -18,8 +18,9 @@ English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">�
 - ✅ **Quality Gates** — validate-gap/design/impl commands catch integration issues before coding
 - ✅ **Customize Once** — Adapt templates to your team's process; all agents follow the same workflow
 - ✅ **Universal Workflow** — 8 agents × 13 languages share the same 11-command process
-- ✅ **Codex Skills support** — `--codex-skills` installs 11 `SKILL.md` packages into `.agents/skills/`
+- ✅ **Codex Skills support** — `--codex-skills` installs 12 `SKILL.md` packages into `.agents/skills/`
 - ⚠️ **Codex prompts are legacy** — `--codex` is kept for compatibility and is non-recommended for new projects
+- ✅ **Codex collaboration modes** — Enable `features.collaboration_modes = true` in `~/.codex/config.toml` for better long-running task orchestration
 
 ---
 
@@ -46,7 +47,7 @@ npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents (12 commands
 npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE (choose any supported lang)
 npx cc-sdd@latest --gemini --lang es        # Gemini CLI
 npx cc-sdd@latest --codex --lang fr         # Codex CLI prompts mode (legacy, non-recommended)
-npx cc-sdd@latest --codex-skills --lang fr  # Codex CLI skills mode (recommended, 11 skills)
+npx cc-sdd@latest --codex-skills --lang fr  # Codex CLI skills mode (recommended, 12 skills)
 npx cc-sdd@latest --copilot --lang pt       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang de          # Qwen Code
 npx cc-sdd@latest --opencode --lang en      # OpenCode (11 commands)
@@ -131,7 +132,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 | **Claude Code Subagents** | ✅ Full | 12 commands + 9 subagents |
 | **Cursor IDE** | ✅ Full | 11 commands |
 | **Gemini CLI** | ✅ Full | 11 commands |
-| **Codex CLI** | ✅ Full | 11 prompts (legacy) + 11 skills mode (recommended) |
+| **Codex CLI** | ✅ Full | 11 prompts (legacy) + 12 skills mode (recommended) |
 | **GitHub Copilot** | ✅ Full | 11 prompts |
 | **Qwen Code** | ✅ Full | 11 commands |
 | **Windsurf IDE** | ✅ Full | 11 workflows |
@@ -208,7 +209,7 @@ After installation, your project gets:
 
 ```
 project/
-├── .agents/skills/          # 11 skills (Codex CLI skills mode)
+├── .agents/skills/          # 12 skills (Codex CLI skills mode)
 ├── .claude/commands/kiro/    # 11 slash commands
 ├── .codex/prompts/           # 11 prompt commands (Codex CLI legacy mode)
 ├── .github/prompts/          # 11 prompt commands (GitHub Copilot)
