@@ -107,7 +107,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.codex/prompts/` as a legacy compatibility mode (non-recommended), shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart. Prefer `--codex-skills`.',
     aliasFlags: ['--codex', '--codex-cli'],
-    recommendedModels: ['gpt-5.3-codex', 'gpt-5.3'],
+    recommendedModels: ['gpt-5.3-codex', 'gpt-5.2'],
     layout: {
       commandsDir: '.codex/prompts',
       agentDir: '.codex',
@@ -128,7 +128,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro skills in `.agents/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--codex-skills'],
-    recommendedModels: ['gpt-5.3-codex', 'gpt-5.3'],
+    recommendedModels: ['gpt-5.3-codex', 'gpt-5.2'],
     layout: {
       commandsDir: '.agents/skills',
       agentDir: '.agents',
