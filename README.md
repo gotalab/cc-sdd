@@ -15,7 +15,7 @@
 
 👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
-Stop losing 70% of development time to meetings, documentation ceremonies, and scattered context. cc-sdd brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, OpenCode, and Windsurf.
+Stop losing 70% of development time to meetings, documentation ceremonies, and scattered context. cc-sdd brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI (Prompts/Skills), GitHub Copilot, Qwen Code, OpenCode, and Windsurf.
 
 ### What you get:
 - ✅ **Spec-first guarantees** — Approve requirements/design upfront, then AI implements exactly as specified
@@ -23,6 +23,9 @@ Stop losing 70% of development time to meetings, documentation ceremonies, and s
 - ✅ **Team-aligned templates** — Customize once, all agents output docs that fit your approval process
 - ✅ **Project Memory** — AI remembers your architecture, patterns, and standards across sessions
 - ✅ **8 agents, unified workflow** — Same spec-driven process across Claude, Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf
+- ✅ **Codex Skills support** — Use `--codex-skills` to install 12 `SKILL.md` packages under `.agents/skills/`
+- ✅ **Codex collaboration modes ready** — Enable `features.collaboration_modes = true` in `~/.codex/config.toml`
+- ⚠️ **Codex prompts are legacy** — `--codex` remains for compatibility; prefer `--codex-skills` for new setups
 - ✅ **Hours instead of weeks** — Feature planning goes from days to hours with AI-assisted specs
 
 ## 🚀 Quick Start
@@ -35,7 +38,7 @@ npx cc-sdd@latest --claude --lang en ## Claude Code
 # ✅ That's it! Now run: /kiro:spec-init <what-to-build>
 ```
 
-**Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages.
+**Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages, plus Codex Skills mode.
 
 📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
@@ -87,7 +90,8 @@ npx cc-sdd@latest --claude         # Claude Code (11 commands) [default]
 npx cc-sdd@latest --claude-agent   # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor         # Cursor IDE
 npx cc-sdd@latest --gemini         # Gemini CLI
-npx cc-sdd@latest --codex          # Codex CLI
+npx cc-sdd@latest --codex          # Codex CLI prompts mode (legacy, non-recommended)
+npx cc-sdd@latest --codex-skills   # Codex CLI skills mode (recommended, 12 skills)
 npx cc-sdd@latest --copilot        # GitHub Copilot
 npx cc-sdd@latest --qwen           # Qwen Code
 npx cc-sdd@latest --opencode       # OpenCode (11 commands)

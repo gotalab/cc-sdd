@@ -8,7 +8,7 @@
 <a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
-✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
+✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI（Prompts/Skills） / GitHub Copilot / Qwen Code / OpenCode / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
 
 👻 **Kiro 相容** — 與 Kiro IDE 相似的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
 
@@ -17,7 +17,10 @@
 - ✅ **分離研究** — 將探索筆記（Research.md）與最終設計（Design.md）分開管理
 - ✅ **品質關卡** — validate-gap/design/impl 指令在編碼前捕捉整合問題
 - ✅ **一次自訂** — 將模板適應至團隊流程；所有代理遵循相同工作流程
-- ✅ **統一工作流程** — 7 代理 × 13 語言共享相同的 11 指令流程
+- ✅ **統一工作流程** — 8 代理 × 13 語言共享相同的 11 指令流程
+- ✅ **Codex Skills 支援** — 使用 `--codex-skills` 可在 `.agents/skills/` 產生 12 個 `SKILL.md` 套件
+- ⚠️ **Codex prompts 為 legacy 模式** — `--codex` 保留相容性用途，不建議新專案使用（建議改用 `--codex-skills`）
+- ✅ **Codex collaboration modes 可用** — 建議在 `~/.codex/config.toml` 設定 `features.collaboration_modes = true` 以提升長任務協作執行
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
 
@@ -40,7 +43,8 @@ npx cc-sdd@latest --claude --lang zh-TW           # Claude Code（11 個指令�
 npx cc-sdd@latest --claude-agent --lang zh-TW     # Claude Code Subagents（12 個指令 + 9 個子代理）
 npx cc-sdd@latest --cursor --lang zh-TW           # Cursor IDE
 npx cc-sdd@latest --gemini --lang zh-TW           # Gemini CLI
-npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI
+npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI prompts 模式（legacy，不建議）
+npx cc-sdd@latest --codex-skills --lang zh-TW     # Codex CLI Skills 模式（建議，12 個技能）
 npx cc-sdd@latest --copilot --lang zh-TW          # GitHub Copilot
 npx cc-sdd@latest --qwen --lang zh-TW             # Qwen Code
 npx cc-sdd@latest --opencode --lang zh-TW         # OpenCode（11 個指令）
@@ -104,7 +108,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 ### 為何團隊選擇 cc-sdd
 1. **規格是單一真實來源** — 需求、設計、任務、Supporting References 同步產出，審查更快。
 2. **Greenfield / Brownfield 皆適用** — 新功能快速起步；既有系統靠 validate 系列與 Project Memory 保持安全。
-3. **可同時使用多個代理** — Claude、Cursor、Codex、Gemini、Copilot、Qwen、OpenCode、Windsurf 共用同一套模板/規則。
+3. **可同時使用多個代理** — Claude、Cursor、Codex（Prompts/Skills）、Gemini、Copilot、Qwen、OpenCode、Windsurf 共用同一套模板/規則。
 4. **自訂只要一次** — 編輯 `.kiro/settings/templates/` 或 `.kiro/settings/rules/`，所有代理立即套用。
 
 ## ✨ 主要功能
@@ -125,11 +129,11 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 | **Claude Code Subagents** | ✅ 完全支援 | 12 個指令 + 9 個子代理 | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
 | **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
-| **Codex CLI** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
+| **Codex CLI** | ✅ 完全支援 | 11 個提示（legacy） + Skills 模式 12 個技能（建議） | `AGENTS.md`, `.agents/skills/` |
 | **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
 | **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `AGENTS.md` |
-| 其他（Factory AI Droid） | 📅 規劃中 | - |
+| 其他（Factory AI Droid） | 📅 規劃中 | - | - |
 
 ## 📋 指令
 
@@ -200,8 +204,9 @@ npx cc-sdd@latest --kiro-dir docs
 
 ```
 project/
+├── .agents/skills/          # 12 個技能（Codex CLI Skills 模式）
 ├── .claude/commands/kiro/    # 11 個斜線指令
-├── .codex/prompts/           # 11 個提示指令（Codex CLI）
+├── .codex/prompts/           # 11 個提示指令（Codex CLI legacy 模式）
 ├── .github/prompts/          # 11 個提示指令（GitHub Copilot）
 ├── .windsurf/workflows/      # 11 個工作流程檔案（Windsurf IDE）
 ├── .kiro/settings/           # 共用規則與模板（以 {{KIRO_DIR}} 展開）

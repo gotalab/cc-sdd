@@ -35,6 +35,9 @@ const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/pr
       && IFS= read -r a \
       && case "$a" in [yY]) rm -rf ./.codex/prompts && echo 'Removed.' ;; *) echo 'Kept original.' ;; esac`;
 
+const codexLegacyPromptNotice =
+  'Note: Codex prompts mode (`--codex`) is kept for compatibility and is non-recommended. Prefer `--codex-skills` for new setups.';
+
 export const agentDefinitions = {
   'claude-code': {
     label: 'Claude Code',
@@ -78,12 +81,33 @@ export const agentDefinitions = {
     },
     manifestId: 'claude-code-agent',
   },
+  'claude-code-skills': {
+    label: 'Claude Code Skills',
+    description:
+      'Installs kiro skills in `.claude/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and a CLAUDE.md quickstart.',
+    aliasFlags: ['--claude-code-skills', '--claude-skills'],
+    recommendedModels: ['Claude Opus 4.5 or newer'],
+    layout: {
+      commandsDir: '.claude/skills',
+      agentDir: '.claude',
+      docFile: 'CLAUDE.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-quick <what-to-build>`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    templateFallbacks: {
+      'CLAUDE.md': '../../CLAUDE.md',
+    },
+    manifestId: 'claude-code-skills',
+  },
   codex: {
     label: 'Codex CLI',
     description:
-      'Installs kiro prompts in `.codex/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro prompts in `.codex/prompts/` as a legacy compatibility mode (non-recommended), shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart. Prefer `--codex-skills`.',
     aliasFlags: ['--codex', '--codex-cli'],
-    recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
+    recommendedModels: ['gpt-5.3-codex', 'gpt-5.2'],
     layout: {
       commandsDir: '.codex/prompts',
       agentDir: '.codex',
@@ -95,9 +119,27 @@ export const agentDefinitions = {
       steeringCustom: '`/prompts:kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
     completionGuide: {
-      prependSteps: [codexCopyInstruction],
+      prependSteps: [codexLegacyPromptNotice, codexCopyInstruction],
     },
     manifestId: 'codex',
+  },
+  'codex-skills': {
+    label: 'Codex Skills',
+    description:
+      'Installs kiro skills in `.agents/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--codex-skills'],
+    recommendedModels: ['gpt-5.3-codex', 'gpt-5.2'],
+    layout: {
+      commandsDir: '.agents/skills',
+      agentDir: '.agents',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`$kiro-spec-quick <what-to-build> [--auto]`',
+      steering: '`$kiro-steering`',
+      steeringCustom: '`$kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'codex-skills',
   },
   cursor: {
     label: 'Cursor IDE',
