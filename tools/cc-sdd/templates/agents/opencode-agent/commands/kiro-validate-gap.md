@@ -1,6 +1,6 @@
 ---
 description: Analyze implementation gap between requirements and existing codebase
-agent: kiro/validate-gap
+agent: validate-gap
 subtask: true
 ---
 
