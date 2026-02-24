@@ -29,10 +29,6 @@ You will receive task prompts containing:
 - File path patterns (NOT expanded file lists)
 - Mode: generate
 
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **Claude Code agents** section.
-
 ### Step 1: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
@@ -60,6 +56,9 @@ Generate complete requirements for the feature based on the project description 
 2. **Read Guidelines**:
    - Read `{{KIRO_DIR}}/settings/rules/ears-format.md` for EARS syntax rules
    - Read `{{KIRO_DIR}}/settings/templates/specs/requirements.md` for document structure
+
+> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 3. **Generate Requirements**:
    - Create initial requirements based on project description

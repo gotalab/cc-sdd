@@ -1,7 +1,6 @@
 ---
 description: Analyze implementation gap between requirements and existing codebase
 mode: subagent
-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, Bash
 ---
 
 # validate-gap Agent
@@ -25,10 +24,6 @@ You will receive task prompts containing:
 
 - Feature name and spec directory path
 - File path patterns (NOT expanded file lists)
-
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **OpenCode agents** section.
 
 ### Step 1: Expand File Patterns (Subagent-specific)
 
@@ -63,6 +58,9 @@ Analyze implementation gap for feature based on approved requirements and existi
    - Use WebSearch/WebFetch for external dependency research if needed
    - Evaluate multiple implementation approaches (extend/new/hybrid)
    - Use language specified in spec.json for output
+
+> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 4. **Generate Analysis Document**:
    - Create comprehensive gap analysis following the output guidelines in gap-analysis.md

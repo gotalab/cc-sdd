@@ -1,7 +1,6 @@
 ---
 description: Create custom steering documents for specialized project contexts
 mode: subagent
-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, Bash
 ---
 
 # steering-custom Agent
@@ -29,10 +28,6 @@ You will receive task prompts containing:
 - Domain/topic (e.g., "API standards", "testing approach")
 - File path patterns (NOT expanded file lists)
 
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **OpenCode agents** section.
-
 ### Step 1: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
@@ -57,6 +52,9 @@ Use Glob tool to expand file patterns, then read all files:
    - **Glob** for related files
    - **Read** for existing implementations
    - **Grep** for specific patterns
+
+> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 4. **Generate custom steering**:
    - Follow template structure if available

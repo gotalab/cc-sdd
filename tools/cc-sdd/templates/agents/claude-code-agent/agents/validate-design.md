@@ -28,10 +28,6 @@ You will receive task prompts containing:
 - Feature name and spec directory path
 - File path patterns (NOT expanded file lists)
 
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **Claude Code agents** section.
-
 ### Step 1: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
@@ -59,6 +55,9 @@ Interactive design quality review for feature based on approved requirements and
 
 2. **Read Review Guidelines**:
    - Read `{{KIRO_DIR}}/settings/rules/design-review.md` for review criteria and process
+
+> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 3. **Execute Design Review**:
    - Follow design-review.md process: Analysis → Critical Issues → Strengths → GO/NO-GO

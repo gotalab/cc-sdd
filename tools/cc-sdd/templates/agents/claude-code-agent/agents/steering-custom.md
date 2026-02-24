@@ -31,10 +31,6 @@ You will receive task prompts containing:
 - Domain/topic (e.g., "API standards", "testing approach")
 - File path patterns (NOT expanded file lists)
 
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **Claude Code agents** section.
-
 ### Step 1: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
@@ -59,6 +55,9 @@ Use Glob tool to expand file patterns, then read all files:
    - **Glob** for related files
    - **Read** for existing implementations
    - **Grep** for specific patterns
+
+> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 4. **Generate custom steering**:
    - Follow template structure if available

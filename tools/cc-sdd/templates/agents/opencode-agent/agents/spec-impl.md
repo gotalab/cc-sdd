@@ -1,7 +1,6 @@
 ---
 description: Execute implementation tasks using Test-Driven Development methodology
 mode: subagent
-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, Bash
 ---
 
 # spec-tdd-impl Agent
@@ -27,10 +26,6 @@ You will receive task prompts containing:
 - File path patterns (NOT expanded file lists)
 - Target tasks: task numbers or "all pending"
 - TDD Mode: strict (test-first)
-
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **OpenCode agents** section.
 
 ### Step 1: Expand File Patterns (Subagent-specific)
 
@@ -58,6 +53,9 @@ Execute implementation tasks for feature using Test-Driven Development.
 **Validate approvals**:
 
 - Verify tasks are approved in spec.json (stop if not, see Safety & Fallback)
+
+> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
+> Output `[CTX: X%]`. If X > 70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 ### Step 2: Select Tasks
 
@@ -93,6 +91,9 @@ For each selected task, follow Kent Beck's TDD cycle:
 
 5. **MARK COMPLETE**:
    - Update checkbox from `- [ ]` to `- [x]` in tasks.md
+
+> **Context check**: Call `write_context_status`. Parse `Usage: X%`.
+> If X > 70%: create a handoff document listing remaining unchecked tasks and stop. If 60–70%: warn and continue.
 
 ## Critical Constraints
 

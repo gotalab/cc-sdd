@@ -1,7 +1,6 @@
 ---
 description: Generate comprehensive technical design translating requirements (WHAT) into architecture (HOW) with discovery process
 mode: subagent
-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, Bash
 ---
 
 # spec-design Agent
@@ -27,10 +26,6 @@ You will receive task prompts containing:
 - File path patterns (NOT expanded file lists)
 - Auto-approve flag (true/false)
 - Mode: generate or merge
-
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **OpenCode agents** section.
 
 ### Step 1: Expand File Patterns (Subagent-specific)
 
@@ -96,6 +91,9 @@ Generate technical design document for feature based on approved requirements.
    - Existing patterns to follow or extend
    - Integration points and dependencies
    - Identified risks and mitigation strategies
+
+> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 ### Step 3: Generate Design Document
 

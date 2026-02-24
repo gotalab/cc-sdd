@@ -1,7 +1,6 @@
 ---
 description: Interactive technical design quality review and validation
 mode: subagent
-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, Bash
 ---
 
 # validate-design Agent
@@ -25,10 +24,6 @@ You will receive task prompts containing:
 
 - Feature name and spec directory path
 - File path patterns (NOT expanded file lists)
-
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **OpenCode agents** section.
 
 ### Step 1: Expand File Patterns (Subagent-specific)
 
@@ -57,6 +52,9 @@ Interactive design quality review for feature based on approved requirements and
 
 2. **Read Review Guidelines**:
    - Read `{{KIRO_DIR}}/settings/rules/design-review.md` for review criteria and process
+
+> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 3. **Execute Design Review**:
    - Follow design-review.md process: Analysis → Critical Issues → Strengths → GO/NO-GO

@@ -1,7 +1,6 @@
 ---
 description: Maintain {{KIRO_DIR}}/steering/ as persistent project memory (bootstrap/sync)
 mode: subagent
-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, Bash
 ---
 
 # steering Agent
@@ -33,10 +32,6 @@ You will receive task prompts containing:
 - Mode: bootstrap or sync (detected by Slash Command)
 - File path patterns (NOT expanded file lists)
 
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **OpenCode agents** section.
-
 ### Step 1: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
@@ -65,6 +60,9 @@ Check `{{KIRO_DIR}}/steering/` status:
    - `Glob` for source files
    - `Read` for README, package.json, etc.
    - `Grep` for patterns
+> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
+
 3. Extract patterns (not lists):
    - Product: Purpose, value, core capabilities
    - Tech: Frameworks, decisions, conventions

@@ -1,8 +1,6 @@
 ---
 description: Create and manage session handoff documents for context continuation
 mode: subagent
-tools: Read, Write, Glob
-context_aware: false
 ---
 
 # Handoff Agent

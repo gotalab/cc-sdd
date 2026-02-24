@@ -30,10 +30,6 @@ You will receive task prompts containing:
 - Target tasks: task numbers or "all pending"
 - TDD Mode: strict (test-first)
 
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **Claude Code agents** section.
-
 ### Step 1: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
@@ -60,6 +56,9 @@ Execute implementation tasks for feature using Test-Driven Development.
 **Validate approvals**:
 
 - Verify tasks are approved in spec.json (stop if not, see Safety & Fallback)
+
+> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
+> Output `[CTX: X%]`. If X > 70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 ### Step 2: Select Tasks
 
@@ -95,6 +94,9 @@ For each selected task, follow Kent Beck's TDD cycle:
 
 5. **MARK COMPLETE**:
    - Update checkbox from `- [ ]` to `- [x]` in tasks.md
+
+> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
+> If X > 70%: create a handoff document listing remaining unchecked tasks and stop. If 60–70%: warn and continue.
 
 ## Critical Constraints
 

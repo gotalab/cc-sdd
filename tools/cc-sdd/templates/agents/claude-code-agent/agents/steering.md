@@ -35,10 +35,6 @@ You will receive task prompts containing:
 - Mode: bootstrap or sync (detected by Slash Command)
 - File path patterns (NOT expanded file lists)
 
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **Claude Code agents** section.
-
 ### Step 1: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
@@ -67,6 +63,9 @@ Check `{{KIRO_DIR}}/steering/` status:
    - `Glob` for source files
    - `Read` for README, package.json, etc.
    - `Grep` for patterns
+> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
+
 3. Extract patterns (not lists):
    - Product: Purpose, value, core capabilities
    - Tech: Frameworks, decisions, conventions

@@ -53,7 +53,7 @@ describe('resolveAgentLayout', () => {
   it('returns opencode defaults', () => {
     const res = resolveAgentLayout('opencode');
     expect(res).toEqual({
-      commandsDir: '.opencode/commands',
+      commandsDir: '.opencode/command',
       agentDir: '.opencode',
       docFile: 'AGENTS.md',
     });
@@ -62,7 +62,7 @@ describe('resolveAgentLayout', () => {
   it('returns opencode-agent defaults', () => {
     const res = resolveAgentLayout('opencode-agent');
     expect(res).toEqual({
-      commandsDir: '.opencode/commands',
+      commandsDir: '.opencode/command',
       agentDir: '.opencode',
       docFile: 'AGENTS.md',
     });

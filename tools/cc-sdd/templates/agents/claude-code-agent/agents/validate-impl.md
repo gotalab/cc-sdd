@@ -30,10 +30,6 @@ You will receive task prompts containing:
 - File path patterns (NOT expanded file lists)
 - Target tasks: task numbers or auto-detect from conversation/checkboxes
 
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **Claude Code agents** section.
-
 ### Step 1: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
@@ -81,6 +77,9 @@ For each detected feature:
   - Default files: `structure.md`, `tech.md`, `product.md`
   - All custom steering files (regardless of mode settings)
 
+> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
+
 ### 3. Execute Validation
 
 For each task, verify:
@@ -115,6 +114,9 @@ For each task, verify:
 - Run full test suite (if available)
 - Verify no existing tests are broken
 - If regressions detected, flag as "Regression detected"
+
+> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
+> If X > 70%: create a handoff document and stop. If 60–70%: warn and continue.
 
 ### 4. Generate Report
 

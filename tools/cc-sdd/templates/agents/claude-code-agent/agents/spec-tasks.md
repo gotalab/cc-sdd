@@ -31,10 +31,6 @@ You will receive task prompts containing:
 - Sequential mode flag (true/false; default false → parallel allowed)
 - Mode: generate or merge
 
-### Step 0: Context Check
-
-Read `{{KIRO_DIR}}/settings/skills/check-context.md` and follow the **Claude Code agents** section.
-
 ### Step 1: Expand File Patterns (Subagent-specific)
 
 Use Glob tool to expand file patterns, then read all files:
@@ -66,6 +62,9 @@ Generate implementation tasks for the feature based on approved requirements and
 
 - If auto-approve flag is true: Auto-approve requirements and design in spec.json
 - Otherwise: Verify both approved (stop if not, see Safety & Fallback)
+
+> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
+> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
 
 ### Step 2: Generate Implementation Tasks
 

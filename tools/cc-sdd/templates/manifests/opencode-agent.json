@@ -25,7 +25,7 @@
       "source": {
         "type": "templateDir",
         "fromDir": "templates/agents/{{AGENT}}/agents",
-        "toDir": "{{AGENT_DIR}}/agents/kiro"
+        "toDir": "{{AGENT_DIR}}/agent/kiro"
       },
       "when": { "agent": "opencode-agent" }
     },
@@ -42,8 +42,8 @@
       "id": "opencode_context_plugin",
       "source": {
         "type": "templateDir",
-        "fromDir": "templates/agents/opencode-agent/plugins",
-        "toDir": ".opencode/plugins"
+        "fromDir": "templates/agents/opencode-agent/plugin",
+        "toDir": ".opencode/plugin"
       },
       "when": { "agent": "opencode-agent" }
     }
