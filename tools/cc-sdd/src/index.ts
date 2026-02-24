@@ -18,6 +18,7 @@ import { determineCategoryPolicies, printSummary, summarizeCategories, type Cate
 import { defaultIO, type CliIO } from './cli/io.js';
 import { colors, formatError, formatHeading, formatSuccess, formatWarning } from './cli/ui/colors.js';
 import { isInteractive, promptChoice, promptConfirm } from './cli/ui/prompt.js';
+import { installStatuslineHook } from './mcp/context-monitor/statusline-installer.js';
 
 const agentKeys = agentList;
 const aliasFlags = Array.from(new Set(agentKeys.flatMap((key) => getAgentDefinition(key).aliasFlags)));
@@ -176,6 +177,17 @@ const runPlanExecution = async (
     });
 
     io.log(formatSuccess(`✅ Setup completed: written=${result.written}, skipped=${result.skipped}`));
+
+    if (resolvedConfig.agent === 'claude-code-agent') {
+      try {
+        await installStatuslineHook();
+        io.log(formatSuccess('✅ Statusline hook installed (cc-sdd-statusline added to ~/.claude/settings.json)'));
+      } catch (error) {
+        const msg = error instanceof Error ? error.message : String(error);
+        io.log(formatWarning(`⚠️  Could not install statusline hook: ${msg}`));
+      }
+    }
+
     printCompletionGuide(resolvedConfig.agent, io);
     return 0;
   } catch (error) {
@@ -223,3 +235,19 @@ export const runCli = async (
 
   return runPlanExecution(manifestPath, resolved, io, execOpts);
 };
+
+// Re-export modules for programmatic use
+export { HandoffGenerator, HandoffParser } from './handoff/index.js';
+export type {
+  HandoffDocument,
+  HandoffMetadata,
+  CompletedTask,
+  InProgressTask,
+  RemainingTask,
+  KeyFile,
+  Decision,
+  ParsedHandoff,
+  AgentMode,
+  TaskStatus,
+  Complexity,
+} from './handoff/types.js';
