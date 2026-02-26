@@ -68,4 +68,13 @@ describe('resolveAgentLayout', () => {
     });
   });
 
+  it('returns google-antigravity defaults', () => {
+    const res = resolveAgentLayout('google-antigravity');
+    expect(res).toEqual({
+      commandsDir: '.agent/workflows',
+      agentDir: '.agent',
+      docFile: 'GEMINI.md',
+    });
+  });
+
 });

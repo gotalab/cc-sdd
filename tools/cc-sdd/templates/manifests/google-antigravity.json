@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "artifacts": [
+    {
+      "id": "commands",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/workflows",
+        "toDir": "{{AGENT_COMMANDS_DIR}}"
+      },
+      "when": {
+        "agent": "google-antigravity"
+      }
+    },
+    {
+      "id": "skills",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/skills",
+        "toDir": "{{AGENT_DIR}}/skills"
+      },
+      "when": {
+        "agent": "google-antigravity"
+      }
+    },
+    {
+      "id": "doc_main",
+      "source": {
+        "type": "templateFile",
+        "from": "templates/agents/{{AGENT}}/docs/GEMINI.md",
+        "toDir": ".",
+        "rename": "{{AGENT_DOC}}"
+      },
+      "when": {
+        "agent": "google-antigravity"
+      }
+    },
+    {
+      "id": "settings_common",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/shared/settings",
+        "toDir": "{{KIRO_DIR}}/settings"
+      },
+      "when": {
+        "agent": "google-antigravity"
+      }
+    }
+  ]
+}

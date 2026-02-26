@@ -8,7 +8,7 @@
 <a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
-✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
+✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf / Google Antigravity 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
 
 👻 **Kiro 相容** — 與 Kiro IDE 相似的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
 
@@ -17,7 +17,7 @@
 - ✅ **分離研究** — 將探索筆記（Research.md）與最終設計（Design.md）分開管理
 - ✅ **品質關卡** — validate-gap/design/impl 指令在編碼前捕捉整合問題
 - ✅ **一次自訂** — 將模板適應至團隊流程；所有代理遵循相同工作流程
-- ✅ **統一工作流程** — 7 代理 × 13 語言共享相同的 11 指令流程
+- ✅ **統一工作流程** — 9 代理 × 13 語言共享相同的 11 指令流程
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
 
@@ -46,6 +46,7 @@ npx cc-sdd@latest --qwen --lang zh-TW             # Qwen Code
 npx cc-sdd@latest --opencode --lang zh-TW         # OpenCode（11 個指令）
 npx cc-sdd@latest --opencode-agent --lang zh-TW   # OpenCode Subagents（12 個指令 + 9 個子代理）
 npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
+npx cc-sdd@latest --antigravity --lang zh-TW     # Google Antigravity（11 個工作流程 + 1 個技能）
 
 # 注意：@next 現已保留給未來的 alpha/beta 版本
 ```
@@ -129,6 +130,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 | **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
 | **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `AGENTS.md` |
+| **Google Antigravity** | ✅ 完全支援 | 11 個工作流程 + 1 個技能 | `GEMINI.md` |
 | 其他（Factory AI Droid） | 📅 規劃中 | - |
 
 ## 📋 指令

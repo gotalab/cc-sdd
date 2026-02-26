@@ -4,7 +4,7 @@
 
 Complete reference for all cc-sdd commands with detailed usage, examples, and troubleshooting.
 
-> **Note**: This reference is based on Claude Code command templates. While the core functionality is consistent across all supported agents (Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf), command syntax and features may vary slightly depending on your agent. Refer to your agent's specific documentation for platform-specific details.
+> **Note**: This reference is based on Claude Code command templates. While the core functionality is consistent across all supported agents (Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, OpenCode, Google Antigravity, Windsurf), command syntax and features may vary slightly depending on your agent. Refer to your agent's specific documentation for platform-specific details.
 
 > For installation, CLI setup, and workspace prerequisites, see the [Project README](../../README.md). For an overview of additional docs and guides, start with the [Docs README](../README.md).
 

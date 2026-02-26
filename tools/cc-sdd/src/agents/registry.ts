@@ -227,6 +227,24 @@ export const agentDefinitions = {
     },
     manifestId: 'opencode-agent',
   },
+  'google-antigravity': {
+    label: 'Google Antigravity',
+    description:
+      'Installs kiro workflows in `.agent/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and a GEMINI.md quickstart.',
+    aliasFlags: ['--google-antigravity', '--antigravity'],
+    recommendedModels: ['Gemini 3.1 Pro Preview or newer'],
+    layout: {
+      commandsDir: '.agent/workflows',
+      agentDir: '.agent',
+      docFile: 'GEMINI.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-init <what-to-build>`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'google-antigravity',
+  },
 } as const satisfies Record<string, AgentDefinition>;
 
 export type AgentType = keyof typeof agentDefinitions;

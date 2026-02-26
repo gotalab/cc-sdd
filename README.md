@@ -15,14 +15,14 @@
 
 👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
-Stop losing 70% of development time to meetings, documentation ceremonies, and scattered context. cc-sdd brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, OpenCode, and Windsurf.
+Stop losing 70% of development time to meetings, documentation ceremonies, and scattered context. cc-sdd brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, OpenCode, Windsurf, and Google Antigravity.
 
 ### What you get:
 - ✅ **Spec-first guarantees** — Approve requirements/design upfront, then AI implements exactly as specified
 - ✅ **Parallel execution ready** — Tasks decomposed for concurrent implementation with dependency tracking
 - ✅ **Team-aligned templates** — Customize once, all agents output docs that fit your approval process
 - ✅ **Project Memory** — AI remembers your architecture, patterns, and standards across sessions
-- ✅ **8 agents, unified workflow** — Same spec-driven process across Claude, Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf
+- ✅ **9 agents, unified workflow** — Same spec-driven process across Claude, Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf, Google Antigravity
 - ✅ **Hours instead of weeks** — Feature planning goes from days to hours with AI-assisted specs
 
 ## 🚀 Quick Start
@@ -35,7 +35,7 @@ npx cc-sdd@latest --claude --lang en ## Claude Code
 # ✅ That's it! Now run: /kiro:spec-init <what-to-build>
 ```
 
-**Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages.
+**Installation takes 30 seconds.** Supports 9 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf, Google Antigravity) × 13 languages.
 
 📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
@@ -93,6 +93,7 @@ npx cc-sdd@latest --qwen           # Qwen Code
 npx cc-sdd@latest --opencode       # OpenCode (11 commands)
 npx cc-sdd@latest --opencode-agent # OpenCode Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --windsurf       # Windsurf IDE
+npx cc-sdd@latest --antigravity    # Google Antigravity
 ```
 
 ### Choose Your Language
