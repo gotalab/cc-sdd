@@ -89,6 +89,12 @@ describe('real codex-skills manifest', () => {
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');
     expect(await exists(settingsTemplate)).toBe(true);
 
+    const skillSpecDesign = join(cwd, '.agents/skills/kiro-spec-design/SKILL.md');
+    expect(await exists(skillSpecDesign)).toBe(true);
+    const skillSpecDesignText = await readFile(skillSpecDesign, 'utf8');
+    expect(skillSpecDesignText).toContain('Parallel Research');
+    expect(skillSpecDesignText).not.toMatch(/context: fork/);
+
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });
 

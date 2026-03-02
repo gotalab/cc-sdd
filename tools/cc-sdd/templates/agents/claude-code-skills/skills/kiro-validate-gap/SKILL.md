@@ -1,9 +1,8 @@
 ---
 name: kiro-validate-gap
 description: Analyze implementation gap between requirements and existing codebase. Use when planning integration with existing systems.
-context: fork
-agent: general-purpose
 allowed-tools: Read, Grep, Glob, WebSearch, WebFetch
+argument-hint: <feature-name>
 ---
 
 # kiro-validate-gap Skill
@@ -19,44 +18,35 @@ You are a specialized skill for analyzing the implementation gap between require
   - Multiple viable implementation approaches evaluated
   - Technical research needs identified for design phase
 
-## Execution Protocol
-
-You will receive task prompts containing:
-- Feature name and spec directory path
-
-### Step 1: Expand File Patterns
-
-Use Glob tool to expand file patterns, then read all files:
-- Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files
-- Read each file from glob results
-- Read other specified file patterns
-
-### Step 2-5: Core Task
-
-## Core Task
-Analyze implementation gap for feature based on approved requirements and existing codebase.
-
 ## Execution Steps
 
-### Step 2: Load Context
+### Step 1: Gather Context
+
+If steering/spec context is already available from conversation, skip redundant file reads.
+Otherwise, load all necessary context:
 - Read `{{KIRO_DIR}}/specs/{feature}/spec.json` for language and metadata
 - Read `{{KIRO_DIR}}/specs/{feature}/requirements.md` for requirements
-- **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory including:
-  - Default files: `structure.md`, `tech.md`, `product.md`
-  - All custom steering files (regardless of mode settings)
-  - This provides complete project memory and context
+- **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory
 
-### Step 3: Read Analysis Guidelines
+### Step 2: Read Analysis Guidelines
 - Read `{{KIRO_DIR}}/settings/rules/gap-analysis.md` for comprehensive analysis framework
 
-### Step 4: Execute Gap Analysis
+### Step 3: Execute Gap Analysis
+
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Codebase analysis**: Existing implementations, architecture patterns, integration points, extension possibilities (using Grep/Glob/Read)
+2. **External dependency research**: Dependency compatibility, version constraints, known integration challenges (using WebSearch/WebFetch when needed)
+3. **Context loading**: Requirements, steering files, gap-analysis rules
+
+After all parallel research completes, synthesize findings for gap analysis.
+
 - Follow gap-analysis.md framework for thorough investigation
-- Analyze existing codebase using Grep and Read tools
-- Use WebSearch/WebFetch for external dependency research if needed
 - Evaluate multiple implementation approaches (extend/new/hybrid)
 - Use language specified in spec.json for output
 
-### Step 5: Generate Analysis Document
+### Step 4: Generate Analysis Document
 - Create comprehensive gap analysis following the output guidelines in gap-analysis.md
 - Present multiple viable options with trade-offs
 - Flag areas requiring further research
@@ -94,4 +84,11 @@ Provide output in the language specified in spec.json with:
 - **Complex Integration Unclear**: Flag for comprehensive research in design phase rather than blocking
 - **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 
-**Note**: You execute tasks autonomously. Return final report only when complete.
+### Next Phase: Design Generation
+
+**If Gap Analysis Complete**:
+- Review gap analysis insights
+- Run `/kiro-spec-design {feature}` to create technical design document
+- Or `/kiro-spec-design {feature} -y` to auto-approve requirements and proceed directly
+
+**Note**: Gap analysis is optional but recommended for brownfield projects to inform design decisions.

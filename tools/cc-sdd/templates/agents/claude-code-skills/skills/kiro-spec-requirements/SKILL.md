@@ -1,9 +1,7 @@
 ---
 name: kiro-spec-requirements
 description: Generate EARS-format requirements based on project description and steering context. Use when generating requirements from project description.
-context: fork
-agent: general-purpose
-allowed-tools: Read, Write, Edit, Glob, WebSearch, WebFetch
+allowed-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, AskUserQuestion
 ---
 
 # kiro-spec-requirements Skill
@@ -19,27 +17,12 @@ You are a specialized skill for generating comprehensive, testable requirements 
   - Focus on core functionality without implementation details
   - Update metadata to track generation status
 
-## Execution Protocol
-
-You will receive task prompts containing:
-- Feature name and spec directory path
-- Mode: generate
-
-### Step 1: Expand File Patterns
-
-Use Glob tool to expand file patterns, then read all files:
-- Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files
-- Read each file from glob results
-- Read other specified file patterns
-
-### Step 2-5: Core Task
-
-## Core Task
-Generate complete requirements for the feature based on the project description in requirements.md.
-
 ## Execution Steps
 
-### Step 2: Load Context
+### Step 1: Gather Context
+
+If steering/spec context is already available from conversation, skip redundant file reads.
+Otherwise, load all necessary context:
 - Read `{{KIRO_DIR}}/specs/{feature}/spec.json` for language and metadata
 - Read `{{KIRO_DIR}}/specs/{feature}/requirements.md` for project description
 - **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory including:
@@ -47,17 +30,25 @@ Generate complete requirements for the feature based on the project description 
   - All custom steering files (regardless of mode settings)
   - This provides complete project memory and context
 
-### Step 3: Read Guidelines
+### Step 2: Read Guidelines
 - Read `{{KIRO_DIR}}/settings/rules/ears-format.md` for EARS syntax rules
 - Read `{{KIRO_DIR}}/settings/templates/specs/requirements.md` for document structure
 
-### Step 4: Generate Requirements
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Context loading**: Steering files, EARS format rules, requirements template
+2. **Codebase hints**: Existing implementations that may inform requirement scope (when needed)
+
+After all parallel research completes, synthesize findings before generating requirements.
+
+### Step 3: Generate Requirements
 - Create initial requirements based on project description
 - Group related functionality into logical requirement areas
 - Apply EARS format to all acceptance criteria
 - Use language specified in spec.json
 
-### Step 5: Update Metadata
+### Step 4: Update Metadata
 - Set `phase: "requirements-generated"`
 - Set `approvals.requirements.generated: true`
 - Update `updated_at` timestamp
@@ -66,7 +57,7 @@ Generate complete requirements for the feature based on the project description 
 - Focus on WHAT, not HOW (no implementation details)
 - Requirements must be testable and verifiable
 - Choose appropriate subject for EARS statements (system/service name for software)
-- Generate initial version first, then iterate with user feedback (no sequential questions upfront)
+- If the project description lacks problem context (who is affected, current pain, desired outcome), clarify with the user before generating. Otherwise, generate initial version first and iterate with feedback.
 - Requirement headings in requirements.md MUST include a leading numeric ID only (for example: "Requirement 1", "1.", "2 Feature ..."); do not use alphabetic IDs like "Requirement A".
 
 ## Tool Guidance
@@ -97,4 +88,14 @@ Provide output in the language specified in spec.json with:
 - **Steering Directory Empty**: Warn user that project context is missing and may affect requirement quality
 - **Non-numeric Requirement Headings**: If existing headings do not include a leading numeric ID (for example, they use "Requirement A"), normalize them to numeric IDs and keep that mapping consistent (never mix numeric and alphabetic labels).
 
-**Note**: You execute tasks autonomously. Return final report only when complete.
+### Next Phase: Design Generation
+
+**If Requirements Approved**:
+- **Optional Gap Analysis** (for existing codebases):
+  - Run `/kiro-validate-gap {feature}` to analyze implementation gap
+  - Recommended for brownfield projects; skip for greenfield
+- Run `/kiro-spec-design {feature}` to proceed to design phase
+- Or `/kiro-spec-design {feature} -y` to auto-approve requirements and proceed directly
+
+**If Modifications Needed**:
+- Provide feedback and re-run `/kiro-spec-requirements {feature}`

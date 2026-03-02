@@ -1,9 +1,8 @@
 ---
 name: kiro-spec-tasks
 description: Generate implementation tasks from requirements and design. Use when creating actionable task lists.
-context: fork
-agent: general-purpose
 allowed-tools: Read, Write, Edit, Glob, Grep
+argument-hint: <feature-name> [-y] [--sequential]
 ---
 
 # kiro-spec-tasks Skill
@@ -19,31 +18,12 @@ You are a specialized skill for generating detailed, actionable implementation t
   - Clear task progression with proper hierarchy
   - Natural language descriptions focused on capabilities
 
-## Execution Protocol
-
-You will receive task prompts containing:
-- Feature name and spec directory path
-- Auto-approve flag (true/false)
-- Sequential mode flag (true/false; default false → parallel allowed)
-- Mode: generate or merge
-
-### Step 1: Expand File Patterns
-
-Use Glob tool to expand file patterns, then read all files:
-- Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files
-- Read each file from glob results
-- Read other specified file patterns
-
-### Step 2-4: Core Task
-
-## Core Task
-Generate implementation tasks for the feature based on approved requirements and design.
-
 ## Execution Steps
 
-### Step 2: Load Context
+### Step 1: Gather Context
 
-**Read all necessary context**:
+If steering/spec context is already available from conversation, skip redundant file reads.
+Otherwise, load all necessary context:
 - `{{KIRO_DIR}}/specs/{feature}/spec.json`, `requirements.md`, `design.md`
 - `{{KIRO_DIR}}/specs/{feature}/tasks.md` (if exists, for merge mode)
 - **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
@@ -55,11 +35,19 @@ Generate implementation tasks for the feature based on approved requirements and
 - If auto-approve flag is true: Auto-approve requirements and design in spec.json
 - Otherwise: Verify both approved (stop if not, see Safety & Fallback)
 
-### Step 3: Generate Implementation Tasks
+### Step 2: Generate Implementation Tasks
 
 - Read `{{KIRO_DIR}}/settings/rules/tasks-generation.md` for principles
 - Read `{{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md` for parallel judgement criteria
 - Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format (supports `(P)` markers)
+
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Context loading**: Spec documents (requirements.md, design.md), steering files
+2. **Rules loading**: tasks-generation.md, tasks-parallel-analysis.md, tasks template
+
+After all parallel research completes, synthesize findings before generating tasks.
 
 **Generate task list following all rules**:
 - Use language specified in spec.json
@@ -71,7 +59,7 @@ Generate implementation tasks for the feature based on approved requirements and
 - If sequential mode is true, omit `(P)` entirely
 - If existing tasks.md found, merge with new content
 
-### Step 4: Finalize
+### Step 3: Finalize
 
 **Write and update**:
 - Create/update `{{KIRO_DIR}}/specs/{feature}/tasks.md`
@@ -84,11 +72,14 @@ Generate implementation tasks for the feature based on approved requirements and
 
 ## Critical Constraints
 - **Follow rules strictly**: All principles in tasks-generation.md are mandatory
+- **Phase ordering**: Foundation → Core → Integration → Validation (ordering implies dependency)
 - **Natural Language**: Describe what to do, not code structure details
 - **Complete Coverage**: ALL requirements must map to tasks
 - **Maximum 2 Levels**: Major tasks and sub-tasks only (no deeper nesting)
 - **Sequential Numbering**: Major tasks increment (1, 2, 3...), never repeat
 - **Task Integration**: Every task must connect to the system (no orphaned work)
+- **Boundary annotations**: Required for `(P)` tasks, recommended for all (`_Boundary: ComponentName_`)
+- **Explicit dependencies**: Cross-boundary non-obvious dependencies declared with `_Depends: X.X_`
 
 ## Tool Guidance
 - **Read first**: Load all context, rules, and templates before generation
@@ -136,4 +127,13 @@ Provide brief summary in the language specified in spec.json:
 - **Missing Numeric Requirement IDs**:
   - **Stop Execution**: All requirements in requirements.md MUST have numeric IDs. If any requirement lacks a numeric ID, stop and request that requirements.md be fixed before generating tasks.
 
-**Note**: You execute tasks autonomously. Return final report only when complete.
+### Next Phase: Implementation
+
+**If Tasks Approved**:
+- Execute specific task: `/kiro-spec-impl {feature} 1.1`
+- Execute multiple tasks: `/kiro-spec-impl {feature} 1.1,1.2`
+- Execute all pending: `/kiro-spec-impl {feature}`
+
+**If Modifications Needed**:
+- Provide feedback and re-run `/kiro-spec-tasks {feature}`
+- Existing tasks used as reference (merge mode)

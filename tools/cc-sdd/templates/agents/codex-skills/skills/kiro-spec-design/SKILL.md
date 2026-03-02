@@ -62,6 +62,15 @@ Generate technical design document for feature **$1** based on approved requirem
    **For Simple Additions**:
    - Skip formal discovery, quick pattern check only
 
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Codebase analysis**: Existing architecture patterns, integration points, code conventions
+2. **External research**: Dependencies, APIs, latest best practices (when needed)
+3. **Context loading**: Steering files, design principles, discovery rules, templates
+
+After all parallel research completes, synthesize findings before proceeding.
+
 3. **Retain Discovery Findings for Step 3**:
    - External API contracts and constraints
    - Technology decisions with rationale

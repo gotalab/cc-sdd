@@ -1,9 +1,8 @@
 ---
 name: kiro-spec-impl
 description: Execute implementation tasks using Test-Driven Development methodology. Use when implementing approved tasks.
-context: fork
-agent: general-purpose
 allowed-tools: Read, Write, Edit, MultiEdit, Bash, Glob, Grep, WebSearch, WebFetch
+argument-hint: <feature-name> [task-numbers]
 ---
 
 # kiro-spec-impl Skill
@@ -19,43 +18,38 @@ You are a specialized skill for executing implementation tasks using Test-Driven
   - Tasks marked as completed in tasks.md
   - Implementation aligns with design and requirements
 
-## Execution Protocol
-
-You will receive task prompts containing:
-- Feature name and spec directory path
-- Target tasks: task numbers or "all pending"
-- TDD Mode: strict (test-first)
-
-### Step 1: Expand File Patterns
-
-Use Glob tool to expand file patterns, then read all files:
-- Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files
-- Read each file from glob results
-- Read other specified file patterns
-
-### Step 2-4: Core Task
-
-## Core Task
-Execute implementation tasks for feature using Test-Driven Development.
-
 ## Execution Steps
 
-### Step 2: Load Context
+### Step 1: Gather Context
 
-**Read all necessary context**:
+If steering/spec context is already available from conversation, skip redundant file reads.
+Otherwise, load all necessary context:
 - `{{KIRO_DIR}}/specs/{feature}/spec.json`, `requirements.md`, `design.md`, `tasks.md`
 - **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
+
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Spec context loading**: spec.json, requirements.md, design.md, tasks.md
+2. **Steering & patterns**: Steering files, coding conventions, existing code patterns
+
+After all parallel research completes, synthesize implementation brief before starting TDD.
 
 **Validate approvals**:
 - Verify tasks are approved in spec.json (stop if not, see Safety & Fallback)
 
-### Step 3: Select Tasks
+### Step 2: Select Tasks
 
 **Determine which tasks to execute**:
 - If task numbers provided: Execute specified task numbers (e.g., "1.1" or "1,2,3")
 - Otherwise: Execute all pending tasks (unchecked `- [ ]` in tasks.md)
 
-### Step 4: Execute with TDD
+**Check prerequisites**:
+- For each selected task, check `_Depends:_` annotations — verify referenced tasks are marked `[x]`
+- If prerequisites incomplete, execute them first or warn the user
+- Use `_Boundary:_` annotations to understand the task's component scope
+
+### Step 3: Execute with TDD
 
 For each selected task, follow Kent Beck's TDD cycle:
 
@@ -89,6 +83,8 @@ For each selected task, follow Kent Beck's TDD cycle:
 - **Test Coverage**: All new code must have tests
 - **No Regressions**: Existing tests must continue to pass
 - **Design Alignment**: Implementation must follow design.md specifications
+- **Boundary Scope**: Respect `_Boundary:_` annotations — limit changes to declared components
+- **Dependency Check**: Verify `_Depends:_` prerequisites are complete before starting a task
 
 ## Tool Guidance
 - **Read first**: Load all context before implementation
@@ -116,4 +112,8 @@ Provide brief summary in the language specified in spec.json:
 - **Stop Implementation**: Fix failing tests before continuing
 - **Action**: Debug and fix, then re-run
 
-**Note**: You execute tasks autonomously. Return final report only when complete.
+### Next Phase: Validation
+
+**After Implementation Complete**:
+- Run `/kiro-validate-impl {feature}` to verify implementation quality
+- Validates test coverage, requirements traceability, and design alignment

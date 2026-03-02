@@ -38,6 +38,15 @@ Validate implementation for feature(s) and task(s) based on approved specificati
 **If both feature and tasks provided** (`$1` and `$2` present):
 - Validate specified feature and tasks only (e.g., `user-auth 1.1,1.2`)
 
+#### Parallel Research
+
+The following validation checks are independent and can be executed in parallel:
+1. **Test execution & coverage**: Run test suite, check for test existence per task, verify no regressions
+2. **Requirements traceability**: Map requirement IDs to implementation code locations
+3. **Design alignment**: Verify components, interfaces, and file structure match design.md
+
+After all parallel checks complete, synthesize findings for GO/NO-GO assessment.
+
 ### 2. Load Context
 
 For each detected feature:

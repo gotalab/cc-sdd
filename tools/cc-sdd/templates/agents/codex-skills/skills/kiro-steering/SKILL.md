@@ -34,9 +34,16 @@ Check `{{KIRO_DIR}}/steering/` status:
 
 1. Load templates from `{{KIRO_DIR}}/settings/templates/steering/`
 2. Analyze codebase (JIT):
-   - `glob_file_search` for source files
-   - `read_file` for README, package.json, etc.
-   - `grep` for patterns
+
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Product analysis**: README, package.json, documentation files for purpose, value, core capabilities
+2. **Tech analysis**: Config files, dependencies, frameworks for technology patterns and decisions
+3. **Structure analysis**: Directory tree, naming conventions, import patterns for organization
+
+After all parallel research completes, synthesize patterns for steering files.
+
 3. Extract patterns (not lists):
    - Product: Purpose, value, core capabilities
    - Tech: Frameworks, decisions, conventions

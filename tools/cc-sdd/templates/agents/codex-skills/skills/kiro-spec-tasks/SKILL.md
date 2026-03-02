@@ -40,6 +40,14 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 - If `sequential` is false: Read `{{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md` for parallel judgement criteria
 - Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format (supports `(P)` markers)
 
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Context loading**: Spec documents (requirements.md, design.md), steering files
+2. **Rules loading**: tasks-generation.md, tasks-parallel-analysis.md, tasks template
+
+After all parallel research completes, synthesize findings before generating tasks.
+
 **Generate task list following all rules**:
 - Use language specified in spec.json
 - Map all requirements to tasks
@@ -64,11 +72,14 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 
 ## Critical Constraints
 - **Follow rules strictly**: All principles in tasks-generation.md are mandatory
+- **Phase ordering**: Foundation → Core → Integration → Validation (ordering implies dependency)
 - **Natural Language**: Describe what to do, not code structure details
 - **Complete Coverage**: ALL requirements must map to tasks
 - **Maximum 2 Levels**: Major tasks and sub-tasks only (no deeper nesting)
 - **Sequential Numbering**: Major tasks increment (1, 2, 3...), never repeat
 - **Task Integration**: Every task must connect to the system (no orphaned work)
+- **Boundary annotations**: Required for `(P)` tasks, recommended for all (`_Boundary: ComponentName_`)
+- **Explicit dependencies**: Cross-boundary non-obvious dependencies declared with `_Depends: X.X_`
 </instructions>
 
 ## Tool Guidance

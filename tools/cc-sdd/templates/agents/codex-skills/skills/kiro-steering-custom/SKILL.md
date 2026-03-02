@@ -29,9 +29,14 @@ description: Create custom steering documents for specialized project contexts
    - Use as starting point, customize based on project
 
 3. **Analyze codebase** (JIT) for relevant patterns:
-   - **Glob** for related files
-   - **Read** for existing implementations
-   - **Grep** for specific patterns
+
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Template & principles**: Load matching template and steering-principles.md
+2. **Domain patterns**: Analyze codebase for domain-specific patterns using Glob/Grep/Read
+
+After all parallel research completes, synthesize findings for steering document.
 
 4. **Generate custom steering**:
    - Follow template structure if available

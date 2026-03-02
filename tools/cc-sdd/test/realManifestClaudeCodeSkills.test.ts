@@ -65,14 +65,23 @@ describe('real claude-code-skills manifest', () => {
     const skillSpecDesign = join(cwd, '.claude/skills/kiro-spec-design/SKILL.md');
     expect(await exists(skillSpecDesign)).toBe(true);
     const skillSpecDesignText = await readFile(skillSpecDesign, 'utf8');
-    expect(skillSpecDesignText).toMatch(/context: fork/);
-    expect(skillSpecDesignText).toMatch(/agent: general-purpose/);
+    expect(skillSpecDesignText).not.toMatch(/context: fork/);
+    expect(skillSpecDesignText).toContain('Parallel Research');
 
     const skillValidateImpl = join(cwd, '.claude/skills/kiro-validate-impl/SKILL.md');
     expect(await exists(skillValidateImpl)).toBe(true);
     const skillValidateImplText = await readFile(skillValidateImpl, 'utf8');
-    expect(skillValidateImplText).toMatch(/context: fork/);
-    expect(skillValidateImplText).not.toContain('Parse conversation history');
+    expect(skillValidateImplText).not.toMatch(/context: fork/);
+    expect(skillValidateImplText).toContain('Parallel Research');
+
+    const skillRalphImpl = join(cwd, '.claude/skills/kiro-ralph-impl/SKILL.md');
+    expect(await exists(skillRalphImpl)).toBe(true);
+    const skillRalphImplText = await readFile(skillRalphImpl, 'utf8');
+    expect(skillRalphImplText).toMatch(/name: kiro-ralph-impl/);
+    expect(skillRalphImplText).toContain('Ralph Loop');
+
+    const ralphPrompt = join(cwd, '.claude/skills/kiro-ralph-impl/templates/ralph-prompt.md');
+    expect(await exists(ralphPrompt)).toBe(true);
 
     const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
     expect(await exists(settingsRule)).toBe(true);
@@ -80,7 +89,7 @@ describe('real claude-code-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });
 
-  it('generates exactly 12 skill directories', async () => {
+  it('generates exactly 13 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force', '--claude-skills'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
@@ -93,6 +102,7 @@ describe('real claude-code-skills manifest', () => {
       'kiro-spec-requirements',
       'kiro-spec-tasks',
       'kiro-spec-impl',
+      'kiro-ralph-impl',
       'kiro-steering',
       'kiro-steering-custom',
       'kiro-validate-design',

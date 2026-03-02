@@ -1,9 +1,8 @@
 ---
 name: kiro-spec-design
 description: Generate comprehensive technical design translating requirements (WHAT) into architecture (HOW) with discovery process. Use when creating architecture from requirements.
-context: fork
-agent: general-purpose
 allowed-tools: Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
+argument-hint: <feature-name> [-y]
 ---
 
 # kiro-spec-design Skill
@@ -19,30 +18,12 @@ You are a specialized skill for generating comprehensive technical design docume
   - Design aligns with steering context and existing patterns
   - Visual diagrams included for complex architectures
 
-## Execution Protocol
-
-You will receive task prompts containing:
-- Feature name and spec directory path
-- Auto-approve flag (true/false)
-- Mode: generate or merge
-
-### Step 1: Expand File Patterns
-
-Use Glob tool to expand file patterns, then read all files:
-- Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files
-- Read each file from glob results
-- Read other specified file patterns
-
-### Step 2-4: Core Task
-
-## Core Task
-Generate technical design document for feature based on approved requirements.
-
 ## Execution Steps
 
-### Step 2: Load Context
+### Step 1: Gather Context
 
-**Read all necessary context**:
+If steering/spec context is already available from conversation, skip redundant file reads.
+Otherwise, load all necessary context:
 - `{{KIRO_DIR}}/specs/{feature}/spec.json`, `requirements.md`, `design.md` (if exists)
 - **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
 - `{{KIRO_DIR}}/settings/templates/specs/design.md` for document structure
@@ -52,7 +33,7 @@ Generate technical design document for feature based on approved requirements.
 - If auto-approve flag is true: Auto-approve requirements in spec.json
 - Otherwise: Verify approval status (stop if unapproved, see Safety & Fallback)
 
-### Step 3: Discovery & Analysis
+### Step 2: Discovery & Analysis
 
 **Critical: This phase ensures design is based on complete, accurate information.**
 
@@ -80,14 +61,23 @@ Generate technical design document for feature based on approved requirements.
    **For Simple Additions**:
    - Skip formal discovery, quick pattern check only
 
-3. **Retain Discovery Findings for Step 4**:
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel. The agent should determine optimal decomposition based on feature complexity:
+1. **Codebase analysis**: Existing architecture patterns, integration points, code conventions (using Grep/Glob)
+2. **External research**: Dependencies, APIs, latest best practices (using WebSearch/WebFetch when needed)
+3. **Context loading**: Steering files, design principles, discovery rules, templates
+
+After all parallel research completes, synthesize findings before proceeding.
+
+3. **Retain Discovery Findings for Step 3**:
    - External API contracts and constraints
    - Technology decisions with rationale
    - Existing patterns to follow or extend
    - Integration points and dependencies
    - Identified risks and mitigation strategies
 
-### Step 4: Generate Design Document
+### Step 3: Generate Design Document
 
 1. **Load Design Template and Rules**:
    - Read `{{KIRO_DIR}}/settings/templates/specs/design.md` for structure
@@ -96,7 +86,7 @@ Generate technical design document for feature based on approved requirements.
 2. **Generate Design Document**:
    - **Follow specs/design.md template structure and generation instructions strictly**
    - **Integrate all discovery findings**: Use researched information (APIs, patterns, technologies) throughout component definitions, architecture decisions, and integration points
-   - If existing design.md found in Step 2, use it as reference context (merge mode)
+   - If existing design.md found in Step 1, use it as reference context (merge mode)
    - Apply design rules: Type Safety, Visual Communication, Formal Tone
    - Use language specified in spec.json
 
@@ -169,4 +159,13 @@ Provide brief summary in the language specified in spec.json:
 - **Invalid Requirement IDs**:
   - **Stop Execution**: If requirements.md is missing numeric IDs or uses non-numeric headings (for example, "Requirement A"), stop and instruct the user to fix requirements.md before continuing.
 
-**Note**: You execute tasks autonomously. Return final report only when complete.
+### Next Phase: Task Generation
+
+**If Design Approved**:
+- **Optional**: Run `/kiro-validate-design {feature}` for interactive quality review
+- Run `/kiro-spec-tasks {feature}` to generate implementation tasks
+- Or `/kiro-spec-tasks {feature} -y` to auto-approve and proceed directly
+
+**If Modifications Needed**:
+- Provide feedback and re-run `/kiro-spec-design {feature}`
+- Existing design used as reference (merge mode)

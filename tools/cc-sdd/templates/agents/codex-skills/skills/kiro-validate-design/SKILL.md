@@ -21,32 +21,36 @@ Interactive design quality review for feature **$1** based on approved requireme
 
 ## Execution Steps
 
-1. **Load Context**:
+1. **Gather Context**:
    - Read `{{KIRO_DIR}}/specs/$1/spec.json` for language and metadata
    - Read `{{KIRO_DIR}}/specs/$1/requirements.md` for requirements
    - Read `{{KIRO_DIR}}/specs/$1/design.md` for design document
-   - **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory including:
-     - Default files: `structure.md`, `tech.md`, `product.md`
-     - All custom steering files (regardless of mode settings)
-     - This provides complete project memory and context
+   - Load entire `{{KIRO_DIR}}/steering/` directory
 
-2. **Read Review Guidelines**:
-   - Read `{{KIRO_DIR}}/settings/rules/design-review.md` for review criteria and process
+#### Parallel Research
 
-3. **Execute Design Review**:
+The following research areas are independent and can be executed in parallel:
+1. **Context & rules loading**: Spec documents, steering files, and `{{KIRO_DIR}}/settings/rules/design-review.md` review criteria
+2. **Codebase pattern survey**: Gather existing architecture patterns, naming conventions, and component structure from the codebase to use as reference during review
+
+After all parallel research completes, synthesize findings for review.
+
+2. **Execute Design Review**:
+   - Reference conversation history when available: leverage prior requirements discussion and user's stated design intent
    - Follow design-review.md process: Analysis → Critical Issues → Strengths → GO/NO-GO
    - Limit to 3 most important concerns
-   - Engage interactively with user
+   - Engage interactively with user — ask clarifying questions, propose alternatives
    - Use language specified in spec.json for output
 
-4. **Provide Decision and Next Steps**:
+3. **Decision and Next Steps**:
    - Clear GO/NO-GO decision with rationale
-   - Guide user on proceeding based on decision
+   - Provide specific actionable next steps (see Next Phase below)
 
 ## Important Constraints
 - **Quality assurance, not perfection seeking**: Accept acceptable risk
 - **Critical focus only**: Maximum 3 issues, only those significantly impacting success
-- **Interactive approach**: Engage in dialogue, not one-way evaluation
+- **Conversation-aware**: Leverage discussion history for requirements context and user intent when available
+- **Interactive approach**: Engage in dialogue, ask clarifying questions, propose alternatives
 - **Balanced assessment**: Recognize both strengths and weaknesses
 - **Actionable feedback**: All suggestions must be implementable
 </instructions>

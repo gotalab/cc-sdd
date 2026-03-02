@@ -1,8 +1,6 @@
 ---
 name: kiro-steering
 description: Maintain {{KIRO_DIR}}/steering/ as persistent project memory (bootstrap/sync). Use when initializing or updating steering documents.
-context: fork
-agent: general-purpose
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
@@ -24,21 +22,15 @@ You are a specialized skill for maintaining `{{KIRO_DIR}}/steering/` as persiste
 - Code drift detected and reported
 - All `{{KIRO_DIR}}/steering/*.md` treated equally (core + custom)
 
-## Execution Protocol
+## Execution Steps
 
-You will receive task prompts containing:
-- Mode: bootstrap or sync (detected by Skill)
+### Step 1: Gather Context
 
-### Step 1: Expand File Patterns
+If steering context is already available from conversation, skip redundant file reads.
 
-Use Glob tool to expand file patterns, then read all files:
 - For Bootstrap mode: Read templates from `{{KIRO_DIR}}/settings/templates/steering/`
-- For Sync mode:
-  - Glob(`{{KIRO_DIR}}/steering/*.md`) to get all existing steering files
-  - Read each steering file
+- For Sync mode: Read all existing `{{KIRO_DIR}}/steering/*.md` files
 - Read steering principles: `{{KIRO_DIR}}/settings/rules/steering-principles.md`
-
-### Core Task
 
 ## Scenario Detection
 
@@ -53,9 +45,16 @@ Check `{{KIRO_DIR}}/steering/` status:
 
 1. Load templates from `{{KIRO_DIR}}/settings/templates/steering/`
 2. Analyze codebase (JIT):
-   - `Glob` for source files
-   - `Read` for README, package.json, etc.
-   - `Grep` for patterns
+
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Product analysis**: README, package.json, documentation files for purpose, value, core capabilities
+2. **Tech analysis**: Config files, dependencies, frameworks for technology patterns and decisions
+3. **Structure analysis**: Directory tree, naming conventions, import patterns for organization
+
+After all parallel research completes, synthesize patterns for steering files.
+
 3. Extract patterns (not lists):
    - Product: Purpose, value, core capabilities
    - Tech: Frameworks, decisions, conventions
@@ -157,5 +156,3 @@ Steering Updated
 - Focus on patterns, not catalogs
 - "Golden Rule": New code following patterns shouldn't require steering updates
 - `{{KIRO_DIR}}/settings/` content should NOT be documented in steering files (settings are metadata, not project knowledge)
-
-**Note**: You execute tasks autonomously. Return final report only when complete.

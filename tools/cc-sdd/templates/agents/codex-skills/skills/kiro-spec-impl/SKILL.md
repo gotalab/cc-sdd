@@ -27,6 +27,14 @@ Execute implementation tasks for feature **$1** using Test-Driven Development.
 - `{{KIRO_DIR}}/specs/$1/spec.json`, `requirements.md`, `design.md`, `tasks.md`
 - **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
 
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Spec context loading**: spec.json, requirements.md, design.md, tasks.md
+2. **Steering & patterns**: Steering files, coding conventions, existing code patterns
+
+After all parallel research completes, synthesize implementation brief before starting TDD.
+
 **Validate approvals**:
 - Verify tasks are approved in spec.json (stop if not, see Safety & Fallback)
 
@@ -35,6 +43,11 @@ Execute implementation tasks for feature **$1** using Test-Driven Development.
 **Determine which tasks to execute**:
 - If `$2` provided: Execute specified task numbers (e.g., "1.1" or "1,2,3")
 - Otherwise: Execute all pending tasks (unchecked `- [ ]` in tasks.md)
+
+**Check prerequisites**:
+- For each selected task, check `_Depends:_` annotations — verify referenced tasks are marked `[x]`
+- If prerequisites incomplete, execute them first or warn the user
+- Use `_Boundary:_` annotations to understand the task's component scope
 
 ### Step 3: Execute with TDD
 
@@ -70,6 +83,8 @@ For each selected task, follow Kent Beck's TDD cycle:
 - **Test Coverage**: All new code must have tests
 - **No Regressions**: Existing tests must continue to pass
 - **Design Alignment**: Implementation must follow design.md specifications
+- **Boundary Scope**: Respect `_Boundary:_` annotations — limit changes to declared components
+- **Dependency Check**: Verify `_Depends:_` prerequisites are complete before starting a task
 </instructions>
 
 ## Tool Guidance

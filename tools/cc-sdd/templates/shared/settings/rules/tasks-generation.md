@@ -21,20 +21,53 @@ Focus on capabilities and outcomes, not code structure.
 
 **Rationale**: Implementation details (files, methods, types) are defined in design.md. Tasks describe the functional work to be done.
 
-### 2. Task Integration & Progression
+### 2. Task Ordering Principle
+
+**Order implies dependency**: Task N implicitly depends on all tasks before it. This is the primary dependency mechanism.
+
+**Tasks must follow this phase order**:
+1. **Foundation**: Environment setup, test infrastructure, shared utilities, database schema, configuration
+2. **Core**: Primary feature implementation (parallel-capable tasks grouped here)
+3. **Integration**: Wiring components together, cross-boundary connections
+4. **Validation**: E2E tests, edge cases, regression checks
+
+**Rationale**: Foundation work unblocks everything else. Placing setup tasks early prevents downstream blocking. Core tasks can often run in parallel because foundation is already complete.
+
+### 3. Task Integration & Progression
 
 **Every task must**:
 - Build on previous outputs (no orphaned code)
 - Connect to the overall system (no hanging features)
 - Progress incrementally (no big jumps in complexity)
-- Validate core functionality early in sequence
 - Respect architecture boundaries defined in design.md (Architecture Pattern & Boundary Map)
 - Honor interface contracts documented in design.md
 - Use major task summaries sparingly—omit detail bullets if the work is fully captured by child tasks.
 
 **End with integration tasks** to wire everything together.
 
-### 3. Flexible Task Sizing
+### 4. Dependency Declaration
+
+**Default**: Sequential ordering handles most dependencies (task N depends on tasks before it).
+
+**Explicit declaration required when**:
+- A task depends on a specific task in a different major-task group (cross-boundary)
+- The dependency is non-obvious from ordering alone
+- A task can skip ahead of its position (declared via `(P)`) but still needs specific prior work
+
+**Format**: `_Depends: 1.2, 2.3_` — placed alongside `_Requirements:_` in task detail sections.
+
+**Do not over-annotate**: If a task simply depends on the task directly before it, ordering alone is sufficient.
+
+### 5. Boundary Scope
+
+**Each task should declare its component boundary** using design.md component/module names:
+- `_Boundary: AuthService_` or `_Boundary: API Layer, UserRepository_`
+- Helps validate parallel safety: tasks with non-overlapping boundaries are parallel candidates
+- Helps agents understand scope: what to touch and what not to touch
+
+**When to use**: Required for tasks marked `(P)` to validate parallel safety. Omit for sequential tasks where scope is obvious from the description.
+
+### 6. Flexible Task Sizing
 
 **Guidelines**:
 - **Major tasks**: As many sub-tasks as logically needed (group by cohesion)
@@ -43,14 +76,14 @@ Focus on capabilities and outcomes, not code structure.
 
 **Don't force arbitrary numbers** - let logical grouping determine structure.
 
-### 4. Requirements Mapping
+### 7. Requirements Mapping
 
 **End each task detail section with**:
 - `_Requirements: X.X, Y.Y_` listing **only numeric requirement IDs** (comma-separated). Never append descriptive text, parentheses, translations, or free-form labels.
 - For cross-cutting requirements, list every relevant requirement ID. All requirements MUST have numeric IDs in requirements.md. If an ID is missing, stop and correct requirements.md before generating tasks.
 - Reference components/interfaces from design.md when helpful (e.g., `_Contracts: AuthService API`)
 
-### 5. Code-Only Focus
+### 8. Code-Only Focus
 
 **Include ONLY**:
 - Coding tasks (implementation)
@@ -85,12 +118,17 @@ Focus on capabilities and outcomes, not code structure.
 
 ### Parallel Analysis (default)
 - Assume parallel analysis is enabled unless explicitly disabled (e.g. `--sequential` flag).
+- `(P)` means: this task has no dependency on its immediately preceding peers and can run concurrently with them.
 - Identify tasks that can run concurrently when **all** conditions hold:
   - No data dependency on other pending tasks
   - No shared file or resource contention
   - No prerequisite review/approval from another task
+  - `_Boundary:_` annotations confirm non-overlapping component scopes
+- Foundation-phase tasks (see Task Ordering Principle) are rarely `(P)` — they establish shared prerequisites.
+- Core-phase tasks are the primary candidates for `(P)` since foundation is already complete.
 - Validate that identified parallel tasks operate within separate boundaries defined in the Architecture Pattern & Boundary Map.
 - Confirm API/event contracts from design.md do not overlap in ways that cause conflicts.
+- `(P)` tasks with cross-boundary dependencies must declare `_Depends: X.X_` explicitly.
 - Append `(P)` immediately after the task number for each parallel-capable task:
   - Example: `- [ ] 2.1 (P) Build background worker`
   - Apply to both major tasks and sub-tasks when appropriate.
@@ -100,22 +138,28 @@ Focus on capabilities and outcomes, not code structure.
 
 ### Checkbox Format
 ```markdown
-- [ ] 1. Major task description
+- [ ] 1. Foundation: environment and test infrastructure setup
 - [ ] 1.1 Sub-task description
   - Detail item 1
   - Detail item 2
   - _Requirements: X.X_
 
-- [ ] 1.2 Sub-task description
+- [ ] 2. Core feature A
+- [ ] 2.1 (P) Sub-task description
   - Detail items...
   - _Requirements: Y.Y_
+  - _Boundary: AuthService_
 
-- [ ] 1.3 Sub-task description
+- [ ] 2.2 (P) Sub-task description
   - Detail items...
-  - _Requirements: Z.Z, W.W_
+  - _Requirements: Z.Z_
+  - _Boundary: UserRepository_
 
-- [ ] 2. Next major task (NOT 1 again!)
-- [ ] 2.1 Sub-task...
+- [ ] 3. Integration and wiring
+- [ ] 3.1 Sub-task description
+  - Detail items...
+  - _Depends: 2.1, 2.2_
+  - _Requirements: W.W_
 ```
 
 ## Requirements Coverage

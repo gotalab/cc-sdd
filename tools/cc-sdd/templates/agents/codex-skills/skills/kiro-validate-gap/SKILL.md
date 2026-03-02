@@ -32,6 +32,15 @@ Analyze implementation gap for feature **$1** based on approved requirements and
 2. **Read Analysis Guidelines**:
    - Read `{{KIRO_DIR}}/settings/rules/gap-analysis.md` for comprehensive analysis framework
 
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Codebase analysis**: Existing implementations, architecture patterns, integration points, extension possibilities
+2. **External dependency research**: Dependency compatibility, version constraints, known integration challenges (when needed)
+3. **Context loading**: Requirements, steering files, gap-analysis rules
+
+After all parallel research completes, synthesize findings for gap analysis.
+
 3. **Execute Gap Analysis**:
    - Follow gap-analysis.md framework for thorough investigation
    - Analyze existing codebase using Grep and Read tools

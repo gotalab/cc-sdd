@@ -19,9 +19,10 @@ description: Initialize a new specification with detailed project description
 Generate a unique feature name from the project description ($ARGUMENTS) and initialize the specification structure.
 
 ## Execution Steps
-1. **Check Uniqueness**: Verify `{{KIRO_DIR}}/specs/` for naming conflicts (append number suffix if needed)
-2. **Create Directory**: `{{KIRO_DIR}}/specs/[feature-name]/`
-3. **Initialize Files Using Templates**:
+1. **Clarify Intent**: Verify the description captures who has the problem, their current reality, and what should change. If it only states a solution without the problem, ask clarifying questions until clear. Do not proceed with solution-only descriptions.
+2. **Check Uniqueness**: Verify `{{KIRO_DIR}}/specs/` for naming conflicts (append number suffix if needed)
+3. **Create Directory**: `{{KIRO_DIR}}/specs/[feature-name]/`
+4. **Initialize Files Using Templates**:
    - Read `{{KIRO_DIR}}/settings/templates/specs/init.json`
    - Read `{{KIRO_DIR}}/settings/templates/specs/requirements-init.md`
    - Replace placeholders:

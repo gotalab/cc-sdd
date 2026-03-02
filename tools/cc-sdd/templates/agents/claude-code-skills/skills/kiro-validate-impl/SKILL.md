@@ -1,8 +1,6 @@
 ---
 name: kiro-validate-impl
 description: Validate implementation against requirements, design, and tasks. Use when verifying completed implementation.
-context: fork
-agent: general-purpose
 allowed-tools: Read, Bash, Grep, Glob
 argument-hint: <feature-name> [task-numbers]
 ---
@@ -21,33 +19,14 @@ You are a specialized skill for verifying that implementation aligns with approv
   - Design structure reflected in implementation
   - No regressions in existing functionality
 
-## Execution Protocol
-
-You will receive task prompts containing:
-- Feature name and spec directory path (required)
-- Target tasks: task numbers or auto-detect from checkboxes
-- **Note**: Conversation history is not available in `context: fork` mode
-
-### Step 1: Expand File Patterns
-
-Use Glob tool to expand file patterns, then read all files:
-- Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files
-- Read each file from glob results
-- Read other specified file patterns
-
-### Step 2-5: Core Task
-
-## Core Task
-Validate implementation for feature(s) and task(s) based on approved specifications.
-
 ## Execution Steps
 
-### Step 2: Detect Validation Target
+### Step 1: Detect Validation Target
 
 **If no arguments provided**:
+- Parse conversation history for `/kiro-spec-impl` commands to detect recently implemented features and tasks
 - Scan `{{KIRO_DIR}}/specs/` for features with completed tasks `[x]`
 - Report detected implementations (e.g., "user-auth: 1.1, 1.2, 1.3")
-- **Note**: Conversation history parsing is NOT available in fork context
 
 **If feature provided** (feature specified, tasks empty):
 - Use specified feature
@@ -56,18 +35,26 @@ Validate implementation for feature(s) and task(s) based on approved specificati
 **If both feature and tasks provided** (explicit mode):
 - Validate specified feature and tasks only (e.g., `user-auth 1.1,1.2`)
 
-### Step 3: Load Context
+### Step 2: Gather Context
 
-For each detected feature:
+If steering/spec context is already available from conversation, skip redundant file reads.
+Otherwise, for each detected feature:
 - Read `{{KIRO_DIR}}/specs/<feature>/spec.json` for metadata
 - Read `{{KIRO_DIR}}/specs/<feature>/requirements.md` for requirements
 - Read `{{KIRO_DIR}}/specs/<feature>/design.md` for design structure
 - Read `{{KIRO_DIR}}/specs/<feature>/tasks.md` for task list
-- **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory including:
-  - Default files: `structure.md`, `tech.md`, `product.md`
-  - All custom steering files (regardless of mode settings)
+- **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory
 
-### Step 4: Execute Validation
+### Step 3: Execute Validation
+
+#### Parallel Research
+
+The following validation checks are independent and can be executed in parallel:
+1. **Test execution & coverage**: Run test suite, check for test existence per task, verify no regressions
+2. **Requirements traceability**: Map requirement IDs to implementation code locations using Grep
+3. **Design alignment**: Verify components, interfaces, and file structure match design.md using Grep/Glob
+
+After all parallel checks complete, synthesize findings for GO/NO-GO assessment.
 
 For each task, verify:
 
@@ -97,7 +84,7 @@ For each task, verify:
 - Verify no existing tests are broken
 - If regressions detected, flag as "Regression detected"
 
-### Step 5: Generate Report
+### Step 4: Generate Report
 
 Provide summary in the language specified in spec.json:
 - Validation summary by feature
@@ -106,7 +93,7 @@ Provide summary in the language specified in spec.json:
 - GO/NO-GO decision
 
 ## Important Constraints
-- **Feature argument required**: In fork context, feature name should be explicitly provided
+- **Conversation-aware**: Prioritize conversation history for auto-detection when available
 - **Non-blocking warnings**: Design deviations are warnings unless critical
 - **Test-first focus**: Test coverage is mandatory for GO decision
 - **Traceability required**: All requirements must be traceable to implementation
@@ -140,4 +127,15 @@ Provide output in the language specified in spec.json with:
 - **Missing Spec Files**: If spec.json/requirements.md/design.md missing, stop with error
 - **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 
-**Note**: You execute tasks autonomously. Return final report only when complete.
+### Next Steps Guidance
+
+**If GO Decision**:
+- Implementation validated and ready
+- Proceed to deployment or next feature
+
+**If NO-GO Decision**:
+- Address critical issues listed
+- Re-run `/kiro-spec-impl {feature} [tasks]` for fixes
+- Re-validate with `/kiro-validate-impl {feature} [tasks]`
+
+**Note**: Validation is recommended after implementation to ensure spec alignment and quality.

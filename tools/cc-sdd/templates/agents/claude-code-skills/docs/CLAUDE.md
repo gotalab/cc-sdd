@@ -30,13 +30,15 @@ Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life
   - `/kiro-validate-design {feature}` (optional: design review)
   - `/kiro-spec-tasks {feature} [-y]`
 - Phase 2 (Implementation): `/kiro-spec-impl {feature} [tasks]`
+  - ALT: `/kiro-ralph-impl {feature}` (autonomous Ralph Loop — implements all tasks)
   - `/kiro-validate-impl {feature}` (optional: after implementation)
 - Progress check: `/kiro-spec-status {feature}` (use anytime)
 
 ## Skills Structure
 Skills are located in `.claude/skills/kiro-*/SKILL.md`
 - Each skill is a directory with a `SKILL.md` file
-- Skills with `context: fork` run in isolated subagent context
+- Skills run inline with access to conversation context
+- Skills may delegate parallel research to subagents for efficiency
 - Additional files (templates, examples) can be added to skill directories
 
 ## Development Rules

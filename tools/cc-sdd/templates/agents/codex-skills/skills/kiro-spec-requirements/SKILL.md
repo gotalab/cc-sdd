@@ -33,6 +33,14 @@ Generate complete requirements for feature **$1** based on the project descripti
    - Read `{{KIRO_DIR}}/settings/rules/ears-format.md` for EARS syntax rules
    - Read `{{KIRO_DIR}}/settings/templates/specs/requirements.md` for document structure
 
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Context loading**: Steering files, EARS format rules, requirements template
+2. **Codebase hints**: Existing implementations that may inform requirement scope (when needed)
+
+After all parallel research completes, synthesize findings before generating requirements.
+
 3. **Generate Requirements**:
    - Create initial requirements based on project description
    - Group related functionality into logical requirement areas
@@ -48,7 +56,7 @@ Generate complete requirements for feature **$1** based on the project descripti
 - Focus on WHAT, not HOW (no implementation details)
 - Requirements must be testable and verifiable
 - Choose appropriate subject for EARS statements (system/service name for software)
-- Generate initial version first, then iterate with user feedback (no sequential questions upfront)
+- If the project description lacks problem context (who is affected, current pain, desired outcome), clarify with the user before generating. Otherwise, generate initial version first and iterate with feedback.
 - Requirement headings in requirements.md MUST include a leading numeric ID only (for example: "Requirement 1", "1.", "2 Feature ..."); do not use alphabetic IDs like "Requirement A".
 </instructions>
 

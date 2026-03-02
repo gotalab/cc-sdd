@@ -1,8 +1,6 @@
 ---
 name: kiro-steering-custom
 description: Create custom steering documents for specialized project contexts. Use when creating domain-specific steering files.
-context: fork
-agent: general-purpose
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
@@ -21,19 +19,14 @@ You are a specialized skill for creating custom steering documents beyond core f
 - Follows same granularity principles as core steering
 - Provides clear value for specific domain
 
-## Execution Protocol
+## Execution Steps
 
-You will receive task prompts containing:
-- Domain/topic (e.g., "API standards", "testing approach")
+### Step 1: Gather Context
 
-### Step 1: Expand File Patterns
-
-Use Glob tool to expand file patterns, then read all files:
-- Glob(`{{KIRO_DIR}}/settings/templates/steering-custom/*.md`) to find available templates
-- Read matching template if available
+If steering context is already available from conversation, skip redundant file reads.
+Otherwise:
+- Check `{{KIRO_DIR}}/settings/templates/steering-custom/` for available templates
 - Read steering principles: `{{KIRO_DIR}}/settings/rules/steering-principles.md`
-
-### Core Task
 
 ## Workflow
 
@@ -46,9 +39,14 @@ Use Glob tool to expand file patterns, then read all files:
    - Use as starting point, customize based on project
 
 3. **Analyze codebase** (JIT) for relevant patterns:
-   - **Glob** for related files
-   - **Read** for existing implementations
-   - **Grep** for specific patterns
+
+#### Parallel Research
+
+The following research areas are independent and can be executed in parallel:
+1. **Template & principles**: Load matching template and steering-principles.md
+2. **Domain patterns**: Analyze codebase for domain-specific patterns using Glob/Grep/Read
+
+After all parallel research completes, synthesize findings for steering document.
 
 4. **Generate custom steering**:
    - Follow template structure if available
@@ -141,5 +139,3 @@ Review and customize as needed.
 - Custom files equally important as core files
 - Avoid documenting agent-specific tooling directories (e.g. `.cursor/`, `.gemini/`, `.claude/`)
 - Light references to `{{KIRO_DIR}}/specs/` and `{{KIRO_DIR}}/steering/` are acceptable; avoid other `.kiro/` directories
-
-**Note**: You execute tasks autonomously. Return final report only when complete.

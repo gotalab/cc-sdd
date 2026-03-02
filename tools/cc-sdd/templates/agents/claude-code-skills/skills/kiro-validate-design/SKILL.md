@@ -1,9 +1,8 @@
 ---
 name: kiro-validate-design
 description: Interactive technical design quality review and validation. Use when reviewing design before implementation.
-context: fork
-agent: general-purpose
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, AskUserQuestion
+argument-hint: <feature-name>
 ---
 
 # kiro-validate-design Skill
@@ -19,51 +18,41 @@ You are a specialized skill for conducting interactive quality review of technic
   - Clear GO/NO-GO decision with rationale
   - Actionable feedback for improvements if needed
 
-## Execution Protocol
-
-You will receive task prompts containing:
-- Feature name and spec directory path
-
-### Step 1: Expand File Patterns
-
-Use Glob tool to expand file patterns, then read all files:
-- Glob(`{{KIRO_DIR}}/steering/*.md`) to get all steering files
-- Read each file from glob results
-- Read other specified file patterns
-
-### Step 2-5: Core Task
-
-## Core Task
-Interactive design quality review for feature based on approved requirements and design document.
-
 ## Execution Steps
 
-### Step 2: Load Context
+### Step 1: Gather Context
+
+If steering/spec context is already available from conversation, skip redundant file reads.
+Otherwise, load all necessary context:
 - Read `{{KIRO_DIR}}/specs/{feature}/spec.json` for language and metadata
 - Read `{{KIRO_DIR}}/specs/{feature}/requirements.md` for requirements
 - Read `{{KIRO_DIR}}/specs/{feature}/design.md` for design document
-- **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory including:
-  - Default files: `structure.md`, `tech.md`, `product.md`
-  - All custom steering files (regardless of mode settings)
-  - This provides complete project memory and context
+- Load entire `{{KIRO_DIR}}/steering/` directory
 
-### Step 3: Read Review Guidelines
-- Read `{{KIRO_DIR}}/settings/rules/design-review.md` for review criteria and process
+#### Parallel Research
 
-### Step 4: Execute Design Review
+The following research areas are independent and can be executed in parallel:
+1. **Context & rules loading**: Spec documents, steering files, and `{{KIRO_DIR}}/settings/rules/design-review.md` review criteria
+2. **Codebase pattern survey**: Gather existing architecture patterns, naming conventions, and component structure from the codebase to use as reference during review
+
+After all parallel research completes, synthesize findings for review.
+
+### Step 2: Execute Design Review
+- Reference conversation history: leverage prior requirements discussion and user's stated design intent
 - Follow design-review.md process: Analysis → Critical Issues → Strengths → GO/NO-GO
 - Limit to 3 most important concerns
-- Engage interactively with user
+- Engage interactively with user — ask clarifying questions, propose alternatives
 - Use language specified in spec.json for output
 
-### Step 5: Provide Decision and Next Steps
+### Step 3: Decision and Next Steps
 - Clear GO/NO-GO decision with rationale
-- Guide user on proceeding based on decision
+- Provide specific actionable next steps (see Next Phase below)
 
 ## Important Constraints
 - **Quality assurance, not perfection seeking**: Accept acceptable risk
 - **Critical focus only**: Maximum 3 issues, only those significantly impacting success
-- **Interactive approach**: Engage in dialogue, not one-way evaluation
+- **Conversation-aware**: Leverage discussion history for requirements context and user intent
+- **Interactive approach**: Engage in dialogue, ask clarifying questions, propose alternatives
 - **Balanced assessment**: Recognize both strengths and weaknesses
 - **Actionable feedback**: All suggestions must be implementable
 
@@ -93,4 +82,16 @@ Provide output in the language specified in spec.json with:
 - **Empty Steering Directory**: Warn user that project context is missing and may affect review quality
 - **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 
-**Note**: You execute tasks autonomously. Return final report only when complete.
+### Next Phase: Task Generation
+
+**If Design Passes Validation (GO Decision)**:
+- Apply any suggested improvements if agreed
+- Run `/kiro-spec-tasks {feature}` to generate implementation tasks
+- Or `/kiro-spec-tasks {feature} -y` to auto-approve and proceed directly
+
+**If Design Needs Revision (NO-GO Decision)**:
+- Address critical issues identified in review
+- Re-run `/kiro-spec-design {feature}` with improvements
+- Re-validate with `/kiro-validate-design {feature}`
+
+**Note**: Design validation is recommended but optional. Quality review helps catch issues early.
