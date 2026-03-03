@@ -45,6 +45,8 @@ The following validation checks are independent and can be executed in parallel:
 2. **Requirements traceability**: Map requirement IDs to implementation code locations
 3. **Design alignment**: Verify components, interfaces, and file structure match design.md
 
+If multi-agent is enabled, spawn sub-agents for each check above. Otherwise execute sequentially.
+
 After all parallel checks complete, synthesize findings for GO/NO-GO assessment.
 
 ### 2. Load Context

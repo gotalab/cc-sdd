@@ -80,6 +80,8 @@ After all parallel research completes, synthesize findings before generating tas
 - **Task Integration**: Every task must connect to the system (no orphaned work)
 - **Boundary annotations**: Required for `(P)` tasks, recommended for all (`_Boundary: ComponentName_`)
 - **Explicit dependencies**: Cross-boundary non-obvious dependencies declared with `_Depends: X.X_`
+- **Executable deliverable granularity**: Each task must produce a verifiable deliverable (file, endpoint, UI component, config). Infrastructure tasks (project scaffolding, manifest, host integration, build config) must be explicit — never assume they exist
+- **No implicit prerequisites**: If a task requires a runtime, SDK, framework setup, or config file, that setup must be a separate preceding task
 
 ## Tool Guidance
 - **Read first**: Load all context, rules, and templates before generation

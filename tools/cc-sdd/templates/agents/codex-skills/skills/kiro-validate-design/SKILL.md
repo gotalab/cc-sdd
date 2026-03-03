@@ -33,6 +33,8 @@ The following research areas are independent and can be executed in parallel:
 1. **Context & rules loading**: Spec documents, steering files, and `{{KIRO_DIR}}/settings/rules/design-review.md` review criteria
 2. **Codebase pattern survey**: Gather existing architecture patterns, naming conventions, and component structure from the codebase to use as reference during review
 
+If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.
+
 After all parallel research completes, synthesize findings for review.
 
 2. **Execute Design Review**:

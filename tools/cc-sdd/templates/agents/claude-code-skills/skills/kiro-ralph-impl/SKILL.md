@@ -92,6 +92,7 @@ started_at: "{ISO_8601_timestamp}"
 - **One Task Per Iteration**: Keep each Ralph iteration focused on a single task
 - **Feature Flag TDD**: Behavioral tasks use feature flag protocol to structurally enforce RED → GREEN transition
 - **Honest Completion**: Never output the completion promise unless ALL tasks are genuinely `[x]`
+- **Spec Conformance**: Do not mark a task complete if the implementation deviates from design.md or does not satisfy requirements.md
 
 ## Tool Guidance
 - **Read**: Load spec files, steering, ralph-prompt.md template

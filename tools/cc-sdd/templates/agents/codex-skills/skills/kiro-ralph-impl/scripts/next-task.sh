@@ -18,10 +18,7 @@ if [[ ! -f "$TASKS_MD" ]]; then
   exit 1
 fi
 
-# --- Find the first unchecked task ---
-TASK_LINE_NUM=""
-TASK_TEXT=""
-
+# --- Find the first actionable unchecked task ---
 while IFS= read -r line_num_and_text; do
   line_num=$(echo "$line_num_and_text" | cut -d: -f1 | tr -d ' ')
   line_text=$(echo "$line_num_and_text" | cut -d: -f2-)
@@ -30,8 +27,9 @@ while IFS= read -r line_num_and_text; do
   task_text=$(echo "$line_text" | sed 's/^\s*- \[ \] //')
 
   # --- Check dependencies ---
-  # Look for _Depends:_ pattern in the task text
-  deps_raw=$(echo "$task_text" | grep -oP '(?<=_Depends:_\s).*' || true)
+  # Look for _Depends: ..._ pattern in the task text (portable — no grep -P)
+  # Match opening _Depends: and strip trailing _ from the value
+  deps_raw=$(echo "$task_text" | sed -n 's/.*_Depends: *//p' | sed 's/_[[:space:]]*$//' || true)
 
   if [[ -n "$deps_raw" ]]; then
     # Parse comma-separated dependency references (e.g., "Task 1.1, Task 1.2")
@@ -40,31 +38,31 @@ while IFS= read -r line_num_and_text; do
     for dep in "${DEP_ITEMS[@]}"; do
       dep=$(echo "$dep" | xargs)  # trim whitespace
       # Check if this dependency task is completed (marked [x]) in tasks.md
-      if ! grep -qP '^\s*- \[x\].*'"$(echo "$dep" | sed 's/[]\/$*.^[]/\\&/g')" "$TASKS_MD"; then
+      escaped_dep=$(echo "$dep" | sed 's/[]\/$*.^[]/\\&/g')
+      if ! grep -q "^[[:space:]]*- \[x\].*${escaped_dep}" "$TASKS_MD"; then
         BLOCKED_DEPS+=("$dep")
       fi
     done
 
     if [[ ${#BLOCKED_DEPS[@]} -gt 0 ]]; then
-      # This task is blocked — try the next one but report it
-      BLOCKED_LIST=$(IFS=','; echo "${BLOCKED_DEPS[*]}")
-
-      # Still output this task as blocked, caller may want to skip
-      echo "NEXT_TASK: $task_text"
-      echo "TASK_LINE: $line_num"
-      echo "DEPS_STATUS: BLOCKED:$BLOCKED_LIST"
-      exit 0
+      # This task is blocked — skip and try the next one
+      continue
     fi
   fi
 
-  # No dependencies or all dependencies met
+  # No dependencies or all dependencies met — this is our task
   echo "NEXT_TASK: $task_text"
   echo "TASK_LINE: $line_num"
   echo "DEPS_STATUS: MET"
+
+  # Save pre-task snapshot for delta-based staging
+  git status --porcelain > .ralph-pre-task-snapshot 2>/dev/null || true
+
   exit 0
 
-done < <(grep -n '^\s*- \[ \]' "$TASKS_MD")
+# Only match sub-tasks (X.Y pattern) — skip major task headers and _Blocked:_ tasks
+done < <(grep -n '^\s*- \[ \]' "$TASKS_MD" | grep '[0-9]\.[0-9]' | grep -v '_Blocked:')
 
-# No unchecked tasks found
+# No actionable tasks found — agent determines ALL_COMPLETE vs ALL_BLOCKED
 echo "NEXT_TASK: NONE"
 echo "DEPS_STATUS: N/A"

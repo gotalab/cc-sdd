@@ -33,6 +33,8 @@ The following research areas are independent and can be executed in parallel:
 1. **Spec context loading**: spec.json, requirements.md, design.md, tasks.md
 2. **Steering & patterns**: Steering files, coding conventions, existing code patterns
 
+If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.
+
 After all parallel research completes, synthesize implementation brief before starting TDD.
 
 ### Step 2: Validate Prerequisites
@@ -56,12 +58,16 @@ After all parallel research completes, synthesize implementation brief before st
 
 **Initialize**: Run `bash scripts/setup-loop.sh <tasks-md-path>` to create loop state
 
-**Loop** — repeat until check-loop.sh returns ALL_COMPLETE:
+**Loop** — repeat until all tasks are complete:
 
 1. Run `bash scripts/check-loop.sh <tasks-md-path> .ralph-loop-state.md`
-   - If ALL_COMPLETE or MAX_ITERATIONS_REACHED → exit loop, proceed to Step 5
+   - If `STATUS: CONTINUE` → proceed to step 2
+   - If `STATUS: MAX_ITERATIONS_REACHED` → exit loop, proceed to Step 5
 2. Run `bash scripts/next-task.sh <tasks-md-path>` → get next task info
-   - If DEPS_STATUS is BLOCKED → skip to next unchecked task
+   - If `NEXT_TASK: NONE` → **you** determine the reason:
+     - All sub-tasks `[x]` → ALL_COMPLETE → exit loop, proceed to Step 5
+     - Unchecked sub-tasks remain (all blocked) → ALL_BLOCKED → report and stop
+   - If `DEPS_STATUS: MET` → proceed to step 3
 3. **Execute TDD implementation** for the current task:
    - For **behavioral tasks**: Follow Feature Flag Protocol
      1. Add feature flag (OFF by default)
@@ -88,6 +94,7 @@ After all parallel research completes, synthesize implementation brief before st
 - **Honest Completion**: Never report completion unless ALL tasks are genuinely `[x]`
 - **Boundary Scope**: Respect `_Boundary:_` annotations — limit changes to declared components
 - **Dependency Check**: Verify `_Depends:_` prerequisites are complete before starting a task
+- **Spec Conformance**: Do not mark a task complete if the implementation deviates from design.md or does not satisfy requirements.md
 </instructions>
 
 ## Tool Guidance

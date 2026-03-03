@@ -77,7 +77,15 @@ After all parallel research completes, synthesize findings before proceeding.
    - Integration points and dependencies
    - Identified risks and mitigation strategies
 
-### Step 3: Generate Design Document
+### Step 3: Synthesis
+
+**Apply design synthesis to discovery findings before writing.**
+
+- Read and apply `{{KIRO_DIR}}/settings/rules/design-synthesis.md`
+- This step requires the full picture from discovery — do not parallelize or delegate to sub-agents
+- Record synthesis outcomes (generalizations found, build-vs-adopt decisions, simplifications) in `research.md`
+
+### Step 4: Generate Design Document
 
 1. **Load Design Template and Rules**:
    - Read `{{KIRO_DIR}}/settings/templates/specs/design.md` for structure
@@ -85,12 +93,13 @@ After all parallel research completes, synthesize findings before proceeding.
 
 2. **Generate Design Document**:
    - **Follow specs/design.md template structure and generation instructions strictly**
-   - **Integrate all discovery findings**: Use researched information (APIs, patterns, technologies) throughout component definitions, architecture decisions, and integration points
+   - **Integrate all discovery findings and synthesis outcomes**: Use researched information (APIs, patterns, technologies) and synthesis decisions (generalizations, build-vs-adopt, simplifications) throughout component definitions, architecture decisions, and integration points
    - If existing design.md found in Step 1, use it as reference context (merge mode)
    - Apply design rules: Type Safety, Visual Communication, Formal Tone
    - Use language specified in spec.json
 
 3. **Update Metadata** in spec.json:
+
    - Set `phase: "design-generated"`
    - Set `approvals.design.generated: true, approved: false`
    - Set `approvals.requirements.approved: true`

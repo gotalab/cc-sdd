@@ -56,6 +56,16 @@ Enable collaboration modes in `~/.codex/config.toml` to let Codex choose focused
 collaboration_modes = true
 ```
 
+## Multi-Agent (Experimental)
+If multi-agent is available, use it to parallelize independent research and validation within skills. Enable in `~/.codex/config.toml`:
+
+```toml
+[features]
+multi_agent = true
+```
+
+Skills with "Parallel Research" sections list independent work items that benefit from sub-agent spawning when this feature is active.
+
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation
 - Human review required each phase; use `-y` only for intentional fast-track

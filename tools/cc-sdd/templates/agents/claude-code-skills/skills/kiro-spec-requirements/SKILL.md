@@ -54,10 +54,28 @@ After all parallel research completes, synthesize findings before generating req
 - Update `updated_at` timestamp
 
 ## Important Constraints
-- Focus on WHAT, not HOW (no implementation details)
+
+### Requirements Scope: WHAT, not HOW
+Requirements describe user-observable behavior, not implementation. Use this to decide what belongs here vs. in design:
+
+**Ask the user about (requirements scope):**
+- Functional scope — what is included and what is excluded
+- User-observable behavior — "when X happens, what should the user see/experience?"
+- Business rules and edge cases — limits, error conditions, special cases
+- Non-functional requirements visible to users — response time expectations, availability, security level
+
+**Do not ask about (design scope — defer to design phase):**
+- Technology stack choices (database, framework, language)
+- Architecture patterns (microservices, monolith, event-driven)
+- API design, data models, internal component structure
+- How to achieve non-functional requirements (caching strategy, scaling approach)
+
+**Litmus test**: If an EARS acceptance criterion can be written without mentioning any technology, it belongs in requirements. If it requires a technology choice, it belongs in design.
+
+### Other Constraints
+- Each requirement must be testable and unambiguous. If the project description leaves room for multiple interpretations on scope, behavior, or boundary conditions, ask the user to clarify before generating that requirement. Ask as many questions as needed; do not generate requirements that contain your own assumptions.
 - Requirements must be testable and verifiable
 - Choose appropriate subject for EARS statements (system/service name for software)
-- If the project description lacks problem context (who is affected, current pain, desired outcome), clarify with the user before generating. Otherwise, generate initial version first and iterate with feedback.
 - Requirement headings in requirements.md MUST include a leading numeric ID only (for example: "Requirement 1", "1.", "2 Feature ..."); do not use alphabetic IDs like "Requirement A".
 
 ## Tool Guidance
@@ -81,7 +99,7 @@ Provide output in the language specified in spec.json with:
 
 ### Error Scenarios
 - **Missing Project Description**: If requirements.md lacks project description, ask user for feature details
-- **Ambiguous Requirements**: Propose initial version and iterate with user rather than asking many upfront questions
+- **Ambiguous Requirements**: Ask the user to clarify before generating. Do not generate requirements based on assumptions.
 - **Template Missing**: If template files don't exist, use inline fallback structure with warning
 - **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 - **Incomplete Requirements**: After generation, explicitly ask user if requirements cover all expected functionality

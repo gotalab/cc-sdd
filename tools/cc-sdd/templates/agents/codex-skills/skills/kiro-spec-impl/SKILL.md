@@ -33,6 +33,8 @@ The following research areas are independent and can be executed in parallel:
 1. **Spec context loading**: spec.json, requirements.md, design.md, tasks.md
 2. **Steering & patterns**: Steering files, coding conventions, existing code patterns
 
+If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.
+
 After all parallel research completes, synthesize implementation brief before starting TDD.
 
 **Validate approvals**:

@@ -36,6 +36,8 @@ The following research areas are independent and can be executed in parallel:
 1. **Template & principles**: Load matching template and steering-principles.md
 2. **Domain patterns**: Analyze codebase for domain-specific patterns using Glob/Grep/Read
 
+If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.
+
 After all parallel research completes, synthesize findings for steering document.
 
 4. **Generate custom steering**:

@@ -19,7 +19,7 @@ description: Initialize a new specification with detailed project description
 Generate a unique feature name from the project description ($ARGUMENTS) and initialize the specification structure.
 
 ## Execution Steps
-1. **Clarify Intent**: Verify the description captures who has the problem, their current reality, and what should change. If it only states a solution without the problem, ask clarifying questions until clear. Do not proceed with solution-only descriptions.
+1. **Clarify Intent**: The Project Description in requirements.md must contain three elements: (a) who has the problem, (b) current situation, (c) what should change. If any of these cannot be determined from the user's input, ask the user to clarify before proceeding. Ask as many questions as needed; do not fill in gaps with your own assumptions.
 2. **Check Uniqueness**: Verify `{{KIRO_DIR}}/specs/` for naming conflicts (append number suffix if needed)
 3. **Create Directory**: `{{KIRO_DIR}}/specs/[feature-name]/`
 4. **Initialize Files Using Templates**:

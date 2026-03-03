@@ -71,7 +71,8 @@ if [[ ! -f "$TASKS_MD" ]]; then
 fi
 
 # --- Count pending tasks ---
-PENDING=$(grep -c '^\s*- \[ \]' "$TASKS_MD" || true)
+# Count only sub-tasks (X.Y pattern) — major task headers are grouping, not execution units
+PENDING=$(grep '^\s*- \[ \]' "$TASKS_MD" | grep -c '[0-9]\.[0-9]' || true)
 
 if [[ "$PENDING" -eq 0 ]]; then
   echo "No pending tasks found in $TASKS_MD. Nothing to do."

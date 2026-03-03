@@ -42,6 +42,8 @@ The following research areas are independent and can be executed in parallel:
 2. **Tech analysis**: Config files, dependencies, frameworks for technology patterns and decisions
 3. **Structure analysis**: Directory tree, naming conventions, import patterns for organization
 
+If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.
+
 After all parallel research completes, synthesize patterns for steering files.
 
 3. Extract patterns (not lists):

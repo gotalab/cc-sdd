@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Ralph Loop Check Script (Codex adaptation)
-# Determines whether the implementation loop should continue or stop
-# Based on CC plugin's stop-hook.sh judgment logic
+# Manages iteration counting only — task completion judgment is delegated to the agent
+# Based on CC plugin's stop-hook.sh: domain-agnostic, iteration-based guard
 
 set -euo pipefail
 
@@ -15,10 +15,8 @@ if [[ -z "$TASKS_MD" ]] || [[ -z "$STATE_FILE" ]]; then
   exit 1
 fi
 
-if [[ ! -f "$TASKS_MD" ]]; then
-  echo "Error: tasks.md not found: $TASKS_MD" >&2
-  exit 1
-fi
+# TASKS_MD kept for interface compatibility but not used by this script
+# Task completion judgment is the agent's responsibility
 
 if [[ ! -f "$STATE_FILE" ]]; then
   echo "Error: State file not found: $STATE_FILE" >&2
@@ -37,10 +35,6 @@ if [[ ! "$ITERATION" =~ ^[0-9]+$ ]] || [[ ! "$MAX_ITERATIONS" =~ ^[0-9]+$ ]]; th
   exit 1
 fi
 
-# --- Count pending tasks ---
-PENDING=$(grep -c '^\s*- \[ \]' "$TASKS_MD" || true)
-COMPLETED=$(grep -c '^\s*- \[x\]' "$TASKS_MD" || true)
-
 # --- Increment iteration ---
 NEXT_ITERATION=$((ITERATION + 1))
 
@@ -49,23 +43,12 @@ TEMP_FILE="${STATE_FILE}.tmp.$$"
 sed "s/^iteration: .*/iteration: $NEXT_ITERATION/" "$STATE_FILE" > "$TEMP_FILE"
 mv "$TEMP_FILE" "$STATE_FILE"
 
-# --- Judgment ---
-if [[ "$PENDING" -eq 0 ]]; then
-  echo "STATUS: ALL_COMPLETE"
-  echo "COMPLETED: $COMPLETED"
-  echo "ITERATION: $NEXT_ITERATION/$MAX_ITERATIONS"
-  exit 0
-fi
-
+# --- Judgment: iteration guard only ---
 if [[ "$NEXT_ITERATION" -ge "$MAX_ITERATIONS" ]]; then
   echo "STATUS: MAX_ITERATIONS_REACHED"
-  echo "PENDING: $PENDING"
-  echo "COMPLETED: $COMPLETED"
   echo "ITERATION: $NEXT_ITERATION/$MAX_ITERATIONS"
   exit 0
 fi
 
 echo "STATUS: CONTINUE"
-echo "PENDING: $PENDING"
-echo "COMPLETED: $COMPLETED"
 echo "ITERATION: $NEXT_ITERATION/$MAX_ITERATIONS"
