@@ -1,6 +1,8 @@
 ---
 name: kiro-steering
 description: Manage {{KIRO_DIR}}/steering/ as persistent project knowledge
+metadata:
+  shared-rules: "steering-principles.md"
 ---
 
 
@@ -51,7 +53,7 @@ After all parallel research completes, synthesize patterns for steering files.
    - Tech: Frameworks, decisions, conventions
    - Structure: Organization, naming, imports
 4. Generate steering files (follow templates)
-5. Load principles from `{{KIRO_DIR}}/settings/rules/steering-principles.md`
+5. Load principles from `rules/steering-principles.md` from this skill's directory
 6. Present summary for review
 
 **Focus**: Patterns that guide decisions, not catalogs of files/dependencies.
@@ -75,7 +77,7 @@ After all parallel research completes, synthesize patterns for steering files.
 
 ## Granularity Principle
 
-From `{{KIRO_DIR}}/settings/rules/steering-principles.md`:
+From `rules/steering-principles.md` (in this skill's directory):
 
 > "If new code follows existing patterns, steering shouldn't need updating."
 

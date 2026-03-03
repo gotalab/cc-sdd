@@ -2,6 +2,8 @@
 name: kiro-steering-custom
 description: Create custom steering documents for specialized project contexts. Use when creating domain-specific steering files.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+metadata:
+  shared-rules: "steering-principles.md"
 ---
 
 # kiro-steering-custom Skill
@@ -26,7 +28,7 @@ You are a specialized skill for creating custom steering documents beyond core f
 If steering context is already available from conversation, skip redundant file reads.
 Otherwise:
 - Check `{{KIRO_DIR}}/settings/templates/steering-custom/` for available templates
-- Read steering principles: `{{KIRO_DIR}}/settings/rules/steering-principles.md`
+- Read `rules/steering-principles.md` from this skill's directory for steering principles
 
 ## Workflow
 
@@ -50,7 +52,7 @@ After all parallel research completes, synthesize findings for steering document
 
 4. **Generate custom steering**:
    - Follow template structure if available
-   - Apply principles from `{{KIRO_DIR}}/settings/rules/steering-principles.md`
+   - Apply principles from `rules/steering-principles.md` from this skill's directory
    - Focus on patterns, not exhaustive lists
    - Keep to 100-200 lines (2-3 minute read)
 
@@ -72,7 +74,7 @@ Load template when needed, customize for project.
 
 ## Steering Principles
 
-From `{{KIRO_DIR}}/settings/rules/steering-principles.md`:
+From `rules/steering-principles.md` (in this skill's directory):
 
 - **Patterns over lists**: Document patterns, not every file/component
 - **Single domain**: One topic per file

@@ -2,6 +2,8 @@
 name: kiro-spec-requirements
 description: Generate EARS-format requirements based on project description and steering context. Use when generating requirements from project description.
 allowed-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, AskUserQuestion
+metadata:
+  shared-rules: "ears-format.md"
 ---
 
 # kiro-spec-requirements Skill
@@ -31,7 +33,7 @@ Otherwise, load all necessary context:
   - This provides complete project memory and context
 
 ### Step 2: Read Guidelines
-- Read `{{KIRO_DIR}}/settings/rules/ears-format.md` for EARS syntax rules
+- Read `rules/ears-format.md` from this skill's directory for EARS syntax rules
 - Read `{{KIRO_DIR}}/settings/templates/specs/requirements.md` for document structure
 
 #### Parallel Research

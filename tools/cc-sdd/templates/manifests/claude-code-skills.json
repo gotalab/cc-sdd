@@ -21,11 +21,11 @@
       "when": { "agent": "claude-code-skills" }
     },
     {
-      "id": "settings_common",
+      "id": "settings_templates",
       "source": {
         "type": "templateDir",
-        "fromDir": "templates/shared/settings",
-        "toDir": "{{KIRO_DIR}}/settings"
+        "fromDir": "templates/shared/settings/templates",
+        "toDir": "{{KIRO_DIR}}/settings/templates"
       },
       "when": { "agent": "claude-code-skills" }
     }

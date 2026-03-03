@@ -1,6 +1,8 @@
 ---
 name: kiro-validate-gap
 description: Analyze implementation gap between requirements and existing codebase
+metadata:
+  shared-rules: "gap-analysis.md"
 ---
 
 
@@ -30,7 +32,7 @@ Analyze implementation gap for feature **$1** based on approved requirements and
      - This provides complete project memory and context
 
 2. **Read Analysis Guidelines**:
-   - Read `{{KIRO_DIR}}/settings/rules/gap-analysis.md` for comprehensive analysis framework
+   - Read `rules/gap-analysis.md` from this skill's directory for comprehensive analysis framework
 
 #### Parallel Research
 

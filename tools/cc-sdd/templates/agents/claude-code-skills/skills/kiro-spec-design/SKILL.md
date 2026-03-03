@@ -3,6 +3,8 @@ name: kiro-spec-design
 description: Generate comprehensive technical design translating requirements (WHAT) into architecture (HOW) with discovery process. Use when creating architecture from requirements.
 allowed-tools: Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
 argument-hint: <feature-name> [-y]
+metadata:
+  shared-rules: "design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md"
 ---
 
 # kiro-spec-design Skill
@@ -27,7 +29,7 @@ Otherwise, load all necessary context:
 - `{{KIRO_DIR}}/specs/{feature}/spec.json`, `requirements.md`, `design.md` (if exists)
 - **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
 - `{{KIRO_DIR}}/settings/templates/specs/design.md` for document structure
-- `{{KIRO_DIR}}/settings/rules/design-principles.md` for design principles
+- Read `rules/design-principles.md` from this skill's directory for design principles
 
 **Validate requirements approval**:
 - If auto-approve flag is true: Auto-approve requirements in spec.json
@@ -46,7 +48,7 @@ Otherwise, load all necessary context:
 2. **Execute Appropriate Discovery Process**:
 
    **For Complex/New Features**:
-   - Read and execute `{{KIRO_DIR}}/settings/rules/design-discovery-full.md`
+   - Read and execute `rules/design-discovery-full.md` from this skill's directory
    - Conduct thorough research using WebSearch/WebFetch:
      - Latest architectural patterns and best practices
      - External dependency verification (APIs, libraries, versions, compatibility)
@@ -54,7 +56,7 @@ Otherwise, load all necessary context:
      - Performance benchmarks and security considerations
 
    **For Extensions**:
-   - Read and execute `{{KIRO_DIR}}/settings/rules/design-discovery-light.md`
+   - Read and execute `rules/design-discovery-light.md` from this skill's directory
    - Focus on integration points, existing patterns, compatibility
    - Use Grep to analyze existing codebase patterns
 
@@ -81,7 +83,7 @@ After all parallel research completes, synthesize findings before proceeding.
 
 **Apply design synthesis to discovery findings before writing.**
 
-- Read and apply `{{KIRO_DIR}}/settings/rules/design-synthesis.md`
+- Read and apply `rules/design-synthesis.md` from this skill's directory
 - This step requires the full picture from discovery — do not parallelize or delegate to sub-agents
 - Record synthesis outcomes (generalizations found, build-vs-adopt decisions, simplifications) in `research.md`
 
@@ -89,7 +91,7 @@ After all parallel research completes, synthesize findings before proceeding.
 
 1. **Load Design Template and Rules**:
    - Read `{{KIRO_DIR}}/settings/templates/specs/design.md` for structure
-   - Read `{{KIRO_DIR}}/settings/rules/design-principles.md` for principles
+   - Read `rules/design-principles.md` from this skill's directory for principles
 
 2. **Generate Design Document**:
    - **Follow specs/design.md template structure and generation instructions strictly**
@@ -163,7 +165,7 @@ Provide brief summary in the language specified in spec.json:
 - **Proceed**: Continue with generation but note limitation in output
 
 **Discovery Complexity Unclear**:
-- **Default**: Use full discovery process (`{{KIRO_DIR}}/settings/rules/design-discovery-full.md`)
+- **Default**: Use full discovery process (`rules/design-discovery-full.md` from this skill's directory)
 - **Rationale**: Better to over-research than miss critical context
 - **Invalid Requirement IDs**:
   - **Stop Execution**: If requirements.md is missing numeric IDs or uses non-numeric headings (for example, "Requirement A"), stop and instruct the user to fix requirements.md before continuing.

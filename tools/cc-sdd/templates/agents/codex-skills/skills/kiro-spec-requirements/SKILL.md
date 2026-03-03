@@ -1,6 +1,8 @@
 ---
 name: kiro-spec-requirements
 description: Generate comprehensive requirements for a specification
+metadata:
+  shared-rules: "ears-format.md"
 ---
 
 
@@ -30,7 +32,7 @@ Generate complete requirements for feature **$1** based on the project descripti
      - This provides complete project memory and context
 
 2. **Read Guidelines**:
-   - Read `{{KIRO_DIR}}/settings/rules/ears-format.md` for EARS syntax rules
+   - Read `rules/ears-format.md` from this skill's directory for EARS syntax rules
    - Read `{{KIRO_DIR}}/settings/templates/specs/requirements.md` for document structure
 
 #### Parallel Research

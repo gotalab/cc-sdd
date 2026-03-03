@@ -3,6 +3,8 @@ name: kiro-spec-tasks
 description: Generate implementation tasks from requirements and design. Use when creating actionable task lists.
 allowed-tools: Read, Write, Edit, Glob, Grep
 argument-hint: <feature-name> [-y] [--sequential]
+metadata:
+  shared-rules: "tasks-generation.md, tasks-parallel-analysis.md"
 ---
 
 # kiro-spec-tasks Skill
@@ -37,8 +39,8 @@ Otherwise, load all necessary context:
 
 ### Step 2: Generate Implementation Tasks
 
-- Read `{{KIRO_DIR}}/settings/rules/tasks-generation.md` for principles
-- Read `{{KIRO_DIR}}/settings/rules/tasks-parallel-analysis.md` for parallel judgement criteria
+- Read `rules/tasks-generation.md` from this skill's directory for principles
+- Read `rules/tasks-parallel-analysis.md` from this skill's directory for parallel judgement criteria
 - Read `{{KIRO_DIR}}/settings/templates/specs/tasks.md` for format (supports `(P)` markers)
 
 #### Parallel Research

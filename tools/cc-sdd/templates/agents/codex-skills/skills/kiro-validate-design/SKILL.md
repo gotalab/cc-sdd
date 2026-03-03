@@ -1,6 +1,8 @@
 ---
 name: kiro-validate-design
 description: Interactive technical design quality review and validation
+metadata:
+  shared-rules: "design-review.md"
 ---
 
 
@@ -30,7 +32,7 @@ Interactive design quality review for feature **$1** based on approved requireme
 #### Parallel Research
 
 The following research areas are independent and can be executed in parallel:
-1. **Context & rules loading**: Spec documents, steering files, and `{{KIRO_DIR}}/settings/rules/design-review.md` review criteria
+1. **Context & rules loading**: Spec documents, steering files, and `rules/design-review.md` from this skill's directory for review criteria
 2. **Codebase pattern survey**: Gather existing architecture patterns, naming conventions, and component structure from the codebase to use as reference during review
 
 If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.

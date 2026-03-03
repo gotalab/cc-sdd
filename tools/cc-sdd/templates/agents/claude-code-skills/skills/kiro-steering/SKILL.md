@@ -2,6 +2,8 @@
 name: kiro-steering
 description: Maintain {{KIRO_DIR}}/steering/ as persistent project memory (bootstrap/sync). Use when initializing or updating steering documents.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+metadata:
+  shared-rules: "steering-principles.md"
 ---
 
 # kiro-steering Skill
@@ -30,7 +32,7 @@ If steering context is already available from conversation, skip redundant file 
 
 - For Bootstrap mode: Read templates from `{{KIRO_DIR}}/settings/templates/steering/`
 - For Sync mode: Read all existing `{{KIRO_DIR}}/steering/*.md` files
-- Read steering principles: `{{KIRO_DIR}}/settings/rules/steering-principles.md`
+- Read `rules/steering-principles.md` from this skill's directory for steering principles
 
 ## Scenario Detection
 
@@ -60,7 +62,7 @@ After all parallel research completes, synthesize patterns for steering files.
    - Tech: Frameworks, decisions, conventions
    - Structure: Organization, naming, imports
 4. Generate steering files (follow templates)
-5. Load principles from `{{KIRO_DIR}}/settings/rules/steering-principles.md`
+5. Load principles from `rules/steering-principles.md` from this skill's directory
 6. Present summary for review
 
 **Focus**: Patterns that guide decisions, not catalogs of files/dependencies.
@@ -84,7 +86,7 @@ After all parallel research completes, synthesize patterns for steering files.
 
 ## Granularity Principle
 
-From `{{KIRO_DIR}}/settings/rules/steering-principles.md`:
+From `rules/steering-principles.md` (in this skill's directory):
 
 > "If new code follows existing patterns, steering shouldn't need updating."
 

@@ -3,6 +3,8 @@ name: kiro-validate-gap
 description: Analyze implementation gap between requirements and existing codebase. Use when planning integration with existing systems.
 allowed-tools: Read, Grep, Glob, WebSearch, WebFetch
 argument-hint: <feature-name>
+metadata:
+  shared-rules: "gap-analysis.md"
 ---
 
 # kiro-validate-gap Skill
@@ -29,7 +31,7 @@ Otherwise, load all necessary context:
 - **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory
 
 ### Step 2: Read Analysis Guidelines
-- Read `{{KIRO_DIR}}/settings/rules/gap-analysis.md` for comprehensive analysis framework
+- Read `rules/gap-analysis.md` from this skill's directory for comprehensive analysis framework
 
 ### Step 3: Execute Gap Analysis
 

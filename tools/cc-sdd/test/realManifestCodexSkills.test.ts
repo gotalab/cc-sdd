@@ -52,7 +52,7 @@ describe('real codex-skills manifest', () => {
     expect(out).toMatch(/Plan \(dry-run\)/);
     expect(out).toContain('[templateDir] skills: templates/agents/codex-skills/skills -> .agents/skills');
     expect(out).toContain('[templateFile] doc_main: templates/agents/codex-skills/docs/AGENTS.md -> ./AGENTS.md');
-    expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
+    expect(out).toContain('[templateDir] settings_templates: templates/shared/settings/templates -> .kiro/settings/templates');
   });
 
   it('apply writes AGENTS.md, skill files, and settings to cwd', async () => {
@@ -94,6 +94,30 @@ describe('real codex-skills manifest', () => {
     const skillSpecDesignText = await readFile(skillSpecDesign, 'utf8');
     expect(skillSpecDesignText).toContain('Parallel Research');
     expect(skillSpecDesignText).not.toMatch(/context: fork/);
+
+    // Shared rules resolved from templates/shared/settings/rules/
+    const designRules = [
+      'design-principles.md',
+      'design-discovery-full.md',
+      'design-discovery-light.md',
+      'design-synthesis.md',
+    ];
+    for (const rule of designRules) {
+      expect(await exists(join(cwd, `.agents/skills/kiro-spec-design/rules/${rule}`))).toBe(true);
+    }
+    expect(await exists(join(cwd, '.agents/skills/kiro-validate-design/rules/design-review.md'))).toBe(true);
+    expect(await exists(join(cwd, '.agents/skills/kiro-spec-requirements/rules/ears-format.md'))).toBe(true);
+    expect(await exists(join(cwd, '.agents/skills/kiro-validate-gap/rules/gap-analysis.md'))).toBe(true);
+    expect(await exists(join(cwd, '.agents/skills/kiro-steering/rules/steering-principles.md'))).toBe(true);
+    expect(await exists(join(cwd, '.agents/skills/kiro-steering-custom/rules/steering-principles.md'))).toBe(true);
+    expect(await exists(join(cwd, '.agents/skills/kiro-spec-tasks/rules/tasks-generation.md'))).toBe(true);
+    expect(await exists(join(cwd, '.agents/skills/kiro-spec-tasks/rules/tasks-parallel-analysis.md'))).toBe(true);
+
+    // Skills without shared-rules should NOT have rules/ directories
+    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-impl', 'kiro-ralph-impl', 'kiro-validate-impl'];
+    for (const skill of noRulesSkills) {
+      expect(await exists(join(cwd, `.agents/skills/${skill}/rules`))).toBe(false);
+    }
 
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });

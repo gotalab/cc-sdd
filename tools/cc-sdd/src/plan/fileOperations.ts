@@ -6,6 +6,7 @@ import { contextFromResolved } from '../template/fromResolved.js';
 import { renderJsonTemplate, renderTemplateString } from '../template/renderer.js';
 import { categorizeTarget, type InstallCategory } from './categories.js';
 import { getAgentDefinition } from '../agents/registry.js';
+import { parseSharedRules, buildSharedRuleOperations } from './sharedRules.js';
 
 export type SourceMode = 'static' | 'template-text' | 'template-json';
 
@@ -153,8 +154,34 @@ export const buildFileOperations = async (
       const srcDir = path.resolve(templatesRoot, art.source.fromDir);
       const destDir = path.resolve(cwd, art.source.toDir);
       const files = await walkDir(srcDir);
+
+      // Collect shared-rules declarations from SKILL.md files
+      const sharedRulesBySkill = new Map<string, string[]>();
+      for (const src of files) {
+        if (path.basename(src) === 'SKILL.md') {
+          const content = await readFile(src, 'utf8');
+          const rules = parseSharedRules(content);
+          if (rules.length > 0) {
+            const skillDir = path.dirname(src);
+            const skillRel = path.relative(srcDir, skillDir);
+            sharedRulesBySkill.set(skillRel, rules);
+          }
+        }
+      }
+
       for (const src of files) {
         const rel = path.relative(srcDir, src);
+
+        // Skip physical rules/ files for skills that declare shared-rules
+        if (sharedRulesBySkill.size > 0) {
+          const parts = rel.split(path.sep);
+          const rulesIdx = parts.indexOf('rules');
+          if (rulesIdx >= 0) {
+            const skillRel = parts.slice(0, rulesIdx).join(path.sep);
+            if (sharedRulesBySkill.has(skillRel)) continue;
+          }
+        }
+
         const { outName, mode } = transformTemplateOutput(rel);
         const destAbs = path.join(destDir, outName);
         const relTarget = path.relative(cwd, destAbs);
@@ -176,6 +203,16 @@ export const buildFileOperations = async (
           },
         });
       }
+
+      // Append shared rule operations for each skill
+      for (const [skillRel, ruleNames] of sharedRulesBySkill) {
+        const skillDestDir = path.join(destDir, skillRel);
+        const sharedOps = await buildSharedRuleOperations(
+          ruleNames, skillDestDir, templatesRoot, art.id, cwd, resolved, ctx,
+        );
+        operations.push(...sharedOps);
+      }
+
       continue;
     }
   }
