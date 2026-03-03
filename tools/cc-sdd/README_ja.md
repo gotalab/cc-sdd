@@ -18,7 +18,7 @@
 - ✅ **品質ゲート** — validate-gap/design/impl コマンドでコーディング前に統合問題を検出
 - ✅ **一度だけカスタマイズ** — テンプレートをチームプロセスに適応、全エージェントが同じワークフローに従う
 - ✅ **統一ワークフロー** — 8エージェント × 13言語で同じ11コマンドプロセスを共有
-- ✅ **Codex Skills対応** — `--codex-skills` で `.agents/skills/` に 12 個の `SKILL.md` を展開
+- ✅ **Codex Skills対応** — `--codex-skills` で `.agents/skills/` に 13 個の `SKILL.md` を展開
 - ⚠️ **Codex promptsはレガシー** — `--codex` は互換性維持のため残しており、新規導入では非推奨（`--codex-skills` 推奨）
 - ✅ **Codex collaboration modes対応** — 長時間タスクのオーケストレーション向上のため、`~/.codex/config.toml` に `features.collaboration_modes = true` を設定可能
 
@@ -32,7 +32,7 @@ Claude Code、Cursor IDE、Gemini CLI、Codex CLI（Prompts/Skills）、GitHub C
 ワンコマンドで、主要AIコーディングエージェント向けの**AI-DLC（AI Driven Development Life Cycle）× SDD（Spec-Driven Development）**ワークフローを導入。要件・設計・タスク・ステアリングのテンプレートもチームの承認プロセスに沿う形で自動生成されます。
 
 ```bash
-# 基本インストール（デフォルト: 英語、Claude Code）
+# 基本インストール（デフォルト: 英語、Claude Code Skills）
 npx cc-sdd@latest
 
 # 言語オプション（デフォルト: --lang en）
@@ -41,7 +41,7 @@ npx cc-sdd@latest --lang zh-TW # 繁体字中国語
 npx cc-sdd@latest --lang es    # スペイン語
 ...（対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el）
 
-# エージェントオプション（デフォルト: claude-code / --claude）
+# エージェントオプション（デフォルト: claude-code-skills / --claude-skills）
 npx cc-sdd@latest --claude --lang ja        # Claude Code（11コマンド、対応言語は任意）
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents（12コマンド + 9サブエージェント）
 npx cc-sdd@latest --cursor --lang ja        # Cursor IDE
@@ -112,7 +112,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 1. **仕様が単一情報源** — 要件・設計・タスク・Supporting References まで1セットで揃い、承認が早い。
 2. **Greenfield / Brownfield 両対応** — 新機能は minutes で起動、既存システムは validate 系コマンドと Project Memory で安全に拡張。
 3. **複数エージェントを同時に活用** — Claude / Cursor / Codex（Prompts/Skills） / Gemini / Copilot / Qwen / Windsurf が同じテンプレ/ルールを共有。
-4. **カスタマイズは一度だけ** — `.kiro/settings/templates/` と `.kiro/settings/rules/` を編集すれば全エージェントへ即反映。
+4. **カスタマイズは一度だけ** — `.kiro/settings/templates/` を編集すれば全エージェントへ即反映。非スキルエージェントは `.kiro/settings/rules/` も使用。
 
 ## ✨ 主要機能
 
@@ -207,14 +207,16 @@ npx cc-sdd@latest --kiro-dir docs
 
 ```
 project/
-├── .agents/skills/          # 12のスキル（Codex CLI Skills モード）
-├── .claude/commands/kiro/    # 11のスラッシュコマンド
+├── .claude/skills/           # 13のスキル（Claude Code Skills モード、デフォルト）
+├── .claude/commands/kiro/    # 11のスラッシュコマンド（Claude Code）
+├── .agents/skills/           # 13のスキル（Codex CLI Skills モード）
 ├── .codex/prompts/           # 11のプロンプトコマンド（Codex CLIレガシーモード）
 ├── .github/prompts/          # 11のプロンプトコマンド（GitHub Copilot）
 ├── .windsurf/workflows/      # 11のワークフローファイル（Windsurf IDE）
-├── .kiro/settings/           # 共通ルールとテンプレート（{{KIRO_DIR}} を展開）
+├── .kiro/settings/templates/ # 共通テンプレート（{{KIRO_DIR}} を展開）
+├── .kiro/settings/rules/     # 共通ルール（非スキルエージェントのみ）
 ├── .kiro/specs/             # 機能仕様書
-├── .kiro/steering/          # AI指導ルール
+├── .kiro/steering/          # AI指導ドキュメント
 └── CLAUDE.md (Claude Code)    # プロジェクト設定
 ```
 

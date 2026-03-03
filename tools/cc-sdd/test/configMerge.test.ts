@@ -10,7 +10,7 @@ describe('mergeConfigAndArgs', () => {
     const cfg: UserConfig = {};
     const out = mergeConfigAndArgs(args, cfg, runtimeDarwin);
     const expected: Partial<ResolvedConfig> = {
-      agent: 'claude-code',
+      agent: 'claude-code-skills',
       os: 'auto',
       resolvedOs: 'mac',
       lang: 'en',
@@ -22,7 +22,7 @@ describe('mergeConfigAndArgs', () => {
       dryRun: false,
     };
     expect(out).toMatchObject(expected);
-    expect(out.layout.commandsDir).toBe('.claude/commands/kiro');
+    expect(out.layout.commandsDir).toBe('.claude/skills');
   });
 
   it('respects precedence: CLI > config > defaults', () => {
@@ -77,11 +77,11 @@ describe('mergeConfigAndArgs', () => {
     const args = parseArgs([]);
     const cfg: UserConfig = {
       agentLayouts: {
-        'claude-code': { commandsDir: '.claude/commands/custom' },
+        'claude-code-skills': { commandsDir: '.claude/skills/custom' },
       },
     };
     const out = mergeConfigAndArgs(args, cfg, runtimeDarwin);
-    expect(out.layout.commandsDir).toBe('.claude/commands/custom');
+    expect(out.layout.commandsDir).toBe('.claude/skills/custom');
   });
 
   describe('effectiveOverwrite logic', () => {

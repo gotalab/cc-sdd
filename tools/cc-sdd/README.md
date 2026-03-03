@@ -18,7 +18,7 @@ English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">�
 - ✅ **Quality Gates** — validate-gap/design/impl commands catch integration issues before coding
 - ✅ **Customize Once** — Adapt templates to your team's process; all agents follow the same workflow
 - ✅ **Universal Workflow** — 8 agents × 13 languages share the same 11-command process
-- ✅ **Codex Skills support** — `--codex-skills` installs 12 `SKILL.md` packages into `.agents/skills/`
+- ✅ **Codex Skills support** — `--codex-skills` installs 13 `SKILL.md` packages into `.agents/skills/`
 - ⚠️ **Codex prompts are legacy** — `--codex` is kept for compatibility and is non-recommended for new projects
 - ✅ **Codex collaboration modes** — Enable `features.collaboration_modes = true` in `~/.codex/config.toml` for better long-running task orchestration
 
@@ -32,7 +32,7 @@ English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">�
 Run one command to install **AI-DLC** (AI Driven Development Lifecycle) with **SDD** (Spec-Driven Development) workflows across your preferred AI coding agent. cc-sdd also scaffolds team-aligned templates so generated requirements, design reviews, task plans, and steering docs fit your approval flow.
 
 ```bash
-# Basic installation (defaults: English docs, Claude Code)
+# Basic installation (defaults: English docs, Claude Code Skills)
 npx cc-sdd@latest
 
 # With language options (default: --lang en)
@@ -41,7 +41,7 @@ npx cc-sdd@latest --lang zh-TW # Traditional Chinese
 npx cc-sdd@latest --lang es    # Spanish
 ... (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el supported)
 
-# With agent options (default: claude-code / --claude)
+# With agent options (default: claude-code-skills / --claude-skills)
 npx cc-sdd@latest --claude        # Claude Code (11 commands, en/ja/zh-TW/...)
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE (choose any supported lang)
@@ -112,7 +112,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 1. **Single source specs** – requirements, design, tasks, and supporting references stay in sync, so reviewers approve faster.
 2. **Greenfield or brownfield** – net-new features boot in minutes, while validate gates and project memory keep legacy upgrades safe.
 3. **Mix any agent** – the same templates and rules power Claude, Cursor, Codex (Prompts/Skills), Gemini, Copilot, Qwen, and Windsurf simultaneously.
-4. **Customize once** – edit `.kiro/settings/templates/` or `.kiro/settings/rules/` and every agent/slash command reflects your workflow.
+4. **Customize once** – edit `.kiro/settings/templates/` and every agent/slash command reflects your workflow. Non-skills agents also use `.kiro/settings/rules/`.
 
 ## ✨ Key Features
 
@@ -209,14 +209,16 @@ After installation, your project gets:
 
 ```
 project/
-├── .agents/skills/          # 12 skills (Codex CLI skills mode)
-├── .claude/commands/kiro/    # 11 slash commands
+├── .claude/skills/           # 13 skills (Claude Code Skills mode, default)
+├── .claude/commands/kiro/    # 11 slash commands (Claude Code)
+├── .agents/skills/           # 13 skills (Codex CLI skills mode)
 ├── .codex/prompts/           # 11 prompt commands (Codex CLI legacy mode)
 ├── .github/prompts/          # 11 prompt commands (GitHub Copilot)
 ├── .windsurf/workflows/      # 11 workflow files (Windsurf IDE)
-├── .kiro/settings/           # Shared rules & templates (variables resolved with {{KIRO_DIR}})
+├── .kiro/settings/templates/ # Shared templates (variables resolved with {{KIRO_DIR}})
+├── .kiro/settings/rules/     # Shared rules (non-skills agents only)
 ├── .kiro/specs/              # Feature specifications
-├── .kiro/steering/           # AI guidance rules
+├── .kiro/steering/           # AI guidance documents
 └── CLAUDE.md (Claude Code)    # Project configuration
 ```
 

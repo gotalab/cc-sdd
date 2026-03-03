@@ -18,7 +18,7 @@
 - ✅ **品質關卡** — validate-gap/design/impl 指令在編碼前捕捉整合問題
 - ✅ **一次自訂** — 將模板適應至團隊流程；所有代理遵循相同工作流程
 - ✅ **統一工作流程** — 8 代理 × 13 語言共享相同的 11 指令流程
-- ✅ **Codex Skills 支援** — 使用 `--codex-skills` 可在 `.agents/skills/` 產生 12 個 `SKILL.md` 套件
+- ✅ **Codex Skills 支援** — 使用 `--codex-skills` 可在 `.agents/skills/` 產生 13 個 `SKILL.md` 套件
 - ⚠️ **Codex prompts 為 legacy 模式** — `--codex` 保留相容性用途，不建議新專案使用（建議改用 `--codex-skills`）
 - ✅ **Codex collaboration modes 可用** — 建議在 `~/.codex/config.toml` 設定 `features.collaboration_modes = true` 以提升長任務協作執行
 
@@ -29,7 +29,7 @@
 只需一個指令，即可為主要 AI 程式代理匯入 **AI-DLC（AI Driven Development Life Cycle）× SDD（Spec-Driven Development）** 工作流程。需求、設計、任務、指導文件也會同步生成，並對齊團隊既有批准流程。
 
 ```bash
-# 基本安裝（預設：英文文件，Claude Code 代理）
+# 基本安裝（預設：英文文件，Claude Code Skills 代理）
 npx cc-sdd@latest
 
 # 語言選項（預設：--lang en）
@@ -38,7 +38,7 @@ npx cc-sdd@latest --lang ja    # 日語
 npx cc-sdd@latest --lang es    # 西班牙語
 ...（支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el）
 
-# 代理選項（預設：claude-code / --claude）
+# 代理選項（預設：claude-code-skills / --claude-skills）
 npx cc-sdd@latest --claude --lang zh-TW           # Claude Code（11 個指令，語言可任選）
 npx cc-sdd@latest --claude-agent --lang zh-TW     # Claude Code Subagents（12 個指令 + 9 個子代理）
 npx cc-sdd@latest --cursor --lang zh-TW           # Cursor IDE
@@ -109,7 +109,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 1. **規格是單一真實來源** — 需求、設計、任務、Supporting References 同步產出，審查更快。
 2. **Greenfield / Brownfield 皆適用** — 新功能快速起步；既有系統靠 validate 系列與 Project Memory 保持安全。
 3. **可同時使用多個代理** — Claude、Cursor、Codex（Prompts/Skills）、Gemini、Copilot、Qwen、OpenCode、Windsurf 共用同一套模板/規則。
-4. **自訂只要一次** — 編輯 `.kiro/settings/templates/` 或 `.kiro/settings/rules/`，所有代理立即套用。
+4. **自訂只要一次** — 編輯 `.kiro/settings/templates/`，所有代理立即套用。非技能代理也使用 `.kiro/settings/rules/`。
 
 ## ✨ 主要功能
 
@@ -204,14 +204,16 @@ npx cc-sdd@latest --kiro-dir docs
 
 ```
 project/
-├── .agents/skills/          # 12 個技能（Codex CLI Skills 模式）
-├── .claude/commands/kiro/    # 11 個斜線指令
+├── .claude/skills/           # 13 個技能（Claude Code Skills 模式，預設）
+├── .claude/commands/kiro/    # 11 個斜線指令（Claude Code）
+├── .agents/skills/           # 13 個技能（Codex CLI Skills 模式）
 ├── .codex/prompts/           # 11 個提示指令（Codex CLI legacy 模式）
 ├── .github/prompts/          # 11 個提示指令（GitHub Copilot）
 ├── .windsurf/workflows/      # 11 個工作流程檔案（Windsurf IDE）
-├── .kiro/settings/           # 共用規則與模板（以 {{KIRO_DIR}} 展開）
+├── .kiro/settings/templates/ # 共用模板（以 {{KIRO_DIR}} 展開）
+├── .kiro/settings/rules/     # 共用規則（非技能代理專用）
 ├── .kiro/specs/             # 功能規格文件
-├── .kiro/steering/          # AI 指導規則
+├── .kiro/steering/          # AI 指導文件
 └── CLAUDE.md (Claude Code)    # 專案設定
 ```
 

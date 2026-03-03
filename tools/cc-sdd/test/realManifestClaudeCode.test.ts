@@ -34,7 +34,7 @@ const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/claude-cod
 describe('real claude-code manifest', () => {
   it('dry-run prints plan for claude-code.json with placeholders applied', async () => {
     const ctx = makeIO();
-    const code = await runCli(['--dry-run', '--lang', 'en', '--manifest', manifestPath], runtime, ctx.io, {});
+    const code = await runCli(['--dry-run', '--lang', 'en', '--claude', '--manifest', manifestPath], runtime, ctx.io, {});
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
@@ -46,7 +46,7 @@ describe('real claude-code manifest', () => {
   it('apply writes CLAUDE.md and command files to cwd', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
-    const code = await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
+    const code = await runCli(['--lang', 'en', '--claude', '--manifest', manifestPath, '--overwrite=force'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0);
 
     const doc = join(cwd, 'CLAUDE.md');
@@ -70,7 +70,7 @@ describe('real claude-code manifest (linux)', () => {
 
   it('dry-run prints plan including commands for linux via windows template', async () => {
     const ctx = makeIO();
-    const code = await runCli(['--dry-run', '--lang', 'en', '--manifest', manifestPath], runtimeLinux, ctx.io, {});
+    const code = await runCli(['--dry-run', '--lang', 'en', '--claude', '--manifest', manifestPath], runtimeLinux, ctx.io, {});
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
@@ -82,7 +82,7 @@ describe('real claude-code manifest (linux)', () => {
   it('apply writes CLAUDE.md and command files to cwd on linux', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
-    const code = await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force'], runtimeLinux, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
+    const code = await runCli(['--lang', 'en', '--claude', '--manifest', manifestPath, '--overwrite=force'], runtimeLinux, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0);
 
     const doc = join(cwd, 'CLAUDE.md');
