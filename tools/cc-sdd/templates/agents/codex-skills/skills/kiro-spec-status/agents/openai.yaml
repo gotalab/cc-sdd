@@ -1,0 +1,6 @@
+interface:
+  display_name: "Spec Status"
+  short_description: "Show specification status and progress"
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Spec Init"
+  short_description: "Initialize a new specification with detailed project description"
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Steering"
+  short_description: "Manage steering directory as persistent project knowledge"
+
+policy:
+  allow_implicit_invocation: false

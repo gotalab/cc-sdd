@@ -98,7 +98,7 @@ describe('real codex-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });
 
-  it('generates exactly 12 skill directories', async () => {
+  it('generates exactly 13 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(
@@ -122,11 +122,28 @@ describe('real codex-skills manifest', () => {
       'kiro-validate-gap',
       'kiro-validate-design',
       'kiro-validate-impl',
+      'kiro-ralph-impl',
     ];
 
     for (const skill of expectedSkills) {
       const skillPath = join(cwd, `.agents/skills/${skill}/SKILL.md`);
       expect(await exists(skillPath)).toBe(true);
+    }
+
+    // kiro-ralph-impl has a templates subdirectory with ralph-prompt.md
+    const ralphPrompt = join(cwd, '.agents/skills/kiro-ralph-impl/templates/ralph-prompt.md');
+    expect(await exists(ralphPrompt)).toBe(true);
+
+    // kiro-ralph-impl has scripts directory with loop management scripts
+    const scriptsDir = join(cwd, '.agents/skills/kiro-ralph-impl/scripts');
+    for (const script of ['setup-loop.sh', 'check-loop.sh', 'next-task.sh', 'complete-task.sh']) {
+      expect(await exists(join(scriptsDir, script))).toBe(true);
+    }
+
+    // every skill has agents/openai.yaml
+    for (const skill of expectedSkills) {
+      const yamlPath = join(cwd, `.agents/skills/${skill}/agents/openai.yaml`);
+      expect(await exists(yamlPath)).toBe(true);
     }
   });
 });

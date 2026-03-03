@@ -38,6 +38,7 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
   - `$kiro-validate-design {feature}` (optional: design review)
   - `$kiro-spec-tasks {feature} [-y]`
 - Phase 2 (Implementation): `$kiro-spec-impl {feature} [tasks]`
+  - ALT: `$kiro-ralph-impl {feature}` (autonomous loop — implements all tasks)
   - `$kiro-validate-impl {feature}` (optional: after implementation)
 - Progress check: `$kiro-spec-status {feature}` (use anytime)
 

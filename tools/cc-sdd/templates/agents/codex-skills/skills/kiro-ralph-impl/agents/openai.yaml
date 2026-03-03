@@ -1,0 +1,6 @@
+interface:
+  display_name: "Ralph Implementation"
+  short_description: "Autonomous implementation of all approved tasks using iterative TDD with Feature Flag Protocol"
+
+policy:
+  allow_implicit_invocation: false
