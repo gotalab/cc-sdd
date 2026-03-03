@@ -21,6 +21,7 @@
 - ✅ **Codex Skills対応** — `--codex-skills` で `.agents/skills/` に 13 個の `SKILL.md` を展開
 - ⚠️ **Codex promptsはレガシー** — `--codex` は互換性維持のため残しており、新規導入では非推奨（`--codex-skills` 推奨）
 - ✅ **Codex collaboration modes対応** — 長時間タスクのオーケストレーション向上のため、`~/.codex/config.toml` に `features.collaboration_modes = true` を設定可能
+- ✅ **Ralph Loop対応** — Skills エージェントで自律タスクループを実行: `/kiro-spec-tasks` でタスク生成 → `/kiro-ralph-impl` でエンドツーエンド自律実行
 
 
 > インストール手順だけ知りたい場合は [インストール](#-インストール) へジャンプ。v1.1.5 維持なら `npx cc-sdd@1.1.5 --claude-code ...`、v2 移行は [Migration Guide](../../docs/guides/migration-guide.md) / [日本語版](../../docs/guides/ja/migration-guide.md) を参照。
@@ -122,6 +123,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 - **🧠 永続的プロジェクトメモリ** - AIがステアリング文書を通じて全セッション間で包括的コンテキスト（アーキテクチャ、パターン、ルール、ドメイン知識）を維持
 - **🛠 テンプレート柔軟性** - `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks）をチームのドキュメント形式に合わせてカスタマイズ可能
 - **🔄 AIネイティブ+人間ゲート** - AI計画 → AI質問 → 人間検証 → AI実装（品質管理付き高速サイクル）
+- **🔁 Ralph Loop統合** - spec-tasksでタスク生成 → ralph-implで自律ループ実行 — SDD仕様書がそのまま自動実行計画に
 - **🌍 チーム対応** - 品質ゲート付き13言語対応のクロスプラットフォーム標準ワークフロー
 
 ## 🤖 対応AIエージェント

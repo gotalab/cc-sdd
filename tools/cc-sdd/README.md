@@ -21,6 +21,7 @@ English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">�
 - ✅ **Codex Skills support** — `--codex-skills` installs 13 `SKILL.md` packages into `.agents/skills/`
 - ⚠️ **Codex prompts are legacy** — `--codex` is kept for compatibility and is non-recommended for new projects
 - ✅ **Codex collaboration modes** — Enable `features.collaboration_modes = true` in `~/.codex/config.toml` for better long-running task orchestration
+- ✅ **Ralph Loop support** — Skills agents can run autonomous task loops: generate tasks with `/kiro-spec-tasks`, then let `/kiro-ralph-impl` execute them end-to-end
 
 ---
 
@@ -122,6 +123,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 - **🧠 Persistent Project Memory** - AI maintains comprehensive context (architecture, patterns, rules, domain knowledge) across all sessions via steering documents  
 - **🛠 Template flexibility** - Tweak `{{KIRO_DIR}}/settings/templates` (steering, requirements, design, tasks) to mirror your team's deliverables
 - **🔄 AI-Native + Human Gates** - AI Plans → AI Asks → Human Validates → AI Implements (rapid cycles with quality control)
+- **🔁 Ralph Loop Integration** - Generate tasks with spec-tasks, then let ralph-impl execute them autonomously in a loop — SDD specs become self-executing plans
 - **🌍 Team-Ready** - 13-language support, cross-platform, standardized workflows with quality gates
 
 ## 🤖 Supported AI Agents

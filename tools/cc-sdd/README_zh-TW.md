@@ -21,6 +21,7 @@
 - ✅ **Codex Skills 支援** — 使用 `--codex-skills` 可在 `.agents/skills/` 產生 13 個 `SKILL.md` 套件
 - ⚠️ **Codex prompts 為 legacy 模式** — `--codex` 保留相容性用途，不建議新專案使用（建議改用 `--codex-skills`）
 - ✅ **Codex collaboration modes 可用** — 建議在 `~/.codex/config.toml` 設定 `features.collaboration_modes = true` 以提升長任務協作執行
+- ✅ **Ralph Loop 支援** — 技能代理可執行自律任務迴圈：以 `/kiro-spec-tasks` 產生任務，再以 `/kiro-ralph-impl` 端對端自律執行
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
 
@@ -119,6 +120,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 - **🧠 持久專案記憶** - AI 透過指導文件在所有會話間維持全面上下文（架構、模式、規則、領域知識）
 - **🛠 模板彈性** - 自訂 `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks），符合團隊慣用的文件格式
 - **🔄 AI 原生+人類關卡** - AI 計劃 → AI 提問 → 人類驗證 → AI 實作（具品質控制的快速循環）
+- **🔁 Ralph Loop 整合** - 以 spec-tasks 產生任務，再由 ralph-impl 自律迴圈執行 — SDD 規格直接成為可自動執行的計畫
 - **🌍 團隊就緒** - 具品質關卡的13語言跨平台標準化工作流程
 
 ## 🤖 支援的 AI 代理
