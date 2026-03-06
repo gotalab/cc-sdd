@@ -53,9 +53,6 @@ Use Glob tool to expand file patterns, then read all files:
    - **Read** for existing implementations
    - **Grep** for specific patterns
 
-> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
-> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
-
 4. **Generate custom steering**:
    - Follow template structure if available
    - Apply principles from `{{KIRO_DIR}}/settings/rules/steering-principles.md`

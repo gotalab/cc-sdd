@@ -60,9 +60,6 @@ Check `{{KIRO_DIR}}/steering/` status:
    - `Glob` for source files
    - `Read` for README, package.json, etc.
    - `Grep` for patterns
-> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
-> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
-
 3. Extract patterns (not lists):
    - Product: Purpose, value, core capabilities
    - Tech: Frameworks, decisions, conventions

@@ -59,9 +59,6 @@ Analyze implementation gap for feature based on approved requirements and existi
    - Evaluate multiple implementation approaches (extend/new/hybrid)
    - Use language specified in spec.json for output
 
-> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
-> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
-
 4. **Generate Analysis Document**:
    - Create comprehensive gap analysis following the output guidelines in gap-analysis.md
    - Present multiple viable options with trade-offs

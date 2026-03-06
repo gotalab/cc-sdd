@@ -60,9 +60,6 @@ Generate implementation tasks for the feature based on approved requirements and
 - If auto-approve flag is true: Auto-approve requirements and design in spec.json
 - Otherwise: Verify both approved (stop if not, see Safety & Fallback)
 
-> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
-> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
-
 ### Step 2: Generate Implementation Tasks
 
 - Read `{{KIRO_DIR}}/settings/rules/tasks-generation.md` for principles

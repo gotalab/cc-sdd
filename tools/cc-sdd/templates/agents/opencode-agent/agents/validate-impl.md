@@ -74,9 +74,6 @@ For each detected feature:
   - Default files: `structure.md`, `tech.md`, `product.md`
   - All custom steering files (regardless of mode settings)
 
-> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
-> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
-
 ### 3. Execute Validation
 
 For each task, verify:
@@ -111,9 +108,6 @@ For each task, verify:
 - Run full test suite (if available)
 - Verify no existing tests are broken
 - If regressions detected, flag as "Regression detected"
-
-> **Context check**: Call `write_context_status`. Parse `Usage: X%`.
-> If X > 70%: create a handoff document and stop. If 60–70%: warn and continue.
 
 ### 4. Generate Report
 

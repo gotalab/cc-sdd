@@ -92,9 +92,6 @@ Generate technical design document for feature based on approved requirements.
    - Integration points and dependencies
    - Identified risks and mitigation strategies
 
-> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
-> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
-
 ### Step 3: Generate Design Document
 
 1. **Load Design Template and Rules**:

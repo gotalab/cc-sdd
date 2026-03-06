@@ -77,11 +77,6 @@ For each detected feature:
   - Default files: `structure.md`, `tech.md`, `product.md`
   - All custom steering files (regardless of mode settings)
 
-> **Context check**: Run the `Context check command` provided in your startup context.
-
-> `Bash: jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable ⚠️ — hooks not active, run cc-sdd --agent claude-code-agent]"`
-> If >70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn and continue. If `unavailable ⚠️`: log the warning and continue normally.
-
 ### 3. Execute Validation
 
 For each task, verify:
@@ -116,11 +111,6 @@ For each task, verify:
 - Run full test suite (if available)
 - Verify no existing tests are broken
 - If regressions detected, flag as "Regression detected"
-
-> **Context check**: Run the `Context check command` provided in your startup context.
-
-> `Bash: jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable ⚠️ — hooks not active, run cc-sdd --agent claude-code-agent]"`
-> If >70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn and continue. If `unavailable ⚠️`: log the warning and continue normally.
 
 ### 4. Generate Report
 

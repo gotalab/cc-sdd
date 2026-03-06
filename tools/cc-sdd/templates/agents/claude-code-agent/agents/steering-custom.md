@@ -56,11 +56,6 @@ Use Glob tool to expand file patterns, then read all files:
    - **Read** for existing implementations
    - **Grep** for specific patterns
 
-> **Context check**: Run the `Context check command` provided in your startup context.
-
-> `Bash: jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable ⚠️ — hooks not active, run cc-sdd --agent claude-code-agent]"`
-> If >70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn and continue. If `unavailable ⚠️`: log the warning and continue normally.
-
 4. **Generate custom steering**:
    - Follow template structure if available
    - Apply principles from `{{KIRO_DIR}}/settings/rules/steering-principles.md`

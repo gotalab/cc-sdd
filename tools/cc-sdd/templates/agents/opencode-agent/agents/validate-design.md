@@ -53,9 +53,6 @@ Interactive design quality review for feature based on approved requirements and
 2. **Read Review Guidelines**:
    - Read `{{KIRO_DIR}}/settings/rules/design-review.md` for review criteria and process
 
-> **Context check**: Call `write_context_status`. Parse `Usage: X%` from the result.
-> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
-
 3. **Execute Design Review**:
    - Follow design-review.md process: Analysis → Critical Issues → Strengths → GO/NO-GO
    - Limit to 3 most important concerns

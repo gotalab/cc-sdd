@@ -95,11 +95,6 @@ Generate technical design document for feature based on approved requirements.
    - Integration points and dependencies
    - Identified risks and mitigation strategies
 
-> **Context check**: Run the `Context check command` provided in your startup context.
-
-> `Bash: jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable ⚠️ — hooks not active, run cc-sdd --agent claude-code-agent]"`
-> If >70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn and continue. If `unavailable ⚠️`: log the warning and continue normally.
-
 ### Step 3: Generate Design Document
 
 1. **Load Design Template and Rules**:
