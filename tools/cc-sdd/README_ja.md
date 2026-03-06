@@ -1,4 +1,4 @@
-# cc-sdd: AIコーディングエージェントを本番仕様駆動にするワンコマンドセットアップ
+# cc-sdd: AIコーディングエージェント向け長時間の仕様駆動実装
 
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
@@ -8,29 +8,28 @@
 <a href="./README.md">English</a> | 日本語 | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-✨ **Claude Code / Cursor IDE / Gemini CLI / Codex CLI（Prompts/Skills 対応） / GitHub Copilot / Qwen Code / OpenCode / Windsurf をプロトタイプから本番仕様駆動へ。要件・設計・タスク・プロジェクトメモリをチームのワークフローに沿うようカスタマイズできます。**
+✨ **承認済みの要件と設計を、Ralph Loop で長時間の自律実装に変える。**
 
 👻 **Kiro互換** — Kiro IDE に似た Spec-Driven / AI-DLC スタイルで、既存の Kiro 仕様書もそのまま扱えます。
 
-**v2.0.0 の新機能：**
-- ✅ **レビューしやすい設計書** — 構造化フォーマットと要約表でレビュー時間を5倍高速化
-- ✅ **Research の分離** — 調査メモ（Research.md）と最終設計（Design.md）を分けて管理
-- ✅ **品質ゲート** — validate-gap/design/impl コマンドでコーディング前に統合問題を検出
-- ✅ **一度だけカスタマイズ** — テンプレートをチームプロセスに適応、全エージェントが同じワークフローに従う
-- ✅ **統一ワークフロー** — 8エージェント × 13言語で同じ11コマンドプロセスを共有
-- ✅ **Codex Skills対応** — `--codex-skills` で `.agents/skills/` に 13 個の `SKILL.md` を展開
-- ⚠️ **Codex promptsはレガシー** — `--codex` は互換性維持のため残しており、新規導入では非推奨（`--codex-skills` 推奨）
-- ✅ **Codex collaboration modes対応** — 長時間タスクのオーケストレーション向上のため、`~/.codex/config.toml` に `features.collaboration_modes = true` を設定可能
-- ✅ **Ralph Loop対応** — Skills エージェントで自律タスクループを実行: `/kiro-spec-tasks` でタスク生成 → `/kiro-ralph-impl` でエンドツーエンド自律実行
+cc-sdd は、承認済み仕様を executable work に変えます。要件 → 設計 → タスク → 実装 → レビュー → 最終検証までをつなぎ、チェックボックスが埋まっただけで完了扱いにせず、正直な完了判定と NO-GO を重視します。
+
+**cc-sdd を使う理由:**
+- ✅ **承認済み仕様が executable work になる** — `/kiro:spec-init` から承認済みの要件・設計・タスクまで、自己流プロセスを組まずに進められる
+- ✅ **Ralph Loop が大きい仕事を回せる** — 大きめの承認済みタスクセットを bounded な長時間自律実装ループに渡せる
+- ✅ **レビューと最終検証フローを内蔵** — 作業を再チェックし、具体的な findings を修正し、blocked / not-ready のときは正直に止まる前提で設計されている
+- ✅ **チーム向けテンプレートが導入しやすい** — 一度カスタマイズすれば、生成される要件・設計レビュー・タスク・ステアリング文書を承認フローに合わせられる
+
+> 仕様を「読むだけの文書」として扱ってきたなら、cc-sdd はその逆です。承認済み仕様を executable work に変えます。
 
 
 > インストール手順だけ知りたい場合は [インストール](#-インストール) へジャンプ。v1.1.5 維持なら `npx cc-sdd@1.1.5 --claude-code ...`、v2 移行は [Migration Guide](../../docs/guides/migration-guide.md) / [日本語版](../../docs/guides/ja/migration-guide.md) を参照。
 
-Claude Code、Cursor IDE、Gemini CLI、Codex CLI（Prompts/Skills）、GitHub Copilot、Qwen Code、OpenCode、Windsurfを **AI-DLC (AI駆動開発ライフサイクル)**へ。**AIネイティブプロセス**と**最小限の人間承認ゲート**：AIが実行を駆動し、人間が各フェーズで重要な決定を検証。
+Claude Code、Cursor IDE、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code、OpenCode、Windsurfを **AI-DLC (AI駆動開発ライフサイクル)**へ。**AIネイティブプロセス**と**最小限の人間承認ゲート**に加えて、長時間の自律実装ループもチームの承認フローに沿う形で組み込めます。
 
 ## 🚀 インストール
 
-ワンコマンドで、主要AIコーディングエージェント向けの**AI-DLC（AI Driven Development Life Cycle）× SDD（Spec-Driven Development）**ワークフローを導入。要件・設計・タスク・ステアリングのテンプレートもチームの承認プロセスに沿う形で自動生成されます。
+ワンコマンドで、主要AIコーディングエージェント向けの**AI-DLC（AI Driven Development Life Cycle）× SDD（Spec-Driven Development）**ワークフローを導入。要件・設計・タスク・ステアリングのテンプレートに加え、長時間の実装ループまでチームの承認プロセスに沿う形で組み込めます。
 
 ```bash
 # 基本インストール（デフォルト: 英語、Claude Code Skills）
@@ -47,7 +46,7 @@ npx cc-sdd@latest --claude --lang ja        # Claude Code（11コマンド、対
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents（12コマンド + 9サブエージェント）
 npx cc-sdd@latest --cursor --lang ja        # Cursor IDE
 npx cc-sdd@latest --gemini --lang ja        # Gemini CLI
-npx cc-sdd@latest --codex --lang ja         # Codex CLI の prompts モード（レガシー、非推奨）
+npx cc-sdd@latest --codex --lang ja         # Codex CLI のレガシーモード（非推奨）
 npx cc-sdd@latest --codex-skills --lang ja  # Codex CLI の Skills モード（推奨、12スキル）
 npx cc-sdd@latest --copilot --lang ja       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang ja          # Qwen Code
@@ -110,21 +109,22 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 **30秒セットアップ** → **AI駆動「ボルト」（スプリントではなく）** → **時間単位の結果**
 
 ### cc-sdd を選ぶ理由
-1. **仕様が単一情報源** — 要件・設計・タスク・Supporting References まで1セットで揃い、承認が早い。
-2. **Greenfield / Brownfield 両対応** — 新機能は minutes で起動、既存システムは validate 系コマンドと Project Memory で安全に拡張。
-3. **複数エージェントを同時に活用** — Claude / Cursor / Codex（Prompts/Skills） / Gemini / Copilot / Qwen / Windsurf が同じテンプレ/ルールを共有。
-4. **カスタマイズは一度だけ** — `.kiro/settings/templates/` を編集すれば全エージェントへ即反映。非スキルエージェントは `.kiro/settings/rules/` も使用。
+1. **承認済み仕様が executable work になる** — 要件・設計・タスク・Supporting References が揃ったまま、実装の駆動源として使えます。
+2. **Ralph Loop が大きい仕事を回せる** — 大きいタスクセットを fragile な one-shot prompt ではなく、bounded な自律実装ループとして進められます。
+3. **Agent Skills が長期的な surface** — 同じ skill-based workflow を Claude Code、Codex、そして今後の skills-capable agents に持ち運べます。
+4. **レビューと最終検証フローを内蔵** — spec mismatch、placeholder 実装、blocked state を完了宣言前に拾う方向で設計されています。
+5. **チーム向けカスタマイズは一度だけ** — `.kiro/settings/templates/` を編集すれば全エージェントへ反映。非スキルエージェントは `.kiro/settings/rules/` も使用します。
 
 ## ✨ 主要機能
 
-- **🚀 AI-DLC手法** - 人間承認付きAIネイティブプロセス。コアパターン：AI実行、人間検証
-- **📋 仕様ファースト開発** - 包括的仕様を単一情報源としてライフサイクル全体を駆動
-- **⚡ 「ボルト」（スプリントではなく）** - [AI-DLC](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)で週単位のスプリントを置き換える時間・日単位の集中サイクル。70%の管理オーバーヘッドから脱却
-- **🧠 永続的プロジェクトメモリ** - AIがステアリング文書を通じて全セッション間で包括的コンテキスト（アーキテクチャ、パターン、ルール、ドメイン知識）を維持
-- **🛠 テンプレート柔軟性** - `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks）をチームのドキュメント形式に合わせてカスタマイズ可能
-- **🔄 AIネイティブ+人間ゲート** - AI計画 → AI質問 → 人間検証 → AI実装（品質管理付き高速サイクル）
-- **🔁 Ralph Loop統合** - spec-tasksでタスク生成 → ralph-implで自律ループ実行 — SDD仕様書がそのまま自動実行計画に
-- **🌍 チーム対応** - 品質ゲート付き13言語対応のクロスプラットフォーム標準ワークフロー
+- **📋 Spec-Governed Development** — 構造化仕様（要件 → 調査 → 設計 → タスク）を、単なる計画書ではなく実装を支配する契約として扱います
+- **🔁 Ralph Loop** — 承認済みタスクセットを、bounded な stop conditions と remediation paths を持つ長時間の自律実装ループに変えます
+- **✅ レビュー + 最終検証フロー** — task-local review、validation passes、final validation flow を内蔵し、honest completion と NO-GO outcomes を目指します
+- **🚀 AI-DLC 手法** — AI実行、人間が各フェーズで検証。[集中「ボルト」](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)が週単位のスプリントを置き換え
+- **🧠 永続的プロジェクトメモリ** — ステアリング文書がアーキテクチャ・パターン・ルール・ドメイン知識を全セッション間で維持
+- **🧩 Agent Skills 対応** — 各コマンドは自己完結型の [Agent Skill](https://agentskills.io)（SKILL.md + ツール制限 + 同梱ルール）。skills-capable agents に展開しやすい設計です
+- **🛠 一度だけカスタマイズ** — `{{KIRO_DIR}}/settings/templates/` を編集すれば全エージェントに反映。8エージェント × 13言語で同じプロセスを共有
+- **🌍 チーム対応** — クロスプラットフォーム、品質ゲート付き標準ワークフロー。`--codex` レガシーモードも互換維持
 
 ## 🤖 対応AIエージェント
 
@@ -134,7 +134,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 | **Claude Code Subagents** | ✅ 完全対応 | 12 コマンド + 9 サブエージェント |
 | **Cursor IDE** | ✅ 完全対応 | 11 コマンド |
 | **Gemini CLI** | ✅ 完全対応 | 11 コマンド |
-| **Codex CLI** | ✅ 完全対応 | 11 プロンプト（レガシー） + Skillsモード 12スキル（推奨） |
+| **Codex CLI** | ✅ 完全対応 | 11 レガシーコマンド + Skillsモード 12スキル（推奨） |
 | **GitHub Copilot** | ✅ 完全対応 | 11 プロンプト |
 | **Qwen Code** | ✅ 完全対応 | 11 コマンド |
 | **Windsurf IDE** | ✅ 完全対応 | 11 ワークフロー |
