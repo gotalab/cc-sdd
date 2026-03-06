@@ -12,6 +12,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'node:url';
 
 async function main(): Promise<void> {
   // Read raw JSON from stdin
@@ -55,8 +56,8 @@ async function main(): Promise<void> {
     typeof contextWindow?.used_percentage === 'number'
       ? contextWindow.used_percentage
       : typeof data.used_percentage === 'number'
-      ? data.used_percentage
-      : null;
+        ? data.used_percentage
+        : null;
 
   let statusLine: string;
   if (usedPercentage !== null) {
@@ -71,8 +72,12 @@ async function main(): Promise<void> {
 
 export { main as runStatuslineWriter };
 
-// Run when invoked directly as a binary
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run when invoked directly as a binary.
+// Using fileURLToPath + realpathSync on both sides makes the check stable across
+// Windows path formats, paths containing spaces, and symlinked bin shims.
+const _thisFile = fs.realpathSync(fileURLToPath(import.meta.url));
+const _entryFile = fs.realpathSync(process.argv[1]);
+if (_thisFile === _entryFile) {
   main().catch(err => {
     process.stderr.write(`[context-monitor] Unexpected error: ${err}\n`);
     process.exit(1);
