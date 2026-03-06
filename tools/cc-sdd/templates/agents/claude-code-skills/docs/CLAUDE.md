@@ -30,8 +30,8 @@ Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life
   - `/kiro-validate-design {feature}` (optional: design review)
   - `/kiro-spec-tasks {feature} [-y]`
 - Phase 2 (Implementation): `/kiro-spec-impl {feature} [tasks]`
-  - ALT: `/kiro-ralph-impl {feature}` (autonomous Ralph Loop — implements all tasks)
-  - `/kiro-validate-impl {feature}` (optional: after implementation)
+  - ALT: `/kiro-ralph-impl {feature}` (autonomous Ralph Loop — implements all tasks and runs final validation)
+  - `/kiro-validate-impl {feature}` (manual standalone re-validation)
 - Progress check: `/kiro-spec-status {feature}` (use anytime)
 
 ## Skills Structure

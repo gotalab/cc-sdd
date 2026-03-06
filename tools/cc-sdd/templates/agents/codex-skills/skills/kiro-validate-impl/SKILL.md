@@ -13,6 +13,7 @@ description: Validate implementation against requirements, design, and tasks
   - Tests exist and pass for implemented functionality
   - Requirements traceability confirmed (EARS requirements covered)
   - Design structure reflected in implementation
+  - Real implementation present for required behavior (not only mocks/stubs/placeholders)
   - No regressions in existing functionality
 </background_information>
 
@@ -44,6 +45,7 @@ The following validation checks are independent and can be executed in parallel:
 1. **Test execution & coverage**: Run test suite, check for test existence per task, verify no regressions
 2. **Requirements traceability**: Map requirement IDs to implementation code locations
 3. **Design alignment**: Verify components, interfaces, and file structure match design.md
+4. **Implementation integrity**: Verify claimed behavior is backed by real runtime code, not mocks/stubs/placeholders/TODO-only paths
 
 If multi-agent is enabled, spawn sub-agents for each check above. Otherwise execute sequentially.
 
@@ -76,14 +78,21 @@ For each task, verify:
 
 #### Requirements Traceability
 - Identify EARS requirements related to the task
+- Use the original section numbering from `requirements.md` in findings and coverage output
 - Use Grep to search implementation for evidence of requirement coverage
 - If requirement not traceable to code, flag as "Requirement not implemented"
 
 #### Design Alignment
 - Check if design.md structure is reflected in implementation
+- Use the original section numbering from `design.md` in findings and coverage output
 - Verify key interfaces, components, and modules exist
 - Use Grep/LS to confirm file structure matches design
 - If misalignment found, flag as "Design deviation"
+
+#### Implementation Integrity
+- Verify the task is implemented with concrete runtime code, not just mocks, stubs, placeholders, fake adapters, or TODO-only branches unless the spec explicitly allows them
+- Confirm the codebase contains the real files, functions, handlers, components, routes, or services needed for the claimed behavior
+- If the implementation only simulates success or scaffolds the path without real behavior, flag as "Placeholder implementation"
 
 #### Regression Check
 - Run full test suite (if available)
@@ -103,6 +112,7 @@ Provide summary in the language specified in spec.json:
 - **Non-blocking warnings**: Design deviations are warnings unless critical
 - **Test-first focus**: Test coverage is mandatory for GO decision
 - **Traceability required**: All requirements must be traceable to implementation
+- **Source numbering only**: Use the exact section numbers from `requirements.md` and `design.md`; do not invent `REQ-*` aliases
 </instructions>
 
 ## Tool Guidance
@@ -119,7 +129,7 @@ Provide output in the language specified in spec.json with:
 1. **Detected Target**: Features and tasks being validated (if auto-detected)
 2. **Validation Summary**: Brief overview per feature (pass/fail counts)
 3. **Issues**: List of validation failures with severity and location
-4. **Coverage Report**: Requirements/design/task coverage percentages
+4. **Coverage Report**: Requirements/design/task coverage percentages using the source section numbers from the spec
 5. **Decision**: GO (ready for next phase) / NO-GO (needs fixes)
 
 **Format Requirements**:

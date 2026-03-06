@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Ralph Loop Setup Script (Codex adaptation)
-# Creates state file for task-driven implementation loop
-# Based on CC plugin's setup-ralph-loop.sh, adapted for tasks.md-based completion
+# Creates state file for a task-driven implementation loop
 
 set -euo pipefail
 
@@ -29,7 +28,7 @@ OPTIONS:
 DESCRIPTION:
   Initializes the Ralph implementation loop by:
   1. Counting pending tasks in tasks.md
-  2. Auto-calculating max_iterations: min(max(pending * 3, 6), 30) + 5
+  2. Setting max_iterations to a simple default of 100
   3. Creating .ralph-loop-state.md state file
 
 EXAMPLES:
@@ -81,11 +80,7 @@ fi
 
 # --- Calculate max_iterations ---
 if [[ "$MAX_ITERATIONS" -eq 0 ]]; then
-  # Formula: min(max(pending * 3, 6), 30) + 5
-  CALC=$((PENDING * 3))
-  if [[ $CALC -lt 6 ]]; then CALC=6; fi
-  if [[ $CALC -gt 30 ]]; then CALC=30; fi
-  MAX_ITERATIONS=$((CALC + 5))
+  MAX_ITERATIONS=100
 fi
 
 # --- Create state file ---

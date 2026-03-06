@@ -2,7 +2,6 @@
 
 # Ralph Loop Check Script (Codex adaptation)
 # Manages iteration counting only — task completion judgment is delegated to the agent
-# Based on CC plugin's stop-hook.sh: domain-agnostic, iteration-based guard
 
 set -euo pipefail
 
@@ -15,8 +14,10 @@ if [[ -z "$TASKS_MD" ]] || [[ -z "$STATE_FILE" ]]; then
   exit 1
 fi
 
-# TASKS_MD kept for interface compatibility but not used by this script
-# Task completion judgment is the agent's responsibility
+if [[ ! -f "$TASKS_MD" ]]; then
+  echo "Error: tasks.md not found: $TASKS_MD" >&2
+  exit 1
+fi
 
 if [[ ! -f "$STATE_FILE" ]]; then
   echo "Error: State file not found: $STATE_FILE" >&2
@@ -28,7 +29,6 @@ fi
 FRONTMATTER=$(sed -n '/^---$/,/^---$/{ /^---$/d; p; }' "$STATE_FILE")
 ITERATION=$(echo "$FRONTMATTER" | grep '^iteration:' | sed 's/iteration: *//')
 MAX_ITERATIONS=$(echo "$FRONTMATTER" | grep '^max_iterations:' | sed 's/max_iterations: *//')
-
 # Validate numeric fields
 if [[ ! "$ITERATION" =~ ^[0-9]+$ ]] || [[ ! "$MAX_ITERATIONS" =~ ^[0-9]+$ ]]; then
   echo "Error: State file corrupted — iteration or max_iterations is not numeric" >&2
@@ -43,7 +43,6 @@ TEMP_FILE="${STATE_FILE}.tmp.$$"
 sed "s/^iteration: .*/iteration: $NEXT_ITERATION/" "$STATE_FILE" > "$TEMP_FILE"
 mv "$TEMP_FILE" "$STATE_FILE"
 
-# --- Judgment: iteration guard only ---
 if [[ "$NEXT_ITERATION" -ge "$MAX_ITERATIONS" ]]; then
   echo "STATUS: MAX_ITERATIONS_REACHED"
   echo "ITERATION: $NEXT_ITERATION/$MAX_ITERATIONS"

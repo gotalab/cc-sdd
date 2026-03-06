@@ -11,11 +11,12 @@ argument-hint: <feature-name> [--max-iterations N]
 You are a specialized skill for launching autonomous Ralph Loop implementation of all approved SDD tasks.
 
 ## Core Mission
-- **Mission**: Configure and activate a Ralph Loop that implements all pending tasks via TDD, one task per iteration
+- **Mission**: Configure and activate a Ralph Loop that implements all pending tasks via TDD, one task per iteration, then runs final feature validation before declaring success
 - **Success Criteria**:
   - Ralph Loop state file written with correct configuration
   - First task implementation started
   - All tasks completed autonomously across iterations
+  - Final validation passes, or bounded remediation findings are reported honestly without a false completion signal
 
 ## Execution Steps
 
@@ -24,9 +25,13 @@ You are a specialized skill for launching autonomous Ralph Loop implementation o
 **Check for active Ralph Loop**:
 - If `.claude/ralph-loop.local.md` already exists: Warn user and ask whether to override or cancel
 
-**Warn about Ralph Loop plugin dependency**:
-- Display: "This skill requires the Ralph Loop plugin for multi-iteration execution. If the plugin is not installed, only the first task will be executed before the session exits."
-- Display: "Install: `claude plugin install ralph-loop@claude-plugins-official`"
+**Preflight: Verify Ralph Loop plugin is installed**:
+- Run: `claude plugin list`
+- Verify the output includes `ralph-loop@claude-plugins-official` and that it is enabled
+- If the plugin is missing or disabled: Stop immediately and report:
+  - "Ralph Loop plugin is required before starting `/kiro-ralph-impl`."
+  - "Install: `claude plugin install ralph-loop@claude-plugins-official`"
+  - "Then re-run `/kiro-ralph-impl {feature}`."
 
 **Check spec approval**:
 - Read `{{KIRO_DIR}}/specs/{feature}/spec.json`
@@ -35,8 +40,13 @@ You are a specialized skill for launching autonomous Ralph Loop implementation o
 
 **Count pending tasks**:
 - Read `{{KIRO_DIR}}/specs/{feature}/tasks.md`
-- Count unchecked tasks (`- [ ]`)
-- If zero pending tasks: Stop and report "All tasks are already complete."
+- Count unchecked required sub-tasks (`- [ ]` with X.Y numbering)
+- If zero pending tasks: continue in final-validation-only mode instead of stopping
+
+**Preflight setup stays in the parent agent**:
+- Run `git status --porcelain` and note any pre-existing uncommitted changes
+- Discover canonical validation commands from the repo root using files such as `package.json`, `pyproject.toml`, `go.mod`, `Makefile`, and `README*`
+- Keep environment/setup work in the parent agent; implementation subagents should receive only task-relevant context plus validation commands
 
 ### Step 2: Calculate Configuration
 
@@ -46,9 +56,9 @@ You are a specialized skill for launching autonomous Ralph Loop implementation o
 
 **Calculate max_iterations**:
 - If user specified: use that value
-- Otherwise: `min(max(pending_task_count * 3, 6), 30)`
+- Otherwise: `100`
 
-**Set completion promise**: `ALL_TASKS_COMPLETE`
+**Set completion promise**: `ALL_TASKS_COMPLETE` (emit it only after final validation passes)
 
 ### Step 3: Generate Ralph Prompt
 
@@ -59,6 +69,8 @@ You are a specialized skill for launching autonomous Ralph Loop implementation o
 
 **Show plan to user**:
 - Display: feature name, pending task count, max_iterations, completion promise
+- Display: validation commands the parent agent will use for verification
+- Display: final validation gate and remediation cap
 - Display the generated prompt summary
 
 ### Step 4: Activate Ralph Loop
@@ -78,21 +90,27 @@ started_at: "{ISO_8601_timestamp}"
 
 **Display activation message**:
 - Report Ralph Loop is active with configuration summary
-- Warn about iteration limit and completion promise
+- Explain that `max_iterations` is a simple safety fuse with a default of 100
+- Explain that final validation runs before the completion promise is emitted
 
 **Begin first iteration**:
 - Follow the generated prompt's Orchestration Protocol
 - Read tasks.md, identify first unchecked task
-- Delegate to kent-beck-tdd-developer subagent for TDD implementation
+- Delegate task implementation to the packaged `tdd-task-implementer` subagent, including the exact requirement/design section numbers the task must satisfy
 
 ## Critical Constraints
-- **Plugin Dependency**: Ralph Loop plugin provides the Stop hook. Without it, only one task executes per session (safe failure)
+- **Plugin Dependency**: Ralph Loop plugin must already be installed and enabled before this skill starts
+- **Parent Owns Setup**: Plugin checks, repo preflight, validation command discovery, task-state updates, and commits stay in the parent agent
 - **Tasks Approved**: All spec phases must be complete before starting
 - **TDD Mandatory**: Implementation subagent must follow RED → GREEN → REFACTOR cycle
 - **One Task Per Iteration**: Keep each Ralph iteration focused on a single task
 - **Feature Flag TDD**: Behavioral tasks use feature flag protocol to structurally enforce RED → GREEN transition
 - **Honest Completion**: Never output the completion promise unless ALL tasks are genuinely `[x]`
+- **Simple Safety Fuse**: `max_iterations` defaults to 100 and exists only to prevent runaway loops
 - **Spec Conformance**: Do not mark a task complete if the implementation deviates from design.md or does not satisfy requirements.md
+- **Worker Review Required**: Implementation subagent must self-review against the exact requirement/design section numbers and return concrete code/test evidence before the parent accepts completion
+- **Final Validation Required**: Execute the packaged `kiro-validate-impl` validation workflow before emitting the completion promise
+- **Bounded Remediation**: If final validation fails, fix only concrete findings and cap remediation at 3 rounds before stopping without the completion promise
 
 ## Tool Guidance
 - **Read**: Load spec files, steering, ralph-prompt.md template
@@ -106,7 +124,7 @@ started_at: "{ISO_8601_timestamp}"
 Display activation summary in the language specified in spec.json:
 
 1. **Configuration**: Feature name, pending tasks, max iterations, completion promise
-2. **Status**: Ralph Loop activated, first task being implemented
+2. **Status**: Ralph Loop activated, first task being implemented or final-validation-only mode starting
 
 **Format**: Concise activation report, then begin implementation
 
@@ -115,8 +133,8 @@ Display activation summary in the language specified in spec.json:
 ### Error Scenarios
 
 **Ralph Loop Plugin Not Installed**:
-- **Safe failure**: First task executes normally, session exits without looping
-- **Action**: "Install with `claude plugin install ralph-loop@claude-plugins-official`"
+- **Hard stop**: Do not create `.claude/ralph-loop.local.md` and do not begin implementation
+- **Action**: "Install with `claude plugin install ralph-loop@claude-plugins-official`, verify with `claude plugin list`, then re-run `/kiro-ralph-impl {feature}`"
 
 **Tasks Not Approved**:
 - **Stop**: Spec phases must be complete

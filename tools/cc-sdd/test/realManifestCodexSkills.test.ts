@@ -73,6 +73,7 @@ describe('real codex-skills manifest', () => {
     expect(docText).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(docText).toContain('$kiro-spec-status');
     expect(docText).not.toContain('/prompts:kiro-spec-status');
+    expect(docText).toContain('implements all tasks and runs final validation');
 
     const skillSpecInit = join(cwd, '.agents/skills/kiro-spec-init/SKILL.md');
     expect(await exists(skillSpecInit)).toBe(true);
@@ -94,6 +95,12 @@ describe('real codex-skills manifest', () => {
     const skillSpecDesignText = await readFile(skillSpecDesign, 'utf8');
     expect(skillSpecDesignText).toContain('Parallel Research');
     expect(skillSpecDesignText).not.toMatch(/context: fork/);
+
+    const skillValidateImpl = join(cwd, '.agents/skills/kiro-validate-impl/SKILL.md');
+    expect(await exists(skillValidateImpl)).toBe(true);
+    const skillValidateImplText = await readFile(skillValidateImpl, 'utf8');
+    expect(skillValidateImplText).toContain('Implementation integrity');
+    expect(skillValidateImplText).toContain('do not invent `REQ-*` aliases');
 
     // Shared rules resolved from templates/shared/settings/rules/
     const designRules = [
@@ -157,6 +164,29 @@ describe('real codex-skills manifest', () => {
     // kiro-ralph-impl has a templates subdirectory with ralph-prompt.md
     const ralphPrompt = join(cwd, '.agents/skills/kiro-ralph-impl/templates/ralph-prompt.md');
     expect(await exists(ralphPrompt)).toBe(true);
+    const ralphPromptText = await readFile(ralphPrompt, 'utf8');
+    expect(ralphPromptText).not.toContain('STATUS: NO_PROGRESS');
+    expect(ralphPromptText).toContain('defaults to 100');
+    expect(ralphPromptText).toContain('Parent Responsibilities');
+    expect(ralphPromptText).toContain('worker agents own task implementation only');
+    expect(ralphPromptText).toContain('does not invent `REQ-*` aliases');
+    expect(ralphPromptText).toContain('mock/stub/placeholder/fake/TODO-only path');
+    expect(ralphPromptText).toContain('Final validation and remediation');
+    expect(ralphPromptText).toContain('kiro-validate-impl');
+
+    const workerPrompt = join(cwd, '.agents/skills/kiro-ralph-impl/templates/implementation-worker-prompt.md');
+    expect(await exists(workerPrompt)).toBe(true);
+    const workerPromptText = await readFile(workerPrompt, 'utf8');
+    expect(workerPromptText).toContain('Do not update `tasks.md`');
+    expect(workerPromptText).toContain('Do not create commits');
+    expect(workerPromptText).toContain('instead of inventing `REQ-*` aliases');
+    expect(workerPromptText).toContain('mock, stub, placeholder, fake, or TODO-only path');
+
+    const skillRalphImpl = join(cwd, '.agents/skills/kiro-ralph-impl/SKILL.md');
+    expect(await exists(skillRalphImpl)).toBe(true);
+    const skillRalphImplText = await readFile(skillRalphImpl, 'utf8');
+    expect(skillRalphImplText).toContain('Final Validation Required');
+    expect(skillRalphImplText).toContain('skip Step 4 and go directly to Step 5 for final validation');
 
     // kiro-ralph-impl has scripts directory with loop management scripts
     const scriptsDir = join(cwd, '.agents/skills/kiro-ralph-impl/scripts');

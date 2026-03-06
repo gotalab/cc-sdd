@@ -39,6 +39,7 @@ describe('real claude-code-skills manifest', () => {
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
     expect(out).toContain('[templateDir] skills: templates/agents/claude-code-skills/skills -> .claude/skills');
+    expect(out).toContain('[templateDir] agents_library: templates/agents/claude-code-skills/agents -> .claude/agents');
     expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code-skills/docs/CLAUDE.md -> ./CLAUDE.md');
     expect(out).toContain('[templateDir] settings_templates: templates/shared/settings/templates -> .kiro/settings/templates');
   });
@@ -55,6 +56,7 @@ describe('real claude-code-skills manifest', () => {
     expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(text).toContain('/kiro-spec-status');
     expect(text).not.toContain('/kiro:spec-status');
+    expect(text).toContain('implements all tasks and runs final validation');
 
     const skillSpecInit = join(cwd, '.claude/skills/kiro-spec-init/SKILL.md');
     expect(await exists(skillSpecInit)).toBe(true);
@@ -73,15 +75,42 @@ describe('real claude-code-skills manifest', () => {
     const skillValidateImplText = await readFile(skillValidateImpl, 'utf8');
     expect(skillValidateImplText).not.toMatch(/context: fork/);
     expect(skillValidateImplText).toContain('Parallel Research');
+    expect(skillValidateImplText).toContain('Implementation integrity');
+    expect(skillValidateImplText).toContain('do not invent `REQ-*` aliases');
 
     const skillRalphImpl = join(cwd, '.claude/skills/kiro-ralph-impl/SKILL.md');
     expect(await exists(skillRalphImpl)).toBe(true);
     const skillRalphImplText = await readFile(skillRalphImpl, 'utf8');
     expect(skillRalphImplText).toMatch(/name: kiro-ralph-impl/);
     expect(skillRalphImplText).toContain('Ralph Loop');
+    expect(skillRalphImplText).toContain('Otherwise: `100`');
+    expect(skillRalphImplText).toContain('default of 100');
+    expect(skillRalphImplText).toContain('Preflight: Verify Ralph Loop plugin is installed');
+    expect(skillRalphImplText).toContain('Hard stop');
+    expect(skillRalphImplText).toContain('Do not create `.claude/ralph-loop.local.md`');
+    expect(skillRalphImplText).toContain('Final Validation Required');
+    expect(skillRalphImplText).toContain('final-validation-only mode');
 
     const ralphPrompt = join(cwd, '.claude/skills/kiro-ralph-impl/templates/ralph-prompt.md');
     expect(await exists(ralphPrompt)).toBe(true);
+    const ralphPromptText = await readFile(ralphPrompt, 'utf8');
+    expect(ralphPromptText).toContain('Parent Responsibilities');
+    expect(ralphPromptText).toContain('all required sub-tasks');
+    expect(ralphPromptText).toContain('max_iterations` defaults to 100');
+    expect(ralphPromptText).toContain('Subagent does NOT update `tasks.md` or create commits');
+    expect(ralphPromptText).toContain('does not invent `REQ-*` aliases');
+    expect(ralphPromptText).toContain('mock/stub/placeholder/fake/TODO-only path');
+    expect(ralphPromptText).toContain('Final validation and remediation');
+    expect(ralphPromptText).toContain('kiro-validate-impl');
+
+    const ralphSubagent = join(cwd, '.claude/agents/tdd-task-implementer.md');
+    expect(await exists(ralphSubagent)).toBe(true);
+    const ralphSubagentText = await readFile(ralphSubagent, 'utf8');
+    expect(ralphSubagentText).toContain('Do NOT update `tasks.md`');
+    expect(ralphSubagentText).toContain('Do NOT create commits');
+    expect(ralphSubagentText).toContain('name: tdd-task-implementer');
+    expect(ralphSubagentText).toContain('do NOT invent `REQ-*` aliases');
+    expect(ralphSubagentText).toContain('Review and Fix Loop');
 
     // Shared rules resolved from templates/shared/settings/rules/
     const designRules = [
@@ -138,5 +167,7 @@ describe('real claude-code-skills manifest', () => {
       const skillPath = join(cwd, `.claude/skills/${skill}/SKILL.md`);
       expect(await exists(skillPath)).toBe(true);
     }
+
+    expect(await exists(join(cwd, '.claude/agents/tdd-task-implementer.md'))).toBe(true);
   });
 });

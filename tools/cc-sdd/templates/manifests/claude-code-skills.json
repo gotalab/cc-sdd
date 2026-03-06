@@ -11,6 +11,15 @@
       "when": { "agent": "claude-code-skills" }
     },
     {
+      "id": "agents_library",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/agents",
+        "toDir": ".claude/agents"
+      },
+      "when": { "agent": "claude-code-skills" }
+    },
+    {
       "id": "doc_main",
       "source": {
         "type": "templateFile",
