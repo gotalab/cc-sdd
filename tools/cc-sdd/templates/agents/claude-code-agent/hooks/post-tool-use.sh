@@ -60,9 +60,17 @@ write_context() {
   local agent_id="$2"
   local transcript="$3"
 
+  # Find the assistant turn with the highest TOTAL token count across the entire session.
+  # Using tail -1 (last turn) is wrong when prompt caching is active: individual turns may
+  # report a low input_tokens because most context was served from cache, making the last
+  # turn appear to "reset" the counter. max_by(total) gives the true peak context usage.
   local LAST_USAGE
   LAST_USAGE=$(jq -c 'select(.type == "assistant") | .message.usage // empty' \
-    "$transcript" 2>/dev/null | tail -1)
+    "$transcript" 2>/dev/null \
+    | jq -rs '[.[] | select(. != null)] |
+        if length == 0 then empty
+        else max_by((.input_tokens // 0) + (.cache_creation_input_tokens // 0) + (.cache_read_input_tokens // 0))
+        end')
 
   if [ -z "$LAST_USAGE" ] || [ "$LAST_USAGE" = "null" ]; then
     # Normal at session start before any assistant turn — not an error
