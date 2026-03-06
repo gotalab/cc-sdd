@@ -52,7 +52,9 @@ Use Glob tool to expand file patterns, then read all files:
 
 **If CONTINUATION CONTEXT is present**: do NOT re-implement what is listed as "Already implemented". Start directly from the remaining work described in the continuation block.
 
-> **Context check**: Run `Bash: S="${CLAUDE_SESSION_ID}"; R=".claude/context-sessions/.relay/$S"; [ -f "$R" ] && F=".claude/context-sessions/${S}_$(cat "$R").json" || F=".claude/context-sessions/${S}.json"; jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable]"`
+> **Context check**: Run the `Context check command` provided in your startup context.
+
+> `Bash: jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable]"`
 > If >70%: return PARTIAL_COMPLETION immediately (see Return Format). If 60–70%: warn `[CTX: X% — wrapping up]` and continue only to a clean stopping point. If `unavailable`: log warning and continue normally.
 
 ### Step 3: Execute the Subtask with TDD

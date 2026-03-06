@@ -56,7 +56,9 @@ Interactive design quality review for feature based on approved requirements and
 2. **Read Review Guidelines**:
    - Read `{{KIRO_DIR}}/settings/rules/design-review.md` for review criteria and process
 
-> **Context check**: Run `Bash: S="${CLAUDE_SESSION_ID}"; R=".claude/context-sessions/.relay/$S"; [ -f "$R" ] && F=".claude/context-sessions/${S}_$(cat "$R").json" || F=".claude/context-sessions/${S}.json"; jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable ⚠️ — hooks not active, run cc-sdd --agent claude-code-agent]"`
+> **Context check**: Run the `Context check command` provided in your startup context.
+
+> `Bash: jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable ⚠️ — hooks not active, run cc-sdd --agent claude-code-agent]"`
 > If >70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn and continue. If `unavailable ⚠️`: log the warning and continue normally.
 
 3. **Execute Design Review**:

@@ -3,12 +3,12 @@
 # and writes a context file at .claude/context-sessions/{id}.json so agents can
 # check their own context usage mid-execution via a Bash call.
 #
-# Subagent detection: SubagentStart writes a per-agent relay file at
-#   .claude/context-sessions/.relay/{session_id}/{agent_id}
-# This hook iterates over all relay files for the session to update each active
-# subagent's context file, supporting parallel subagent execution.
+# Subagent detection: subagent transcripts exist at a predictable path:
+#   {transcript_dir}/subagents/agent-{agent_id}.jsonl
+# This hook globs that directory to update context files for all active subagents,
+# supporting parallel subagent execution without any relay mechanism.
 # When the Task tool completes (tool_name=Task, tool_response.agentId set),
-# the corresponding relay file is removed.
+# the finished subagent's context file is deleted.
 
 INPUT=$(cat)
 SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // empty' 2>/dev/null)
@@ -36,13 +36,10 @@ if [ -z "$CWD" ]; then
   exit 0
 fi
 
-RELAY_DIR="$CWD/.claude/context-sessions/.relay/$SESSION_ID"
-
-# If this is the Task tool completing, remove that agent's relay file and context file.
+# If this is the Task tool completing, delete the finished subagent's context file.
 if [ "$TOOL_NAME" = "Task" ]; then
   COMPLETED_AGENT_ID=$(echo "$INPUT" | jq -r '.tool_response.agentId // empty' 2>/dev/null)
   if [ -n "$COMPLETED_AGENT_ID" ]; then
-    rm -f "$RELAY_DIR/$COMPLETED_AGENT_ID"
     rm -f "$CWD/.claude/context-sessions/${SESSION_ID}_${COMPLETED_AGENT_ID}.json"
   fi
 fi
@@ -107,16 +104,14 @@ write_context() {
     }' > "$CWD/.claude/context-sessions/${file_key}.json"
 }
 
-# Update context file for each active subagent (supports parallel execution).
-if [ -d "$RELAY_DIR" ] && [ -n "$(ls -A "$RELAY_DIR" 2>/dev/null)" ]; then
-  for relay_file in "$RELAY_DIR"/*; do
-    AGENT_ID=$(basename "$relay_file")
-    SUBAGENT_TRANSCRIPT="${TRANSCRIPT_PATH%.jsonl}/subagents/agent-${AGENT_ID}.jsonl"
-    if [ -f "$SUBAGENT_TRANSCRIPT" ]; then
-      write_context "${SESSION_ID}_${AGENT_ID}" "$AGENT_ID" "$SUBAGENT_TRANSCRIPT"
-    else
-      write_context "${SESSION_ID}_${AGENT_ID}" "$AGENT_ID" "$TRANSCRIPT_PATH"
-    fi
+# Update context file for each active subagent by globbing their transcripts.
+SUBAGENT_DIR="${TRANSCRIPT_PATH%.jsonl}/subagents"
+if [ -d "$SUBAGENT_DIR" ]; then
+  for subagent_transcript in "$SUBAGENT_DIR"/agent-*.jsonl; do
+    [ -f "$subagent_transcript" ] || continue
+    filename=$(basename "$subagent_transcript" .jsonl)
+    AGENT_ID="${filename#agent-}"
+    write_context "${SESSION_ID}_${AGENT_ID}" "$AGENT_ID" "$subagent_transcript"
   done
 fi
 
