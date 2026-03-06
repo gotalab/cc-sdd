@@ -191,11 +191,11 @@ export const agentDefinitions = {
   'opencode': {
     label: 'OpenCode',
     description:
-      'Installs kiro prompts in `.opencode/command/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro prompts in `.opencode/commands/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode'],
     recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
     layout: {
-      commandsDir: '.opencode/command',
+      commandsDir: '.opencode/commands',
       agentDir: '.opencode',
       docFile: 'AGENTS.md',
     },
@@ -209,11 +209,11 @@ export const agentDefinitions = {
   'opencode-agent': {
     label: 'OpenCode Agents',
     description:
-      'Installs kiro commands in `.opencode/command/`, a kiro agent library in `.opencode/agent/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro commands in `.opencode/commands/`, a kiro agent library in `.opencode/agent/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode-agent'],
     recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
     layout: {
-      commandsDir: '.opencode/command',
+      commandsDir: '.opencode/commands',
       agentDir: '.opencode',
       docFile: 'AGENTS.md',
     },

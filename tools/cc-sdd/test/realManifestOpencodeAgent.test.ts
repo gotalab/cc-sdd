@@ -13,7 +13,7 @@ const makeIO = () => {
     io: {
       log: (m: string) => logs.push(m),
       error: (m: string) => errs.push(m),
-      exit: (_c: number) => {},
+      exit: (_c: number) => { },
     },
     get logs() {
       return logs;
@@ -38,7 +38,7 @@ describe('real opencode-agent manifest', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
-    expect(out).toContain('[templateDir] commands: templates/agents/opencode-agent/commands -> .opencode/command');
+    expect(out).toContain('[templateDir] commands: templates/agents/opencode-agent/commands -> .opencode/commands');
     expect(out).toContain('[templateDir] agents_library: templates/agents/opencode-agent/agents -> .opencode/agent/kiro');
     expect(out).toContain('[templateFile] doc_main: templates/agents/opencode-agent/docs/AGENTS.md -> ./AGENTS.md');
     expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
@@ -55,13 +55,13 @@ describe('real opencode-agent manifest', () => {
     const text = await readFile(doc, 'utf8');
     expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
 
-    const cmd = join(cwd, '.opencode/command/kiro-spec-init.md');
+    const cmd = join(cwd, '.opencode/commands/kiro-spec-init.md');
     expect(await exists(cmd)).toBe(true);
 
     const agentSpecImpl = join(cwd, '.opencode/agent/kiro/spec-impl.md');
     expect(await exists(agentSpecImpl)).toBe(true);
     const agentSpecImplText = await readFile(agentSpecImpl, 'utf8');
-    expect(agentSpecImplText).toMatch(/Subagent/);
+    expect(agentSpecImplText).toMatch(/spec-tdd-impl Agent/);
 
     const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
     expect(await exists(settingsRule)).toBe(true);

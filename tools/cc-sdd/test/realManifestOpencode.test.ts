@@ -38,7 +38,7 @@ describe('real opencode manifest', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
-    expect(out).toContain('[templateDir] commands: templates/agents/opencode/commands -> .opencode/command');
+    expect(out).toContain('[templateDir] commands: templates/agents/opencode/commands -> .opencode/commands');
     expect(out).toContain('[templateFile] doc_main: templates/agents/opencode/docs/AGENTS.md -> ./AGENTS.md');
     expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
@@ -55,7 +55,7 @@ describe('real opencode manifest', () => {
     expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
-    const cmd = join(cwd, '.opencode/command/kiro-spec-init.md');
+    const cmd = join(cwd, '.opencode/commands/kiro-spec-init.md');
     expect(await exists(cmd)).toBe(true);
 
     const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
@@ -74,7 +74,7 @@ describe('real opencode manifest (linux)', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
-    expect(out).toContain('[templateDir] commands: templates/agents/opencode/commands -> .opencode/command');
+    expect(out).toContain('[templateDir] commands: templates/agents/opencode/commands -> .opencode/commands');
     expect(out).toContain('[templateFile] doc_main: templates/agents/opencode/docs/AGENTS.md -> ./AGENTS.md');
     expect(out).toContain('[templateDir] settings_common: templates/shared/settings -> .kiro/settings');
   });
@@ -91,7 +91,7 @@ describe('real opencode manifest (linux)', () => {
     expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
-    const cmd = join(cwd, '.opencode/command/kiro-spec-init.md');
+    const cmd = join(cwd, '.opencode/commands/kiro-spec-init.md');
     expect(await exists(cmd)).toBe(true);
 
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');
