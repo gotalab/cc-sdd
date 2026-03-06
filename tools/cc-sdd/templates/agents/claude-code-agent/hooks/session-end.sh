@@ -26,9 +26,9 @@ fi
 rm -f "$CONTEXT_DIR/${SESSION_ID}.json"
 
 # Delete any subagent context files for this session
-rm -f "$CONTEXT_DIR/${SESSION_ID}"_*.json
+rm -f "${CONTEXT_DIR}/${SESSION_ID}_"*.json
 
-# Delete relay file if it exists
-rm -f "$CONTEXT_DIR/.relay/$SESSION_ID"
+# Delete relay directory for this session
+rm -rf "$CONTEXT_DIR/.relay/$SESSION_ID"
 
 exit 0

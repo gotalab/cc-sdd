@@ -44,6 +44,13 @@ export async function installStatuslineHook(_projectDir?: string): Promise<void>
     }
   }
 
+  // Only set statusLine if it is not already configured.
+  const existing = settings.statusLine as Record<string, unknown> | string | undefined;
+  const alreadySet =
+    (typeof existing === 'object' && existing !== null && existing.command === STATUSLINE_COMMAND) ||
+    existing === STATUSLINE_COMMAND;
+  if (alreadySet) return;
+
   // Merge the statusLine key (camelCase, object format required by Claude Code)
   settings.statusLine = STATUSLINE_VALUE;
 

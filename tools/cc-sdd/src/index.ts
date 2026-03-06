@@ -246,19 +246,3 @@ export const runCli = async (
 
   return runPlanExecution(manifestPath, resolved, io, execOpts);
 };
-
-// Re-export modules for programmatic use
-export { HandoffGenerator, HandoffParser } from './handoff/index.js';
-export type {
-  HandoffDocument,
-  HandoffMetadata,
-  CompletedTask,
-  InProgressTask,
-  RemainingTask,
-  KeyFile,
-  Decision,
-  ParsedHandoff,
-  AgentMode,
-  TaskStatus,
-  Complexity,
-} from './handoff/types.js';

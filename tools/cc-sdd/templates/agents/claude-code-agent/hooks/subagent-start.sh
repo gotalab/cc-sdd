@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# cc-sdd SubagentStart hook — writes a relay file so PostToolUse can identify
-# which agent_id is currently running and key its context file as
-# {session_id}_{agent_id}.json instead of the shared session file.
+# cc-sdd SubagentStart hook — writes a per-agent relay file so PostToolUse can
+# identify all active subagents and update their context files.
 #
 # CLAUDE_ENV_FILE is NOT set for SubagentStart (only for SessionStart), so env
 # var injection is not possible. We use a relay file at:
-#   .claude/context-sessions/.relay/{session_id}
-# PostToolUse reads this file to get the current agent_id.
-# PostToolUse deletes it when the Task tool completes (subagent is done).
+#   .claude/context-sessions/.relay/{session_id}/{agent_id}
+# PostToolUse iterates over all relay files for the session on each tool call,
+# supporting parallel subagent execution without race conditions.
+# PostToolUse removes a relay file when the corresponding Task tool completes.
 
 INPUT=$(cat)
 AGENT_ID=$(echo "$INPUT" | jq -r '.agent_id // empty' 2>/dev/null)
@@ -29,10 +29,10 @@ if [ -z "$CWD" ]; then
   exit 0
 fi
 
-# Write relay file: PostToolUse reads this to get the current subagent's ID.
-RELAY_DIR="$CWD/.claude/context-sessions/.relay"
+# Write per-agent relay file: PostToolUse enumerates these to find active agents.
+RELAY_DIR="$CWD/.claude/context-sessions/.relay/$SESSION_ID"
 mkdir -p "$RELAY_DIR" 2>/dev/null
-echo "$AGENT_ID" > "$RELAY_DIR/$SESSION_ID"
+touch "$RELAY_DIR/$AGENT_ID"
 
 # Also emit additionalContext as a prompt-visible reminder for the agent.
 jq -n \
