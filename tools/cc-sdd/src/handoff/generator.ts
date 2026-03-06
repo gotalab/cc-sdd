@@ -6,6 +6,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as crypto from 'crypto';
 import type {
   HandoffMetadata,
   CompletedTask,
@@ -28,8 +29,8 @@ export class HandoffGenerator {
    */
   generateHandoffId(): string {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-    const random = Math.random().toString(36).slice(2, 6);
-    return `handoff-${timestamp}-${random}`;
+    const randomId = crypto.randomUUID().slice(0, 8);
+    return `handoff-${timestamp}-${randomId}`;
   }
 
   /**

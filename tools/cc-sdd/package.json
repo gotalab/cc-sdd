@@ -32,7 +32,7 @@
   "type": "module",
   "bin": {
     "cc-sdd": "./dist/cli.js",
-    "cc-sdd-statusline": "./dist/mcp/context-monitor/statusline-writer.js"
+    "cc-sdd-statusline": "./dist/hooks/context-monitor/statusline-writer.js"
   },
   "scripts": {
     "test": "vitest run",

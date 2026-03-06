@@ -14,6 +14,12 @@ const CLAUDE_SETTINGS_PATH = path.join(os.homedir(), '.claude', 'settings.json')
 const STATUSLINE_COMMAND = 'cc-sdd-statusline';
 
 /**
+ * The statusLine value written to settings.json.
+ * Claude Code requires an object with type + command (camelCase key).
+ */
+const STATUSLINE_VALUE = { type: 'command', command: STATUSLINE_COMMAND };
+
+/**
  * Install the statusline hook into ~/.claude/settings.json.
  *
  * Reads the existing settings (creating the file if absent), merges the
@@ -38,8 +44,8 @@ export async function installStatuslineHook(_projectDir?: string): Promise<void>
     }
   }
 
-  // Merge the statusline key
-  settings.statusline = STATUSLINE_COMMAND;
+  // Merge the statusLine key (camelCase, object format required by Claude Code)
+  settings.statusLine = STATUSLINE_VALUE;
 
   // Write back atomically via a sibling temp file
   const tmpPath = CLAUDE_SETTINGS_PATH + '.tmp';

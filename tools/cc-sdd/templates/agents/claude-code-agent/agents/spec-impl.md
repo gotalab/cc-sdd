@@ -57,8 +57,8 @@ Execute implementation tasks for feature using Test-Driven Development.
 
 - Verify tasks are approved in spec.json (stop if not, see Safety & Fallback)
 
-> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
-> Output `[CTX: X%]`. If X > 70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
+> **Context check**: Run `Bash: S="${CLAUDE_SESSION_ID}"; R=".claude/context-sessions/.relay/$S"; [ -f "$R" ] && F=".claude/context-sessions/${S}_$(cat "$R").json" || F=".claude/context-sessions/${S}.json"; jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable ⚠️ — hooks not active, run cc-sdd --agent claude-code-agent]"`
+> If >70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn and continue. If `unavailable ⚠️`: log the warning and continue normally.
 
 ### Step 2: Select Tasks
 
@@ -95,8 +95,8 @@ For each selected task, follow Kent Beck's TDD cycle:
 5. **MARK COMPLETE**:
    - Update checkbox from `- [ ]` to `- [x]` in tasks.md
 
-> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
-> If X > 70%: create a handoff document listing remaining unchecked tasks and stop. If 60–70%: warn and continue.
+> **Context check**: Run `Bash: S="${CLAUDE_SESSION_ID}"; R=".claude/context-sessions/.relay/$S"; [ -f "$R" ] && F=".claude/context-sessions/${S}_$(cat "$R").json" || F=".claude/context-sessions/${S}.json"; jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable ⚠️ — hooks not active, run cc-sdd --agent claude-code-agent]"`
+> If >70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn and continue. If `unavailable ⚠️`: log the warning and continue normally.
 
 ## Critical Constraints
 

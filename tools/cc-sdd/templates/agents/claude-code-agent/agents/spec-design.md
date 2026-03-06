@@ -95,8 +95,8 @@ Generate technical design document for feature based on approved requirements.
    - Integration points and dependencies
    - Identified risks and mitigation strategies
 
-> **Context check**: `Bash: jq -r '.usage_percentage // "n/a"' ".claude/context-sessions/$CLAUDE_SESSION_ID.json" 2>/dev/null`
-> Output `[CTX: X%]`. If X > 70%: create a handoff document and stop. If 60–70%: warn `⚠️ Context at X%. Consider wrapping up soon.` and continue.
+> **Context check**: Run `Bash: S="${CLAUDE_SESSION_ID}"; R=".claude/context-sessions/.relay/$S"; [ -f "$R" ] && F=".claude/context-sessions/${S}_$(cat "$R").json" || F=".claude/context-sessions/${S}.json"; jq -r '.usage_percentage // "n/a"' "$F" 2>/dev/null || echo "[CTX: unavailable ⚠️ — hooks not active, run cc-sdd --agent claude-code-agent]"`
+> If >70%: create a handoff document listing remaining tasks and stop. If 60–70%: warn and continue. If `unavailable ⚠️`: log the warning and continue normally.
 
 ### Step 3: Generate Design Document
 

@@ -9,7 +9,7 @@ The Context Window Management system prevents LLM context overflow by proactivel
 - **Real-time Context Monitoring**: Track context window utilization across Claude Code and OpenCode
 - **Automatic Handoff**: Create handoff documents when context exceeds 70% utilization
 - **Seamless Continuation**: Resume work from handoff documents in new sessions
-- **Visual Status Display**: Context status bar shows current usage at a glance
+- **Visual Status Display**: Context status bar shows current usage at a glance (Claude Code only)
 
 ## Configuration
 
@@ -65,7 +65,7 @@ Handoff documents contain:
 
 ## Context Status Display
 
-The status bar shows context usage:
+The status bar shows context usage (Claude Code only):
 
 - **SAFE** (0-60%): Green indicator
 - **CAUTION** (60-70%): Yellow indicator with warning

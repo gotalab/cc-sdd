@@ -1,9 +1,8 @@
 /**
  * Context Monitor Plugin for OpenCode
  *
- * Writes real-time token usage to `.opencode/context-status.json` so the
- * external `context-monitor` MCP server can read it without needing access
- * to OpenCode's internal API.
+ * This plugin exposes a tool to read real-time token usage from the session
+ * so that agents can check their context usage natively.
  *
  * Installation: this file is automatically placed in `.opencode/plugin/`
  * by `cc-sdd --agent opencode-agent`. OpenCode loads all `.ts` files in
@@ -14,13 +13,10 @@
  *     during heavy work (after loading large context, between execution steps).
  *   - Each subagent calls it inline and reads `Usage: X%` from the return value
  *     to decide whether to continue, warn, or create a handoff document.
- *   - The file `.opencode/context-status.json` is also written for statusline display.
  */
 
 import type { Plugin } from "@opencode-ai/plugin"
 import { tool } from "@opencode-ai/plugin"
-import fs from "fs"
-import path from "path"
 
 // ---------------------------------------------------------------------------
 // Types
@@ -148,22 +144,6 @@ function extractTokensFromMessages(messages: SessionMessage[]): {
 }
 
 // ---------------------------------------------------------------------------
-// File writer
-// ---------------------------------------------------------------------------
-
-function writeContextStatus(status: ContextStatus): void {
-  const outputDir = path.join(process.cwd(), ".opencode")
-  const outputPath = path.join(outputDir, "context-status.json")
-  try {
-    fs.mkdirSync(outputDir, { recursive: true })
-    fs.writeFileSync(outputPath, JSON.stringify(status, null, 2) + "\n", "utf-8")
-  } catch (err) {
-    // Non-fatal: the MCP server will simply not find the file
-    console.error("[context-monitor] Failed to write context-status.json:", err)
-  }
-}
-
-// ---------------------------------------------------------------------------
 // Plugin export
 // ---------------------------------------------------------------------------
 
@@ -172,43 +152,47 @@ export const ContextMonitorPlugin: Plugin = async ({ client }) => {
     tool: {
       write_context_status: tool({
         description:
-          "Write current session token usage to .opencode/context-status.json for the context-monitor MCP server. " +
-          "Call this at the beginning of each response so the external monitor stays up to date.",
-        args: {
-          sessionID: tool.schema.string().optional(),
-        },
+          "Get current session token usage. " +
+          "Call this at natural checkpoints (start of heavy work, between steps) to check context usage. " +
+          "Returns token usage info directly.",
+        args: {},
         async execute(args, context) {
-          const sessionID = args.sessionID ?? context.sessionID
+          const sessionID = context.sessionID
           if (!sessionID) {
-            return "No session ID available — cannot write context status."
+            return "⚠️ Context monitoring unavailable: no session ID in context."
           }
 
-          const response = await client.session.messages({ path: { id: sessionID } })
+          let response: unknown
+          try {
+            response = await client.session.messages({ path: { id: sessionID } })
+          } catch (err) {
+            return `⚠️ Context monitoring unavailable: failed to fetch session messages — ${err}`
+          }
+
           const messages: SessionMessage[] = (
             ((response as { data?: unknown }).data ?? response) ?? []
           ) as SessionMessage[]
 
           if (!Array.isArray(messages) || messages.length === 0) {
-            return `Session ${sessionID} has no messages yet.`
+            return `⚠️ Context monitoring unavailable: session ${sessionID} has no messages yet.`
           }
 
           const result = extractTokensFromMessages(messages)
           if (!result) {
-            return "No assistant messages with token data found yet."
+            return "⚠️ Context monitoring unavailable: no assistant messages with token data found yet."
           }
 
           result.status.session_id = sessionID
-          writeContextStatus(result.status)
 
           const { total_tokens, input_tokens, output_tokens, reasoning_tokens, usage_percentage, context_window_size } =
             result.status
           return (
-            `Context status written to .opencode/context-status.json\n` +
-            `Total: ${total_tokens.toLocaleString()} tokens ` +
+            `Context Status:\n` +
+            `- Total: ${total_tokens.toLocaleString()} tokens ` +
             `(in: ${input_tokens.toLocaleString()}, out: ${output_tokens.toLocaleString()}` +
             (reasoning_tokens > 0 ? `, reasoning: ${reasoning_tokens.toLocaleString()}` : "") +
             `)\n` +
-            `Usage: ${usage_percentage}% of ${context_window_size.toLocaleString()} token context window`
+            `- Usage: ${usage_percentage}% of ${context_window_size.toLocaleString()} token context window`
           )
         },
       }),

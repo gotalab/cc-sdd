@@ -47,8 +47,16 @@ async function main(): Promise<void> {
     process.stderr.write(`[context-monitor] Failed to write context-status.json: ${err}\n`);
   }
 
-  // Format and emit the status line
-  const usedPercentage = typeof data.used_percentage === 'number' ? data.used_percentage : null;
+  // Format and emit the status line.
+  // Claude Code nests the percentage at context_window.used_percentage; fall back
+  // to the top-level used_percentage for any older/alternate payload shapes.
+  const contextWindow = data.context_window as Record<string, unknown> | undefined;
+  const usedPercentage =
+    typeof contextWindow?.used_percentage === 'number'
+      ? contextWindow.used_percentage
+      : typeof data.used_percentage === 'number'
+      ? data.used_percentage
+      : null;
 
   let statusLine: string;
   if (usedPercentage !== null) {
