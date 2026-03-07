@@ -1,0 +1,8 @@
+{
+    "threshold_percentage": 70,
+    "warning_percentage": 60,
+    "handoff_enabled": true,
+    "handoff_directory": "{{KIRO_DIR}}/handoffs",
+    "display_mode": "always",
+    "token_budget_override": null
+}

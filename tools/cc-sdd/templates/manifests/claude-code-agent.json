@@ -37,6 +37,15 @@
         "toDir": "{{KIRO_DIR}}/settings"
       },
       "when": { "agent": "claude-code-agent" }
+    },
+    {
+      "id": "claude_hooks",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/claude-code-agent/hooks",
+        "toDir": ".claude/hooks"
+      },
+      "when": { "agent": "claude-code-agent" }
     }
   ]
 }

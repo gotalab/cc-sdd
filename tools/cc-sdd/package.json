@@ -31,7 +31,8 @@
   },
   "type": "module",
   "bin": {
-    "cc-sdd": "./dist/cli.js"
+    "cc-sdd": "./dist/cli.js",
+    "cc-sdd-statusline": "./dist/hooks/context-monitor/statusline-writer.js"
   },
   "scripts": {
     "test": "vitest run",
@@ -44,6 +45,7 @@
     "dist",
     "templates"
   ],
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^25.1.0",
     "typescript": "^5.9.3",

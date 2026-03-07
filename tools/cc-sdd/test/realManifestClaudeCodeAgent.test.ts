@@ -13,7 +13,7 @@ const makeIO = () => {
     io: {
       log: (m: string) => logs.push(m),
       error: (m: string) => errs.push(m),
-      exit: (_c: number) => {},
+      exit: (_c: number) => { },
     },
     get logs() {
       return logs;
@@ -61,7 +61,7 @@ describe('real claude-code-agent manifest', () => {
     const agentSpecImpl = join(cwd, '.claude/agents/kiro/spec-impl.md');
     expect(await exists(agentSpecImpl)).toBe(true);
     const agentSpecImplText = await readFile(agentSpecImpl, 'utf8');
-    expect(agentSpecImplText).toMatch(/Subagent/);
+    expect(agentSpecImplText).toMatch(/spec-tdd-impl Agent/);
 
     const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
     expect(await exists(settingsRule)).toBe(true);

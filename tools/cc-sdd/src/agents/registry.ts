@@ -209,7 +209,7 @@ export const agentDefinitions = {
   'opencode-agent': {
     label: 'OpenCode Agents',
     description:
-      'Installs kiro commands in `.opencode/commands/`, a kiro agent library in `.opencode/agents/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro commands in `.opencode/commands/`, a kiro agent library in `.opencode/agent/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode-agent'],
     recommendedModels: ['gpt-5.2-codex', 'gpt-5.2'],
     layout: {

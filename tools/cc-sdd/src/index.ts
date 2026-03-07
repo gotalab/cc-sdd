@@ -18,6 +18,8 @@ import { determineCategoryPolicies, printSummary, summarizeCategories, type Cate
 import { defaultIO, type CliIO } from './cli/io.js';
 import { colors, formatError, formatHeading, formatSuccess, formatWarning } from './cli/ui/colors.js';
 import { isInteractive, promptChoice, promptConfirm } from './cli/ui/prompt.js';
+import { installStatuslineHook } from './hooks/context-monitor/statusline-installer.js';
+import { installProjectHooks } from './hooks/context-monitor/hooks-installer.js';
 
 const agentKeys = agentList;
 const aliasFlags = Array.from(new Set(agentKeys.flatMap((key) => getAgentDefinition(key).aliasFlags)));
@@ -176,6 +178,27 @@ const runPlanExecution = async (
     });
 
     io.log(formatSuccess(`✅ Setup completed: written=${result.written}, skipped=${result.skipped}`));
+
+    if (resolvedConfig.agent === 'claude-code-agent') {
+      const projectDir = execOpts?.cwd ?? process.cwd();
+
+      try {
+        await installStatuslineHook();
+        io.log(formatSuccess('✅ Statusline registered (statusLine → cc-sdd-statusline in ~/.claude/settings.json)'));
+      } catch (error) {
+        const msg = error instanceof Error ? error.message : String(error);
+        io.log(formatWarning(`⚠️  Could not register statusline: ${msg}`));
+      }
+
+      try {
+        await installProjectHooks(projectDir);
+        io.log(formatSuccess('✅ Context hooks registered (PostToolUse + SessionStart in .claude/settings.json)'));
+      } catch (error) {
+        const msg = error instanceof Error ? error.message : String(error);
+        io.log(formatWarning(`⚠️  Could not register context hooks: ${msg}`));
+      }
+    }
+
     printCompletionGuide(resolvedConfig.agent, io);
     return 0;
   } catch (error) {
