@@ -1,4 +1,4 @@
-# cc-sdd: Spec-driven development for your team's workflow
+# cc-sdd: Long-running spec-driven implementation for AI coding agents
 
 <!-- npm badges -->
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
@@ -9,33 +9,48 @@
 <a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-## Transform AI coding agents into production-ready spec-driven development
+## Turn approved requirements and design into long-running autonomous implementation with Ralph Loop
 
-**One command. Hours instead of weeks. Requirements → Design → Tasks → Implementation.**
+**One command. Hours instead of weeks. Requirements → Design → Tasks → Implementation, review, and final validation.**
 
 👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
-Stop losing 70% of development time to meetings, documentation ceremonies, and scattered context. cc-sdd brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, OpenCode, and Windsurf.
+cc-sdd turns approved specs into executable work instead of leaving them as passive documents. It brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, OpenCode, and Windsurf, with Ralph Loop for larger approved task sets.
 
 ### What you get:
-- ✅ **Spec-first guarantees** — Approve requirements/design upfront, then AI implements exactly as specified
-- ✅ **Parallel execution ready** — Tasks decomposed for concurrent implementation with dependency tracking
-- ✅ **Team-aligned templates** — Customize once, all agents output docs that fit your approval process
-- ✅ **Project Memory** — AI remembers your architecture, patterns, and standards across sessions
-- ✅ **8 agents, unified workflow** — Same spec-driven process across Claude, Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf
-- ✅ **Hours instead of weeks** — Feature planning goes from days to hours with AI-assisted specs
+- ✅ **Approved specs become executable work** — Requirements, design, tasks, implementation, review, and final validation stay connected instead of drifting apart
+- ✅ **Ralph Loop handles bigger work** — Large approved task sets can run through bounded long-running autonomous implementation instead of fragile one-shot prompting
+- ✅ **Review and final validation flows are built in** — The system is designed to re-check work, remediate concrete findings, and stop honestly when work is blocked or not ready to claim complete
+- ✅ **Team-aligned templates keep adoption practical** — Customize once and generated requirements, design reviews, tasks, and steering docs fit your approval process
+
+### Why Agent Skills matter:
+- Agent Skills package workflow instructions, domain knowledge, playbooks, and tool restrictions into composable units instead of scattering them across ad hoc docs
+- The same skills-based workflow can move across Claude Code, Codex, and future skills-capable agents with less translation work
+- `claude-code-skills` and `codex-skills` are the recommended installs when you want the most durable long-running setup
 
 ## 🚀 Quick Start
 
 ```bash
 # Run in your project root directory
 cd your-project
-npx cc-sdd@latest --claude --lang en ## Claude Code
+npx cc-sdd@latest
 
-# ✅ That's it! Now run: /kiro:spec-init <what-to-build>
+# Default install targets Claude Code Skills.
+# Choose a different agent with flags like --codex-skills, --cursor, or --windsurf.
 ```
 
-**Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages.
+Then start with:
+
+```bash
+/kiro:spec-init <what-to-build>
+/kiro:spec-requirements <feature-name>
+/kiro:spec-design <feature-name>
+/kiro:spec-tasks <feature-name>
+```
+
+For larger approved task sets, move from task generation into Ralph Loop driven implementation.
+
+**Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages, plus Codex Skills mode.
 
 📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
@@ -87,7 +102,8 @@ npx cc-sdd@latest --claude         # Claude Code (11 commands) [default]
 npx cc-sdd@latest --claude-agent   # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor         # Cursor IDE
 npx cc-sdd@latest --gemini         # Gemini CLI
-npx cc-sdd@latest --codex          # Codex CLI
+npx cc-sdd@latest --codex          # Codex CLI legacy mode (non-recommended)
+npx cc-sdd@latest --codex-skills   # Codex CLI skills mode (recommended, 12 skills)
 npx cc-sdd@latest --copilot        # GitHub Copilot
 npx cc-sdd@latest --qwen           # Qwen Code
 npx cc-sdd@latest --opencode       # OpenCode (11 commands)

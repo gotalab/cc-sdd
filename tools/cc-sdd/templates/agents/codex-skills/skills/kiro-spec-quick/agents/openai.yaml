@@ -1,0 +1,6 @@
+interface:
+  display_name: "Spec Quick"
+  short_description: "Quick spec generation with interactive or automatic mode"
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Validate Implementation"
+  short_description: "Validate implementation against requirements, design, and tasks"
+
+policy:
+  allow_implicit_invocation: false
