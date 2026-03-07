@@ -46,6 +46,7 @@ You are a specialized skill for launching autonomous Ralph Loop implementation o
 **Preflight setup stays in the parent agent**:
 - Run `git status --porcelain` and note any pre-existing uncommitted changes
 - Discover canonical validation commands from the repo root using files such as `package.json`, `pyproject.toml`, `go.mod`, `Makefile`, and `README*`
+- Identify any local playbooks or agent skills that clearly match this feature's host environment or use case so they can be passed only to the tasks that need them
 - Keep environment/setup work in the parent agent; implementation subagents should receive only task-relevant context plus validation commands
 
 ### Step 2: Calculate Configuration
@@ -113,7 +114,7 @@ started_at: "{ISO_8601_timestamp}"
 - **Bounded Remediation**: If final validation fails, fix only concrete findings and cap remediation at 3 rounds before stopping without the completion promise
 
 ## Tool Guidance
-- **Read**: Load spec files, steering, ralph-prompt.md template
+- **Read**: Load spec files, core steering, relevant local playbooks/agent skills, and the ralph-prompt.md template
 - **Write**: Create `.claude/ralph-loop.local.md` state file
 - **Bash**: Get timestamps
 - **Glob**: Find steering files, spec files

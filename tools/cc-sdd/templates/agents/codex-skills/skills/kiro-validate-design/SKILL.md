@@ -27,12 +27,14 @@ Interactive design quality review for feature **$1** based on approved requireme
    - Read `{{KIRO_DIR}}/specs/$1/spec.json` for language and metadata
    - Read `{{KIRO_DIR}}/specs/$1/requirements.md` for requirements
    - Read `{{KIRO_DIR}}/specs/$1/design.md` for design document
-   - Load entire `{{KIRO_DIR}}/steering/` directory
+   - Core steering context: `product.md`, `tech.md`, `structure.md`
+   - Additional steering files only when directly relevant to architecture boundaries, integrations, runtime prerequisites, domain rules, security/performance constraints, or team conventions that affect implementation readiness
+   - Relevant local agent skills or playbooks only when they clearly match the feature's host environment or use case and provide review-relevant context
 
 #### Parallel Research
 
 The following research areas are independent and can be executed in parallel:
-1. **Context & rules loading**: Spec documents, steering files, and `rules/design-review.md` from this skill's directory for review criteria
+1. **Context & rules loading**: Spec documents, core steering, task-relevant extra steering, relevant local agent skills/playbooks, and `rules/design-review.md` from this skill's directory for review criteria
 2. **Codebase pattern survey**: Gather existing architecture patterns, naming conventions, and component structure from the codebase to use as reference during review
 
 If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.
@@ -57,10 +59,11 @@ After all parallel research completes, synthesize findings for review.
 - **Interactive approach**: Engage in dialogue, ask clarifying questions, propose alternatives
 - **Balanced assessment**: Recognize both strengths and weaknesses
 - **Actionable feedback**: All suggestions must be implementable
+- **Context Discipline**: Start with core steering and expand only with review-relevant steering or use-case-aligned local agent skills/playbooks
 </instructions>
 
 ## Tool Guidance
-- **Read first**: Load all context (spec, steering, rules) before review
+- **Read first**: Load spec, core steering, relevant local playbooks/agent skills, and rules before review
 - **Grep if needed**: Search codebase for pattern validation or integration checks
 - **Interactive**: Engage with user throughout the review process
 

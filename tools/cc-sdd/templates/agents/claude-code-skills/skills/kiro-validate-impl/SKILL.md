@@ -44,7 +44,9 @@ Otherwise, for each detected feature:
 - Read `{{KIRO_DIR}}/specs/<feature>/requirements.md` for requirements
 - Read `{{KIRO_DIR}}/specs/<feature>/design.md` for design structure
 - Read `{{KIRO_DIR}}/specs/<feature>/tasks.md` for task list
-- **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory
+- Core steering context: `product.md`, `tech.md`, `structure.md`
+- Additional steering files only when directly relevant to the validated boundaries, runtime prerequisites, integrations, domain rules, security/performance constraints, or team conventions that affect the GO/NO-GO call
+- Relevant local agent skills or playbooks only when they clearly match the feature's host environment or use case and provide validation-relevant constraints or procedures
 
 ### Step 3: Execute Validation
 
@@ -107,9 +109,10 @@ Provide summary in the language specified in spec.json:
 - **Test-first focus**: Test coverage is mandatory for GO decision
 - **Traceability required**: All requirements must be traceable to implementation
 - **Source numbering only**: Use the exact section numbers from `requirements.md` and `design.md`; do not invent `REQ-*` aliases
+- **Context Discipline**: Start with core steering and expand only with validation-relevant steering or use-case-aligned local agent skills/playbooks
 
 ## Tool Guidance
-- **Read context**: Load all specs and steering before validation
+- **Read context**: Load specs, core steering, and only the local playbooks/agent skills relevant to the validation target
 - **Bash for tests**: Execute test commands to verify pass status
 - **Grep for traceability**: Search codebase for requirement evidence
 - **Glob for structure**: Verify file structure matches design

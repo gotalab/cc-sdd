@@ -12,7 +12,7 @@ Use this scaffold when the parent Ralph Loop agent delegates a task to a worker 
 - Feature name and task identifier/text
 - Relevant excerpts or paths from `requirements.md`, `design.md`, and `tasks.md`
 - Exact numbered sections from `requirements.md` and `design.md` that this task must satisfy, using the source numbering from those files (for example `1.2`, `3.1`, `A.2`)
-- Steering files or code patterns relevant to the task
+- Steering files, local playbooks, agent skills, or code patterns relevant to the task
 - Validation commands discovered by the parent
 - Whether the task is behavioral (Feature Flag Protocol) or non-behavioral
 

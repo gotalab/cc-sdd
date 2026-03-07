@@ -20,6 +20,11 @@ cc-sdd turns approved specs into executable work: requirements → design → ta
 - ✅ **Review and final validation flows are built in** — Re-check work, remediate concrete findings, and stop honestly when the work is blocked or not ready to claim complete
 - ✅ **Team-aligned templates keep adoption practical** — Customize once and generated requirements, design reviews, tasks, and steering docs fit your approval process
 
+**Why Agent Skills matter:**
+- Agent Skills package workflow instructions, domain knowledge, playbooks, and tool restrictions into composable units instead of scattering them across ad hoc docs
+- The same skills-based workflow can move across Claude Code, Codex, and future skills-capable agents with less translation work
+- `claude-code-skills` and `codex-skills` are the recommended installs when you want the most durable long-running setup
+
 > If you've used specs as passive documents, cc-sdd is the opposite: approved specs become executable work.
 
 ---

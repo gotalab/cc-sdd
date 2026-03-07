@@ -20,6 +20,11 @@ cc-sdd 會把已核准規格轉成 executable work，串起需求 → 設計 →
 - ✅ **內建審查與最終驗證流程** — 重新檢查工作、修正具體 findings，並在 blocked / not-ready 時誠實停止
 - ✅ **團隊對齊模板讓導入更務實** — 自訂一次後，產生的需求、設計審查、任務與 steering 文件就能貼合團隊的批准流程
 
+**為什麼 Agent Skills 很重要:**
+- Agent Skills 可以把 workflow instructions、領域知識、操作手冊與 tool restrictions 封裝成可組合的單位，而不是散落在各種 ad hoc 文件裡
+- 同一套 skill-based workflow 能以較低的轉換成本移動到 Claude Code、Codex 與未來的 skills-capable agents
+- 如果你要的是更耐久的長時間運作方式，`claude-code-skills` 與 `codex-skills` 會是建議安裝方式
+
 > 如果你過去把規格當成「只讀文件」，cc-sdd 則是相反：它把已核准規格轉成 executable work。
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。

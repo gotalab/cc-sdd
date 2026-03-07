@@ -6,7 +6,9 @@ Read the following files to understand the full implementation context:
 1. `{{KIRO_DIR}}/specs/{{FEATURE_NAME}}/tasks.md` — task list and progress
 2. `{{KIRO_DIR}}/specs/{{FEATURE_NAME}}/design.md` — architecture and component design
 3. `{{KIRO_DIR}}/specs/{{FEATURE_NAME}}/requirements.md` — functional requirements
-4. Entire `{{KIRO_DIR}}/steering/` directory — project conventions and patterns
+4. Core steering context: `product.md`, `tech.md`, `structure.md`
+5. Additional steering files only when directly relevant to the current task's boundary, runtime prerequisites, integrations, domain rules, security/performance constraints, or team conventions
+6. Relevant local agent skills or playbooks only when they clearly match the current task's host environment or use case; load only the specific artifact(s) needed, not whole directories
 
 ## Parent Responsibilities
 
@@ -27,7 +29,7 @@ Before delegating any implementation work, the parent Ralph Loop agent must:
    - If remaining required sub-tasks all have `_Blocked:_` → report blocked tasks and reasons, then stop (human review needed)
 3. **Check prerequisites**: Verify `_Depends:_` annotations — referenced tasks must be `[x]`
 4. **Delegate implementation** to a subagent (`tdd-task-implementer`):
-   - Pass: task description, boundary scope, exact requirement/design section numbers as written in `requirements.md` and `design.md`, steering context, and the validation commands discovered by the parent
+   - Pass: task description, boundary scope, exact requirement/design section numbers as written in `requirements.md` and `design.md`, task-relevant steering context, matching local agent skills/playbooks when applicable, and the validation commands discovered by the parent
    - For behavioral tasks: subagent follows the Feature Flag Protocol (flag OFF → RED → flag ON → GREEN → remove flag)
    - For non-behavioral tasks (refactoring, config): standard TDD cycle
    - Subagent does NOT update `tasks.md` or create commits; it returns changed files, exact section coverage, review results, and validation results to the parent after running its own review/fix loop
@@ -59,10 +61,11 @@ Before delegating any implementation work, the parent Ralph Loop agent must:
 ## Subagent Delegation
 
 For each task, delegate to a `tdd-task-implementer` subagent with this context:
-- Full spec context (design.md, requirements.md, tasks.md, steering)
+- Task-relevant spec context (design.md, requirements.md, tasks.md)
 - The specific task to implement
 - The exact requirement and design section numbers that the task must satisfy, using the source numbering from those files
 - `_Boundary:_` scope constraints
+- Task-relevant steering files, local playbooks, or agent skills that materially constrain the work
 - Existing code patterns from the codebase
 - Validation commands discovered by the parent agent
 

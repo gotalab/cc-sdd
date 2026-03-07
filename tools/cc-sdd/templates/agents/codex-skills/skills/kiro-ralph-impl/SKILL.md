@@ -26,13 +26,15 @@ Autonomously implement all approved tasks for feature **$1** using an iterative 
 
 **Read all necessary context**:
 - `{{KIRO_DIR}}/specs/$1/spec.json`, `requirements.md`, `design.md`, `tasks.md`
-- **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
+- Core steering context: `product.md`, `tech.md`, `structure.md`
+- Additional steering files only when directly relevant to the current task's boundary, runtime prerequisites, integrations, domain rules, security/performance constraints, or team conventions
+- Relevant local agent skills or playbooks only when they clearly match the feature's host environment or use case; read the specific artifact(s) you need, not entire directories
 
 #### Parallel Research
 
 The following research areas are independent and can be executed in parallel:
 1. **Spec context loading**: spec.json, requirements.md, design.md, tasks.md
-2. **Steering & patterns**: Steering files, coding conventions, existing code patterns
+2. **Steering, playbooks, & patterns**: Core steering, task-relevant extra steering, matching local agent skills/playbooks, and existing code patterns
 3. **Validation discovery**: repo files such as `package.json`, `pyproject.toml`, `go.mod`, `Makefile`, and `README*` to determine canonical validation commands
 
 If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.
@@ -51,6 +53,7 @@ After all parallel research completes, synthesize implementation brief before st
 
 **Keep setup in the manager**:
 - Run `git status --porcelain` and note pre-existing changes before starting the loop
+- Identify any local playbooks or agent skills that clearly match this feature's host environment or use case so they can be passed only to the tasks that need them
 - Keep environment/setup, validation command discovery, task-state updates, and commits in the parent Ralph Loop agent
 
 ### Step 3: Read Implementation Protocol
@@ -118,7 +121,7 @@ After all parallel research completes, synthesize implementation brief before st
 </instructions>
 
 ## Tool Guidance
-- **Read first**: Load all context and ralph-prompt.md protocol before implementation
+- **Read first**: Load spec files, core steering, relevant local playbooks/agent skills, and ralph-prompt.md before implementation
 - **Test first**: Write tests before code in every cycle
 - Use **WebSearch/WebFetch** for library documentation when needed
 - Use **task list** to track overall progress through the loop

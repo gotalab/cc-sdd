@@ -25,13 +25,15 @@ Execute implementation tasks for feature **$1** using Test-Driven Development.
 
 **Read all necessary context**:
 - `{{KIRO_DIR}}/specs/$1/spec.json`, `requirements.md`, `design.md`, `tasks.md`
-- **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
+- Core steering context: `product.md`, `tech.md`, `structure.md`
+- Additional steering files only when directly relevant to the selected task's boundary, runtime prerequisites, integrations, domain rules, security/performance constraints, or team conventions that affect implementation or validation
+- Relevant local agent skills or playbooks only when they clearly match the task's host environment or use case; read the specific artifact(s) you need, not entire directories
 
 #### Parallel Research
 
 The following research areas are independent and can be executed in parallel:
 1. **Spec context loading**: spec.json, requirements.md, design.md, tasks.md
-2. **Steering & patterns**: Steering files, coding conventions, existing code patterns
+2. **Steering, playbooks, & patterns**: Core steering, task-relevant extra steering, matching local agent skills/playbooks, and existing code patterns
 
 If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.
 
@@ -87,6 +89,7 @@ For each selected task, follow Kent Beck's TDD cycle:
 - **Design Alignment**: Implementation must follow design.md specifications
 - **Boundary Scope**: Respect `_Boundary:_` annotations — limit changes to declared components
 - **Dependency Check**: Verify `_Depends:_` prerequisites are complete before starting a task
+- **Context Discipline**: Start with core steering and expand only with task-relevant steering or use-case-aligned local skills/playbooks
 </instructions>
 
 ## Tool Guidance
@@ -123,4 +126,3 @@ Provide brief summary in the language specified in spec.json:
 
 **Execute all pending**:
 - `$kiro-spec-impl $1` - All unchecked tasks
-

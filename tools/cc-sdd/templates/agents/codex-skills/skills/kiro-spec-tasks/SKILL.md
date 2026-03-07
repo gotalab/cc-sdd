@@ -28,7 +28,8 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 **Read all necessary context**:
 - `{{KIRO_DIR}}/specs/$1/spec.json`, `requirements.md`, `design.md`
 - `{{KIRO_DIR}}/specs/$1/tasks.md` (if exists, for merge mode)
-- **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
+- Core steering context: `product.md`, `tech.md`, `structure.md`
+- Additional steering files only when directly relevant to requirements coverage, design boundaries, runtime prerequisites, or team conventions that affect task executability
 
 **Validate approvals**:
 - If `-y` flag provided ($2 == "-y"): Auto-approve requirements and design in spec.json
@@ -63,7 +64,23 @@ After all parallel research completes, synthesize findings before generating tas
 - Mark optional test coverage subtasks with `- [ ]*` only when they strictly cover acceptance criteria already satisfied by core implementation and can be deferred post-MVP
 - If existing tasks.md found, merge with new content
 
-### Step 3: Finalize
+### Step 3: Review Task Plan
+
+- Keep the draft task plan in working memory; do NOT write `tasks.md` yet
+- Run the `Task Plan Review Gate` from `rules/tasks-generation.md`
+- Review coverage:
+  - Every requirement ID appears in at least one task
+  - Every design component, contract, integration point, runtime prerequisite, and validation concern is represented
+- Review executability:
+  - Each sub-task is an executable 1-3 hour work unit
+  - Each sub-task has a verifiable deliverable
+  - No implicit prerequisites remain hidden
+  - `_Depends:_`, `_Boundary:_`, and `(P)` markers still match the dependency graph and architecture boundaries
+- If issues are task-plan-local, repair the draft and re-run the review gate before writing
+- Keep the review bounded to at most 2 repair passes
+- If review exposes a real requirements/design gap or contradiction, stop and send the user back to requirements/design instead of inventing filler tasks
+
+### Step 4: Finalize
 
 **Write and update**:
 - Create/update `{{KIRO_DIR}}/specs/$1/tasks.md`
@@ -103,7 +120,9 @@ Provide brief summary in the language specified in spec.json:
    - Average task size: 1-3 hours per sub-task
 3. **Quality Validation**:
    - ✅ All requirements mapped to tasks
+   - ✅ Design coverage and runtime prerequisites reviewed
    - ✅ Task dependencies verified
+   - ✅ Task plan review gate passed
    - ✅ Testing tasks included
 4. **Next Action**: Review tasks and proceed when ready
 
@@ -126,6 +145,11 @@ Provide brief summary in the language specified in spec.json:
 **Incomplete Requirements Coverage**:
 - **Warning**: "Not all requirements mapped to tasks. Review coverage."
 - **User Action Required**: Confirm intentional gaps or regenerate tasks
+
+**Spec Gap Found During Task Review**:
+- **Stop Execution**: Do not write a patched-over `tasks.md`
+- **User Message**: "Requirements/design do not provide enough clear coverage to generate an executable task plan"
+- **Suggested Action**: "Refine requirements.md or design.md, then re-run `$kiro-spec-tasks $1`"
 
 **Template/Rules Missing**:
 - **User Message**: "Template or rules files missing in `{{KIRO_DIR}}/settings/`"
@@ -151,4 +175,3 @@ Provide brief summary in the language specified in spec.json:
 - Existing tasks used as reference (merge mode)
 
 **Note**: The implementation phase will guide you through executing tasks with appropriate context and validation.
-

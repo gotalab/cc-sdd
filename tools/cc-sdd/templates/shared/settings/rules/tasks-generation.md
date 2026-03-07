@@ -96,6 +96,33 @@ Focus on capabilities and outcomes, not code structure.
 - User testing
 - Marketing/business activities
 
+## Task Plan Review Gate
+
+Before writing `tasks.md`, review the draft task plan and repair local issues until the plan passes or a true spec gap is discovered.
+
+### Coverage Review
+
+- Every requirement ID from `requirements.md` must appear in at least one task.
+- Every design component, interface/contract, integration point, runtime prerequisite, and validation concern from `design.md` must be represented by at least one task.
+- If coverage is missing because the task plan is incomplete, repair the draft tasks and review again.
+- If coverage cannot be added cleanly because requirements or design are ambiguous, contradictory, or underspecified, stop and return to the requirements/design phase instead of papering over the gap in `tasks.md`.
+
+### Executability Review
+
+- Every sub-task must be executable as written, usually within 1-3 hours.
+- Every sub-task must produce a verifiable deliverable (behavior, artifact, endpoint, UI state, config, migration, test, or integration result).
+- Split tasks that combine multiple independently verifiable outcomes.
+- Merge or collapse tasks that are too small, bookkeeping-only, or not meaningful execution units.
+- Make implicit prerequisites explicit as preceding tasks.
+- Re-check `_Depends:_`, `_Boundary:_`, and `(P)` markers after edits so concurrency claims still match the design boundaries and dependency graph.
+
+### Review Loop
+
+- Run the review gate on the draft task plan before writing `tasks.md`.
+- If issues are task-plan-local, repair the draft and re-run the review gate.
+- Keep the loop bounded: no more than 2 review-and-repair passes before escalating a real spec gap.
+- Write `tasks.md` only after the review gate passes.
+
 ### Optional Test Coverage Tasks
 
 - When the design already guarantees functional coverage and rapid MVP delivery is prioritized, mark purely test-oriented follow-up work (e.g., baseline rendering/unit tests) as **optional** using the `- [ ]*` checkbox form.

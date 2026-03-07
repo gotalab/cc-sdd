@@ -27,10 +27,9 @@ If steering/spec context is already available from conversation, skip redundant 
 Otherwise, load all necessary context:
 - Read `{{KIRO_DIR}}/specs/{feature}/spec.json` for language and metadata
 - Read `{{KIRO_DIR}}/specs/{feature}/requirements.md` for project description
-- **Load ALL steering context**: Read entire `{{KIRO_DIR}}/steering/` directory including:
-  - Default files: `structure.md`, `tech.md`, `product.md`
-  - All custom steering files (regardless of mode settings)
-  - This provides complete project memory and context
+- Core steering context: `product.md`, `tech.md`, `structure.md`
+- Additional steering files only when directly relevant to feature scope, user personas, business/domain rules, compliance/security constraints, operational constraints, or existing product boundaries
+- Relevant local agent skills or playbooks only when they clearly match the feature's host environment or use case and contain domain terminology or workflow rules that shape user-observable requirements
 
 ### Step 2: Read Guidelines
 - Read `rules/ears-format.md` from this skill's directory for EARS syntax rules
@@ -39,7 +38,7 @@ Otherwise, load all necessary context:
 #### Parallel Research
 
 The following research areas are independent and can be executed in parallel:
-1. **Context loading**: Steering files, EARS format rules, requirements template
+1. **Context loading**: Core steering, task-relevant extra steering, relevant local agent skills/playbooks, EARS format rules, requirements template
 2. **Codebase hints**: Existing implementations that may inform requirement scope (when needed)
 
 After all parallel research completes, synthesize findings before generating requirements.
@@ -79,9 +78,10 @@ Requirements describe user-observable behavior, not implementation. Use this to 
 - Requirements must be testable and verifiable
 - Choose appropriate subject for EARS statements (system/service name for software)
 - Requirement headings in requirements.md MUST include a leading numeric ID only (for example: "Requirement 1", "1.", "2 Feature ..."); do not use alphabetic IDs like "Requirement A".
+- **Context Discipline**: Start with core steering and expand only with requirement-relevant steering or use-case-aligned local agent skills/playbooks
 
 ## Tool Guidance
-- **Read first**: Load all context (spec, steering, rules, templates) before generation
+- **Read first**: Load spec, core steering, relevant local playbooks/agent skills, rules, and templates before generation
 - **Write last**: Update requirements.md only after complete generation
 - Use **WebSearch/WebFetch** only if external domain knowledge needed
 

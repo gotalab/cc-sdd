@@ -2,7 +2,7 @@
 name: kiro-spec-design
 description: Create comprehensive technical design for a specification
 metadata:
-  shared-rules: "design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md"
+  shared-rules: "design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md"
 ---
 
 
@@ -27,7 +27,8 @@ Generate technical design document for feature **$1** based on approved requirem
 
 **Read all necessary context**:
 - `{{KIRO_DIR}}/specs/$1/spec.json`, `requirements.md`, `design.md` (if exists)
-- **Entire `{{KIRO_DIR}}/steering/` directory** for complete project memory
+- Core steering context: `product.md`, `tech.md`, `structure.md`
+- Additional steering files only when directly relevant to requirement coverage, architecture boundaries, integrations, runtime prerequisites, security/performance constraints, or team conventions that affect implementation readiness
 - `{{KIRO_DIR}}/settings/templates/specs/design.md` for document structure
 - Read `rules/design-principles.md` from this skill's directory for design principles
 - `{{KIRO_DIR}}/settings/templates/specs/research.md` for discovery log structure
@@ -99,21 +100,36 @@ After all parallel research completes, synthesize findings before proceeding.
 - This step requires the full picture from discovery — do not parallelize or delegate to sub-agents
 - Record synthesis outcomes (generalizations found, build-vs-adopt decisions, simplifications) in `research.md`
 
-### Step 4: Generate Design Document
+### Step 4: Generate Design Draft
 
 1. **Load Design Template and Rules**:
    - Read `{{KIRO_DIR}}/settings/templates/specs/design.md` for structure
    - Read `rules/design-principles.md` from this skill's directory for principles
 
-2. **Generate Design Document**:
+2. **Generate Design Draft**:
    - **Follow specs/design.md template structure and generation instructions strictly**
    - **Integrate all discovery findings and synthesis outcomes**: Use researched information (APIs, patterns, technologies) and synthesis decisions (generalizations, build-vs-adopt, simplifications) throughout component definitions, architecture decisions, and integration points
    - If existing design.md found in Step 1, use it as reference context (merge mode)
    - Apply design rules: Type Safety, Visual Communication, Formal Tone
    - Use language specified in spec.json
    - Ensure sections reflect updated headings ("Architecture Pattern & Boundary Map", "Technology Stack & Alignment", "Components & Interface Contracts") and reference supporting details from `research.md`
+   - Keep this as a draft until the review gate passes; do not write `design.md` yet
 
-3. **Update Metadata** in spec.json:
+### Step 5: Review Design Draft
+
+- Read and apply `rules/design-review-gate.md` from this skill's directory
+- Verify requirements coverage, architecture readiness, and implementation executability before finalizing the design
+- If issues are local to the draft, repair the design and review again
+- Keep the review bounded to at most 2 repair passes
+- If the draft exposes a real requirements/design gap, stop and return to requirements clarification instead of papering over it in `design.md`
+
+### Step 6: Finalize Design Document
+
+1. **Write Final Design and Research Log**:
+   - Write `{{KIRO_DIR}}/specs/$1/design.md` only after the design review gate passes
+   - Persist any `research.md` updates that support the finalized design
+
+2. **Update Metadata** in spec.json:
    - Set `phase: "design-generated"`
    - Set `approvals.design.generated: true, approved: false`
    - Set `approvals.requirements.approved: true`
@@ -140,7 +156,7 @@ After all parallel research completes, synthesize findings before proceeding.
 - **Read first**: Load all context before taking action (specs, steering, templates, rules)
 - **Research when uncertain**: Use WebSearch/WebFetch for external dependencies, APIs, and latest best practices
 - **Analyze existing code**: Use Grep to find patterns and integration points in codebase
-- **Write last**: Generate design.md (and research.md updates) only after all research and analysis complete
+- **Write last**: Generate design.md (and research.md updates) only after all research, synthesis, and design review complete
 
 ## Output Description
 
@@ -151,8 +167,9 @@ Provide brief summary in the language specified in spec.json:
 1. **Status**: Confirm design document generated at `{{KIRO_DIR}}/specs/$1/design.md`
 2. **Discovery Type**: Which discovery process was executed (full/light/minimal)
 3. **Key Findings**: 2-3 critical insights from `research.md` that shaped the design
-4. **Next Action**: Approval workflow guidance (see Safety & Fallback)
-5. **Research Log**: Confirm `research.md` updated with latest decisions
+4. **Review Gate**: Confirm the design review gate passed
+5. **Next Action**: Approval workflow guidance (see Safety & Fallback)
+6. **Research Log**: Confirm `research.md` updated with latest decisions
 
 **Format**: Concise Markdown (under 200 words) - this is the command output, NOT the design document itself
 
@@ -186,6 +203,11 @@ Provide brief summary in the language specified in spec.json:
 - **Rationale**: Better to over-research than miss critical context
 - **Invalid Requirement IDs**:
   - **Stop Execution**: If requirements.md is missing numeric IDs or uses non-numeric headings (for example, "Requirement A"), stop and instruct the user to fix requirements.md before continuing.
+
+**Spec Gap Found During Design Review**:
+- **Stop Execution**: Do not write a patched-over `design.md`
+- **User Message**: "Design review found a real spec gap or ambiguity that must be resolved before design can be finalized."
+- **Suggested Action**: Clarify or fix `requirements.md`, then re-run `$kiro-spec-design $1`
 
 ### Next Phase: Task Generation
 

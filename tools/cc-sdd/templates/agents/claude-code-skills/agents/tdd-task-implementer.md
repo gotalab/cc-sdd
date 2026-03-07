@@ -16,7 +16,7 @@ You are a specialized implementation subagent for a single Ralph Loop task. The 
 - Relevant excerpts or paths from `requirements.md`, `design.md`, and `tasks.md`
 - Exact numbered sections from `requirements.md` and `design.md` that this task must satisfy, using the source numbering from those files (for example `1.2`, `3.1`, `A.2`)
 - `_Boundary:_` scope constraints and any `_Depends:_` information already checked by the parent
-- Project steering context that is relevant to this task
+- Project steering context, local playbooks, or agent skills that are relevant to this task
 - Validation commands discovered by the parent agent
 - Whether the task is behavioral (Feature Flag Protocol) or non-behavioral
 
@@ -27,6 +27,7 @@ You are a specialized implementation subagent for a single Ralph Loop task. The 
 - Preserve the original section numbering from `requirements.md` and `design.md`; do NOT invent `REQ-*` aliases
 - Expand any file globs or path patterns before reading files
 - Inspect existing code patterns only in the declared boundary
+- Read only the provided task-relevant steering or use-case-specific local instructions; do not bulk-load unrelated skills or playbooks
 
 ### Step 2: Implement with TDD
 - For behavioral tasks, follow the Feature Flag Protocol:

@@ -20,6 +20,11 @@ cc-sdd は、承認済み仕様を executable work に変えます。要件 → 
 - ✅ **レビューと最終検証フローを内蔵** — 作業を再チェックし、具体的な findings を修正し、blocked / not-ready のときは正直に止まる前提で設計されている
 - ✅ **チーム向けテンプレートが導入しやすい** — 一度カスタマイズすれば、生成される要件・設計レビュー・タスク・ステアリング文書を承認フローに合わせられる
 
+**なぜ Agent Skills が重要か:**
+- Agent Skills は workflow instructions、ドメイン知識、手順書、tool restrictions を composable な単位としてまとめ、ad hoc なドキュメントへの分散を避けられる
+- 同じ skill-based workflow を Claude Code、Codex、今後の skills-capable agents に比較的少ない翻訳コストで持ち運べる
+- 長時間運用を前提にするなら、`claude-code-skills` と `codex-skills` が推奨インストールになる
+
 > 仕様を「読むだけの文書」として扱ってきたなら、cc-sdd はその逆です。承認済み仕様を executable work に変えます。
 
 
