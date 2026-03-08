@@ -107,7 +107,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.codex/prompts/` as a legacy compatibility mode (non-recommended), shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart. Prefer `--codex-skills`.',
     aliasFlags: ['--codex', '--codex-cli'],
-    recommendedModels: ['gpt-5.4 xhigh', 'gpt-5.4'],
+    recommendedModels: ['gpt-5.4 high or xhigh', 'gpt-5.4'],
     layout: {
       commandsDir: '.codex/prompts',
       agentDir: '.codex',
@@ -128,7 +128,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro skills in `.agents/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--codex-skills'],
-    recommendedModels: ['gpt-5.4 xhigh', 'gpt-5.4'],
+    recommendedModels: ['gpt-5.4 high or xhigh', 'gpt-5.4'],
     layout: {
       commandsDir: '.agents/skills',
       agentDir: '.agents',
@@ -146,7 +146,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.cursor/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--cursor'],
-    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer', 'Implementation: Claude Sonnet 4.6 or newer', 'gpt-5.4 xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer', 'Implementation: Claude Sonnet 4.6 or newer', 'gpt-5.4 high or xhigh', 'gpt-5.4'],
     layout: {
       commandsDir: '.cursor/commands/kiro',
       agentDir: '.cursor',
@@ -164,7 +164,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.github/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--copilot', '--github-copilot'],
-    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer', 'Implementation: Claude Sonnet 4.6 or newer', 'gpt-5.4 xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer', 'Implementation: Claude Sonnet 4.6 or newer', 'gpt-5.4 high or xhigh', 'gpt-5.4'],
     layout: {
       commandsDir: '.github/prompts',
       agentDir: '.github',
@@ -200,7 +200,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro workflows in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--windsurf'],
-    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer', 'Implementation: Claude Sonnet 4.6 or newer', 'gpt-5.4 xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer', 'Implementation: Claude Sonnet 4.6 or newer', 'gpt-5.4 high or xhigh', 'gpt-5.4'],
     layout: {
       commandsDir: '.windsurf/workflows',
       agentDir: '.windsurf',
@@ -235,7 +235,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.opencode/commands/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode'],
-    recommendedModels: ['gpt-5.4 xhigh', 'gpt-5.4'],
+    recommendedModels: ['gpt-5.4 high or xhigh', 'gpt-5.4'],
     layout: {
       commandsDir: '.opencode/commands',
       agentDir: '.opencode',
@@ -253,7 +253,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro commands in `.opencode/commands/`, a kiro agent library in `.opencode/agents/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode-agent'],
-    recommendedModels: ['gpt-5.4 xhigh', 'gpt-5.4'],
+    recommendedModels: ['gpt-5.4 high or xhigh', 'gpt-5.4'],
     layout: {
       commandsDir: '.opencode/commands',
       agentDir: '.opencode',
