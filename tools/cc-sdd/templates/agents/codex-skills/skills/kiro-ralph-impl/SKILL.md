@@ -116,7 +116,7 @@ After all parallel research completes, synthesize implementation brief before st
 - **Dependency Check**: Verify `_Depends:_` prerequisites are complete before starting a task
 - **Spec Conformance**: Do not mark a task complete if the implementation deviates from design.md or does not satisfy requirements.md
 - **Worker Review Required**: Worker agents must self-review against the exact requirement/design section numbers and return concrete code/test evidence before the parent accepts completion
-- **Final Validation Required**: Run the `kiro-validate-impl` validation workflow before reporting success
+- **Final Validation Required**: Run the `kiro-validate-impl` validation workflow before reporting success, and treat only `GO` as success
 - **Bounded Remediation**: If final validation fails, fix only concrete findings and cap remediation at 3 rounds before stopping
 </instructions>
 

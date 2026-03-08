@@ -49,7 +49,7 @@ The following validation checks are independent and can be executed in parallel:
 
 If multi-agent is enabled, spawn sub-agents for each check above. Otherwise execute sequentially.
 
-After all parallel checks complete, synthesize findings for GO/NO-GO assessment.
+After all parallel checks complete, synthesize findings for GO/NO-GO/MANUAL_VERIFY_REQUIRED assessment.
 
 ### 2. Load Context
 
@@ -75,6 +75,7 @@ For each task, verify:
 - Tests pass (no failures or errors)
 - Use Bash to run test commands (e.g., `npm test`, `pytest`)
 - If tests fail or don't exist, flag as "Test coverage issue"
+- If the canonical validation/test command cannot be identified, flag the task as "Manual verification required" and do not allow a GO decision
 
 #### Requirements Traceability
 - Identify EARS requirements related to the task
@@ -106,6 +107,7 @@ Provide summary in the language specified in spec.json:
 - Coverage report (tasks, requirements, design)
 - Issues and deviations with severity (Critical/Warning)
 - GO/NO-GO decision
+- Use `MANUAL_VERIFY_REQUIRED` instead of `GO` when a mandatory validation step could not be executed or completed confidently
 
 ## Important Constraints
 - **Conversation-aware**: Prioritize conversation history for auto-detection
@@ -114,6 +116,7 @@ Provide summary in the language specified in spec.json:
 - **Traceability required**: All requirements must be traceable to implementation
 - **Source numbering only**: Use the exact section numbers from `requirements.md` and `design.md`; do not invent `REQ-*` aliases
 - **Context Discipline**: Start with core steering and expand only with validation-relevant steering or use-case-aligned local agent skills/playbooks
+- **Strict Final Gate**: Return `GO` only when all mandatory validation checks ran and passed; return `NO-GO` for concrete failures and `MANUAL_VERIFY_REQUIRED` when mandatory validation could not be completed
 </instructions>
 
 ## Tool Guidance
@@ -131,7 +134,7 @@ Provide output in the language specified in spec.json with:
 2. **Validation Summary**: Brief overview per feature (pass/fail counts)
 3. **Issues**: List of validation failures with severity and location
 4. **Coverage Report**: Requirements/design/task coverage percentages using the source section numbers from the spec
-5. **Decision**: GO (ready for next phase) / NO-GO (needs fixes)
+5. **Decision**: GO / NO-GO / MANUAL_VERIFY_REQUIRED
 
 **Format Requirements**:
 - Use Markdown headings and tables for clarity
@@ -142,7 +145,7 @@ Provide output in the language specified in spec.json with:
 
 ### Error Scenarios
 - **No Implementation Found**: If no `$kiro-spec-impl` in history and no `[x]` tasks, report "No implementations detected"
-- **Test Command Unknown**: If test framework unclear, warn and skip test validation (manual verification required)
+- **Test Command Unknown**: If test framework unclear, return `MANUAL_VERIFY_REQUIRED` and explain which validation command is missing; do not return `GO`
 - **Missing Spec Files**: If spec.json/requirements.md/design.md missing, stop with error
 - **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 
@@ -156,5 +159,10 @@ Provide output in the language specified in spec.json with:
 - Address critical issues listed
 - Re-run `$kiro-spec-impl <feature> [tasks]` for fixes
 - Re-validate with `$kiro-validate-impl [feature] [tasks]`
+
+**If MANUAL_VERIFY_REQUIRED**:
+- Do not treat the feature as complete
+- Provide the exact missing validation step or environment prerequisite
+- Re-run `$kiro-validate-impl [feature] [tasks]` after the missing verification path is available
 
 **Note**: Validation is recommended after implementation to ensure spec alignment and quality.

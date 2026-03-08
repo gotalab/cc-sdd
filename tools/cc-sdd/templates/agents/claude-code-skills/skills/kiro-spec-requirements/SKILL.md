@@ -3,7 +3,7 @@ name: kiro-spec-requirements
 description: Generate EARS-format requirements based on project description and steering context. Use when generating requirements from project description.
 allowed-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, AskUserQuestion
 metadata:
-  shared-rules: "ears-format.md"
+  shared-rules: "ears-format.md, requirements-review-gate.md"
 ---
 
 # kiro-spec-requirements Skill
@@ -33,6 +33,7 @@ Otherwise, load all necessary context:
 
 ### Step 2: Read Guidelines
 - Read `rules/ears-format.md` from this skill's directory for EARS syntax rules
+- Read `rules/requirements-review-gate.md` from this skill's directory for pre-write review criteria
 - Read `{{KIRO_DIR}}/settings/templates/specs/requirements.md` for document structure
 
 #### Parallel Research
@@ -43,13 +44,22 @@ The following research areas are independent and can be executed in parallel:
 
 After all parallel research completes, synthesize findings before generating requirements.
 
-### Step 3: Generate Requirements
-- Create initial requirements based on project description
+### Step 3: Generate Requirements Draft
+- Create initial requirements draft based on project description
 - Group related functionality into logical requirement areas
 - Apply EARS format to all acceptance criteria
 - Use language specified in spec.json
+- Keep this as a draft until the review gate passes; do not write `requirements.md` yet
 
-### Step 4: Update Metadata
+### Step 4: Review Requirements Draft
+- Run the `Requirements Review Gate` from `rules/requirements-review-gate.md`
+- Review coverage, EARS compliance, ambiguity, and scope boundaries before finalizing
+- If issues are local to the draft, repair the requirements and review again
+- Keep the review bounded to at most 2 repair passes
+- If the draft exposes a real scope ambiguity or contradiction, stop and ask the user to clarify instead of writing guessed requirements
+
+### Step 5: Finalize and Update Metadata
+- Write `{{KIRO_DIR}}/specs/{feature}/requirements.md` only after the requirements review gate passes
 - Set `phase: "requirements-generated"`
 - Set `approvals.requirements.generated: true`
 - Update `updated_at` timestamp
@@ -90,7 +100,8 @@ Provide output in the language specified in spec.json with:
 
 1. **Generated Requirements Summary**: Brief overview of major requirement areas (3-5 bullets)
 2. **Document Status**: Confirm requirements.md updated and spec.json metadata updated
-3. **Next Steps**: Guide user on how to proceed (approve and continue, or modify)
+3. **Review Gate**: Confirm the requirements review gate passed
+4. **Next Steps**: Guide user on how to proceed (approve and continue, or modify)
 
 **Format Requirements**:
 - Use Markdown headings for clarity
@@ -107,6 +118,7 @@ Provide output in the language specified in spec.json with:
 - **Incomplete Requirements**: After generation, explicitly ask user if requirements cover all expected functionality
 - **Steering Directory Empty**: Warn user that project context is missing and may affect requirement quality
 - **Non-numeric Requirement Headings**: If existing headings do not include a leading numeric ID (for example, they use "Requirement A"), normalize them to numeric IDs and keep that mapping consistent (never mix numeric and alphabetic labels).
+- **Scope Ambiguity Found During Requirements Review**: Stop execution, do not write a guessed `requirements.md`, and ask the user to clarify the missing or conflicting scope before re-running `/kiro-spec-requirements {feature}`
 
 ### Next Phase: Design Generation
 

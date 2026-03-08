@@ -107,6 +107,8 @@ describe('real codex-skills manifest', () => {
     expect(skillValidateImplText).toContain('do not invent `REQ-*` aliases');
     expect(skillValidateImplText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
     expect(skillValidateImplText).toContain('validation-relevant steering or use-case-aligned local agent skills/playbooks');
+    expect(skillValidateImplText).toContain('MANUAL_VERIFY_REQUIRED');
+    expect(skillValidateImplText).toContain('do not return `GO`');
 
     const skillValidateDesign = join(cwd, '.agents/skills/kiro-validate-design/SKILL.md');
     expect(await exists(skillValidateDesign)).toBe(true);
@@ -125,6 +127,9 @@ describe('real codex-skills manifest', () => {
     const skillSpecRequirementsText = await readFile(skillSpecRequirements, 'utf8');
     expect(skillSpecRequirementsText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
     expect(skillSpecRequirementsText).toContain('requirement-relevant steering or use-case-aligned local agent skills/playbooks');
+    expect(skillSpecRequirementsText).toContain('Review Requirements Draft');
+    expect(skillSpecRequirementsText).toContain('requirements review gate passes');
+    expect(skillSpecRequirementsText).toContain('Scope Ambiguity Found During Requirements Review');
     // Shared rules resolved from templates/shared/settings/rules/
     const designRules = [
       'design-principles.md',
@@ -138,6 +143,7 @@ describe('real codex-skills manifest', () => {
     }
     expect(await exists(join(cwd, '.agents/skills/kiro-validate-design/rules/design-review.md'))).toBe(true);
     expect(await exists(join(cwd, '.agents/skills/kiro-spec-requirements/rules/ears-format.md'))).toBe(true);
+    expect(await exists(join(cwd, '.agents/skills/kiro-spec-requirements/rules/requirements-review-gate.md'))).toBe(true);
     expect(await exists(join(cwd, '.agents/skills/kiro-validate-gap/rules/gap-analysis.md'))).toBe(true);
     expect(await exists(join(cwd, '.agents/skills/kiro-steering/rules/steering-principles.md'))).toBe(true);
     expect(await exists(join(cwd, '.agents/skills/kiro-steering-custom/rules/steering-principles.md'))).toBe(true);
@@ -158,6 +164,10 @@ describe('real codex-skills manifest', () => {
     expect(designReviewGate).toContain('## Requirements Coverage Review');
     expect(designReviewGate).toContain('## Architecture Readiness Review');
     expect(designReviewGate).toContain('## Executability Review');
+    const requirementsReviewGate = await readFile(join(cwd, '.agents/skills/kiro-spec-requirements/rules/requirements-review-gate.md'), 'utf8');
+    expect(requirementsReviewGate).toContain('## Scope and Coverage Review');
+    expect(requirementsReviewGate).toContain('## EARS and Testability Review');
+    expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
     // Skills without shared-rules should NOT have rules/ directories
     const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-impl', 'kiro-ralph-impl', 'kiro-validate-impl'];
@@ -212,6 +222,7 @@ describe('real codex-skills manifest', () => {
     expect(ralphPromptText).toContain('mock/stub/placeholder/fake/TODO-only path');
     expect(ralphPromptText).toContain('Final validation and remediation');
     expect(ralphPromptText).toContain('kiro-validate-impl');
+    expect(ralphPromptText).toContain('MANUAL_VERIFY_REQUIRED');
     expect(ralphPromptText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
     expect(ralphPromptText).toContain('Relevant local agent skills or playbooks only when they clearly match');
 
@@ -227,6 +238,7 @@ describe('real codex-skills manifest', () => {
     expect(await exists(skillRalphImpl)).toBe(true);
     const skillRalphImplText = await readFile(skillRalphImpl, 'utf8');
     expect(skillRalphImplText).toContain('Final Validation Required');
+    expect(skillRalphImplText).toContain('treat only `GO` as success');
     expect(skillRalphImplText).toContain('skip Step 4 and go directly to Step 5 for final validation');
 
     // kiro-ralph-impl has scripts directory with loop management scripts

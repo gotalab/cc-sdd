@@ -110,7 +110,7 @@ started_at: "{ISO_8601_timestamp}"
 - **Simple Safety Fuse**: `max_iterations` defaults to 100 and exists only to prevent runaway loops
 - **Spec Conformance**: Do not mark a task complete if the implementation deviates from design.md or does not satisfy requirements.md
 - **Worker Review Required**: Implementation subagent must self-review against the exact requirement/design section numbers and return concrete code/test evidence before the parent accepts completion
-- **Final Validation Required**: Execute the packaged `kiro-validate-impl` validation workflow before emitting the completion promise
+- **Final Validation Required**: Execute the packaged `kiro-validate-impl` validation workflow before emitting the completion promise, and treat only `GO` as success
 - **Bounded Remediation**: If final validation fails, fix only concrete findings and cap remediation at 3 rounds before stopping without the completion promise
 
 ## Tool Guidance

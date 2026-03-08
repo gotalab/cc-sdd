@@ -57,6 +57,10 @@ Before delegating any implementation work, the parent Ralph Loop agent must:
      - If a finding maps cleanly to one or more completed tasks, revert those task checkboxes to `[ ]` and return to step 1
      - If a finding is cross-cutting but fixable without reopening tasks, make a focused remediation change, validate locally, commit with `fix(<feature-name>): address final validation findings`, then re-run this step
      - Cap final-validation remediation at 3 rounds; if still NO-GO, stop without the completion promise and report the remaining findings
+   - If validation returns MANUAL_VERIFY_REQUIRED:
+     - Stop without the completion promise
+     - Report the exact missing validation step, tool, or environment prerequisite
+     - Do not auto-remediate by guessing around the missing verification path
 
 ## Subagent Delegation
 
@@ -93,6 +97,7 @@ For tasks that add or change behavior, enforce RED → GREEN with a feature flag
 - Parent agent owns setup/preflight, `tasks.md`, and commits; subagent owns implementation only
 - Subagent review must cite exact spec section numbers and concrete code/test evidence before the parent accepts completion
 - Final validation must pass before the completion promise is emitted
+- Only a `GO` result from final validation counts as passing
 - Final-validation remediation is capped at 3 rounds and stays in the parent agent
 - Feature Flag Protocol: behavioral tasks must prove RED with flag OFF before implementing GREEN
 - If stuck on a task for multiple attempts, leave a TODO comment and move to next task
