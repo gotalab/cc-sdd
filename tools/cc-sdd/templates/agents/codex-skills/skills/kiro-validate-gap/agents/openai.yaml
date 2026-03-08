@@ -1,0 +1,6 @@
+interface:
+  display_name: "Validate Gap"
+  short_description: "Analyze implementation gap between requirements and existing codebase"
+
+policy:
+  allow_implicit_invocation: false

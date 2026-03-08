@@ -1,4 +1,4 @@
-# cc-sdd: 一鍵讓 AI 程式代理進入生產級規格開發
+# cc-sdd: 面向 AI 程式代理的長時間規格驅動實作
 
 [![npm version](https://img.shields.io/npm/v/cc-sdd?logo=npm)](https://www.npmjs.com/package/cc-sdd?activeTab=readme)
 [![install size](https://packagephobia.com/badge?p=cc-sdd)](https://packagephobia.com/result?p=cc-sdd)
@@ -8,25 +8,33 @@
 <a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
-✨ **將 Claude Code / Cursor IDE / Gemini CLI / Codex CLI / GitHub Copilot / Qwen Code / OpenCode / Windsurf 直接帶入 Spec-Driven / AI-DLC 的生產級流程，需求・設計・任務・指導文件一次對齊團隊審核。**
+✨ **把已核准的需求與設計，透過 Ralph Loop 轉成長時間自律實作。**
 
 👻 **Kiro 相容** — 與 Kiro IDE 相似的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
 
-**v2.0.0 新功能：**
-- ✅ **易於審查的設計** — 結構化格式與摘要表讓審查速度提升 5 倍
-- ✅ **分離研究** — 將探索筆記（Research.md）與最終設計（Design.md）分開管理
-- ✅ **品質關卡** — validate-gap/design/impl 指令在編碼前捕捉整合問題
-- ✅ **一次自訂** — 將模板適應至團隊流程；所有代理遵循相同工作流程
-- ✅ **統一工作流程** — 7 代理 × 13 語言共享相同的 11 指令流程
+cc-sdd 會把已核准規格轉成 executable work，串起需求 → 設計 → 任務 → 實作 → 審查 → 最終驗證。它強調 honest completion 與 NO-GO outcomes，而不是只看 checkbox 是否勾完。
+
+**團隊為什麼選 cc-sdd:**
+- ✅ **已核准規格會變成 executable work** — 從 `/kiro:spec-init` 一路走到已核准的需求、設計與任務，不必自己拼湊流程
+- ✅ **Ralph Loop 適合更大的工作** — 較大的已核准任務集可以進入 bounded 的長時間自律實作
+- ✅ **內建審查與最終驗證流程** — 重新檢查工作、修正具體 findings，並在 blocked / not-ready 時誠實停止
+- ✅ **團隊對齊模板讓導入更務實** — 自訂一次後，產生的需求、設計審查、任務與 steering 文件就能貼合團隊的批准流程
+
+**為什麼 Agent Skills 很重要:**
+- Agent Skills 可以把 workflow instructions、領域知識、操作手冊與 tool restrictions 封裝成可組合的單位，而不是散落在各種 ad hoc 文件裡
+- 同一套 skill-based workflow 能以較低的轉換成本移動到 Claude Code、Codex 與未來的 skills-capable agents
+- 如果你要的是更耐久的長時間運作方式，`claude-code-skills` 與 `codex-skills` 會是建議安裝方式
+
+> 如果你過去把規格當成「只讀文件」，cc-sdd 則是相反：它把已核准規格轉成 executable work。
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
 
 ## 🚀 安裝
 
-只需一個指令，即可為主要 AI 程式代理匯入 **AI-DLC（AI Driven Development Life Cycle）× SDD（Spec-Driven Development）** 工作流程。需求、設計、任務、指導文件也會同步生成，並對齊團隊既有批准流程。
+只需一個指令，即可為主要 AI 程式代理匯入 **AI-DLC（AI Driven Development Life Cycle）× SDD（Spec-Driven Development）** 工作流程。需求、設計、任務、指導文件與長時間實作迴圈也會同步建立，並對齊團隊既有批准流程。
 
 ```bash
-# 基本安裝（預設：英文文件，Claude Code 代理）
+# 基本安裝（預設：英文文件，Claude Code Skills 代理）
 npx cc-sdd@latest
 
 # 語言選項（預設：--lang en）
@@ -35,12 +43,13 @@ npx cc-sdd@latest --lang ja    # 日語
 npx cc-sdd@latest --lang es    # 西班牙語
 ...（支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el）
 
-# 代理選項（預設：claude-code / --claude）
+# 代理選項（預設：claude-code-skills / --claude-skills）
 npx cc-sdd@latest --claude --lang zh-TW           # Claude Code（11 個指令，語言可任選）
 npx cc-sdd@latest --claude-agent --lang zh-TW     # Claude Code Subagents（12 個指令 + 9 個子代理）
 npx cc-sdd@latest --cursor --lang zh-TW           # Cursor IDE
 npx cc-sdd@latest --gemini --lang zh-TW           # Gemini CLI
-npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI
+npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI legacy 模式（不建議）
+npx cc-sdd@latest --codex-skills --lang zh-TW     # Codex CLI Skills 模式（建議，12 個技能）
 npx cc-sdd@latest --copilot --lang zh-TW          # GitHub Copilot
 npx cc-sdd@latest --qwen --lang zh-TW             # Qwen Code
 npx cc-sdd@latest --opencode --lang zh-TW         # OpenCode（11 個指令）
@@ -102,20 +111,22 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 **30 秒設定** → **AI 驅動「快速衝刺」（非衝刺）** → **小時交付結果**
 
 ### 為何團隊選擇 cc-sdd
-1. **規格是單一真實來源** — 需求、設計、任務、Supporting References 同步產出，審查更快。
-2. **Greenfield / Brownfield 皆適用** — 新功能快速起步；既有系統靠 validate 系列與 Project Memory 保持安全。
-3. **可同時使用多個代理** — Claude、Cursor、Codex、Gemini、Copilot、Qwen、OpenCode、Windsurf 共用同一套模板/規則。
-4. **自訂只要一次** — 編輯 `.kiro/settings/templates/` 或 `.kiro/settings/rules/`，所有代理立即套用。
+1. **已核准規格會變成 executable work** — 需求、設計、任務與 supporting references 保持對齊，能直接驅動實作，而不是逐漸過期。
+2. **Ralph Loop 適合更大的工作** — 大型任務集可以進入 long-running autonomous implementation，而不是脆弱的 one-shot prompt。
+3. **Agent Skills 是更耐久的 surface** — 同一套 skill-based workflow 可以在 Claude Code、Codex 與未來的 skills-capable agents 間移動。
+4. **內建審查與最終驗證流程** — 系統在宣告完成前，會朝著抓出 spec mismatch、placeholder 實作與 blocked state 的方向設計。
+5. **團隊化自訂只做一次** — 編輯 `.kiro/settings/templates/` 後，每個代理／slash command 都會反映你的工作流；非 skills 代理也會使用 `.kiro/settings/rules/`。
 
 ## ✨ 主要功能
 
-- **🚀 AI-DLC 方法論** - 具人類批准的 AI 原生流程。核心模式：AI 執行，人類驗證
-- **📋 規格優先開發** - 全面性規格作為單一資訊源驅動整個生命週期
-- **⚡ 「快速衝刺」非衝刺** - [AI-DLC 術語](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)，強度小時/天周期取代數周衝刺。脱離 70% 管理額外負擔
-- **🧠 持久專案記憶** - AI 透過指導文件在所有會話間維持全面上下文（架構、模式、規則、領域知識）
-- **🛠 模板彈性** - 自訂 `{{KIRO_DIR}}/settings/templates`（steering / requirements / design / tasks），符合團隊慣用的文件格式
-- **🔄 AI 原生+人類關卡** - AI 計劃 → AI 提問 → 人類驗證 → AI 實作（具品質控制的快速循環）
-- **🌍 團隊就緒** - 具品質關卡的13語言跨平台標準化工作流程
+- **📋 Spec-Governed Development** — 結構化規格（需求 → 研究 → 設計 → 任務）不是只有規劃用途，而是作為約束實作的 governing contract
+- **🔁 Ralph Loop** — 把已核准任務集轉成具 bounded stop conditions 與 remediation paths 的長時間自律實作迴圈
+- **✅ 審查 + 最終驗證流程** — 內建 task-local review、validation passes 與 final validation flow，朝 honest completion 與 NO-GO outcomes 前進
+- **🚀 AI-DLC 方法論** — AI 執行，人類在各階段驗證。[集中式「快衝」](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)取代數周衝刺
+- **🧠 持久專案記憶** — 指導文件在所有會話間維持架構、模式、規則與領域知識
+- **🧩 Agent Skills 支援** — 每個指令都是自足的 [Agent Skill](https://agentskills.io)（SKILL.md + 工具限制 + 同置規則），設計上可延伸到更多 skills-capable agents
+- **🛠 一次自訂** — 編輯 `{{KIRO_DIR}}/settings/templates/` 即可反映至所有代理。8 代理 × 13 語言共享相同流程
+- **🌍 團隊就緒** — 跨平台、具品質關卡的標準化工作流程。`--codex` legacy 模式保留相容性
 
 ## 🤖 支援的 AI 代理
 
@@ -125,11 +136,11 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 | **Claude Code Subagents** | ✅ 完全支援 | 12 個指令 + 9 個子代理 | `CLAUDE.md`, `.claude/agents/kiro/` |
 | **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
 | **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
-| **Codex CLI** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
+| **Codex CLI** | ✅ 完全支援 | 11 個 legacy 指令 + Skills 模式 12 個技能（建議） | `AGENTS.md`, `.agents/skills/` |
 | **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
 | **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
 | **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `AGENTS.md` |
-| 其他（Factory AI Droid） | 📅 規劃中 | - |
+| 其他（Factory AI Droid） | 📅 規劃中 | - | - |
 
 ## 📋 指令
 
@@ -200,13 +211,16 @@ npx cc-sdd@latest --kiro-dir docs
 
 ```
 project/
-├── .claude/commands/kiro/    # 11 個斜線指令
-├── .codex/prompts/           # 11 個提示指令（Codex CLI）
+├── .claude/skills/           # 13 個技能（Claude Code Skills 模式，預設）
+├── .claude/commands/kiro/    # 11 個斜線指令（Claude Code）
+├── .agents/skills/           # 13 個技能（Codex CLI Skills 模式）
+├── .codex/prompts/           # 11 個提示指令（Codex CLI legacy 模式）
 ├── .github/prompts/          # 11 個提示指令（GitHub Copilot）
 ├── .windsurf/workflows/      # 11 個工作流程檔案（Windsurf IDE）
-├── .kiro/settings/           # 共用規則與模板（以 {{KIRO_DIR}} 展開）
+├── .kiro/settings/templates/ # 共用模板（以 {{KIRO_DIR}} 展開）
+├── .kiro/settings/rules/     # 共用規則（非技能代理專用）
 ├── .kiro/specs/             # 功能規格文件
-├── .kiro/steering/          # AI 指導規則
+├── .kiro/steering/          # AI 指導文件
 └── CLAUDE.md (Claude Code)    # 專案設定
 ```
 

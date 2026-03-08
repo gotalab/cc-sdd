@@ -34,7 +34,7 @@ describe('plan executor', () => {
     expect(res.written).toBe(1);
     const out = join(cwd, 'out/README.md');
     expect(await exists(out)).toBe(true);
-    expect(await fileContent(out)).toMatch(/Agent: claude-code/);
+    expect(await fileContent(out)).toMatch(/Agent: claude-code-skills/);
   });
 
   it('writes templateFile JSON with placeholders and pretty format', async () => {
@@ -52,7 +52,7 @@ describe('plan executor', () => {
     expect(res.written).toBe(1);
     const out = join(cwd, 'out/config.json');
     const content = await fileContent(out);
-    expect(JSON.parse(content)).toEqual({ agent: 'claude-code' });
+    expect(JSON.parse(content)).toEqual({ agent: 'claude-code-skills' });
     expect(content.endsWith('\n')).toBe(true);
   });
 
@@ -89,8 +89,8 @@ describe('plan executor', () => {
     const resolved = baseResolved();
     const res = await executeProcessedArtifacts(items, resolved, { cwd, templatesRoot });
     expect(res.written).toBe(3);
-    expect(await fileContent(join(cwd, 'out/a.md'))).toMatch(/Hello claude-code/);
-    expect(JSON.parse(await fileContent(join(cwd, 'out/b.json')))).toEqual({ x: 'claude-code' });
+    expect(await fileContent(join(cwd, 'out/a.md'))).toMatch(/Hello claude-code-skills/);
+    expect(JSON.parse(await fileContent(join(cwd, 'out/b.json')))).toEqual({ x: 'claude-code-skills' });
     expect(await fileContent(join(cwd, 'out/c.txt'))).toBe('plain');
   });
 
@@ -236,7 +236,7 @@ describe('plan executor', () => {
 
       const res = await executeProcessedArtifacts(items, resolved, { cwd, templatesRoot, onConflict });
       expect(res.written).toBe(1);
-      expect(await fileContent(out)).toMatch(/New: claude-code/);
+      expect(await fileContent(out)).toMatch(/New: claude-code-skills/);
     });
 
     it('creates new files automatically without prompts in prompt mode', async () => {
@@ -265,7 +265,7 @@ describe('plan executor', () => {
       
       const out = join(cwd, 'out/new-file.md');
       expect(await exists(out)).toBe(true);
-      expect(await fileContent(out)).toMatch(/Brand New: claude-code/);
+      expect(await fileContent(out)).toMatch(/Brand New: claude-code-skills/);
     });
   });
 });

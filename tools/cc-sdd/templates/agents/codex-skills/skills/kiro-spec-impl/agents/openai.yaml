@@ -1,0 +1,6 @@
+interface:
+  display_name: "Spec Implement"
+  short_description: "Execute spec tasks using TDD methodology"
+
+policy:
+  allow_implicit_invocation: false

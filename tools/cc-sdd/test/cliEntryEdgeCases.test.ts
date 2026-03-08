@@ -80,7 +80,7 @@ describe('CLI entry edge cases', () => {
     const manifestsDir = join(templatesRoot, 'templates', 'manifests');
     await mkdir(manifestsDir, { recursive: true });
     
-    const manifestPath = join(manifestsDir, 'claude-code.json');
+    const manifestPath = join(manifestsDir, 'claude-code-skills.json');
     const manifest = {
       version: 1,
       artifacts: [
@@ -122,8 +122,8 @@ describe('CLI entry edge cases', () => {
       ]
     };
     
-    await writeFile(join(manifestsDir, 'claude-code.json'), JSON.stringify(fullManifest), 'utf8');
-    await writeFile(join(manifestsDir, 'claude-code-min.json'), JSON.stringify(minimalManifest), 'utf8');
+    await writeFile(join(manifestsDir, 'claude-code-skills.json'), JSON.stringify(fullManifest), 'utf8');
+    await writeFile(join(manifestsDir, 'claude-code-skills-min.json'), JSON.stringify(minimalManifest), 'utf8');
     
     const ctx = makeIO();
     const code = await runCli(['--dry-run', '--profile', 'minimal'], runtime, ctx.io, {}, { templatesRoot });
@@ -145,8 +145,8 @@ describe('CLI entry edge cases', () => {
       ]
     };
     
-    await writeFile(join(manifestsDir, 'claude-code.json'), JSON.stringify(fullManifest), 'utf8');
-    // No claude-code-min.json created
+    await writeFile(join(manifestsDir, 'claude-code-skills.json'), JSON.stringify(fullManifest), 'utf8');
+    // No claude-code-skills-min.json created
     
     const ctx = makeIO();
     const code = await runCli(['--dry-run', '--profile', 'minimal'], runtime, ctx.io, {}, { templatesRoot });
