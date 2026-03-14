@@ -25,7 +25,7 @@
       "source": {
         "type": "templateDir",
         "fromDir": "templates/agents/{{AGENT}}/agents",
-        "toDir": "{{AGENT_DIR}}/agent/kiro"
+        "toDir": "{{AGENT_DIR}}/agents/kiro"
       },
       "when": { "agent": "opencode-agent" }
     },
