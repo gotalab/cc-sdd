@@ -37,6 +37,15 @@
         "toDir": "{{KIRO_DIR}}/settings"
       },
       "when": { "agent": "opencode-agent" }
+    },
+    {
+      "id": "opencode_context_plugin",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/opencode-agent/plugin",
+        "toDir": ".opencode/plugin"
+      },
+      "when": { "agent": "opencode-agent" }
     }
   ]
 }
