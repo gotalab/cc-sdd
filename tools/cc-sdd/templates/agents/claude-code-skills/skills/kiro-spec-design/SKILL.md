@@ -32,6 +32,7 @@ Otherwise, load all necessary context:
 - Additional steering files only when directly relevant to requirement coverage, architecture boundaries, integrations, runtime prerequisites, security/performance constraints, or team conventions that affect implementation readiness
 - `{{KIRO_DIR}}/settings/templates/specs/design.md` for document structure
 - Read `rules/design-principles.md` from this skill's directory for design principles
+- `{{KIRO_DIR}}/settings/templates/specs/research.md` for discovery log structure
 
 **Validate requirements approval**:
 - If auto-approve flag is true: Auto-approve requirements in spec.json
@@ -84,6 +85,13 @@ After all findings return, synthesize in main context before proceeding.
    - Existing patterns to follow or extend
    - Integration points and dependencies
    - Identified risks and mitigation strategies
+
+4. **Persist Findings to Research Log**:
+   - Create or update `{{KIRO_DIR}}/specs/{feature}/research.md` using the shared template
+   - Summarize discovery scope and key findings
+   - Record investigations with sources and implications
+   - Document architecture pattern evaluation, design decisions, and risks
+   - Use the language specified in spec.json when writing or updating `research.md`
 
 ### Step 3: Synthesis
 
@@ -160,6 +168,7 @@ Provide brief summary in the language specified in spec.json:
 3. **Key Findings**: 2-3 critical insights from discovery that shaped the design
 4. **Review Gate**: Confirm the design review gate passed
 5. **Next Action**: Approval workflow guidance (see Safety & Fallback)
+6. **Research Log**: Confirm `research.md` updated with latest decisions
 
 **Format**: Concise Markdown (under 200 words) - this is the command output, NOT the design document itself
 

@@ -20,6 +20,13 @@ metadata:
 </background_information>
 
 <instructions>
+### Step 1: Gather Context
+
+If steering context is already available from conversation, skip redundant file reads.
+Otherwise:
+- Check `{{KIRO_DIR}}/settings/templates/steering-custom/` for available templates
+- Read `rules/steering-principles.md` from this skill's directory for steering principles
+
 ## Workflow
 
 1. **Ask user** for custom steering needs:
@@ -81,7 +88,7 @@ From `rules/steering-principles.md` (in this skill's directory):
 - **Read**: Load template, analyze existing code
 - **Glob**: Find related files for pattern analysis
 - **Grep**: Search for specific patterns
-- **LS**: Understand relevant structure
+- **Bash** with `ls`: Understand relevant structure
 
 **JIT Strategy**: Load template only when creating that type of steering.
 

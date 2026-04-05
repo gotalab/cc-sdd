@@ -137,11 +137,13 @@ If NO-GO, REMEDIATION is mandatory — identify the exact issue and what needs t
 
 ## Important Constraints
 - **Integration focus**: This is a feature-level gate, not a per-task re-check
+- **Mechanical first**: Run commands and use results before applying judgment
 - **Conversation-aware**: Prioritize conversation history for auto-detection
 - **Test-first focus**: Full test suite pass is mandatory for GO decision
 - **Source numbering only**: Use the exact section numbers from `requirements.md` and `design.md`; do not invent `REQ-*` aliases
 - **Context Discipline**: Start with core steering and expand only with validation-relevant steering
 - **Strict Final Gate**: Return `GO` only when all integration checks passed; return `NO-GO` for concrete failures and `MANUAL_VERIFY_REQUIRED` when mandatory validation could not be completed
+- **Remediation required**: NO-GO must include actionable remediation steps
 </instructions>
 
 ## Tool Guidance
@@ -156,10 +158,12 @@ If NO-GO, REMEDIATION is mandatory — identify the exact issue and what needs t
 Provide output in the language specified in spec.json with:
 
 1. **Detected Target**: Features and tasks being validated (if auto-detected)
-2. **Integration Summary**: Brief overview of cross-task integration status
-3. **Issues**: Integration failures with severity and location
-4. **Coverage Map**: Requirements/design coverage using source section numbers
-5. **Decision**: GO / NO-GO / MANUAL_VERIFY_REQUIRED
+2. **Mechanical Results**: Test suite, TBD/TODO, secrets grep results
+3. **Integration Summary**: Brief overview of cross-task integration status
+4. **Issues**: Integration failures with severity and location
+5. **Coverage Map**: Requirements/design coverage using source section numbers
+6. **Decision**: GO / NO-GO / MANUAL_VERIFY_REQUIRED
+7. **Remediation** (if NO-GO): Specific files and actions needed
 
 **Format**: Markdown headings and tables. Keep summary concise (under 400 words).
 
@@ -179,6 +183,9 @@ Provide output in the language specified in spec.json with:
 - Address integration issues listed
 - Re-run `$kiro-impl <feature> [tasks]` for targeted fixes
 - Re-validate with `$kiro-validate-impl [feature]`
+
+**Session Interrupted**:
+- Safe to re-run — validation is read-only and idempotent
 
 **If MANUAL_VERIFY_REQUIRED**:
 - Do not treat the feature as complete

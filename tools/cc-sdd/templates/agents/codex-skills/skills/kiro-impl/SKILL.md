@@ -197,6 +197,10 @@ For tasks that add or change behavior, enforce RED → GREEN with a feature flag
 - **Stop Execution**: All spec files must exist and tasks must be approved
 - **Suggested Action**: "Complete previous phases: `$kiro-spec-requirements`, `$kiro-spec-design`, `$kiro-spec-tasks`"
 
+**Test Failures**:
+- **Stop Implementation**: Fix failing tests before continuing
+- **Action**: Debug and fix, then re-run
+
 **All Tasks Blocked**:
 - Stop and report all blocked tasks with reasons; human review needed
 

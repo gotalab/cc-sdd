@@ -90,10 +90,10 @@ Document patterns and principles, not exhaustive lists.
 
 ## Tool guidance
 
-- `glob_file_search`: Find source/config files
-- `read_file`: Read steering, docs, configs
-- `grep`: Search patterns
-- `list_dir`: Analyze structure
+- **Glob**: Find source/config files
+- **Read**: Read steering, docs, configs
+- **Grep**: Search patterns
+- **Bash** with `ls`: Analyze structure
 
 **JIT Strategy**: Fetch when needed, not upfront.
 
