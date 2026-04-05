@@ -76,10 +76,10 @@ describe('real claude-code-skills manifest', () => {
     const skillValidateImpl = join(cwd, '.claude/skills/kiro-validate-impl/SKILL.md');
     expect(await exists(skillValidateImpl)).toBe(true);
     const skillValidateImplText = await readFile(skillValidateImpl, 'utf8');
-    expect(skillValidateImplText).toContain('feature-level integration validation');
+    expect(skillValidateImplText).toContain('Validate feature-level integration');
     expect(skillValidateImplText).toContain('Cross-Task Integration');
     expect(skillValidateImplText).toContain('Requirements Coverage Gaps');
-    expect(skillValidateImplText).toContain('do not invent `REQ-*` aliases');
+    expect(skillValidateImplText).toContain('do NOT invent `REQ-*` aliases');
     expect(skillValidateImplText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
     expect(skillValidateImplText).toContain('MANUAL_VERIFY_REQUIRED');
     expect(skillValidateImplText).toContain('Does NOT Do');
@@ -100,10 +100,10 @@ describe('real claude-code-skills manifest', () => {
     expect(await exists(skillSpecRequirements)).toBe(true);
     const skillSpecRequirementsText = await readFile(skillSpecRequirements, 'utf8');
     expect(skillSpecRequirementsText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
-    expect(skillSpecRequirementsText).toContain('requirement-relevant steering or use-case-aligned local agent skills/playbooks');
+    expect(skillSpecRequirementsText).toContain('Additional steering files only when directly relevant');
     expect(skillSpecRequirementsText).toContain('Step 4: Review Requirements Draft');
     expect(skillSpecRequirementsText).toContain('requirements review gate passes');
-    expect(skillSpecRequirementsText).toContain('Scope Ambiguity Found During Requirements Review');
+    expect(skillSpecRequirementsText).toContain('Missing Project Description');
 
     // kiro-impl skill with subagent dispatch
     const skillImpl = join(cwd, '.claude/skills/kiro-impl/SKILL.md');

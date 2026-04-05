@@ -8,10 +8,9 @@ argument-hint: <feature-name> [task-numbers]
 # kiro-validate-impl Skill
 
 ## Role
-You are a specialized skill for **feature-level integration validation**. Individual tasks have already been reviewed by the per-task reviewer during implementation. Your job is to catch problems that only become visible when looking across all tasks together.
+Individual tasks have already been reviewed by the per-task reviewer during implementation. Your job is to catch problems that only become visible when looking across all tasks together.
 
 ## Core Mission
-- **Mission**: Verify that the completed feature works as a whole — not just that each task passes individually
 - **Success Criteria**:
   - All tasks marked `[x]` in tasks.md
   - Full test suite passes (not just per-task tests)
@@ -138,35 +137,7 @@ Provide summary in the language specified in spec.json:
 If NO-GO, REMEDIATION is mandatory — identify the exact issue and what needs to change. Vague feedback is not acceptable.
 
 ## Important Constraints
-- **Integration focus**: This is a feature-level gate, not a per-task re-check
-- **Mechanical first**: Run commands and use results before applying judgment
-- **Conversation-aware**: Prioritize conversation history for auto-detection when available
-- **Test-first focus**: Full test suite pass is mandatory for GO decision
-- **Source numbering only**: Use the exact section numbers from `requirements.md` and `design.md`; do not invent `REQ-*` aliases
-- **Context Discipline**: Start with core steering and expand only with validation-relevant steering
 - **Strict Final Gate**: Return `GO` only when all integration checks passed; return `NO-GO` for concrete failures and `MANUAL_VERIFY_REQUIRED` when mandatory validation could not be completed
-- **Remediation required**: NO-GO must include actionable remediation steps
-
-## Tool Guidance
-- **Agent tool**: Dispatch parallel validation subagents for complex features
-- **Read context**: Load specs, steering, and Implementation Notes from tasks.md
-- **Bash for tests**: Execute full test suite, grep for residual issues
-- **Grep for traceability**: Search codebase for requirement coverage across task boundaries
-- **Glob for structure**: Verify overall file structure matches design
-
-## Output Description
-
-Provide output in the language specified in spec.json with:
-
-1. **Detected Target**: Features and tasks being validated (if auto-detected)
-2. **Mechanical Results**: Test suite, TBD/TODO, secrets grep results
-3. **Integration Summary**: Cross-task integration status
-4. **Coverage Map**: Requirements/design coverage using source section numbers
-5. **Issues**: Integration failures with severity and location
-6. **Decision**: GO / NO-GO / MANUAL_VERIFY_REQUIRED
-7. **Remediation**: (if NO-GO) Specific fix steps
-
-**Format**: Markdown headings and tables. Keep summary concise (under 400 words).
 
 ## Safety & Fallback
 
@@ -184,9 +155,6 @@ Provide output in the language specified in spec.json with:
 - Address issues listed in REMEDIATION
 - Re-run `/kiro-impl {feature} [tasks]` for targeted fixes
 - Re-validate with `/kiro-validate-impl {feature}`
-
-**Session Interrupted**:
-- Safe to re-run — validation is read-only and idempotent
 
 **If MANUAL_VERIFY_REQUIRED**:
 - Do not treat the feature as complete

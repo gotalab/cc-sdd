@@ -7,11 +7,7 @@ argument-hint: <feature-name>
 
 # kiro-spec-status Skill
 
-## Role
-You are a specialized skill for displaying comprehensive status and progress reports for specifications.
-
 ## Core Mission
-- **Mission**: Display comprehensive status and progress for a specification
 - **Success Criteria**:
   - Show current phase and completion status
   - Identify next actions and blockers
@@ -40,27 +36,6 @@ Create report in the language specified in spec.json covering:
 3. **Task Breakdown**: If tasks exist, show completed/remaining counts
 4. **Next Actions**: What needs to be done next
 5. **Blockers**: Any issues preventing progress
-
-## Critical Constraints
-- Use language from spec.json
-- Calculate accurate completion percentages
-- Identify specific next action commands
-
-## Tool Guidance
-- **Read**: Load spec.json first, then other spec files as needed
-- **Parse carefully**: Extract completion data from tasks.md checkboxes
-- Use **Glob** to check which spec files exist
-
-## Output Description
-
-Provide status report in the language specified in spec.json:
-
-**Report Structure**:
-1. **Feature Overview**: Name, phase, last updated
-2. **Phase Status**: Requirements, Design, Tasks with completion %
-3. **Task Progress**: If tasks exist, show X/Y completed
-4. **Next Action**: Specific command to run next
-5. **Issues**: Any blockers or missing elements
 
 **Format**: Clear, scannable format with emojis for status
 

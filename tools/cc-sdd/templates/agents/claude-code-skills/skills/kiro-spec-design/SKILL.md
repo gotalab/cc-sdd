@@ -9,11 +9,7 @@ metadata:
 
 # kiro-spec-design Skill
 
-## Role
-You are a specialized skill for generating comprehensive technical design documents that translate requirements (WHAT) into architectural design (HOW).
-
 ## Core Mission
-- **Mission**: Generate comprehensive technical design document that translates requirements (WHAT) into architectural design (HOW)
 - **Success Criteria**:
   - All requirements mapped to technical components with clear interfaces
   - Appropriate architecture discovery and research completed
@@ -103,11 +99,7 @@ After all findings return, synthesize in main context before proceeding.
 
 ### Step 4: Generate Design Draft
 
-1. **Load Design Template**:
-   - Read `{{KIRO_DIR}}/settings/templates/specs/design.md` for structure
-   - Apply `rules/design-principles.md` (already loaded in Step 1)
-
-2. **Generate Design Draft**:
+1. **Generate Design Draft**:
    - **Follow specs/design.md template structure and generation instructions strictly**
    - **Integrate all discovery findings and synthesis outcomes**: Use researched information (APIs, patterns, technologies) and synthesis decisions (generalizations, build-vs-adopt, simplifications) throughout component definitions, architecture decisions, and integration points
    - **File Structure Plan** (required): Populate the File Structure Plan section with concrete file paths and responsibilities. Analyze the codebase to determine which files need to be created vs. modified. Each file must have one clear responsibility. This section directly drives task `_Boundary:_` annotations and implementation Task Briefs — vague file structures produce vague implementations.
@@ -145,18 +137,7 @@ After all findings return, synthesize in main context before proceeding.
    - For TypeScript, never use `any`; prefer precise types and generics.
    - For dynamically typed languages, provide type hints/annotations where available (e.g., Python type hints) and validate inputs at boundaries.
    - Document public interfaces and contracts clearly to ensure cross-component type safety.
-- **Latest Information**: Use WebSearch/WebFetch for external dependencies and best practices
-- **Steering Alignment**: Respect existing architecture patterns from steering context
-- **Template Adherence**: Follow specs/design.md template structure and generation instructions strictly
-- **Design Focus**: Architecture and interfaces ONLY, no implementation code
 - **Requirements Traceability IDs**: Use numeric requirement IDs only (e.g. "1.1", "1.2", "3.1", "3.3") exactly as defined in requirements.md. Do not invent new IDs or use alphabetic labels.
-
-## Tool Guidance
-- **Read first**: Load all context before taking action (specs, steering, templates, rules)
-- **Agent tool**: Dispatch codebase and external research as subagents for complex features. Each returns a findings summary, keeping the main context clean for synthesis.
-- **Research when uncertain**: Use WebSearch/WebFetch for external dependencies, APIs, and latest best practices
-- **Analyze existing code**: Use Grep to find patterns and integration points in codebase
-- **Write last**: Generate design.md only after all research, synthesis, and design review complete
 
 ## Output Description
 
@@ -198,10 +179,7 @@ Provide brief summary in the language specified in spec.json:
 - **Warning**: "Steering directory empty or missing - design may not align with project standards"
 - **Proceed**: Continue with generation but note limitation in output
 
-**Discovery Complexity Unclear**:
-- **Default**: Use full discovery process (`rules/design-discovery-full.md` from this skill's directory)
-- **Rationale**: Better to over-research than miss critical context
-- **Invalid Requirement IDs**:
+**Invalid Requirement IDs**:
   - **Stop Execution**: If requirements.md is missing numeric IDs or uses non-numeric headings (for example, "Requirement A"), stop and instruct the user to fix requirements.md before continuing.
 
 **Spec Gap Found During Design Review**:

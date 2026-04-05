@@ -8,11 +8,7 @@ argument-hint: <idea-or-request>
 
 # kiro-brainstorm Skill
 
-## Role
-You are the entry point when a user wants to build or change something but isn't sure where to start. You determine the right action path based on the project's current state, then guide the user through brainstorming if needed.
-
 ## Core Mission
-- **Mission**: Determine the best action path for the user's request, and if brainstorming is needed, refine it into a concrete plan through structured dialogue
 - **Success Criteria**:
   - Correct action path identified based on existing project state
   - User's intent clarified through questions, not assumptions
@@ -190,47 +186,9 @@ After writing, verify the files exist by reading them back.
 - Re-entry: `/kiro-spec-init <next-feature-name>` or `/kiro-spec-batch` if multiple specs remain
 
 ## Critical Constraints
-- **Action path first**: Always determine the action path (Step 2) before brainstorming. Do not brainstorm when the answer is "update existing spec" or "no spec needed."
-- **Lazy context loading**: Step 1 is metadata only. Full content is loaded in Step 3, only for Path C/D.
-- **Delegate heavy exploration**: Use Agent tool for codebase exploration and web research to keep the main context lean.
 - **MUST write files before suggesting next command**: For Path C/D, use the Write tool to create brief.md and roadmap.md. Do NOT just display the content in conversation -- files on disk are the only thing that survives session boundaries.
-- **Only brief.md and roadmap.md**: Do NOT create spec.json, requirements.md, design.md, or tasks.md. Only `brief.md` (per-feature) and `roadmap.md` (steering) are written.
-- **No assumptions**: Ask questions instead of guessing the user's intent
-- **Sequential questions**: Ask 1-2 questions at a time, not a wall of questions
-- **Codebase-aware**: Use loaded context to skip obvious questions
-- **Scope discipline**: Push for smaller scope when the idea is too large for a single spec
-- **Existing specs respected**: Never suggest creating a new spec that overlaps with an existing spec's domain
-
-## Tool Guidance
-- **Glob**: Discover spec.json files and steering documents (Step 1 lightweight scan)
-- **Read**: Load spec.json metadata (Step 1), steering content and spec details (Step 3 only)
-- **Grep**: Quick targeted searches when a specific pattern is needed
-- **Agent**: Delegate codebase exploration (Step 3) and web research (Step 5) to subagents. Pass specific questions, receive summaries.
-- **Write**: For `brief.md` (Path C and D) and `roadmap.md` (Path D only)
-- **WebSearch/WebFetch**: Research technical approaches. Prefer delegating via Agent to avoid loading raw results into main context.
-- **AskUserQuestion**: Structured questions with options when useful
-
-## Output Description
-
-Depends on action path:
-- Path A: One-line recommendation + command to run
-- Path B: One-line recommendation (no spec needed)
-- Path C: `brief.md` written + `/kiro-spec-init` command
-- Path D: `roadmap.md` + all specs' `brief.md` written + `/kiro-spec-batch` for parallel spec creation
-- Re-entry: Next spec's `brief.md` written + roadmap.md updated if needed + `/kiro-spec-init` or `/kiro-spec-batch` for remaining specs
 
 ## Safety & Fallback
-
-**Idea Too Large for Single Spec**:
-- If the idea would produce 20+ tasks, switch to Path D (multi-spec decomposition)
-- Propose feature decomposition with dependency ordering
-
-**Existing Spec Overlap**:
-- If a matching spec exists in `{{KIRO_DIR}}/specs/`, recommend Path A (update existing)
-- Do NOT create a new spec that duplicates an existing spec's domain
-
-**User Already Knows What to Build**:
-- If the user provides a clear description with who/what/why, minimize questions and move quickly to the output step
 
 **Roadmap Already Exists (re-entry)**:
 - Read roadmap.md to restore project context before asking questions
@@ -238,7 +196,3 @@ Depends on action path:
 - Write brief.md for the next spec only (just-in-time)
 - Update roadmap.md if scope/ordering changed based on implementation experience
 - Append new specs as a new phase if the request expands the project, don't overwrite existing content
-
-**Context Growing Too Large**:
-- If the conversation exceeds ~15 turns, summarize decisions made so far and proceed to the output step
-- Do not loop indefinitely on refinement

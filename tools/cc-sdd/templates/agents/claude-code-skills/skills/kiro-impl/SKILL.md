@@ -9,12 +9,11 @@ argument-hint: <feature-name> [task-numbers]
 # kiro-impl Skill
 
 ## Role
-You are a specialized skill for implementing SDD tasks using Test-Driven Development. You operate in two modes:
+You operate in two modes:
 - **Autonomous mode** (no task numbers): Dispatch a fresh subagent per task, with independent review after each
 - **Manual mode** (task numbers provided): Execute selected tasks directly in the main context
 
 ## Core Mission
-- **Mission**: Implement all pending or selected tasks via TDD, with subagent dispatch for autonomous execution and adversarial review for quality assurance
 - **Success Criteria**:
   - All tests written before implementation code
   - Code passes all tests with no regressions
@@ -163,30 +162,9 @@ For tasks that add or change behavior, enforce RED → GREEN with a feature flag
 **Skip this protocol for**: refactoring, configuration, documentation, or tasks with no behavioral change.
 
 ## Critical Constraints
-- **One Sub-Task Per Iteration**: NEVER batch multiple sub-tasks (e.g., 3.1 and 3.2) into a single subagent dispatch. Each sub-task gets its own implementer → reviewer → commit cycle.
-- **Re-Read tasks.md Every Iteration**: Determine the next task from the file, not from memory. This prevents context drift over long runs.
-- **Discard Iteration Details**: After each task completes, keep only a one-line summary. Do not accumulate full status reports or reviewer details across iterations.
-- **TDD Mandatory**: Tests MUST be written before implementation code
-- **Task Scope**: Implement only what the specific task requires
-- **Test Coverage**: All new code must have tests
-- **No Regressions**: Existing tests must continue to pass
-- **Design Alignment**: Implementation must follow design.md specifications
-- **Boundary Scope**: Respect `_Boundary:_` annotations -- limit changes to declared components
-- **Dependency Check**: Verify `_Depends:_` prerequisites are complete before starting a task
-- **Context Discipline**: Start with core steering and expand only with task-relevant steering or use-case-aligned local skills/playbooks
-- **Honest Completion**: Never mark a task complete if implementation deviates from design.md or does not satisfy requirements.md
-- **Section Number Preservation**: Use exact section numbering from requirements.md and design.md (e.g., 1.2, 3.1, A.2); do NOT invent `REQ-*` aliases
-- **Parent Owns State**: In autonomous mode, parent owns task-state updates, commits, and remediation decisions; subagents own implementation and review only
 - **Selective Staging**: NEVER use `git add -A` or `git add .`; always stage explicit file paths
 - **Bounded Review Rounds**: Max 2 implementer re-dispatch rounds per reviewer rejection
 - **Bounded Remediation**: Cap final-validation remediation at 3 rounds
-
-## Tool Guidance
-- **Read first**: Load all context before implementation
-- **Test first**: Write tests before code
-- **Agent tool**: Dispatch implementer and reviewer subagents (autonomous mode)
-- **WebSearch/WebFetch**: For library documentation when needed
-- **Bash**: Run tests, git operations
 
 ## Output Description
 
@@ -219,13 +197,3 @@ For tasks that add or change behavior, enforce RED → GREEN with a feature flag
 
 **Spec Conflicts with Reality**:
 - If a requirement or design conflicts with reality (API doesn't exist, platform limitation), block the task with `_Blocked: <reason>_` -- do not silently work around it
-
-**Session Interrupted**:
-- Safe to re-run `/kiro-impl {feature}` — completed tasks are already `[x]` in tasks.md and committed to git
-- The controller re-reads tasks.md on each iteration, so it will pick up where it left off automatically
-
-### Next Phase: Validation
-
-**After Implementation Complete**:
-- Run `/kiro-validate-impl {feature}` to verify implementation quality
-- Validates test coverage, requirements traceability, and design alignment
