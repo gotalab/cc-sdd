@@ -23,9 +23,16 @@ Before writing `design.md`, review the draft design and repair local issues unti
 - Avoid speculative abstraction: remove components, adapters, or interfaces that exist only for hypothetical future scope.
 - If a section is too vague for tasks to reference directly, rewrite it before finalizing the design.
 
+## Mechanical Checks
+
+Before applying judgment, verify these mechanically:
+- **Requirements traceability**: Extract all numeric requirement IDs from `requirements.md`. Scan the design draft for each ID. Report any IDs not found in the design.
+- **File Structure Plan populated**: The File Structure Plan section must contain concrete file paths (not just "TBD" or empty). Scan for placeholder text in that section.
+- **No orphan components**: Every component mentioned in the design must appear in the File Structure Plan with a file path. Scan for component names that have no corresponding file entry.
+
 ## Review Loop
 
-- Run this review gate on the design draft before writing `design.md`.
+- Run mechanical checks first, then judgment-based review.
 - If issues are local to the draft, repair the draft and re-run the review gate.
 - Keep the loop bounded: no more than 2 review-and-repair passes before escalating a real spec gap.
 - Write `design.md` only after the review gate passes.

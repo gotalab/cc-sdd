@@ -23,9 +23,16 @@ Before writing `requirements.md`, review the draft requirements and repair local
 - Ensure non-functional expectations remain user-observable or operator-observable; move technology choices and internal architecture detail out of requirements.
 - Normalize vague language such as "fast", "robust", or "secure" into concrete user-visible expectations whenever the source material supports it.
 
+## Mechanical Checks
+
+Before applying judgment, verify these mechanically:
+- **Numeric IDs present**: Every requirement heading has a numeric ID (1, 1.1, 2, etc.). Scan the draft for headings without IDs.
+- **Acceptance criteria exist**: Every requirement has at least one EARS-format acceptance criterion. Scan for requirements with no "When/If/While/Where" acceptance statements.
+- **No implementation language**: Scan for technology-specific terms (database names, framework names, API patterns) that belong in design, not requirements. Flag any found.
+
 ## Review Loop
 
-- Run this review gate on the requirements draft before writing `requirements.md`.
+- Run mechanical checks first, then judgment-based review.
 - If issues are local to the draft, repair the draft and re-run the review gate.
 - Keep the loop bounded: no more than 2 review-and-repair passes before escalating a real ambiguity back to the user.
 - Write `requirements.md` only after the review gate passes.

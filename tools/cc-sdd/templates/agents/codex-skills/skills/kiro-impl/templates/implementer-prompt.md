@@ -33,10 +33,10 @@ If any of these cannot be determined from the spec — the requirements are too 
 ### Step 3: Implement with TDD
 - For behavioral tasks, follow the Feature Flag Protocol:
   1. Add a flag defaulting OFF
-  2. RED: write/adjust tests so they fail with the flag OFF
+  2. RED: write/adjust tests so they fail with the flag OFF. **Run tests and capture the failing output.** You will include this in the status report as evidence.
   3. GREEN: enable the flag and implement until tests pass
   4. Remove the flag and confirm tests still pass
-- For non-behavioral tasks, use a standard RED → GREEN → REFACTOR cycle
+- For non-behavioral tasks, use a standard RED → GREEN → REFACTOR cycle. **Run tests after writing them (before implementation) and capture the failing output.**
 - Use the acceptance criteria from the Task Brief to drive test design
 - Follow the design constraints exactly
 - Keep changes tightly scoped to the assigned task
@@ -77,7 +77,8 @@ End your response with this structured status block:
 - FILES_CHANGED: <comma-separated list of changed files>
 - REQUIREMENTS_CHECKED: <exact section numbers from requirements.md>
 - DESIGN_CHECKED: <exact section numbers from design.md>
-- TESTS_RUN: <test commands and results>
+- RED_PHASE_OUTPUT: <test command and failing output from before implementation -- proves tests were written first>
+- TESTS_RUN: <test commands and final passing results>
 - CONCERNS: <only for DONE_WITH_CONCERNS -- describe the concern>
 - BLOCKER: <only for BLOCKED -- describe what prevents completion>
 - BLOCKER_REMEDIATION: <only for BLOCKED -- what would unblock this? e.g., "design.md section 3.2 specifies API X but it doesn't exist; update design or provide alternative">

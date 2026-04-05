@@ -42,34 +42,39 @@ Evaluate each item. If ANY item fails, the verdict is REJECTED.
 - Run: `git diff --name-only` and compare against the task's `_Boundary:_` scope.
 - If files outside boundary are changed → REJECTED.
 
+**5. RED Phase Evidence**
+- Check the implementer's status report for `RED_PHASE_OUTPUT`.
+- If the task is behavioral and RED_PHASE_OUTPUT is missing or empty → REJECTED (tests may not have been written before implementation).
+- The output should show test failures related to the task's acceptance criteria.
+
 ### Judgment Checks (read code, compare to spec)
 
-**5. Reality Check**
+**6. Reality Check**
 - Read the `git diff`. Implementation is real production code.
 - NOT a mock, stub, placeholder, fake, or TODO-only path (unless the task explicitly requires one).
 - No "will be implemented later" or similar deferred-work patterns.
 
-**6. Acceptance Criteria**
+**7. Acceptance Criteria**
 - Read the task description from tasks.md. All aspects are addressed, not just the primary case.
 - The Task Brief's acceptance criteria (from implementer's status report) are met.
 
-**7. Spec Alignment (Requirements)**
+**8. Spec Alignment (Requirements)**
 - Read the referenced sections of requirements.md yourself.
 - Each referenced requirement is satisfied by concrete, observable behavior.
 - Use source section numbers (e.g., 1.2, 3.1); do NOT accept invented `REQ-*` aliases.
 
-**8. Spec Alignment (Design)**
+**9. Spec Alignment (Design)**
 - Read the referenced sections of design.md yourself.
 - If design says "use X", the code uses X — not a substitute.
 - Component structure, interfaces, and data flow match the design.
 - Dependency direction follows design.md's architecture (no upward imports).
 
-**9. Test Quality**
+**10. Test Quality**
 - Tests prove the required behavior, not just scaffolding or happy-path shells.
 - Test assertions are meaningful (not `expect(true).toBe(true)` or similar).
 - Tests would fail if the implementation were removed or broken.
 
-**10. Error Handling**
+**11. Error Handling**
 - Error paths are handled, not just the happy path.
 - Errors are not silently swallowed.
 
@@ -86,6 +91,7 @@ End your response with this structured verdict:
   - TBD/TODO grep: CLEAN | <count> matches
   - Secrets grep: CLEAN | <count> matches
   - Boundary: WITHIN | <files outside boundary>
+  - RED phase: VERIFIED | MISSING | N/A (non-behavioral task)
 - FINDINGS:
   - <numbered list of specific findings, if any>
   - <reference exact file paths, line ranges, and spec section numbers>
