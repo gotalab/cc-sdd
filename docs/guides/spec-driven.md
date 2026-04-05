@@ -6,14 +6,16 @@ This document explains how cc-sdd implements Spec-Driven Development (SDD) insid
 
 ## Lifecycle Overview
 
+0. **Brainstorm (Optional)** – `/kiro-brainstorm` (skills mode only) refines vague ideas into a concrete feature description before spec initiation. Useful when you have a rough notion but not a clear scope.
 1. **Steering (Context Capture)** – `/kiro:steering` and `/kiro:steering-custom` gather architecture, conventions, and domain knowledge into steering docs.
 2. **Spec Initiation** – `/kiro:spec-init <feature>` creates the feature workspace (`.kiro/specs/<feature>/`).
 3. **Requirements** – `/kiro:spec-requirements <feature>` collects clarifications and produces `requirements.md`.
-4. **Design** – `/kiro:spec-design <feature>` first emits/updates `research.md` with investigation notes (skipped when no research is needed), then yields `design.md` for human approval.
+4. **Design** – `/kiro:spec-design <feature>` first emits/updates `research.md` with investigation notes (skipped when no research is needed), then yields `design.md` for human approval. In 3.0, `design.md` also includes a **File Structure Plan** section that maps directory structure and file responsibilities.
 5. **Task Planning** – `/kiro:spec-tasks <feature>` creates `tasks.md`, mapping deliverables to implementable chunks and tagging each wave with `P0`, `P1`, etc. so teams know which tasks can run in parallel.
-6. **Implementation** – `/kiro:spec-impl <feature> <task-ids>` drives execution and validation.
+6. **Implementation** – `/kiro:spec-impl <feature> <task-ids>` drives execution and validation. In skills mode, `/kiro-impl` replaces this command and supports both autonomous mode (subagent dispatch per task) and manual mode (TDD in main context). See the Skills Workflow section below.
 7. **Quality Gates** – optional `/kiro:validate-gap` and `/kiro:validate-design` commands compare requirements/design against existing code before implementation.
-8. **Status Tracking** – `/kiro:spec-status <feature>` summarises progress and approvals.
+8. **Validation** – `/kiro:validate-impl` verifies implementation quality. In skills mode, this command focuses on **integration validation** across tasks rather than per-task checks.
+9. **Status Tracking** – `/kiro:spec-status <feature>` summarises progress and approvals.
 
 > Need everything in one pass? `/kiro:spec-quick <feature>` orchestrates steps 2–5 with Subagent support, pausing for approval after each phase so you can refine the generated documents.
 
@@ -44,6 +46,31 @@ Each phase pauses for human review unless you explicitly bypass it (for example 
 
 - **Greenfield** – if you already have project-wide guardrails, capture them via `/kiro:steering` (and `/kiro:steering-custom`) first; otherwise start with `/kiro:spec-init` right away and let steering evolve as those rules become clear.
 - **Brownfield** – start with `/kiro:validate-gap` and `/kiro:validate-design` to ensure new specs reconcile with the existing system before implementation.
+
+## Skills Workflow (3.0)
+
+Skills mode (`--claude-skills` / `--codex-skills`) provides an alternative workflow that uses skill-based commands instead of `/kiro:*` slash commands. The spec phases are the same, but implementation and validation work differently.
+
+### Commands vs Skills Equivalents
+
+| Phase | Commands Mode | Skills Mode | Notes |
+|-------|--------------|-------------|-------|
+| Brainstorm | N/A | `/kiro-brainstorm` | Optional; refine ideas before spec-init |
+| Steering | `/kiro:steering` | `/kiro:steering` | Same in both modes |
+| Spec (init through tasks) | `/kiro:spec-init` ... `/kiro:spec-tasks` | Same | Same in both modes |
+| Implementation | `/kiro:spec-impl <feature> <tasks>` | `/kiro-impl` | See below |
+| Validation | `/kiro:validate-impl` | `/kiro-validate-impl` | Integration-focused in skills mode |
+
+### `/kiro-impl` Modes
+
+- **Autonomous mode** (no task args): Dispatches a fresh implementer subagent per task plus an independent adversarial reviewer subagent. Each implementer synthesizes a **Task Brief** with concrete acceptance criteria from the spec before coding. Uses native Agent tool, no external dependencies.
+- **Manual mode** (with task args): Runs TDD in the main conversation context, similar to the commands-based `/kiro:spec-impl`.
+
+Both modes enforce **1-task-per-iteration** discipline for context hygiene during long runs and are **session-resume safe** -- you can re-run `/kiro-impl` after an interruption without losing progress.
+
+### `/kiro-validate-impl` in Skills Mode
+
+In skills mode, validation focuses on **integration** concerns: cross-task consistency, boundary correctness (verified via `git diff`), and mechanical enforcement (grep for leftover TODOs, run full test suite). Per-task correctness is handled by the reviewer subagent during implementation.
 
 ## Related Resources
 

@@ -180,6 +180,8 @@ requirements.md は非常に柔軟にカスタマイズできます：
 
 **必須なのはファイルの存在のみ**: コマンドは `design.md` を読み込みますが、特定の見出しやフォーマットをパースしません。
 
+**v3.0.0での追加要素**: `design.md` には **File Structure Plan**（ディレクトリ構造とファイル責務の定義）が含まれるようになりました。テンプレートをカスタマイズする際は、このセクションを維持することを推奨します。また、行数上限は1000行から1500行に拡大されています。
+
 ### 🎯 design.md のカスタマイズ例
 
 #### 例1: 社内レビュープロセスに合わせる
@@ -470,7 +472,7 @@ Always include NFR sections for:
 3. **Verification Method** と **Success Threshold** が各要件に追加される
 4. **Non-Functional Requirements** セクションが自動的に生成される
 5. **Compliance & Approvals** チェックリストが追加される
-6. 要件番号と受け入れ基準の構造は維持される（`/kiro:spec-impl` と互換性あり）
+6. 要件番号と受け入れ基準の構造は維持される（`/kiro:spec-impl` および Skills モードの `/kiro-impl` と互換性あり）
 
 ### 🧪 テスト方法
 
@@ -2239,7 +2241,7 @@ git commit -m "Add team-wide templates"
 
 - 必須構造の削除（番号付け、チェックボックス）
 - 曖昧なルール（"should", "consider"）
-- テンプレート1000行超
+- テンプレート1500行超（v3.0.0で上限が1000行から1500行に拡大）
 - テストなしでコミット
 
 ---

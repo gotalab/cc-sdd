@@ -75,6 +75,39 @@ Need to re-run just one phase? Mention `@agents-spec-design`, `@agents-spec-task
 - **Too many files analysed** – edit the file pattern expansion step in the relevant Subagent prompt to narrow the search.
 - **Outputs differ from templates** – update `{{KIRO_DIR}}/settings/templates` so that Subagent summaries point to the latest document sections.
 
+## Skills Mode (`--claude-skills` / `--codex-skills`)
+
+Skills mode (3.0) uses a fundamentally different subagent approach from the `--claude-agent` mode described above. Both are valid modes; choose the one that fits your workflow.
+
+### How Skills Mode Dispatches Subagents
+
+Unlike `--claude-agent` mode, which relies on pre-defined subagent definitions in `.claude/agents/kiro/`, skills mode dispatches implementation subagents **dynamically** at runtime:
+
+- **No pre-defined agent files** -- there is no `tdd-task-implementer.md` or similar file in `.claude/agents/`. Subagents are created on-the-fly by `/kiro-impl` using prompt templates.
+- **Per-task subagent pair** -- each task gets a fresh **implementer subagent** and an independent **reviewer subagent** dispatched via the native Agent tool.
+- **Task Brief synthesis** -- before coding, the implementer subagent synthesizes a concrete Task Brief with acceptance criteria derived from the spec, ensuring alignment with requirements and design.
+- **Adversarial review** -- the reviewer subagent performs mechanical enforcement: grep for leftover TODOs, run the test suite, and check boundary correctness via `git diff`. This happens independently of the implementer.
+- **1-task-per-iteration** -- each iteration processes a single task to maintain context hygiene across long runs.
+
+### When to Use Which Mode
+
+| Consideration | `--claude-agent` | `--claude-skills` / `--codex-skills` |
+|--------------|------------------|--------------------------------------|
+| Spec generation (spec-quick) | Subagent-accelerated | Same spec commands |
+| Implementation dispatch | Manual via `/kiro:spec-impl` | Autonomous or manual via `/kiro-impl` |
+| Subagent definitions | Static files in `.claude/agents/kiro/` | Dynamic prompt templates |
+| Review process | Manual or via validate-impl | Built-in adversarial reviewer subagent |
+| Session resume | Start fresh | Safe to re-run after interruption |
+| External dependencies | None | None (native Agent tool only) |
+
+### Customising Skills Mode Subagents
+
+Because subagent prompts are generated dynamically, customization works differently than editing `.claude/agents/kiro/*.md` files:
+
+1. **Steering documents** -- the primary customization lever. Implementer and reviewer subagents inherit rules from steering, so update `{{KIRO_DIR}}/steering/*.md` for architecture and convention changes.
+2. **Templates and rules** -- update `{{KIRO_DIR}}/settings/templates/*.md` and `{{KIRO_DIR}}/settings/rules/*.md` to influence the Task Brief and review criteria.
+3. **Skill files** -- advanced users can edit the installed skill SKILL.md files to adjust dispatch behaviour, review gates, or iteration strategy.
+
 ## See Also
 
 - [Spec-Driven Development Workflow](spec-driven.md)

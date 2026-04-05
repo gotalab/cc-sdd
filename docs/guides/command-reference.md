@@ -31,6 +31,32 @@ Complete reference for all cc-sdd commands with detailed usage, examples, and tr
 
 ---
 
+## Skills Mode Reference
+
+> **Applies to**: `--claude-skills` and `--codex-skills` install targets only. Commands-based agents (`--claude-code`, `--cursor`, etc.) continue to use the `/kiro:*` commands documented below.
+
+Skills mode (3.0) replaces the commands-based implementation and validation workflow with skill files that leverage native Agent tool dispatch. The spec phases (steering, init, requirements, design, tasks) remain the same across both modes.
+
+### Key Differences
+
+| Area | Commands Mode | Skills Mode |
+|------|--------------|-------------|
+| Brainstorm | N/A | `/kiro-brainstorm` -- refine vague ideas before spec-init |
+| Implementation | `/kiro:spec-impl <feature> [tasks]` | `/kiro-impl` -- autonomous (subagent per task) or manual (TDD in main context) |
+| Validation | `/kiro:validate-impl` | `/kiro-validate-impl` -- focuses on integration validation across tasks |
+| Subagent dispatch | Pre-defined in `.claude/agents/` | Dynamic per-task dispatch via prompt templates |
+| External dependencies | None | None (Ralph Loop plugin removed; uses native Agent tool) |
+| Session safety | N/A | `/kiro-impl` is session-resume safe |
+
+### Skill Files
+
+Refer to the installed `SKILL.md` files for full skill documentation:
+- `/kiro-brainstorm` -- Optional idea refinement
+- `/kiro-impl` -- Unified implementation (autonomous + manual modes)
+- `/kiro-validate-impl` -- Integration-focused validation with mechanical enforcement
+
+---
+
 ### Command Matrix
 
 | Command | Parameters | Primary Purpose | Typical Next Step |
@@ -701,6 +727,8 @@ P1 — Service Integration
 
 ### `/kiro:spec-impl`
 
+> **Skills mode equivalent**: `/kiro-impl`. Skills mode supports autonomous (subagent dispatch per task) and manual (TDD in main context) modes. See [Skills Mode Reference](#skills-mode-reference).
+
 **Purpose**: Execute implementation tasks using Test-Driven Development (TDD) methodology.
 
 **Parameters**: `<feature-name> [task-numbers]`
@@ -1122,6 +1150,8 @@ Estimated fix time: 2-3 hours of design refinement.
 ---
 
 ### `/kiro:validate-impl`
+
+> **Skills mode equivalent**: `/kiro-validate-impl`. In skills mode, validation focuses on **integration** concerns (cross-task consistency, boundary correctness via `git diff`, mechanical enforcement) rather than per-task checks. See [Skills Mode Reference](#skills-mode-reference).
 
 **Purpose**: Validate implementation against requirements, design, and tasks to ensure quality and completeness.
 
