@@ -65,16 +65,18 @@ Generate technical design document for feature **$1** based on approved requirem
    **For Simple Additions**:
    - Skip formal discovery, quick pattern check only
 
-#### Parallel Research
+#### Parallel Research (sub-agent dispatch)
 
-The following research areas are independent and can be executed in parallel:
-1. **Codebase analysis**: Existing architecture patterns, integration points, code conventions
-2. **External research**: Dependencies, APIs, latest best practices (when needed)
-3. **Context loading**: Steering files, design principles, discovery rules, templates
+The following research areas are independent and can be dispatched as **sub-agents**. The agent should decide the optimal decomposition based on feature complexity — split, merge, add, or skip sub-agents as needed. Each sub-agent returns a **findings summary** (not raw data) to keep the main context clean for synthesis.
 
-If multi-agent is enabled, spawn sub-agents for each area above. Otherwise execute sequentially.
+**Typical research areas** (adjust as appropriate):
+- **Codebase analysis**: Existing architecture patterns, integration points, code conventions
+- **External research**: Dependencies, APIs, latest best practices
+- **Context loading** (usually main context): Steering files, design principles, discovery rules, templates
 
-After all parallel research completes, synthesize findings before proceeding.
+For simple additions, skip sub-agent dispatch entirely and do a quick pattern check in main context.
+
+After all findings return, synthesize in main context before proceeding.
 
 3. **Retain Discovery Findings for Step 3**:
    - External API contracts and constraints

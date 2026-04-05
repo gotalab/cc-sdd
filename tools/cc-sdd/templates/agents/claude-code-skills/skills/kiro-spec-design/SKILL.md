@@ -1,7 +1,7 @@
 ---
 name: kiro-spec-design
 description: Generate comprehensive technical design translating requirements (WHAT) into architecture (HOW) with discovery process. Use when creating architecture from requirements.
-allowed-tools: Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
+allowed-tools: Read, Write, Edit, Grep, Glob, WebSearch, WebFetch, Agent
 argument-hint: <feature-name> [-y]
 metadata:
   shared-rules: "design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md"
@@ -64,14 +64,18 @@ Otherwise, load all necessary context:
    **For Simple Additions**:
    - Skip formal discovery, quick pattern check only
 
-#### Parallel Research
+#### Parallel Research (subagent dispatch)
 
-The following research areas are independent and can be executed in parallel. The agent should determine optimal decomposition based on feature complexity:
-1. **Codebase analysis**: Existing architecture patterns, integration points, code conventions (using Grep/Glob)
-2. **External research**: Dependencies, APIs, latest best practices (using WebSearch/WebFetch when needed)
-3. **Context loading**: Steering files, design principles, discovery rules, templates
+The following research areas are independent and can be dispatched as **subagents** via the Agent tool. The agent should decide the optimal decomposition based on feature complexity — split, merge, add, or skip subagents as needed. Each subagent returns a **findings summary** (not raw data) to keep the main context clean for synthesis.
 
-After all parallel research completes, synthesize findings before proceeding.
+**Typical research areas** (adjust as appropriate):
+- **Codebase analysis**: Existing architecture patterns, integration points, code conventions (using Grep/Glob)
+- **External research**: Dependencies, APIs, latest best practices (using WebSearch/WebFetch)
+- **Context loading** (usually main context): Steering files, design principles, discovery rules, templates
+
+For simple additions, skip subagent dispatch entirely and do a quick pattern check in main context.
+
+After all findings return, synthesize in main context before proceeding.
 
 3. **Retain Discovery Findings for Step 3**:
    - External API contracts and constraints
@@ -85,7 +89,7 @@ After all parallel research completes, synthesize findings before proceeding.
 **Apply design synthesis to discovery findings before writing.**
 
 - Read and apply `rules/design-synthesis.md` from this skill's directory
-- This step requires the full picture from discovery — do not parallelize or delegate to sub-agents
+- This step requires the full picture from discovery findings — execute in main context, not in a subagent
 - Record synthesis outcomes (generalizations found, build-vs-adopt decisions, simplifications) in `research.md`
 
 ### Step 4: Generate Design Draft
@@ -138,6 +142,7 @@ After all parallel research completes, synthesize findings before proceeding.
 
 ## Tool Guidance
 - **Read first**: Load all context before taking action (specs, steering, templates, rules)
+- **Agent tool**: Dispatch codebase and external research as subagents for complex features. Each returns a findings summary, keeping the main context clean for synthesis.
 - **Research when uncertain**: Use WebSearch/WebFetch for external dependencies, APIs, and latest best practices
 - **Analyze existing code**: Use Grep to find patterns and integration points in codebase
 - **Write last**: Generate design.md only after all research, synthesis, and design review complete
