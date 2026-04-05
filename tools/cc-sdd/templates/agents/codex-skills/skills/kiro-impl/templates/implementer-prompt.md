@@ -80,6 +80,7 @@ End your response with this structured status block:
 - TESTS_RUN: <test commands and results>
 - CONCERNS: <only for DONE_WITH_CONCERNS -- describe the concern>
 - BLOCKER: <only for BLOCKED -- describe what prevents completion>
-- MISSING: <only for NEEDS_CONTEXT -- describe what additional context is needed>
+- BLOCKER_REMEDIATION: <only for BLOCKED -- what would unblock this? e.g., "design.md section 3.2 specifies API X but it doesn't exist; update design or provide alternative">
+- MISSING: <only for NEEDS_CONTEXT -- describe exactly what additional context is needed and where it might be found>
 - EVIDENCE: <concrete code paths, functions, and tests that prove the behavior>
 ```

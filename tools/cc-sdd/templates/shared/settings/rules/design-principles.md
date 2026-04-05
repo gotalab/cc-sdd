@@ -47,6 +47,12 @@
 - **Idempotency**: Design for retry safety
 - **Contract Visibility**: Surface API and event contracts in design.md while linking extended details from `research.md`
 
+### 8. Dependency Direction
+- **Define and enforce the dependency direction** in the architecture section of design.md (e.g., Types → Config → Repository → Service → Runtime → UI)
+- Each layer imports only from layers to its left — never upward
+- This constraint is not a suggestion; implementation and review should treat violations as errors
+- When the File Structure Plan maps files to components, the dependency direction determines which imports are allowed
+
 ## Documentation Standards
 
 ### Language and Tone
