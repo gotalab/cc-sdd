@@ -38,6 +38,9 @@ const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/pr
 const codexLegacyPromptNotice =
   'Note: Codex prompts mode (`--codex`) is kept for compatibility and is non-recommended. Prefer `--codex-skills` for new setups.';
 
+const skillsUpgradeNotice =
+  'Upgrade available: `npx cc-sdd@latest --claude-skills` installs Agent Skills with subagent-driven autonomous implementation, independent review, and the unified `/kiro-impl` command. Recommended for new setups.';
+
 export const agentDefinitions = {
   'claude-code': {
     label: 'Claude Code',
@@ -54,6 +57,9 @@ export const agentDefinitions = {
       spec: '`/kiro:spec-init <what-to-build>`',
       steering: '`/kiro:steering`',
       steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [skillsUpgradeNotice],
     },
     templateFallbacks: {
       'CLAUDE.md': '../../CLAUDE.md',
@@ -75,6 +81,9 @@ export const agentDefinitions = {
       spec: '`/kiro:spec-quick <what-to-build>`',
       steering: '`/kiro:steering`',
       steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [skillsUpgradeNotice],
     },
     templateFallbacks: {
       'CLAUDE.md': '../../CLAUDE.md',
