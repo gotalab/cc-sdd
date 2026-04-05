@@ -80,7 +80,7 @@ After all parallel research completes, synthesize findings before generating tas
 
 ### Step 4: Finalize
 
-**Write and update**:
+**Write tasks.md**:
 - Create/update `{{KIRO_DIR}}/specs/{feature}/tasks.md`
 - Update spec.json metadata:
   - Set `phase: "tasks-generated"`
@@ -88,6 +88,16 @@ After all parallel research completes, synthesize findings before generating tas
   - Set `approvals.requirements.approved: true`
   - Set `approvals.design.approved: true`
   - Update `updated_at` timestamp
+
+**Present and ask for approval**:
+- Display a summary of the generated tasks (task count, major groups, parallel markers)
+- Ask the user: "Tasks generated. Approve and proceed to implementation?"
+- If the user approves:
+  - Set `approvals.tasks.approved: true` in spec.json
+  - Respond: "Tasks approved. Start implementation with `/kiro-impl {feature}`"
+- If the user wants changes:
+  - Keep `approvals.tasks.approved: false`
+  - Respond with guidance on what to adjust and re-run
 
 ## Critical Constraints
 - **Follow rules strictly**: All principles in tasks-generation.md are mandatory
@@ -157,11 +167,6 @@ Provide brief summary in the language specified in spec.json:
 
 ### Next Phase: Implementation
 
-**If Tasks Approved**:
-- Execute specific task: `/kiro-impl {feature} 1.1`
-- Execute multiple tasks: `/kiro-impl {feature} 1.1,1.2`
-- Execute all pending: `/kiro-impl {feature}`
-
-**If Modifications Needed**:
-- Provide feedback and re-run `/kiro-spec-tasks {feature}`
-- Existing tasks used as reference (merge mode)
+Tasks are approved in Step 4 via user confirmation. Once approved:
+- Autonomous implementation: `/kiro-impl {feature}`
+- Specific tasks only: `/kiro-impl {feature} 1.1,1.2`

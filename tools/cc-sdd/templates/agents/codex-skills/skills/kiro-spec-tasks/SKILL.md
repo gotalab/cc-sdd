@@ -82,7 +82,7 @@ After all parallel research completes, synthesize findings before generating tas
 
 ### Step 4: Finalize
 
-**Write and update**:
+**Write tasks.md**:
 - Create/update `{{KIRO_DIR}}/specs/$1/tasks.md`
 - Update spec.json metadata:
   - Set `phase: "tasks-generated"`
@@ -90,6 +90,16 @@ After all parallel research completes, synthesize findings before generating tas
   - Set `approvals.requirements.approved: true`
   - Set `approvals.design.approved: true`
   - Update `updated_at` timestamp
+
+**Present and ask for approval**:
+- Display a summary of the generated tasks (task count, major groups, parallel markers)
+- Ask the user: "Tasks generated. Approve and proceed to implementation?"
+- If the user approves:
+  - Set `approvals.tasks.approved: true` in spec.json
+  - Respond: "Tasks approved. Start implementation with `$kiro-impl $1`"
+- If the user wants changes:
+  - Keep `approvals.tasks.approved: false`
+  - Respond with guidance on what to adjust and re-run
 
 ## Critical Constraints
 - **Follow rules strictly**: All principles in tasks-generation.md are mandatory
@@ -160,18 +170,9 @@ Provide brief summary in the language specified in spec.json:
 
 ### Next Phase: Implementation
 
-**Before Starting Implementation**:
-- **IMPORTANT**: Clear conversation history and free up context before running `$kiro-impl`
-- This applies when starting first task OR switching between tasks
-- Fresh context ensures clean state and proper task focus
-
-**If Tasks Approved**:
-- Execute specific task: `$kiro-impl $1 1.1` (recommended: clear context between each task)
-- Execute multiple tasks: `$kiro-impl $1 1.1,1.2` (use cautiously, clear context between tasks)
-- Without arguments: `$kiro-impl $1` (executes all pending tasks - NOT recommended due to context bloat)
-
-**If Modifications Needed**:
-- Provide feedback and re-run `$kiro-spec-tasks $1`
+Tasks are approved in Step 4 via user confirmation. Once approved:
+- Autonomous implementation: `$kiro-impl $1`
+- Specific tasks only: `$kiro-impl $1 1.1,1.2`
 - Existing tasks used as reference (merge mode)
 
 **Note**: The implementation phase will guide you through executing tasks with appropriate context and validation.
