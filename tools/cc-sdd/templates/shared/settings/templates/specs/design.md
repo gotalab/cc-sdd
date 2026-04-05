@@ -9,7 +9,7 @@
 - Match detail level to feature complexity
 - Use diagrams and tables over lengthy prose
 
-**Warning**: Approaching 1500 lines indicates excessive feature complexity that may require design simplification or splitting into multiple specs.
+**Warning**: Approaching 1000 lines indicates excessive feature complexity that may require design simplification or splitting into multiple specs.
 ---
 
 > Sections may be reordered (e.g., surfacing Requirements Traceability earlier or moving Data Models nearer Architecture) when it improves clarity. Within each section, keep the flow **Summary → Scope → Decisions → Impacts/Risks** so reviewers can scan consistently.
