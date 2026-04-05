@@ -1098,3 +1098,49 @@ Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-proj
 <usage><total_tokens>39061</total_tokens><tool_uses>30</tool_uses><duration_ms>178520</duration_ms></usage>
 </task-notification>
 Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a2830ee1644d571b5.output
+
+---
+
+<task-notification>
+<task-id>a19d02492caa91342</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a19d02492caa91342.output</output-file>
+<status>completed</status>
+<summary>Agent "Trim tasks+impl+validate+status" completed</summary>
+<result>All four files have been verified and read coherently. Here is a summary of the changes:
+
+**File 1: kiro-spec-tasks/SKILL.md** (178 -> 164 lines)
+- Removed: Role section (restated frontmatter description)
+- Removed: Mission line (kept Success Criteria)
+- Removed: Tool Guidance section (2 lines, obvious from steps)
+- Removed: 6 Critical Constraints that duplicate `tasks-generation.md` rules ("Follow rules strictly", "Phase ordering", "Natural Language", "Complete Coverage", "Maximum 2 Levels", "Sequential Numbering")
+- Kept: 5 specific constraints (Task Integration, Boundary annotations, Explicit dependencies, Executable deliverable granularity, No implicit prerequisites), Output Description, all Safety error scenarios
+
+**File 2: kiro-impl/SKILL.md** (232 -> 199 lines)
+- Removed: First Role sentence (kept mode explanation)
+- Removed: Mission line (kept Success Criteria)
+- Removed: 14 Critical Constraints that duplicate execution steps
+- Removed: Tool Guidance section (5 lines)
+- Removed: "Session Interrupted" safety item (already in Step 3 context management)
+- Removed: "Next Phase: Validation" section (already in Step 4)
+- Kept: 3 constraints with specific numbers (Selective Staging, Bounded Review Rounds, Bounded Remediation), Output Description, remaining Safety error scenarios
+
+**File 3: kiro-validate-impl/SKILL.md** (194 -> 162 lines)
+- Removed: First sentence of Role (kept the "what this skill catches vs doesn't catch" framing)
+- Removed: Mission line (kept Success Criteria)
+- Removed: 7 Important Constraints duplicating steps ("Integration focus", "Mechanical first", "Conversation-aware", "Test-first focus", "Source numbering only", "Context Discipline", "Remediation required")
+- Removed: Tool Guidance section (5 lines)
+- Removed: Output Description section (Step 4 already defines the exact report format)
+- Removed: "Session Interrupted" safety item (validation is read-only)
+- Kept: "Strict Final Gate" constraint (specific 3-way decision logic), "What This Skill Does NOT Do" section, all Safety error scenarios with specific messages
+
+**File 4: kiro-spec-status/SKILL.md** (84 -> 59 lines)
+- Removed: Role section (restated frontmatter description)
+- Removed: Mission line (kept Success Criteria)
+- Removed: Critical Constraints (3 items, all restated in success criteria or steps)
+- Removed: Tool Guidance section (3 lines)
+- Removed: Output Description section (merged format line "Clear, scannable format with emojis for status" into Step 3)
+- Kept: Safety error scenarios, "List All Specs" section</result>
+<usage><total_tokens>38925</total_tokens><tool_uses>26</tool_uses><duration_ms>170953</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a19d02492caa91342.output
