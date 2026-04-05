@@ -9,7 +9,7 @@
 - Match detail level to feature complexity
 - Use diagrams and tables over lengthy prose
 
-**Warning**: Approaching 1000 lines indicates excessive feature complexity that may require design simplification.
+**Warning**: Approaching 1500 lines indicates excessive feature complexity that may require design simplification or splitting into multiple specs.
 ---
 
 > Sections may be reordered (e.g., surfacing Requirements Traceability earlier or moving Data Models nearer Architecture) when it improves clarity. Within each section, keep the flow **Summary → Scope → Decisions → Impacts/Risks** so reviewers can scan consistently.
@@ -67,29 +67,17 @@ When modifying existing systems:
 
 ## File Structure Plan
 
-Map which files will be created or modified, and each file's single responsibility. This section directly drives task boundaries and implementation briefs.
+Map which files will be created or modified, and each file's single responsibility. This section directly drives task `_Boundary:_` annotations and implementation Task Briefs.
 
 ### New Files
-| File Path | Responsibility | Component |
-|-----------|---------------|-----------|
-| | | |
+- `path/to/file.ts` — Single-line responsibility description
+- `path/to/file.test.ts` — Tests for file.ts
 
 ### Modified Files
-| File Path | Change Summary | Component |
-|-----------|---------------|-----------|
-| | | |
-
-### Directory Layout (if new directories are introduced)
-```
-project/
-├── ...existing structure...
-└── new-directory/
-    ├── file.ts          # responsibility
-    └── file.test.ts     # tests for file.ts
-```
+- `path/to/existing.ts` — What changes and why
 
 > Each file should have one clear responsibility. If a file has multiple responsibilities, split it. Group files that change together; split files that change independently.
-> This section is required for features that create new files. For modifications-only features, the Modified Files table alone is sufficient.
+> Required for features that create new files. For modifications-only features, the Modified Files list alone is sufficient.
 
 ## System Flows
 
