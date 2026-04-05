@@ -15,6 +15,7 @@ export const colors = {
   magenta: wrap('\u001b[35m', '\u001b[39m'),
   bold: wrap('\u001b[1m', '\u001b[22m'),
   dim: wrap('\u001b[2m', '\u001b[22m'),
+  white: wrap('\u001b[37m', '\u001b[39m'),
   reset: (value: string): string => value,
 };
 
@@ -36,5 +37,15 @@ export const formatAttention = (msg: string): string => {
 export const formatSectionTitle = (label: string): string => {
   if (!supportsColor) return `== ${label} ==`;
   return `
-[35m[1m== ${label} ==[22m[39m`;
+[35m[1m== ${label} ==[22m[39m`;
+};
+
+export const formatBox = (title: string): string => {
+  const padding = 2;
+  const width = title.length + padding * 2 + 2;
+  const top = `┌${'─'.repeat(width - 2)}┐`;
+  const mid = `│${' '.repeat(padding)}${title}${' '.repeat(padding)}│`;
+  const bot = `└${'─'.repeat(width - 2)}┘`;
+  if (!supportsColor) return `${top}\n${mid}\n${bot}`;
+  return `${colors.cyan(top)}\n${colors.cyan('│')}${' '.repeat(padding)}${colors.bold(title)}${' '.repeat(padding)}${colors.cyan('│')}\n${colors.cyan(bot)}`;
 };

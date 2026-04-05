@@ -66,6 +66,6 @@ describe('real opencode-agent manifest', () => {
     const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
     expect(await exists(settingsRule)).toBe(true);
 
-    expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 });

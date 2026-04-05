@@ -68,7 +68,7 @@ describe('real cursor manifest', () => {
     const out = ctx.logs.join('\n');
     
     // Check that the setup completion message is present (new format)
-    expect(out).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(out).toMatch(/\d+\/\d+ files written/);
     
     // Check that the Cursor-specific recommended models are shown
     expect(out).toContain('Recommended models');

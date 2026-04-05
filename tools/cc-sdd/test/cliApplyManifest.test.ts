@@ -56,6 +56,6 @@ describe('CLI apply with manifest', () => {
     expect(await exists(out)).toBe(true);
     expect((await readFile(out, 'utf8')).trim()).toMatch(/Hello claude-code-skills/);
     // New output includes emoji and colon; match the stable part
-    expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=1, skipped=0/);
+    expect(ctx.logs.join('\n')).toMatch(/1\/1 files written/);
   });
 });

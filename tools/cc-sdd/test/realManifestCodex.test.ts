@@ -78,6 +78,6 @@ describe('real codex manifest', () => {
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');
     expect(await exists(settingsTemplate)).toBe(true);
 
-    expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 });

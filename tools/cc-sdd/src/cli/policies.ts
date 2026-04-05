@@ -2,7 +2,7 @@ import type { ResolvedConfig } from './config.js';
 import type { CliIO } from './io.js';
 import type { FileOperation } from '../plan/fileOperations.js';
 import type { InstallCategory } from '../plan/categories.js';
-import { categoryDescriptions, categoryLabels } from '../plan/categories.js';
+import { categoryDescriptions, categoryLabels, getCategoryLabel } from '../plan/categories.js';
 import { colors, formatHeading, formatWarning } from './ui/colors.js';
 import { isInteractive, promptChoice, promptConfirm } from './ui/prompt.js';
 import { fileExists } from '../utils/fs.js';
@@ -49,11 +49,15 @@ const summarizeStatus = (summary: CategorySummary): string => {
 
 export const printSummary = (summaries: CategorySummary[], resolved: ResolvedConfig, io: CliIO): void => {
   if (!summaries.length) return;
-  io.log(formatHeading('Planned changes:'));
+  io.log('');
+  io.log(formatHeading('  Installed:'));
   summaries.forEach((summary) => {
+    const label = getCategoryLabel(summary.category, resolved);
     const location = categoryDescriptions(summary.category, resolved);
-    const detail = location ? ` (${location})` : '';
-    io.log(`  • ${colors.cyan(`${summary.label}${detail}`)} — ${summarizeStatus(summary)} (${summary.total} file(s))`);
+    const loc = location ? colors.dim(` → ${location}`) : '';
+    const count = colors.bold(`${summary.total}`);
+    const status = summarizeStatus(summary);
+    io.log(`    ${colors.cyan(label)}  ${count} file(s)${loc}  ${status}`);
   });
   io.log('');
 };

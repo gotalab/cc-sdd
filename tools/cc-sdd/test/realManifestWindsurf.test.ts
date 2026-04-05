@@ -65,7 +65,7 @@ describe('real windsurf manifest', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
 
-    expect(out).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(out).toMatch(/\d+\/\d+ files written/);
     expect(out).toContain('Recommended models');
     expect(out).toContain('Planning / review: Claude Opus 4.6 or newer');
     expect(out).toContain('Implementation: Claude Sonnet 4.6 or newer');

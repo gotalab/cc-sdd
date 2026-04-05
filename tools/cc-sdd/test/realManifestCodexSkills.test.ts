@@ -176,7 +176,7 @@ describe('real codex-skills manifest', () => {
       expect(await exists(join(cwd, `.agents/skills/${skill}/rules`))).toBe(false);
     }
 
-    expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 
   it('generates exactly 13 skill directories', async () => {

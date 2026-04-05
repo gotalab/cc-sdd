@@ -1,6 +1,6 @@
 import { agentList, getAgentDefinition, type AgentType } from '../agents/registry.js';
 import type { CliIO } from './io.js';
-import { colors, formatAttention, formatHeading, formatSectionTitle } from './ui/colors.js';
+import { colors, formatAttention, formatHeading } from './ui/colors.js';
 import { isInteractive, promptSelect } from './ui/prompt.js';
 
 export type AgentOption = {
@@ -58,16 +58,16 @@ const buildGuideSteps = (agent: AgentType): string[] => {
 };
 
 export const printCompletionGuide = (agent: AgentType, io: CliIO): void => {
-  io.log('');
   const definition = getAgentDefinition(agent);
   const models = definition.recommendedModels;
   if (models && models.length > 0) {
-    io.log(formatSectionTitle('Recommended models'));
-    models.forEach((model) => io.log(formatAttention(`  • ${model}`)));
+    io.log(formatHeading('  Recommended models:'));
+    models.forEach((model) => io.log(formatAttention(`    ${model}`)));
     io.log('');
   }
-  io.log(formatSectionTitle('Next steps'));
+  io.log(formatHeading('  Get started:'));
   buildGuideSteps(agent).forEach((step, idx) => {
-    io.log(colors.cyan(`  ${idx + 1}. ${step}`));
+    io.log(colors.cyan(`    ${idx + 1}. ${step}`));
   });
+  io.log('');
 };

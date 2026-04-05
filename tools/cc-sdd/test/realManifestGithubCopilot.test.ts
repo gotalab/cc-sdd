@@ -78,6 +78,6 @@ describe('real github-copilot manifest', () => {
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/tasks.md');
     expect(await exists(settingsTemplate)).toBe(true);
 
-    expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 });
