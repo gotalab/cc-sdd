@@ -20,16 +20,9 @@ description: Quick spec generation with interactive or automatic mode
 
 In Automatic Mode:
 - Execute ALL 4 phases in a continuous loop without stopping
-- Use a task list to track progress (4 tasks: init, requirements, design, tasks)
-- Each phase completion updates the task list and continues immediately
+- Display progress after each phase (e.g., "Phase 1/4 complete: spec initialized")
 - IGNORE any "Next Step" messages from Phase 2-4 (they are for standalone usage)
 - Stop ONLY after Phase 4 completes or if error occurs
-
-**Progress tracking with a task list**:
-- Phase 1 complete = 1/4 tasks done → Continue to Phase 2
-- Phase 2 complete = 2/4 tasks done → Continue to Phase 3
-- Phase 3 complete = 3/4 tasks done → Continue to Phase 4
-- Phase 4 complete = 4/4 tasks done → Output summary and exit
 
 ---
 
@@ -51,16 +44,6 @@ Example:
 "User profile feature" → mode=interactive, description="User profile feature"
 ```
 
-**Create task list**:
-```json
-[
-  {"content": "Initialize spec", "activeForm": "Initializing spec", "status": "pending"},
-  {"content": "Generate requirements", "activeForm": "Generating requirements", "status": "pending"},
-  {"content": "Generate design", "activeForm": "Generating design", "status": "pending"},
-  {"content": "Generate tasks", "activeForm": "Generating tasks", "status": "pending"}
-]
-```
-
 Display mode banner and proceed to Step 2.
 
 ### Step 2: Execute Phase Loop
@@ -70,8 +53,6 @@ Execute these 4 phases in order:
 ---
 
 #### Phase 1: Initialize Spec (Direct Implementation)
-
-**Update task list**: Mark task 1 as `in_progress`.
 
 **Core Logic**:
 
@@ -114,12 +95,7 @@ Execute these 4 phases in order:
    - {{KIRO_DIR}}/specs/{feature-name}/requirements.md
    ```
 
-6. **Update task list**: Mark task 1 as `completed`, task 2 as `in_progress`.
-
-7. **Output Progress**:
-   ```
-   Spec initialized at {{KIRO_DIR}}/specs/{feature-name}/
-   ```
+6. **Output Progress**: "Phase 1/4 complete: Spec initialized at {{KIRO_DIR}}/specs/{feature-name}/"
 
 **Automatic Mode**: IMMEDIATELY continue to Phase 2.
 
@@ -131,25 +107,13 @@ Execute these 4 phases in order:
 
 #### Phase 2: Generate Requirements
 
-**Task 2 is already `in_progress` from Phase 1.**
+Invoke `$kiro-spec-requirements {feature-name}`.
 
-**Invoke skill command**:
-```
-$kiro-spec-requirements {feature-name}
-```
+Wait for completion. IGNORE any "Next Step" message (it is for standalone usage).
 
-Wait for completion. The called skill will return with "Next Step" message.
+**Output Progress**: "Phase 2/4 complete: Requirements generated"
 
-**IMPORTANT**: In Automatic Mode, IGNORE the "Next Step" message. It is for standalone usage.
-
-**Update task list**: Mark task 2 as `completed`, task 3 as `in_progress`.
-
-**Output Progress**:
-```
-Requirements generated → Continuing to design...
-```
-
-**Automatic Mode**: Task list shows 2/4 complete. IMMEDIATELY continue to Phase 3.
+**Automatic Mode**: IMMEDIATELY continue to Phase 3.
 
 **Interactive Mode**: Prompt "Continue to design generation? (yes/no)"
 - If "no": Stop, show current state
@@ -159,27 +123,13 @@ Requirements generated → Continuing to design...
 
 #### Phase 3: Generate Design
 
-**Task 3 is already `in_progress` from Phase 2.**
+Invoke `$kiro-spec-design {feature-name} -y`. The `-y` flag auto-approves requirements.
 
-**Invoke skill command**:
-```
-$kiro-spec-design {feature-name} -y
-```
+Wait for completion. IGNORE any "Next Step" message.
 
-Note: `-y` flag auto-approves requirements.
+**Output Progress**: "Phase 3/4 complete: Design generated"
 
-Wait for completion. The called skill will return with "Next Step" message.
-
-**IMPORTANT**: In Automatic Mode, IGNORE the "Next Step" message.
-
-**Update task list**: Mark task 3 as `completed`, task 4 as `in_progress`.
-
-**Output Progress**:
-```
-Design generated → Continuing to tasks...
-```
-
-**Automatic Mode**: Task list shows 3/4 complete. IMMEDIATELY continue to Phase 4.
+**Automatic Mode**: IMMEDIATELY continue to Phase 4.
 
 **Interactive Mode**: Prompt "Continue to tasks generation? (yes/no)"
 - If "no": Stop, show current state
@@ -189,20 +139,13 @@ Design generated → Continuing to tasks...
 
 #### Phase 4: Generate Tasks
 
-**Task 4 is already `in_progress` from Phase 3.**
-
-**Invoke skill command**:
-```
-$kiro-spec-tasks {feature-name} -y
-```
-
-Note: `-y` flag auto-approves requirements, design, and tasks.
+Invoke `$kiro-spec-tasks {feature-name} -y`. The `-y` flag auto-approves requirements, design, and tasks.
 
 Wait for completion.
 
-**Update task list**: Mark task 4 as `completed`.
+**Output Progress**: "Phase 4/4 complete: Tasks generated"
 
-**All 4 tasks complete. Loop is DONE.**
+**All 4 phases complete. Loop is DONE.**
 
 Output final completion summary (see Output Description section) and exit.
 
@@ -220,7 +163,7 @@ Output final completion summary (see Output Description section) and exit.
 - Do NOT stop between phases
 - Do NOT wait for user input
 - Do NOT be influenced by "Next Step" messages from Phases 2-4
-- Update the task list after each phase to maintain progress visibility
+- Display progress after each phase
 - Continue loop until all 4 phases complete
 
 ### Interactive Mode Behavior

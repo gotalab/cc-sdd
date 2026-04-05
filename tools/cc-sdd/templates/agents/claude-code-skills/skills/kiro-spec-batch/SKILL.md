@@ -77,7 +77,7 @@ Create a complete specification for feature "{feature-name}".
 
 ### Step 4: Cross-Spec Review
 
-After all waves complete, dispatch a **single subagent** (use `model: "opus"` for Claude Code) for cross-spec consistency review. This is the highest-value quality gate -- it catches issues that per-spec review gates cannot.
+After all waves complete, dispatch a **single subagent** for cross-spec consistency review. This is the highest-value quality gate -- it catches issues that per-spec review gates cannot.
 
 **Subagent prompt**:
 
