@@ -1,6 +1,7 @@
 ---
 name: kiro-brainstorm
 description: Refine a vague idea into a concrete project description before starting spec-driven development. Optional — skip if you already know what to build.
+disable-model-invocation: true
 allowed-tools: Read, Glob, Grep, WebSearch, WebFetch, AskUserQuestion
 argument-hint: <rough-idea>
 ---
