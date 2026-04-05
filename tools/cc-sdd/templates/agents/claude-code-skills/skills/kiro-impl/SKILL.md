@@ -71,7 +71,11 @@ After all parallel research completes, synthesize implementation brief before st
 
 #### Autonomous Mode (subagent dispatch)
 
-For each task in the queue:
+**Iteration discipline**: Process exactly ONE sub-task (e.g., 1.1) per iteration. Do NOT batch multiple sub-tasks into a single subagent dispatch. Each iteration follows the full cycle: dispatch implementer → review → commit → re-read tasks.md → next.
+
+**Context management**: At the start of each iteration, re-read `tasks.md` to determine the next actionable sub-task. Do NOT rely on accumulated memory of previous iterations. After completing each iteration, retain only a one-line summary (e.g., "1.1: DONE, 3 files changed") and discard the full status report and reviewer details.
+
+For each task (one at a time):
 
 **a) Dispatch implementer**:
 - Read `templates/implementer-prompt.md` from this skill's directory
@@ -157,6 +161,9 @@ For tasks that add or change behavior, enforce RED → GREEN with a feature flag
 **Skip this protocol for**: refactoring, configuration, documentation, or tasks with no behavioral change.
 
 ## Critical Constraints
+- **One Sub-Task Per Iteration**: NEVER batch multiple sub-tasks (e.g., 3.1 and 3.2) into a single subagent dispatch. Each sub-task gets its own implementer → reviewer → commit cycle.
+- **Re-Read tasks.md Every Iteration**: Determine the next task from the file, not from memory. This prevents context drift over long runs.
+- **Discard Iteration Details**: After each task completes, keep only a one-line summary. Do not accumulate full status reports or reviewer details across iterations.
 - **TDD Mandatory**: Tests MUST be written before implementation code
 - **Task Scope**: Implement only what the specific task requires
 - **Test Coverage**: All new code must have tests
