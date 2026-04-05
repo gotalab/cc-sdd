@@ -36,10 +36,13 @@ const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/pr
       && case "$a" in [yY]) rm -rf ./.codex/prompts && echo 'Removed.' ;; *) echo 'Kept original.' ;; esac`;
 
 const codexLegacyPromptNotice =
-  'Note: Codex prompts mode (`--codex`) is kept for compatibility and is non-recommended. Prefer `--codex-skills` for new setups.';
+  'Deprecated: Codex prompts mode (`--codex`) is deprecated. Use `npx cc-sdd@latest --codex-skills` for subagent-driven autonomous implementation with `/kiro-impl`.';
 
 const skillsUpgradeNotice =
   'Upgrade available: `npx cc-sdd@latest --claude-skills` installs Agent Skills with subagent-driven autonomous implementation, independent review, and the unified `/kiro-impl` command. Recommended for new setups.';
+
+const codexSkillsUpgradeNotice =
+  'Upgrade available: `npx cc-sdd@latest --codex-skills` installs Agent Skills with subagent-driven autonomous implementation and the unified `$kiro-impl` command. Recommended for new setups.';
 
 export const agentDefinitions = {
   'claude-code': {
@@ -128,7 +131,7 @@ export const agentDefinitions = {
       steeringCustom: '`/prompts:kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
     completionGuide: {
-      prependSteps: [codexLegacyPromptNotice, codexCopyInstruction],
+      prependSteps: [codexLegacyPromptNotice, codexSkillsUpgradeNotice],
     },
     manifestId: 'codex',
   },
