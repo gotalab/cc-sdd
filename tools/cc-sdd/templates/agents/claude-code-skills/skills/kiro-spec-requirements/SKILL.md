@@ -1,7 +1,7 @@
 ---
 name: kiro-spec-requirements
 description: Generate EARS-format requirements based on project description and steering context. Use when generating requirements from project description.
-allowed-tools: Read, Write, Edit, Glob, WebSearch, WebFetch, AskUserQuestion
+allowed-tools: Read, Write, Edit, Glob, Grep, Agent, WebSearch, WebFetch, AskUserQuestion
 metadata:
   shared-rules: "ears-format.md, requirements-review-gate.md"
 ---
@@ -37,13 +37,23 @@ Otherwise, load all necessary context:
 - Read `rules/requirements-review-gate.md` from this skill's directory for pre-write review criteria
 - Read `{{KIRO_DIR}}/settings/templates/specs/requirements.md` for document structure
 
-#### Parallel Research
+#### Parallel Research (subagent dispatch)
 
-The following research areas are independent and can be executed in parallel:
-1. **Context loading**: Core steering, task-relevant extra steering, relevant local agent skills/playbooks, EARS format rules, requirements template
-2. **Codebase hints**: Existing implementations that may inform requirement scope (when needed)
+The following research areas are independent. Decide the optimal decomposition based on project complexity -- split, merge, add, or skip subagents as needed.
 
-After all parallel research completes, synthesize findings before generating requirements.
+**In main context** (essential for requirements generation):
+- Spec files: spec.json, brief.md, requirements.md (project description)
+- EARS format rules, requirements review gate, requirements template
+- Core steering: product.md, tech.md (directly inform scope and constraints)
+
+**Delegate to subagent via Agent tool** (keeps exploration out of main context):
+- **Codebase hints** (brownfield projects): Dispatch a subagent to explore existing implementations that inform requirement scope. Example prompt: "Explore this codebase for existing features related to [feature area]. Summarize: (1) what already exists, (2) relevant interfaces/APIs, (3) patterns that new requirements should align with. Return a summary under 150 lines."
+- **Domain research** (when external knowledge is needed): Dispatch a subagent for WebSearch/WebFetch to research domain-specific requirements, standards, or best practices. Return a concise findings summary.
+- **Additional steering and playbooks**: If many steering files or local agent playbooks exist, dispatch a subagent to scan them and return only the sections relevant to this feature.
+
+For greenfield projects with minimal codebase, skip subagent dispatch and load context directly.
+
+After all research completes, synthesize findings in main context before generating requirements.
 
 ### Step 3: Generate Requirements Draft
 - Create initial requirements draft based on project description
@@ -92,9 +102,10 @@ Requirements describe user-observable behavior, not implementation. Use this to 
 - **Context Discipline**: Start with core steering and expand only with requirement-relevant steering or use-case-aligned local agent skills/playbooks
 
 ## Tool Guidance
-- **Read first**: Load spec, core steering, relevant local playbooks/agent skills, rules, and templates before generation
+- **Read first**: Load spec, brief.md, core steering, rules, and templates in main context before generation
+- **Agent tool**: Delegate codebase exploration, domain research, and bulk steering scanning to subagents. Each returns a findings summary, keeping the main context clean for generation.
 - **Write last**: Update requirements.md only after complete generation
-- Use **WebSearch/WebFetch** only if external domain knowledge needed
+- **WebSearch/WebFetch**: For domain knowledge. Prefer delegating via Agent to avoid loading raw results into main context.
 
 ## Output Description
 Provide output in the language specified in spec.json with:
