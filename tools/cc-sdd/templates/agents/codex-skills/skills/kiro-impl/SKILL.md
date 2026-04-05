@@ -72,23 +72,15 @@ After all parallel research completes, synthesize implementation brief before st
 
 If multi-agent capability is available, for each task in the queue:
 
-**a) Build Task Brief**:
-Before dispatching, synthesize a concrete Task Brief from the abstract task description in tasks.md by cross-referencing requirements.md and design.md. The Task Brief must include:
-- **Acceptance criteria**: Extract from the requirement sections this task must satisfy. What observable behaviors must be true when done? (e.g., "POST /auth/login returns JWT on valid credentials, 401 on invalid")
-- **Completion definition**: What files, functions, tests, or artifacts must exist? Derive from design.md component structure and task boundary.
-- **Design constraints**: How must this be built? Extract specific technical decisions from design.md (e.g., "use bcrypt for hashing", "implement as Express middleware")
-- **Verification method**: How to confirm the task works. Derive from the requirement's testability and the project's validation commands.
-- **Behavioral classification**: Is this a behavioral change (requires Feature Flag Protocol) or non-behavioral (standard TDD)?
-
-This step turns kiro-compatible abstract tasks into concrete, actionable implementation briefs without modifying tasks.md.
-
-**b) Dispatch implementer**:
+**a) Dispatch implementer**:
 - Read `templates/implementer-prompt.md` from this skill's directory
-- Construct a prompt by combining the template with the Task Brief:
-  - The synthesized Task Brief (acceptance criteria, completion definition, constraints, verification)
+- Construct a prompt by combining the template with task-specific context:
   - Task description and boundary scope
-  - Exact requirement and design section numbers (using source numbering, NOT invented `REQ-*` aliases)
+  - Paths to spec files: requirements.md, design.md, tasks.md
+  - Exact requirement and design section numbers this task must satisfy (using source numbering, NOT invented `REQ-*` aliases)
   - Task-relevant steering context and validation commands
+  - Whether the task is behavioral (Feature Flag Protocol) or non-behavioral
+- The implementer sub-agent will read the spec files and build its own Task Brief (acceptance criteria, completion definition, design constraints, verification method) before implementation
 - Spawn a fresh sub-agent with this prompt
 
 **b) Handle implementer status**:
@@ -125,8 +117,12 @@ This step turns kiro-compatible abstract tasks into concrete, actionable impleme
 
 For each selected task:
 
-**1. Build Task Brief** (same as autonomous mode):
-Synthesize acceptance criteria, completion definition, design constraints, and verification method from requirements.md and design.md before writing any code.
+**1. Build Task Brief**:
+Before writing any code, read the relevant sections of requirements.md and design.md for this task and clarify:
+- What observable behaviors must be true when done (acceptance criteria)
+- What files/functions/tests must exist (completion definition)
+- What technical decisions to follow from design.md (design constraints)
+- How to confirm the task works (verification method)
 
 **2. Execute TDD cycle** (Kent Beck's RED → GREEN → REFACTOR):
 - **RED**: Write test for the next small piece of functionality based on the acceptance criteria. Test should fail.
