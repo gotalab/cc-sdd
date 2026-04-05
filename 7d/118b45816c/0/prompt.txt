@@ -1,0 +1,250 @@
+今cc-sddはskills対応の大改修をしてますが、その際にsuperpowersというclaude code等で使えるハーネスを参考にすべきなのではないかと感じています。cc-sddはkiroの要素を残す必要があるのでagent skills化をすると自律実行くらいしか難しいかなと思いつつどうしていくのが良いかな？superpowers v5.0系は結構参考になる可能性があり、よりよくするにはどうすれば良いか考えてます
+
+---
+
+あれ? スーパーパワーのサブエージェントドリブンってどういうこと? いや、Claude Code でサブエージェントを使うってこと?
+
+---
+
+確かに無理にralph-loop自体を使うよりそっちの方がよさそうね
+
+---
+
+確かに無理にralph-loop自体を使うよりそっちの方がよさそうね. ralph-loopは外部ライブラリだし
+
+---
+
+codexでもspawnの指示適切に出せば問題ないしね
+
+---
+
+OK. これら含めて何を修正していくかをちゃんと設計しましょうか
+
+---
+
+そうだね. subagentsって一つで良いのかな？implって検証まで入れるべきでは？superpowersとかどうなってる？
+
+---
+
+cc-sddもsuperpowersと同じ形式にした方が良いかも。subagentsの.claude/agentsってclaude code / codex / github copilot /cursorとかで変わるから
+
+---
+
+reviewは一つにまとめるとはどういうこと？
+
+---
+
+まずはreviewer 1つで安定するならそれで良いし、安定しないなら2つに増やすが良いかもね. ハーネスが重いと問題になるからね.重要なのは、reality check的なmockになってないかとかちゃんとTBDとかがないかとか1.1, 1.2の受入基準や完了定義が満たされてるかや仕様と合致してるかとかかな...
+
+---
+
+お願いします.
+
+---
+
+pushした？ ドキュメントも更新した？
+
+---
+
+claude codeの別version使ってる人にはこのskillsを使うようなrecommendを分かりやすく出した方が良い気がする
+
+---
+
+ralph loopって完全に言及なくなった？
+
+---
+
+ralph loopなくても長時間自律的に実装回るよは伝わる？
+
+---
+
+superpowersと比較した時にcc-sddの弱いところはどこかな？
+
+---
+
+さっきレビュー段階入れたよね？implに？
+あと検証skillsが現状別にありますけどこのあたりどうすべきなのかな？
+
+---
+
+2が良いかもしれませんね
+
+---
+
+tasksの具体度向上ってkiro互換な以上限界があるよね？ここどうにか本当はしたいんだよな...implの最初で具体化するのが良いのかな...tasks.mdだけじゃなくてrequirements.md, design.mdみてそのtasksの完了定義や受入基準、制約、検証方法等をちゃんと最初に明確化してから進める指示を入れるとかになっちゃうのかな？
+
+---
+
+一旦これで良いかな
+
+---
+
+task briefってsubagentsの中に入れるべきではないの？tasksの一つだけのやつを定義する...
+
+---
+
+Controllerってspecsに20個タスクがある場合どうなるの？
+
+---
+
+はい
+
+---
+
+はい。後ろの方で一気にまとめてやるみたいなことを防ぐ必要もあるしね. tasks 3.1, 3.2をまとめてやるみたいな...
+
+---
+
+他に問題ある？
+
+---
+
+1の並列タスクは過去からある仕様だからregressionになるんだよな... 2ってちゃんとtaskで実装したコード読むんだよね？(gitとかで差分渡せば良いのか？)
+
+---
+
+1の並列タスクは過去からある仕様だからregressionになるんだよな... 2ってちゃんとtaskで実装したコード読むんだよね？(gitとかで差分渡せば良いのか？)
+
+3は簡単に記載しないとね...
+
+---
+
+reviewer inputってreviewer subagents内で行うんだよね？
+
+---
+
+他にcc-sddでよりプロセスをよくした方が良いところとかってある？
+
+---
+
+init内にbrainstormを入れるのってさすがに責務が被りすぎるよね？brainstormを使っても使わなくても良い状態にするのが良いのかな？どうすべきなのか？
+
+ファイル構造計画ってディレクトリ構造の話？ないとおかしくなるね
+
+---
+
+いや、もう一気にやろう
+
+---
+
+いや、もう一気にやろう. コンテキストエンジニアリングとハーネスエンジニアリングについてしっかり反映してね
+
+---
+
+> Map which files will be created or modified, and each file's single responsibility. This section directly drives task boundaries and implementation briefs.
+      71 +
+      72 +### New Files
+      73 +| File Path | Responsibility | Component |
+      74 +|-----------|---------------|-----------|
+      75 +| | | |
+      76 +
+      77 +### Modified Files
+      78 +| File Path | Change Summary | Component |
+      79 +|-----------|---------------|-----------|
+      80 +| | | |
+ここまで詳しく書くべきかな？(design.mdに1000行制限が入ってたりするんだよね...むしろそれをもう少し拡張すべき？1500行くらいに？)
+
+---
+
+design.mdって例えば超複雑なCRMアプリつくると相当デカくなるよね？ directoryって具体ファイルまで書くべき？重複はめんどい
+
+---
+
+harness engineering https://openai.com/en-US/index/harness-engineering/から参考になるところってある？cc-sddに取り入れるべきところは？(まだ更新しないで)
+
+---
+
+今回のPRにいれましょうか最もインパクトが大きいやついれましょうか
+
+---
+
+ドキュメントとか利用方法のドキュメントとか更新すべきところあるかな？
+
+---
+
+どう修正するか教えてまず
+
+---
+
+今回cc-sdd 3.0でいくので一旦その更新時にやるべき. それ以外のガイド系は修正していきたい.
+
+そもそもの体験自体の変更があればそれも修正してね
+
+---
+
+kiro-impltてsubagentsにspawnできるようになってるよね？
+
+---
+
+ちなみにskillsで他にコンテキスト分離すべきところとかsubagentsにspawnすべきところってある？
+
+---
+
+spec-designはspawnできるようにした気がするけどそうなってないならspawnできるようにして欲しい、validateも同様です validateはimplのreviewer似合ったいくつかの要素取り込むべきところあるっけ？
+
+---
+
+codexのmulti-agentはcodexのspawnの仕方にちゃんと従ってるかな？他のも含めて？
+
+---
+
+自然言語でいいや. 長期的に考えると状況によってsubagentsを生成が多分そうなるはず
+
+---
+
+claude code skillsって$ARGUMENTSとかいろんな引数使えるけどどこまで使うべきかな？
+
+---
+
+$ARGUMENTSはoptionの引数とか考えたらどうすべきなのかな？${CLAUDE_SKILL_DIR}はあっても良いけどcodexと変わりすぎるのはよくないのかな？それともclaude codeはclaude codeに適用させた方が良いかな？
+
+---
+
+そうしようか
+
+---
+
+次にtasks作成とimplの間の体験がちょっと問題で、tasksをOKと判断しても-yみたいなフラグがないからすぐに次にいけない問題あるんだよね...
+
+---
+
+3にしましょうか
+
+---
+
+localでテストしたいけど、別のdirectoryでnpxでインストールする方法ってどうするんだっけ？
+
+---
+
+npxde
+
+---
+
+npxで試したいんだが...
+
+---
+
+sh: /Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/cc-sdd-2.1.1.tgz: Permission denied
+
+---
+
+これまでこれでいけてたのにな...
+
+---
+
+そんなことある？
+
+---
+
+このあたりのTUIの表示ってなんかもっと良い感じにできない？
+
+Planned changes:
+  • Commands (.claude/skills/) — new (28 file(s))
+  • Project Memory document (CLAUDE.md) — new (1 file(s))
+  • Settings templates and rules (.kiro/settings/) — new (16 file(s))
+
+✅ Setup completed: written=45, skipped=0
+
+---
+
+入れましょう. あと情報に色つけた方が良いよね？古い--claudeとか使ってるならこっちを使えの推奨とか
