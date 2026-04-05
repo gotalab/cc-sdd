@@ -67,17 +67,27 @@ When modifying existing systems:
 
 ## File Structure Plan
 
-Map which files will be created or modified, and each file's single responsibility. This section directly drives task `_Boundary:_` annotations and implementation Task Briefs.
+Map the directory structure and file responsibilities for this feature. This section directly drives task `_Boundary:_` annotations and implementation Task Briefs. Use the appropriate level of detail:
 
-### New Files
-- `path/to/file.ts` — Single-line responsibility description
-- `path/to/file.test.ts` — Tests for file.ts
+- **Small features**: List individual files with responsibilities
+- **Large features**: Describe directory-level structure + per-domain/module pattern, list only non-obvious files individually
+
+### Directory Structure
+- `path/to/domain/` — Domain or module responsibility
+
+### Pattern (if multiple domains/modules follow the same structure)
+- `{domain}/controller.ts` — Endpoint handlers
+- `{domain}/service.ts` — Business logic
+- `{domain}/types.ts` — Domain types
+
+### Key Files (non-obvious or cross-cutting only)
+- `path/to/non-obvious-file.ts` — Why this file exists and what it does
 
 ### Modified Files
 - `path/to/existing.ts` — What changes and why
 
-> Each file should have one clear responsibility. If a file has multiple responsibilities, split it. Group files that change together; split files that change independently.
-> Required for features that create new files. For modifications-only features, the Modified Files list alone is sufficient.
+> Each file should have one clear responsibility. Group files that change together. For repeated structures, describe the pattern once rather than listing every file.
+> Avoid duplicating what Components and Interfaces already describes — focus on the physical file layout that Components maps to.
 
 ## System Flows
 
