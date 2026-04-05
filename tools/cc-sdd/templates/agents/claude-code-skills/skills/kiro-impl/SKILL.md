@@ -93,15 +93,13 @@ For each task (one at a time):
 - **BLOCKED** → append `_Blocked: <reason>_` to the task line in tasks.md, skip to next task
 - **NEEDS_CONTEXT** → re-dispatch once with the requested additional context; if still unresolved, treat as BLOCKED
 
-**c) Capture changes and dispatch reviewer**:
-- Run `git diff` to capture the actual code changes made by the implementer
+**c) Dispatch reviewer**:
 - Read `templates/reviewer-prompt.md` from this skill's directory
 - Construct a review prompt with:
-  - The `git diff` output (actual code changes — the reviewer must read these, not trust the implementer's report)
-  - The implementer's status report (for reference, not as source of truth)
-  - Paths to changed files
-  - The original task description
-  - Paths to relevant spec sections (requirements.md, design.md) so the reviewer can read them directly
+  - The task description and relevant spec section numbers
+  - Paths to spec files (requirements.md, design.md) so the reviewer can read them directly
+  - The implementer's status report (for reference only — reviewer must verify independently)
+- The reviewer subagent will run `git diff` itself to read the actual code changes and verify against the spec
 - Dispatch via **Agent tool** as a fresh subagent
 
 **d) Handle reviewer verdict**:
