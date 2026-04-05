@@ -56,24 +56,15 @@ For each wave, dispatch all features in the wave as **parallel sub-agents**.
 ```
 Create a complete specification for feature "{feature-name}".
 
-1. Read the brief at {{KIRO_DIR}}/specs/{feature-name}/brief.md
-2. Read steering context: {{KIRO_DIR}}/steering/product.md, tech.md (if they exist)
-3. Read the roadmap at {{KIRO_DIR}}/steering/roadmap.md for project context
-4. Execute the full spec pipeline:
-   a. Initialize: Create spec.json and requirements.md scaffold from templates in {{KIRO_DIR}}/settings/templates/specs/
-   b. Generate requirements: Read EARS format rules, generate requirements from brief, apply review gate
-   c. Generate design: Read design principles and templates, run discovery, generate design, apply review gate
-   d. Generate tasks: Read task generation rules, generate tasks from requirements+design, apply review gate
-5. Set all approvals to true in spec.json (auto-approve mode)
-6. Report completion with file list and task count
-
-Key files to read:
-- Brief: {{KIRO_DIR}}/specs/{feature-name}/brief.md
-- Templates: {{KIRO_DIR}}/settings/templates/specs/ (init.json, requirements-init.md, requirements.md, design.md, tasks.md)
-- Requirements rules: .agents/skills/kiro-spec-requirements/rules/ (ears-format.md, requirements-review-gate.md)
-- Design rules: .agents/skills/kiro-spec-design/rules/ (design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md)
-- Tasks rules: .agents/skills/kiro-spec-tasks/rules/ (tasks-generation.md, tasks-parallel-analysis.md)
-- Steering: {{KIRO_DIR}}/steering/ (product.md, tech.md, structure.md)
+1. Read the brief at {{KIRO_DIR}}/specs/{feature-name}/brief.md for feature context
+2. Read the roadmap at {{KIRO_DIR}}/steering/roadmap.md for project context
+3. Execute the full spec pipeline. For each phase, read the corresponding skill's SKILL.md for complete instructions (templates, rules, review gates):
+   a. Initialize: Read .agents/skills/kiro-spec-init/SKILL.md, then create spec.json and requirements.md
+   b. Generate requirements: Read .agents/skills/kiro-spec-requirements/SKILL.md, then follow its steps
+   c. Generate design: Read .agents/skills/kiro-spec-design/SKILL.md, then follow its steps
+   d. Generate tasks: Read .agents/skills/kiro-spec-tasks/SKILL.md, then follow its steps
+4. Set all approvals to true in spec.json (auto-approve mode, equivalent of -y flag)
+5. Report completion with file list and task count
 ```
 
 If multi-agent is not available, execute features in the wave sequentially.
