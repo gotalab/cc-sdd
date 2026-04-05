@@ -51,7 +51,7 @@ npx cc-sdd@latest --claude        # Claude Code (11 commands, en/ja/zh-TW/...)
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE (choose any supported lang)
 npx cc-sdd@latest --gemini --lang es        # Gemini CLI
-npx cc-sdd@latest --codex --lang fr         # Codex CLI legacy mode (non-recommended)
+npx cc-sdd@latest --codex --lang fr         # Codex CLI (blocked — use --codex-skills instead)
 npx cc-sdd@latest --codex-skills --lang fr  # Codex CLI skills mode (recommended)
 npx cc-sdd@latest --copilot --lang pt       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang de          # Qwen Code
@@ -129,7 +129,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 - **🧠 Persistent Project Memory** — Steering documents maintain architecture, patterns, rules, and domain knowledge across all sessions
 - **🧩 Agent Skills Support** — Each command is a self-contained [Agent Skill](https://agentskills.io) (SKILL.md + tool restrictions + co-located rules), designed to carry forward across skills-capable agents
 - **🛠 Customize Once** — Edit `{{KIRO_DIR}}/settings/templates/` and every agent reflects your workflow. 8 agents × 13 languages share the same process
-- **🌍 Team-Ready** — Cross-platform, standardized workflows with quality gates. `--codex` legacy mode kept for compatibility
+- **🌍 Team-Ready** — Cross-platform, standardized workflows with quality gates. `--codex` blocked, use `--codex-skills`
 
 ## 🤖 Supported AI Agents
 
@@ -139,7 +139,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 | **Claude Code Subagents** | ✅ Full | 12 commands + 9 subagents |
 | **Cursor IDE** | ✅ Full | 11 commands |
 | **Gemini CLI** | ✅ Full | 11 commands |
-| **Codex CLI** | ✅ Full | 11 legacy commands + 12 skills |
+| **Codex CLI** | ✅ Full | `--codex` blocked — 14 skills via `--codex-skills` |
 | **GitHub Copilot** | ✅ Full | 11 prompts |
 | **Qwen Code** | ✅ Full | 11 commands |
 | **Windsurf IDE** | ✅ Full | 11 workflows |
@@ -216,10 +216,10 @@ After installation, your project gets:
 
 ```
 project/
-├── .claude/skills/           # 12 skills (Claude Code Skills mode, default)
+├── .claude/skills/           # 14 skills (Claude Code Skills mode, default)
 ├── .claude/commands/kiro/    # 11 slash commands (Claude Code)
-├── .agents/skills/           # 12 skills (Codex CLI skills mode)
-├── .codex/prompts/           # 11 prompt commands (Codex CLI legacy mode)
+├── .agents/skills/           # 14 skills (Codex CLI skills mode)
+├── .codex/prompts/           # 11 prompt commands (Codex CLI — blocked, use skills)
 ├── .github/prompts/          # 11 prompt commands (GitHub Copilot)
 ├── .windsurf/workflows/      # 11 workflow files (Windsurf IDE)
 ├── .kiro/settings/templates/ # Shared templates (variables resolved with {{KIRO_DIR}})
@@ -243,7 +243,7 @@ project/
 
 ---
 
-**Stable Release v2.0.0** - Production-ready. [Report issues](https://github.com/gotalab/cc-sdd/issues) | MIT License
+**Stable Release v3.0.0** - Production-ready. [Report issues](https://github.com/gotalab/cc-sdd/issues) | MIT License
 
 ### Platform Support
 - Supported OS: macOS, Linux, Windows (auto-detected by default).

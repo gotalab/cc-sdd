@@ -6,7 +6,7 @@ This document explains how cc-sdd implements Spec-Driven Development (SDD) insid
 
 ## Lifecycle Overview
 
-0. **Brainstorm (Optional)** – `/kiro-brainstorm` (skills mode only) refines vague ideas into a concrete feature description before spec initiation. Useful when you have a rough notion but not a clear scope.
+0. **Brainstorm (Entry Point)** – `/kiro-brainstorm` (skills mode only) is the recommended entry point for new work. It presents four action paths (A: new feature, B: enhance existing, C: fix bug, D: refactor/chore) and produces `brief.md` + `roadmap.md`. The brief persists across sessions, so you can resume where you left off without re-explaining the feature.
 1. **Steering (Context Capture)** – `/kiro:steering` and `/kiro:steering-custom` gather architecture, conventions, and domain knowledge into steering docs.
 2. **Spec Initiation** – `/kiro:spec-init <feature>` creates the feature workspace (`.kiro/specs/<feature>/`).
 3. **Requirements** – `/kiro:spec-requirements <feature>` collects clarifications and produces `requirements.md`.
@@ -55,7 +55,8 @@ Skills mode (`--claude-skills` / `--codex-skills`) provides an alternative workf
 
 | Phase | Commands Mode | Skills Mode | Notes |
 |-------|--------------|-------------|-------|
-| Brainstorm | N/A | `/kiro-brainstorm` | Optional; refine ideas before spec-init |
+| Brainstorm | N/A | `/kiro-brainstorm` | Entry point; action paths A/B/C/D, writes brief.md + roadmap.md |
+| Spec Batch | N/A | `/kiro-spec-batch` | Parallel multi-spec creation with cross-spec review |
 | Steering | `/kiro:steering` | `/kiro:steering` | Same in both modes |
 | Spec (init through tasks) | `/kiro:spec-init` ... `/kiro:spec-tasks` | Same | Same in both modes |
 | Implementation | `/kiro:spec-impl <feature> <tasks>` | `/kiro-impl` | See below |
@@ -66,7 +67,15 @@ Skills mode (`--claude-skills` / `--codex-skills`) provides an alternative workf
 - **Autonomous mode** (no task args): Dispatches a fresh implementer subagent per task plus an independent adversarial reviewer subagent. Each implementer synthesizes a **Task Brief** with concrete acceptance criteria from the spec before coding. Uses native Agent tool, no external dependencies.
 - **Manual mode** (with task args): Runs TDD in the main conversation context, similar to the commands-based `/kiro:spec-impl`.
 
-Both modes enforce **1-task-per-iteration** discipline for context hygiene during long runs and are **session-resume safe** -- you can re-run `/kiro-impl` after an interruption without losing progress.
+Both modes enforce **1-task-per-iteration** discipline for context hygiene during long runs and are **session-resume safe** -- you can re-run `/kiro-impl` after an interruption without losing progress. Both modes also follow the **Feature Flag TDD** protocol (RED then GREEN) for safe, incremental delivery.
+
+### `/kiro-spec-batch` for Parallel Spec Creation
+
+`/kiro-spec-batch` creates multiple specs in parallel from the roadmap produced by `/kiro-brainstorm`. After all specs are generated, it runs a **cross-spec review** to detect contradictions, duplicated responsibilities, and interface mismatches across the batch. For Codex installs, the cross-spec review is delegated to `.codex/agents/spec-reviewer.toml`.
+
+### Session Persistence via `brief.md`
+
+`/kiro-brainstorm` writes `brief.md` to the spec workspace. This file persists across sessions, allowing you to resume a feature conversation without re-explaining scope. Downstream skills (`/kiro-spec-batch`, `/kiro-impl`) read the brief automatically when present.
 
 ### `/kiro-validate-impl` in Skills Mode
 

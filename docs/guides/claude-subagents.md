@@ -79,6 +79,14 @@ Need to re-run just one phase? Mention `@agents-spec-design`, `@agents-spec-task
 
 Skills mode (3.0) uses a fundamentally different subagent approach from the `--claude-agent` mode described above. Both are valid modes; choose the one that fits your workflow.
 
+### Entry Point: `/kiro-brainstorm`
+
+In skills mode, `/kiro-brainstorm` is the recommended entry point for new work. It presents four action paths (A: new feature, B: enhance existing, C: fix bug, D: refactor/chore) and produces `brief.md` + `roadmap.md`. The brief persists across sessions for context continuity.
+
+### Parallel Spec Creation: `/kiro-spec-batch`
+
+`/kiro-spec-batch` creates multiple specs in parallel from the roadmap produced by brainstorm. After generation, it runs a **cross-spec review** to catch contradictions, duplicated responsibilities, and interface mismatches. For Codex installs (`--codex-skills`), the cross-spec reviewer is defined in `.codex/agents/spec-reviewer.toml`.
+
 ### How Skills Mode Dispatches Subagents
 
 Unlike `--claude-agent` mode, which relies on pre-defined subagent definitions in `.claude/agents/kiro/`, skills mode dispatches implementation subagents **dynamically** at runtime:
@@ -93,7 +101,9 @@ Unlike `--claude-agent` mode, which relies on pre-defined subagent definitions i
 
 | Consideration | `--claude-agent` | `--claude-skills` / `--codex-skills` |
 |--------------|------------------|--------------------------------------|
+| Brainstorm | N/A | `/kiro-brainstorm` entry point with action paths |
 | Spec generation (spec-quick) | Subagent-accelerated | Same spec commands |
+| Parallel spec batch | N/A | `/kiro-spec-batch` with cross-spec review |
 | Implementation dispatch | Manual via `/kiro:spec-impl` | Autonomous or manual via `/kiro-impl` |
 | Subagent definitions | Static files in `.claude/agents/kiro/` | Dynamic prompt templates |
 | Review process | Manual or via validate-impl | Built-in adversarial reviewer subagent |

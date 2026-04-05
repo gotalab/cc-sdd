@@ -41,7 +41,8 @@ Skills mode (3.0) replaces the commands-based implementation and validation work
 
 | Area | Commands Mode | Skills Mode |
 |------|--------------|-------------|
-| Brainstorm | N/A | `/kiro-brainstorm` -- refine vague ideas before spec-init |
+| Brainstorm | N/A | `/kiro-brainstorm` -- entry point with action paths (A/B/C/D); writes brief.md + roadmap.md |
+| Spec Batch | N/A | `/kiro-spec-batch` -- parallel multi-spec creation with cross-spec review |
 | Implementation | `/kiro:spec-impl <feature> [tasks]` | `/kiro-impl` -- autonomous (subagent per task) or manual (TDD in main context) |
 | Validation | `/kiro:validate-impl` | `/kiro-validate-impl` -- focuses on integration validation across tasks |
 | Subagent dispatch | Pre-defined in `.claude/agents/` | Dynamic per-task dispatch via prompt templates |
@@ -51,8 +52,9 @@ Skills mode (3.0) replaces the commands-based implementation and validation work
 ### Skill Files
 
 Refer to the installed `SKILL.md` files for full skill documentation:
-- `/kiro-brainstorm` -- Optional idea refinement
-- `/kiro-impl` -- Unified implementation (autonomous + manual modes)
+- `/kiro-brainstorm` -- Entry point with action paths (A/B/C/D); writes brief.md + roadmap.md for session persistence
+- `/kiro-spec-batch` -- Parallel multi-spec creation with cross-spec review (uses `.codex/agents/spec-reviewer.toml` for Codex installs)
+- `/kiro-impl` -- Unified implementation with subagent dispatch (implementer + reviewer); supports autonomous and manual modes
 - `/kiro-validate-impl` -- Integration-focused validation with mechanical enforcement
 
 ---

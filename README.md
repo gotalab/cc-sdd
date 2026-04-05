@@ -42,6 +42,7 @@ npx cc-sdd@latest
 Then start with:
 
 ```bash
+/kiro:brainstorm <idea>                # Optional: explore and refine ideas first
 /kiro:spec-init <what-to-build>
 /kiro:spec-requirements <feature-name>
 /kiro:spec-design <feature-name>
@@ -50,7 +51,7 @@ Then start with:
 
 For larger approved task sets, run `/kiro-impl` to start autonomous implementation with per-task subagent dispatch and review.
 
-**Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages, plus Codex Skills mode.
+**Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages, plus Codex Skills mode with 14 skills.
 
 📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
@@ -78,8 +79,10 @@ Want to inspect a complex, large-scale requirements set? Jump to the advanced [c
 
 | Scenario | Workflow |
 |----------|----------|
-| **New feature (greenfield)** | `spec-init` → `spec-requirements` → `spec-design` → `spec-tasks` → `spec-impl` |
-| **Enhance existing code (brownfield)** | `steering` → `spec-init` → (`validate-gap` →) `spec-design` → (`validate-design` →) `spec-tasks` → `spec-impl` |
+| **New feature (greenfield)** | (`brainstorm` →) `spec-init` → `spec-requirements` → `spec-design` → `spec-tasks` → `kiro-impl` |
+| **Enhance existing code (brownfield)** | `steering` → (`brainstorm` →) `spec-init` → (`validate-gap` →) `spec-design` → (`validate-design` →) `spec-tasks` → `kiro-impl` |
+| **Rapid ideation** | `brainstorm` → explore and refine ideas → `spec-init` when ready |
+| **Batch spec generation** | `spec-batch` → generate requirements, design, and tasks in one pass |
 | **Team process alignment** | Customize templates once in `.kiro/settings/templates/` → all agents follow same format |
 
 ## 🎨 Customization
@@ -102,8 +105,8 @@ npx cc-sdd@latest --claude         # Claude Code (11 commands) [default]
 npx cc-sdd@latest --claude-agent   # Claude Code Subagents (12 commands + 9 subagents)
 npx cc-sdd@latest --cursor         # Cursor IDE
 npx cc-sdd@latest --gemini         # Gemini CLI
-npx cc-sdd@latest --codex          # Codex CLI legacy mode (non-recommended)
-npx cc-sdd@latest --codex-skills   # Codex CLI skills mode (recommended, 12 skills)
+npx cc-sdd@latest --codex          # Codex CLI blocked (use --codex-skills)
+npx cc-sdd@latest --codex-skills   # Codex CLI skills mode (recommended, 14 skills)
 npx cc-sdd@latest --copilot        # GitHub Copilot
 npx cc-sdd@latest --qwen           # Qwen Code
 npx cc-sdd@latest --opencode       # OpenCode (11 commands)
@@ -142,7 +145,7 @@ npx cc-sdd@latest --kiro-dir docs
 | **Customization Guide** | 7 practical examples: PRD requirements, frontend/backend designs, JIRA integration | [English](docs/guides/customization-guide.md) \| [日本語](docs/guides/ja/customization-guide.md) |
 | **Spec-Driven Guide** | Complete workflow methodology from requirements to implementation | [English](docs/guides/spec-driven.md) \| [日本語](docs/guides/ja/spec-driven.md) |
 | **Claude Subagents** | Advanced: Using 9 specialized subagents for complex projects | [English](docs/guides/claude-subagents.md) \| [日本語](docs/guides/ja/claude-subagents.md) |
-| **Migration Guide** | Upgrading from v1.x to v2.0.0 | [English](docs/guides/migration-guide.md) \| [日本語](docs/guides/ja/migration-guide.md) |
+| **Migration Guide** | Upgrading from v1.x to v3.0.0 | [English](docs/guides/migration-guide.md) \| [日本語](docs/guides/ja/migration-guide.md) |
 
 ### Package Documentation
 - English: [tools/cc-sdd/README.md](tools/cc-sdd/README.md)

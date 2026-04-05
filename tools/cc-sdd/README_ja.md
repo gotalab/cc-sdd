@@ -51,8 +51,8 @@ npx cc-sdd@latest --claude --lang ja        # Claude Code（11コマンド、対
 npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents（12コマンド + 9サブエージェント）
 npx cc-sdd@latest --cursor --lang ja        # Cursor IDE
 npx cc-sdd@latest --gemini --lang ja        # Gemini CLI
-npx cc-sdd@latest --codex --lang ja         # Codex CLI のレガシーモード（非推奨）
-npx cc-sdd@latest --codex-skills --lang ja  # Codex CLI の Skills モード（推奨、12スキル）
+npx cc-sdd@latest --codex --lang ja         # Codex CLI（ブロック済み — --codex-skills を使用）
+npx cc-sdd@latest --codex-skills --lang ja  # Codex CLI の Skills モード（推奨、14スキル）
 npx cc-sdd@latest --copilot --lang ja       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang ja          # Qwen Code
 npx cc-sdd@latest --opencode --lang ja      # OpenCode（11コマンド）
@@ -129,7 +129,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 - **🧠 永続的プロジェクトメモリ** — ステアリング文書がアーキテクチャ・パターン・ルール・ドメイン知識を全セッション間で維持
 - **🧩 Agent Skills 対応** — 各コマンドは自己完結型の [Agent Skill](https://agentskills.io)（SKILL.md + ツール制限 + 同梱ルール）。skills-capable agents に展開しやすい設計です
 - **🛠 一度だけカスタマイズ** — `{{KIRO_DIR}}/settings/templates/` を編集すれば全エージェントに反映。8エージェント × 13言語で同じプロセスを共有
-- **🌍 チーム対応** — クロスプラットフォーム、品質ゲート付き標準ワークフロー。`--codex` レガシーモードも互換維持
+- **🌍 チーム対応** — クロスプラットフォーム、品質ゲート付き標準ワークフロー。`--codex` はブロック済み、`--codex-skills` を使用
 
 ## 🤖 対応AIエージェント
 
@@ -139,7 +139,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 | **Claude Code Subagents** | ✅ 完全対応 | 12 コマンド + 9 サブエージェント |
 | **Cursor IDE** | ✅ 完全対応 | 11 コマンド |
 | **Gemini CLI** | ✅ 完全対応 | 11 コマンド |
-| **Codex CLI** | ✅ 完全対応 | 11 レガシーコマンド + Skillsモード 12スキル（推奨） |
+| **Codex CLI** | ✅ 完全対応 | `--codex` ブロック済み — `--codex-skills` で14スキル |
 | **GitHub Copilot** | ✅ 完全対応 | 11 プロンプト |
 | **Qwen Code** | ✅ 完全対応 | 11 コマンド |
 | **Windsurf IDE** | ✅ 完全対応 | 11 ワークフロー |
@@ -214,10 +214,10 @@ npx cc-sdd@latest --kiro-dir docs
 
 ```
 project/
-├── .claude/skills/           # 13のスキル（Claude Code Skills モード、デフォルト）
+├── .claude/skills/           # 14のスキル（Claude Code Skills モード、デフォルト）
 ├── .claude/commands/kiro/    # 11のスラッシュコマンド（Claude Code）
-├── .agents/skills/           # 13のスキル（Codex CLI Skills モード）
-├── .codex/prompts/           # 11のプロンプトコマンド（Codex CLIレガシーモード）
+├── .agents/skills/           # 14のスキル（Codex CLI Skills モード）
+├── .codex/prompts/           # 11のプロンプトコマンド（Codex CLI — ブロック済み、skillsを使用）
 ├── .github/prompts/          # 11のプロンプトコマンド（GitHub Copilot）
 ├── .windsurf/workflows/      # 11のワークフローファイル（Windsurf IDE）
 ├── .kiro/settings/templates/ # 共通テンプレート（{{KIRO_DIR}} を展開）
@@ -241,7 +241,7 @@ project/
 
 ---
 
-**安定版リリース v2.0.0** - 本番環境対応。[問題を報告](https://github.com/gotalab/cc-sdd/issues) | MIT License
+**安定版リリース v3.0.0** - 本番環境対応。[問題を報告](https://github.com/gotalab/cc-sdd/issues) | MIT License
 
 ### プラットフォーム対応
 - 対応OS: macOS / Linux / Windows（通常は自動検出）。
