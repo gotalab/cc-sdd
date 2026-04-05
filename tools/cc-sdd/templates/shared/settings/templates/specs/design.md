@@ -73,15 +73,18 @@ Map the directory structure and file responsibilities for this feature. This sec
 - **Large features**: Describe directory-level structure + per-domain/module pattern, list only non-obvious files individually
 
 ### Directory Structure
-- `path/to/domain/` — Domain or module responsibility
+```
+src/
+├── domain-a/              # Domain A responsibility
+│   ├── controller.ts      # Endpoint handlers
+│   ├── service.ts         # Business logic
+│   └── types.ts           # Domain types
+├── domain-b/              # Domain B (same pattern as domain-a)
+└── shared/
+    └── cross-cutting.ts   # Non-obvious: why this exists
+```
 
-### Pattern (if multiple domains/modules follow the same structure)
-- `{domain}/controller.ts` — Endpoint handlers
-- `{domain}/service.ts` — Business logic
-- `{domain}/types.ts` — Domain types
-
-### Key Files (non-obvious or cross-cutting only)
-- `path/to/non-obvious-file.ts` — Why this file exists and what it does
+> For repeated structures, describe the pattern once (e.g., "domain-b follows same pattern as domain-a"). List individual files only when their responsibility isn't obvious from the path.
 
 ### Modified Files
 - `path/to/existing.ts` — What changes and why
