@@ -39,7 +39,6 @@ describe('real claude-code-skills manifest', () => {
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
     expect(out).toContain('[templateDir] skills: templates/agents/claude-code-skills/skills -> .claude/skills');
-    expect(out).toContain('[templateDir] agents_library: templates/agents/claude-code-skills/agents -> .claude/agents');
     expect(out).toContain('[templateFile] doc_main: templates/agents/claude-code-skills/docs/CLAUDE.md -> ./CLAUDE.md');
     expect(out).toContain('[templateDir] settings_templates: templates/shared/settings/templates -> .kiro/settings/templates');
   });
@@ -56,7 +55,7 @@ describe('real claude-code-skills manifest', () => {
     expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(text).toContain('/kiro-spec-status');
     expect(text).not.toContain('/kiro:spec-status');
-    expect(text).toContain('implements all tasks and runs final validation');
+    expect(text).toContain('autonomous mode');
 
     const skillSpecInit = join(cwd, '.claude/skills/kiro-spec-init/SKILL.md');
     expect(await exists(skillSpecInit)).toBe(true);
@@ -106,43 +105,35 @@ describe('real claude-code-skills manifest', () => {
     expect(skillSpecRequirementsText).toContain('Step 4: Review Requirements Draft');
     expect(skillSpecRequirementsText).toContain('requirements review gate passes');
     expect(skillSpecRequirementsText).toContain('Scope Ambiguity Found During Requirements Review');
-    const skillRalphImpl = join(cwd, '.claude/skills/kiro-ralph-impl/SKILL.md');
-    expect(await exists(skillRalphImpl)).toBe(true);
-    const skillRalphImplText = await readFile(skillRalphImpl, 'utf8');
-    expect(skillRalphImplText).toMatch(/name: kiro-ralph-impl/);
-    expect(skillRalphImplText).toContain('Ralph Loop');
-    expect(skillRalphImplText).toContain('Otherwise: `100`');
-    expect(skillRalphImplText).toContain('default of 100');
-    expect(skillRalphImplText).toContain('Preflight: Verify Ralph Loop plugin is installed');
-    expect(skillRalphImplText).toContain('Hard stop');
-    expect(skillRalphImplText).toContain('Do not create `.claude/ralph-loop.local.md`');
-    expect(skillRalphImplText).toContain('Final Validation Required');
-    expect(skillRalphImplText).toContain('treat only `GO` as success');
-    expect(skillRalphImplText).toContain('final-validation-only mode');
 
-    const ralphPrompt = join(cwd, '.claude/skills/kiro-ralph-impl/templates/ralph-prompt.md');
-    expect(await exists(ralphPrompt)).toBe(true);
-    const ralphPromptText = await readFile(ralphPrompt, 'utf8');
-    expect(ralphPromptText).toContain('Parent Responsibilities');
-    expect(ralphPromptText).toContain('all required sub-tasks');
-    expect(ralphPromptText).toContain('max_iterations` defaults to 100');
-    expect(ralphPromptText).toContain('Subagent does NOT update `tasks.md` or create commits');
-    expect(ralphPromptText).toContain('does not invent `REQ-*` aliases');
-    expect(ralphPromptText).toContain('mock/stub/placeholder/fake/TODO-only path');
-    expect(ralphPromptText).toContain('Final validation and remediation');
-    expect(ralphPromptText).toContain('kiro-validate-impl');
-    expect(ralphPromptText).toContain('MANUAL_VERIFY_REQUIRED');
-    expect(ralphPromptText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
-    expect(ralphPromptText).toContain('Relevant local agent skills or playbooks only when they clearly match');
+    // kiro-impl skill with subagent dispatch
+    const skillImpl = join(cwd, '.claude/skills/kiro-impl/SKILL.md');
+    expect(await exists(skillImpl)).toBe(true);
+    const skillImplText = await readFile(skillImpl, 'utf8');
+    expect(skillImplText).toMatch(/name: kiro-impl/);
+    expect(skillImplText).toContain('Agent tool');
+    expect(skillImplText).toContain('Autonomous mode');
+    expect(skillImplText).toContain('Manual mode');
+    expect(skillImplText).toContain('Feature Flag Protocol');
+    expect(skillImplText).toContain('kiro-validate-impl');
+    expect(skillImplText).toContain('BLOCKED');
+    expect(skillImplText).toContain('Bounded Remediation');
 
-    const ralphSubagent = join(cwd, '.claude/agents/tdd-task-implementer.md');
-    expect(await exists(ralphSubagent)).toBe(true);
-    const ralphSubagentText = await readFile(ralphSubagent, 'utf8');
-    expect(ralphSubagentText).toContain('Do NOT update `tasks.md`');
-    expect(ralphSubagentText).toContain('Do NOT create commits');
-    expect(ralphSubagentText).toContain('name: tdd-task-implementer');
-    expect(ralphSubagentText).toContain('do NOT invent `REQ-*` aliases');
-    expect(ralphSubagentText).toContain('Review and Fix Loop');
+    const implPrompt = join(cwd, '.claude/skills/kiro-impl/templates/implementer-prompt.md');
+    expect(await exists(implPrompt)).toBe(true);
+    const implPromptText = await readFile(implPrompt, 'utf8');
+    expect(implPromptText).toContain('TDD');
+    expect(implPromptText).toContain('STATUS: DONE');
+    expect(implPromptText).toContain('Do NOT update `tasks.md`');
+    expect(implPromptText).toContain('Do NOT create commits');
+
+    const reviewPrompt = join(cwd, '.claude/skills/kiro-impl/templates/reviewer-prompt.md');
+    expect(await exists(reviewPrompt)).toBe(true);
+    const reviewPromptText = await readFile(reviewPrompt, 'utf8');
+    expect(reviewPromptText).toContain('Reality Check');
+    expect(reviewPromptText).toContain('APPROVED');
+    expect(reviewPromptText).toContain('REJECTED');
+    expect(reviewPromptText).toContain('Do Not Trust the Report');
 
     // Shared rules resolved from templates/shared/settings/rules/
     const designRules = [
@@ -184,7 +175,7 @@ describe('real claude-code-skills manifest', () => {
     expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
     // Skills without shared-rules should NOT have rules/ directories
-    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-impl', 'kiro-ralph-impl', 'kiro-validate-impl'];
+    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-impl', 'kiro-validate-impl'];
     for (const skill of noRulesSkills) {
       expect(await exists(join(cwd, `.claude/skills/${skill}/rules`))).toBe(false);
     }
@@ -195,7 +186,7 @@ describe('real claude-code-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });
 
-  it('generates exactly 13 skill directories', async () => {
+  it('generates exactly 12 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force', '--claude-skills'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
@@ -207,8 +198,7 @@ describe('real claude-code-skills manifest', () => {
       'kiro-spec-design',
       'kiro-spec-requirements',
       'kiro-spec-tasks',
-      'kiro-spec-impl',
-      'kiro-ralph-impl',
+      'kiro-impl',
       'kiro-steering',
       'kiro-steering-custom',
       'kiro-validate-design',
@@ -221,6 +211,11 @@ describe('real claude-code-skills manifest', () => {
       expect(await exists(skillPath)).toBe(true);
     }
 
-    expect(await exists(join(cwd, '.claude/agents/tdd-task-implementer.md'))).toBe(true);
+    // kiro-impl has prompt templates
+    expect(await exists(join(cwd, '.claude/skills/kiro-impl/templates/implementer-prompt.md'))).toBe(true);
+    expect(await exists(join(cwd, '.claude/skills/kiro-impl/templates/reviewer-prompt.md'))).toBe(true);
+
+    // No agents directory (tdd-task-implementer removed)
+    expect(await exists(join(cwd, '.claude/agents'))).toBe(false);
   });
 });

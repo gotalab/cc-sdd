@@ -297,7 +297,7 @@ Quick generation skipped:
 2. Optional validation:
    - `$kiro-validate-gap {feature}` - Check integration with existing codebase
    - `$kiro-validate-design {feature}` - Verify architecture quality
-3. Start implementation: `$kiro-spec-impl {feature}`
+3. Start implementation: `$kiro-impl {feature}`
 
 ## Note:
 For complex features (integrations, security, APIs), use standard workflow:

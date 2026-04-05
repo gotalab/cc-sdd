@@ -161,14 +161,14 @@ Provide brief summary in the language specified in spec.json:
 ### Next Phase: Implementation
 
 **Before Starting Implementation**:
-- **IMPORTANT**: Clear conversation history and free up context before running `$kiro-spec-impl`
+- **IMPORTANT**: Clear conversation history and free up context before running `$kiro-impl`
 - This applies when starting first task OR switching between tasks
 - Fresh context ensures clean state and proper task focus
 
 **If Tasks Approved**:
-- Execute specific task: `$kiro-spec-impl $1 1.1` (recommended: clear context between each task)
-- Execute multiple tasks: `$kiro-spec-impl $1 1.1,1.2` (use cautiously, clear context between tasks)
-- Without arguments: `$kiro-spec-impl $1` (executes all pending tasks - NOT recommended due to context bloat)
+- Execute specific task: `$kiro-impl $1 1.1` (recommended: clear context between each task)
+- Execute multiple tasks: `$kiro-impl $1 1.1,1.2` (use cautiously, clear context between tasks)
+- Without arguments: `$kiro-impl $1` (executes all pending tasks - NOT recommended due to context bloat)
 
 **If Modifications Needed**:
 - Provide feedback and re-run `$kiro-spec-tasks $1`

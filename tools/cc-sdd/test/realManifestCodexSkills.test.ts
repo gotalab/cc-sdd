@@ -73,7 +73,7 @@ describe('real codex-skills manifest', () => {
     expect(docText).toMatch(/# AI-DLC and Spec-Driven Development/);
     expect(docText).toContain('$kiro-spec-status');
     expect(docText).not.toContain('/prompts:kiro-spec-status');
-    expect(docText).toContain('implements all tasks and runs final validation');
+    expect(docText).toContain('autonomous mode');
 
     const skillSpecInit = join(cwd, '.agents/skills/kiro-spec-init/SKILL.md');
     expect(await exists(skillSpecInit)).toBe(true);
@@ -85,7 +85,7 @@ describe('real codex-skills manifest', () => {
     expect(await exists(skillSpecQuick)).toBe(true);
     const skillSpecQuickText = await readFile(skillSpecQuick, 'utf8');
     expect(skillSpecQuickText).toMatch(/name: kiro-spec-quick/);
-    expect(skillSpecQuickText).toContain('$kiro-spec-impl');
+    expect(skillSpecQuickText).toContain('$kiro-impl');
 
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');
     expect(await exists(settingsTemplate)).toBe(true);
@@ -170,7 +170,7 @@ describe('real codex-skills manifest', () => {
     expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
     // Skills without shared-rules should NOT have rules/ directories
-    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-impl', 'kiro-ralph-impl', 'kiro-validate-impl'];
+    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-impl', 'kiro-validate-impl'];
     for (const skill of noRulesSkills) {
       expect(await exists(join(cwd, `.agents/skills/${skill}/rules`))).toBe(false);
     }
@@ -178,7 +178,7 @@ describe('real codex-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });
 
-  it('generates exactly 13 skill directories', async () => {
+  it('generates exactly 12 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(
@@ -195,14 +195,13 @@ describe('real codex-skills manifest', () => {
       'kiro-spec-requirements',
       'kiro-spec-design',
       'kiro-spec-tasks',
-      'kiro-spec-impl',
+      'kiro-impl',
       'kiro-spec-status',
       'kiro-steering',
       'kiro-steering-custom',
       'kiro-validate-gap',
       'kiro-validate-design',
       'kiro-validate-impl',
-      'kiro-ralph-impl',
     ];
 
     for (const skill of expectedSkills) {
@@ -210,42 +209,19 @@ describe('real codex-skills manifest', () => {
       expect(await exists(skillPath)).toBe(true);
     }
 
-    // kiro-ralph-impl has a templates subdirectory with ralph-prompt.md
-    const ralphPrompt = join(cwd, '.agents/skills/kiro-ralph-impl/templates/ralph-prompt.md');
-    expect(await exists(ralphPrompt)).toBe(true);
-    const ralphPromptText = await readFile(ralphPrompt, 'utf8');
-    expect(ralphPromptText).not.toContain('STATUS: NO_PROGRESS');
-    expect(ralphPromptText).toContain('defaults to 100');
-    expect(ralphPromptText).toContain('Parent Responsibilities');
-    expect(ralphPromptText).toContain('worker agents own task implementation only');
-    expect(ralphPromptText).toContain('does not invent `REQ-*` aliases');
-    expect(ralphPromptText).toContain('mock/stub/placeholder/fake/TODO-only path');
-    expect(ralphPromptText).toContain('Final validation and remediation');
-    expect(ralphPromptText).toContain('kiro-validate-impl');
-    expect(ralphPromptText).toContain('MANUAL_VERIFY_REQUIRED');
-    expect(ralphPromptText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
-    expect(ralphPromptText).toContain('Relevant local agent skills or playbooks only when they clearly match');
+    // kiro-impl has prompt templates
+    const implPrompt = join(cwd, '.agents/skills/kiro-impl/templates/implementer-prompt.md');
+    expect(await exists(implPrompt)).toBe(true);
+    const implPromptText = await readFile(implPrompt, 'utf8');
+    expect(implPromptText).toContain('TDD');
+    expect(implPromptText).toContain('STATUS: DONE');
+    expect(implPromptText).toContain('Do NOT update `tasks.md`');
 
-    const workerPrompt = join(cwd, '.agents/skills/kiro-ralph-impl/templates/implementation-worker-prompt.md');
-    expect(await exists(workerPrompt)).toBe(true);
-    const workerPromptText = await readFile(workerPrompt, 'utf8');
-    expect(workerPromptText).toContain('Do not update `tasks.md`');
-    expect(workerPromptText).toContain('Do not create commits');
-    expect(workerPromptText).toContain('instead of inventing `REQ-*` aliases');
-    expect(workerPromptText).toContain('mock, stub, placeholder, fake, or TODO-only path');
-
-    const skillRalphImpl = join(cwd, '.agents/skills/kiro-ralph-impl/SKILL.md');
-    expect(await exists(skillRalphImpl)).toBe(true);
-    const skillRalphImplText = await readFile(skillRalphImpl, 'utf8');
-    expect(skillRalphImplText).toContain('Final Validation Required');
-    expect(skillRalphImplText).toContain('treat only `GO` as success');
-    expect(skillRalphImplText).toContain('skip Step 4 and go directly to Step 5 for final validation');
-
-    // kiro-ralph-impl has scripts directory with loop management scripts
-    const scriptsDir = join(cwd, '.agents/skills/kiro-ralph-impl/scripts');
-    for (const script of ['setup-loop.sh', 'check-loop.sh', 'next-task.sh', 'complete-task.sh']) {
-      expect(await exists(join(scriptsDir, script))).toBe(true);
-    }
+    const reviewPrompt = join(cwd, '.agents/skills/kiro-impl/templates/reviewer-prompt.md');
+    expect(await exists(reviewPrompt)).toBe(true);
+    const reviewPromptText = await readFile(reviewPrompt, 'utf8');
+    expect(reviewPromptText).toContain('Reality Check');
+    expect(reviewPromptText).toContain('Do Not Trust the Report');
 
     // every skill has agents/openai.yaml
     for (const skill of expectedSkills) {

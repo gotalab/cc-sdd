@@ -25,7 +25,7 @@ You are a specialized skill for verifying that implementation aligns with approv
 ### Step 1: Detect Validation Target
 
 **If no arguments provided**:
-- Parse conversation history for `/kiro-spec-impl` commands to detect recently implemented features and tasks
+- Parse conversation history for `/kiro-impl` commands to detect recently implemented features and tasks
 - Scan `{{KIRO_DIR}}/specs/` for features with completed tasks `[x]`
 - Report detected implementations (e.g., "user-auth: 1.1, 1.2, 1.3")
 
@@ -151,7 +151,7 @@ Provide output in the language specified in spec.json with:
 
 **If NO-GO Decision**:
 - Address critical issues listed
-- Re-run `/kiro-spec-impl {feature} [tasks]` for fixes
+- Re-run `/kiro-impl {feature} [tasks]` for fixes
 - Re-validate with `/kiro-validate-impl {feature} [tasks]`
 
 **If MANUAL_VERIFY_REQUIRED**:

@@ -37,9 +37,10 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
   - `$kiro-spec-design {feature} [-y]`
   - `$kiro-validate-design {feature}` (optional: design review)
   - `$kiro-spec-tasks {feature} [-y]`
-- Phase 2 (Implementation): `$kiro-spec-impl {feature} [tasks]`
-  - ALT: `$kiro-ralph-impl {feature}` (autonomous loop — implements all tasks and runs final validation)
-  - `$kiro-validate-impl {feature}` (manual standalone re-validation)
+- Phase 2 (Implementation): `$kiro-impl {feature} [tasks]`
+  - Without task numbers: autonomous mode (subagent per task + independent review + final validation)
+  - With task numbers: manual mode (selected tasks only in main context)
+  - `$kiro-validate-impl {feature}` (standalone re-validation)
 - Progress check: `$kiro-spec-status {feature}` (use anytime)
 
 ## Skills Structure

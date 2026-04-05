@@ -8,7 +8,7 @@
 English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-✨ **Turn approved requirements and design into long-running autonomous implementation with Ralph Loop.**
+✨ **Turn approved requirements and design into long-running autonomous implementation with native subagent dispatch.**
 
 👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
@@ -16,7 +16,7 @@ cc-sdd turns approved specs into executable work: requirements → design → ta
 
 **Why teams pick cc-sdd:**
 - ✅ **Approved specs become executable work** — Go from `/kiro:spec-init` to approved requirements, design, and tasks without inventing your own process
-- ✅ **Ralph Loop handles bigger work** — Hand larger approved task sets to a bounded long-running autonomous implementation loop
+- ✅ **Subagent dispatch handles bigger work** — Hand larger approved task sets to bounded autonomous implementation with per-task subagent dispatch and independent review
 - ✅ **Review and final validation flows are built in** — Re-check work, remediate concrete findings, and stop honestly when the work is blocked or not ready to claim complete
 - ✅ **Team-aligned templates keep adoption practical** — Customize once and generated requirements, design reviews, tasks, and steering docs fit your approval process
 
@@ -52,7 +52,7 @@ npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents (12 commands
 npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE (choose any supported lang)
 npx cc-sdd@latest --gemini --lang es        # Gemini CLI
 npx cc-sdd@latest --codex --lang fr         # Codex CLI legacy mode (non-recommended)
-npx cc-sdd@latest --codex-skills --lang fr  # Codex CLI skills mode (recommended, 12 skills)
+npx cc-sdd@latest --codex-skills --lang fr  # Codex CLI skills mode (recommended)
 npx cc-sdd@latest --copilot --lang pt       # GitHub Copilot
 npx cc-sdd@latest --qwen --lang de          # Qwen Code
 npx cc-sdd@latest --opencode --lang en      # OpenCode (11 commands)
@@ -115,7 +115,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 ### Why teams install cc-sdd
 1. **Approved specs become executable work** – requirements, design, tasks, and supporting references stay aligned and can drive implementation instead of going stale.
-2. **Ralph Loop is built for bigger work** – large task sets can run through long-running autonomous implementation with bounded stop conditions instead of fragile one-shot prompting.
+2. **Subagent dispatch is built for bigger work** – large task sets can run through autonomous implementation with per-task subagent dispatch, independent review, and bounded stop conditions instead of fragile one-shot prompting.
 3. **Agent Skills are the durable surface** – the same skill-based workflow can move across Claude Code, Codex, and future skills-capable agents.
 4. **Review and final validation flows are built in** – the system is designed to catch mismatches, placeholders, and blocked states before claiming completion.
 5. **Customize once for your team** – edit `.kiro/settings/templates/` and every agent/slash command reflects your workflow. Non-skills agents also use `.kiro/settings/rules/`.
@@ -123,7 +123,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 ## ✨ Key Features
 
 - **📋 Spec-Governed Development** — Structured specs (requirements → research → design → tasks) stay as the governing contract for implementation, not just planning documents
-- **🔁 Ralph Loop** — Turn approved task sets into long-running autonomous implementation loops with bounded stop conditions and remediation paths
+- **🔁 Subagent-Driven Implementation** — Turn approved task sets into autonomous implementation with per-task subagent dispatch, adversarial review, and bounded remediation
 - **✅ Review + Final Validation Flows** — Task-local review, validation passes, and final validation flows are built in so the system aims for honest completion and NO-GO outcomes
 - **🚀 AI-DLC Methodology** — AI executes, human validates at each phase. [Intensive "bolts"](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/) replace weeks-long sprints
 - **🧠 Persistent Project Memory** — Steering documents maintain architecture, patterns, rules, and domain knowledge across all sessions
@@ -139,7 +139,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 | **Claude Code Subagents** | ✅ Full | 12 commands + 9 subagents |
 | **Cursor IDE** | ✅ Full | 11 commands |
 | **Gemini CLI** | ✅ Full | 11 commands |
-| **Codex CLI** | ✅ Full | 11 legacy commands + 12 skills (recommended) |
+| **Codex CLI** | ✅ Full | 11 legacy commands + 12 skills |
 | **GitHub Copilot** | ✅ Full | 11 prompts |
 | **Qwen Code** | ✅ Full | 11 commands |
 | **Windsurf IDE** | ✅ Full | 11 workflows |
@@ -216,9 +216,9 @@ After installation, your project gets:
 
 ```
 project/
-├── .claude/skills/           # 13 skills (Claude Code Skills mode, default)
+├── .claude/skills/           # 12 skills (Claude Code Skills mode, default)
 ├── .claude/commands/kiro/    # 11 slash commands (Claude Code)
-├── .agents/skills/           # 13 skills (Codex CLI skills mode)
+├── .agents/skills/           # 12 skills (Codex CLI skills mode)
 ├── .codex/prompts/           # 11 prompt commands (Codex CLI legacy mode)
 ├── .github/prompts/          # 11 prompt commands (GitHub Copilot)
 ├── .windsurf/workflows/      # 11 workflow files (Windsurf IDE)

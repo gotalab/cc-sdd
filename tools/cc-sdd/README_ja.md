@@ -8,7 +8,7 @@
 <a href="./README.md">English</a> | 日本語 | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-✨ **承認済みの要件と設計を、Ralph Loop で長時間の自律実装に変える。**
+✨ **承認済みの要件と設計を、ネイティブ subagent dispatch で長時間の自律実装に変える。**
 
 👻 **Kiro互換** — Kiro IDE に似た Spec-Driven / AI-DLC スタイルで、既存の Kiro 仕様書もそのまま扱えます。
 
@@ -16,7 +16,7 @@ cc-sdd は、承認済み仕様を executable work に変えます。要件 → 
 
 **cc-sdd を使う理由:**
 - ✅ **承認済み仕様が executable work になる** — `/kiro:spec-init` から承認済みの要件・設計・タスクまで、自己流プロセスを組まずに進められる
-- ✅ **Ralph Loop が大きい仕事を回せる** — 大きめの承認済みタスクセットを bounded な長時間自律実装ループに渡せる
+- ✅ **Subagent dispatch が大きい仕事を回せる** — 大きめの承認済みタスクセットを、タスクごとの subagent dispatch と independent review で自律実装できる
 - ✅ **レビューと最終検証フローを内蔵** — 作業を再チェックし、具体的な findings を修正し、blocked / not-ready のときは正直に止まる前提で設計されている
 - ✅ **チーム向けテンプレートが導入しやすい** — 一度カスタマイズすれば、生成される要件・設計レビュー・タスク・ステアリング文書を承認フローに合わせられる
 
@@ -115,7 +115,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 ### cc-sdd を選ぶ理由
 1. **承認済み仕様が executable work になる** — 要件・設計・タスク・Supporting References が揃ったまま、実装の駆動源として使えます。
-2. **Ralph Loop が大きい仕事を回せる** — 大きいタスクセットを fragile な one-shot prompt ではなく、bounded な自律実装ループとして進められます。
+2. **Subagent dispatch が大きい仕事を回せる** — 大きいタスクセットを fragile な one-shot prompt ではなく、タスクごとの subagent dispatch と independent review で自律実装できます。
 3. **Agent Skills が長期的な surface** — 同じ skill-based workflow を Claude Code、Codex、そして今後の skills-capable agents に持ち運べます。
 4. **レビューと最終検証フローを内蔵** — spec mismatch、placeholder 実装、blocked state を完了宣言前に拾う方向で設計されています。
 5. **チーム向けカスタマイズは一度だけ** — `.kiro/settings/templates/` を編集すれば全エージェントへ反映。非スキルエージェントは `.kiro/settings/rules/` も使用します。
@@ -123,7 +123,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 ## ✨ 主要機能
 
 - **📋 Spec-Governed Development** — 構造化仕様（要件 → 調査 → 設計 → タスク）を、単なる計画書ではなく実装を支配する契約として扱います
-- **🔁 Ralph Loop** — 承認済みタスクセットを、bounded な stop conditions と remediation paths を持つ長時間の自律実装ループに変えます
+- **🔁 Subagent-Driven Implementation** — 承認済みタスクセットを、タスクごとの subagent dispatch・adversarial review・bounded remediation で自律実装に変えます
 - **✅ レビュー + 最終検証フロー** — task-local review、validation passes、final validation flow を内蔵し、honest completion と NO-GO outcomes を目指します
 - **🚀 AI-DLC 手法** — AI実行、人間が各フェーズで検証。[集中「ボルト」](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)が週単位のスプリントを置き換え
 - **🧠 永続的プロジェクトメモリ** — ステアリング文書がアーキテクチャ・パターン・ルール・ドメイン知識を全セッション間で維持

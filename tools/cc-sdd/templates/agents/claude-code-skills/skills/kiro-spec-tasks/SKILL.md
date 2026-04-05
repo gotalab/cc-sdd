@@ -158,9 +158,9 @@ Provide brief summary in the language specified in spec.json:
 ### Next Phase: Implementation
 
 **If Tasks Approved**:
-- Execute specific task: `/kiro-spec-impl {feature} 1.1`
-- Execute multiple tasks: `/kiro-spec-impl {feature} 1.1,1.2`
-- Execute all pending: `/kiro-spec-impl {feature}`
+- Execute specific task: `/kiro-impl {feature} 1.1`
+- Execute multiple tasks: `/kiro-impl {feature} 1.1,1.2`
+- Execute all pending: `/kiro-impl {feature}`
 
 **If Modifications Needed**:
 - Provide feedback and re-run `/kiro-spec-tasks {feature}`

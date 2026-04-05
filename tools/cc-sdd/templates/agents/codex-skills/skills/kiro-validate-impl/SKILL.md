@@ -26,7 +26,7 @@ Validate implementation for feature(s) and task(s) based on approved specificati
 ### 1. Detect Validation Target
 
 **If no arguments provided** (`$1` empty):
-- Parse conversation history for `$kiro-spec-impl <feature> [tasks]` commands
+- Parse conversation history for `$kiro-impl <feature> [tasks]` commands
 - Extract feature names and task numbers from each execution
 - Aggregate all implemented tasks by feature
 - Report detected implementations (e.g., "user-auth: 1.1, 1.2, 1.3")
@@ -120,7 +120,7 @@ Provide summary in the language specified in spec.json:
 </instructions>
 
 ## Tool Guidance
-- **Conversation parsing**: Extract `$kiro-spec-impl` patterns from history
+- **Conversation parsing**: Extract `$kiro-impl` patterns from history
 - **Read context**: Load specs, core steering, and only the local playbooks/agent skills relevant to the validation target
 - **Bash for tests**: Execute test commands to verify pass status
 - **Grep for traceability**: Search codebase for requirement evidence
@@ -144,7 +144,7 @@ Provide output in the language specified in spec.json with:
 ## Safety & Fallback
 
 ### Error Scenarios
-- **No Implementation Found**: If no `$kiro-spec-impl` in history and no `[x]` tasks, report "No implementations detected"
+- **No Implementation Found**: If no `$kiro-impl` in history and no `[x]` tasks, report "No implementations detected"
 - **Test Command Unknown**: If test framework unclear, return `MANUAL_VERIFY_REQUIRED` and explain which validation command is missing; do not return `GO`
 - **Missing Spec Files**: If spec.json/requirements.md/design.md missing, stop with error
 - **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
@@ -157,7 +157,7 @@ Provide output in the language specified in spec.json with:
 
 **If NO-GO Decision**:
 - Address critical issues listed
-- Re-run `$kiro-spec-impl <feature> [tasks]` for fixes
+- Re-run `$kiro-impl <feature> [tasks]` for fixes
 - Re-validate with `$kiro-validate-impl [feature] [tasks]`
 
 **If MANUAL_VERIFY_REQUIRED**:
