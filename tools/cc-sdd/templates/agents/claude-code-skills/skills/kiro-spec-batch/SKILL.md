@@ -72,7 +72,9 @@ Create a complete specification for feature "{feature-name}".
 Key files to read:
 - Brief: {{KIRO_DIR}}/specs/{feature-name}/brief.md
 - Templates: {{KIRO_DIR}}/settings/templates/specs/ (init.json, requirements-init.md, requirements.md, design.md, tasks.md)
-- Rules: {{KIRO_DIR}}/settings/rules/ (ears-format.md, requirements-review-gate.md, design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md, tasks-generation.md, tasks-parallel-analysis.md)
+- Requirements rules: .claude/skills/kiro-spec-requirements/rules/ (ears-format.md, requirements-review-gate.md)
+- Design rules: .claude/skills/kiro-spec-design/rules/ (design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md)
+- Tasks rules: .claude/skills/kiro-spec-tasks/rules/ (tasks-generation.md, tasks-parallel-analysis.md)
 - Steering: {{KIRO_DIR}}/steering/ (product.md, tech.md, structure.md)
 ```
 
