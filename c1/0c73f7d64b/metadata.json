@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "c10c73f7d64b",
+  "strategy": "manual-commit",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/guides/claude-subagents.md",
+    "docs/guides/command-reference.md",
+    "docs/guides/customization-guide.md",
+    "docs/guides/ja/claude-subagents.md",
+    "docs/guides/ja/command-reference.md",
+    "docs/guides/ja/customization-guide.md",
+    "docs/guides/ja/spec-driven.md",
+    "docs/guides/spec-driven.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/c1/0c73f7d64b/0/metadata.json",
+      "transcript": "/c1/0c73f7d64b/0/full.jsonl",
+      "content_hash": "/c1/0c73f7d64b/0/content_hash.txt",
+      "prompt": "/c1/0c73f7d64b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 5777,
+    "cache_creation_tokens": 455047,
+    "cache_read_tokens": 74721547,
+    "output_tokens": 134966,
+    "api_call_count": 340
+  }
+}
