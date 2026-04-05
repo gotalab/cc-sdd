@@ -1,0 +1,1317 @@
+今cc-sddはskills対応の大改修をしてますが、その際にsuperpowersというclaude code等で使えるハーネスを参考にすべきなのではないかと感じています。cc-sddはkiroの要素を残す必要があるのでagent skills化をすると自律実行くらいしか難しいかなと思いつつどうしていくのが良いかな？superpowers v5.0系は結構参考になる可能性があり、よりよくするにはどうすれば良いか考えてます
+
+---
+
+あれ? スーパーパワーのサブエージェントドリブンってどういうこと? いや、Claude Code でサブエージェントを使うってこと?
+
+---
+
+確かに無理にralph-loop自体を使うよりそっちの方がよさそうね
+
+---
+
+確かに無理にralph-loop自体を使うよりそっちの方がよさそうね. ralph-loopは外部ライブラリだし
+
+---
+
+codexでもspawnの指示適切に出せば問題ないしね
+
+---
+
+OK. これら含めて何を修正していくかをちゃんと設計しましょうか
+
+---
+
+そうだね. subagentsって一つで良いのかな？implって検証まで入れるべきでは？superpowersとかどうなってる？
+
+---
+
+cc-sddもsuperpowersと同じ形式にした方が良いかも。subagentsの.claude/agentsってclaude code / codex / github copilot /cursorとかで変わるから
+
+---
+
+reviewは一つにまとめるとはどういうこと？
+
+---
+
+まずはreviewer 1つで安定するならそれで良いし、安定しないなら2つに増やすが良いかもね. ハーネスが重いと問題になるからね.重要なのは、reality check的なmockになってないかとかちゃんとTBDとかがないかとか1.1, 1.2の受入基準や完了定義が満たされてるかや仕様と合致してるかとかかな...
+
+---
+
+お願いします.
+
+---
+
+pushした？ ドキュメントも更新した？
+
+---
+
+claude codeの別version使ってる人にはこのskillsを使うようなrecommendを分かりやすく出した方が良い気がする
+
+---
+
+ralph loopって完全に言及なくなった？
+
+---
+
+ralph loopなくても長時間自律的に実装回るよは伝わる？
+
+---
+
+superpowersと比較した時にcc-sddの弱いところはどこかな？
+
+---
+
+さっきレビュー段階入れたよね？implに？
+あと検証skillsが現状別にありますけどこのあたりどうすべきなのかな？
+
+---
+
+2が良いかもしれませんね
+
+---
+
+tasksの具体度向上ってkiro互換な以上限界があるよね？ここどうにか本当はしたいんだよな...implの最初で具体化するのが良いのかな...tasks.mdだけじゃなくてrequirements.md, design.mdみてそのtasksの完了定義や受入基準、制約、検証方法等をちゃんと最初に明確化してから進める指示を入れるとかになっちゃうのかな？
+
+---
+
+一旦これで良いかな
+
+---
+
+task briefってsubagentsの中に入れるべきではないの？tasksの一つだけのやつを定義する...
+
+---
+
+Controllerってspecsに20個タスクがある場合どうなるの？
+
+---
+
+はい
+
+---
+
+はい。後ろの方で一気にまとめてやるみたいなことを防ぐ必要もあるしね. tasks 3.1, 3.2をまとめてやるみたいな...
+
+---
+
+他に問題ある？
+
+---
+
+1の並列タスクは過去からある仕様だからregressionになるんだよな... 2ってちゃんとtaskで実装したコード読むんだよね？(gitとかで差分渡せば良いのか？)
+
+---
+
+1の並列タスクは過去からある仕様だからregressionになるんだよな... 2ってちゃんとtaskで実装したコード読むんだよね？(gitとかで差分渡せば良いのか？)
+
+3は簡単に記載しないとね...
+
+---
+
+reviewer inputってreviewer subagents内で行うんだよね？
+
+---
+
+他にcc-sddでよりプロセスをよくした方が良いところとかってある？
+
+---
+
+init内にbrainstormを入れるのってさすがに責務が被りすぎるよね？brainstormを使っても使わなくても良い状態にするのが良いのかな？どうすべきなのか？
+
+ファイル構造計画ってディレクトリ構造の話？ないとおかしくなるね
+
+---
+
+いや、もう一気にやろう
+
+---
+
+いや、もう一気にやろう. コンテキストエンジニアリングとハーネスエンジニアリングについてしっかり反映してね
+
+---
+
+> Map which files will be created or modified, and each file's single responsibility. This section directly drives task boundaries and implementation briefs.
+      71 +
+      72 +### New Files
+      73 +| File Path | Responsibility | Component |
+      74 +|-----------|---------------|-----------|
+      75 +| | | |
+      76 +
+      77 +### Modified Files
+      78 +| File Path | Change Summary | Component |
+      79 +|-----------|---------------|-----------|
+      80 +| | | |
+ここまで詳しく書くべきかな？(design.mdに1000行制限が入ってたりするんだよね...むしろそれをもう少し拡張すべき？1500行くらいに？)
+
+---
+
+design.mdって例えば超複雑なCRMアプリつくると相当デカくなるよね？ directoryって具体ファイルまで書くべき？重複はめんどい
+
+---
+
+harness engineering https://openai.com/en-US/index/harness-engineering/から参考になるところってある？cc-sddに取り入れるべきところは？(まだ更新しないで)
+
+---
+
+今回のPRにいれましょうか最もインパクトが大きいやついれましょうか
+
+---
+
+ドキュメントとか利用方法のドキュメントとか更新すべきところあるかな？
+
+---
+
+どう修正するか教えてまず
+
+---
+
+今回cc-sdd 3.0でいくので一旦その更新時にやるべき. それ以外のガイド系は修正していきたい.
+
+そもそもの体験自体の変更があればそれも修正してね
+
+---
+
+kiro-impltてsubagentsにspawnできるようになってるよね？
+
+---
+
+ちなみにskillsで他にコンテキスト分離すべきところとかsubagentsにspawnすべきところってある？
+
+---
+
+spec-designはspawnできるようにした気がするけどそうなってないならspawnできるようにして欲しい、validateも同様です validateはimplのreviewer似合ったいくつかの要素取り込むべきところあるっけ？
+
+---
+
+codexのmulti-agentはcodexのspawnの仕方にちゃんと従ってるかな？他のも含めて？
+
+---
+
+自然言語でいいや. 長期的に考えると状況によってsubagentsを生成が多分そうなるはず
+
+---
+
+claude code skillsって$ARGUMENTSとかいろんな引数使えるけどどこまで使うべきかな？
+
+---
+
+$ARGUMENTSはoptionの引数とか考えたらどうすべきなのかな？${CLAUDE_SKILL_DIR}はあっても良いけどcodexと変わりすぎるのはよくないのかな？それともclaude codeはclaude codeに適用させた方が良いかな？
+
+---
+
+そうしようか
+
+---
+
+次にtasks作成とimplの間の体験がちょっと問題で、tasksをOKと判断しても-yみたいなフラグがないからすぐに次にいけない問題あるんだよね...
+
+---
+
+3にしましょうか
+
+---
+
+localでテストしたいけど、別のdirectoryでnpxでインストールする方法ってどうするんだっけ？
+
+---
+
+npxde
+
+---
+
+npxで試したいんだが...
+
+---
+
+sh: /Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/cc-sdd-2.1.1.tgz: Permission denied
+
+---
+
+これまでこれでいけてたのにな...
+
+---
+
+そんなことある？
+
+---
+
+このあたりのTUIの表示ってなんかもっと良い感じにできない？
+
+Planned changes:
+  • Commands (.claude/skills/) — new (28 file(s))
+  • Project Memory document (CLAUDE.md) — new (1 file(s))
+  • Settings templates and rules (.kiro/settings/) — new (16 file(s))
+
+✅ Setup completed: written=45, skipped=0
+
+---
+
+入れましょう. あと情報に色つけた方が良いよね？古い--claudeとか使ってるならこっちを使えの推奨とか
+
+---
+
+—の文字は使わないで
+
+---
+
+なんか線が微妙にずれたりしてるよ？
+
+---
+
+--codexのpromptsとかはすでに使えないんだよね.
+
+---
+
+次からだいぶ話が変わります。kiro-brainstormなのですが、例えば超複雑なものを作りたい時に下記のように複数のspecsに分けるようになってるのですが、こうなった時にspec-initって一つしかspec作れないことがだいぶ問題になりそうで、これどうするのが良いのかな？複雑さも上がるんよね...
+
+/kiro-brainstorm
+Notionをできる限り再現するローカルデスクトップアプリ。ブロックエディタ（テキスト、見出し、TODO、箇条書き、番号リスト、トグル、引用、コードブロック、コールアウト、区切り線、画像）
+
+、スラッシュコマンドでブロック挿入、ドラッグ&ドロップ並び替え、インラインスタイル（太字・斜体・コード・リンク・色）。ページは無限階層でネスト可能、アイコンとカバー画像あり。データベ
+  ース機能はテーブル・カンバン・リスト・ギャラリーの4ビュー、プロパティ（テキスト・数値・セレクト・マルチセレクト・日付・チェックボックス・URL）、フィルタとソート対応、各行がページと
+  して開ける。サイドバーにページツリー・検索・お気に入り・ゴミ箱。CLIからページ作成・ブロック追加・検索・エクスポートができてGUIにリアルタイム反映。Electron + React +
+  SQLiteでローカル完結。
+
+  Searched for 2 patterns, read 1 file (ctrl+o to expand)
+
+⏺ かなり詳細な構想ですね。既存のステアリングやスペックはまだないクリーンなプロジェクトです。
+
+  まず最も重要な点として — この構想は単一のスペックには大きすぎます。Notionクローンは複数の独立した機能領域にまたがるため、段階的に分割して開発する必要があります。
+
+  いくつか確認させてください：
+
+  1. 最初にどこから価値を出したいですか？
+
+  以下の中で最優先はどれでしょう：
+
+  - A) ブロックエディタ: テキスト編集体験が核。まずこれがないと他が成り立たない
+  - B) ページ管理: 階層構造・サイドバー・ナビゲーション
+  - C) データベース: テーブル/カンバン等のビュー機能
+  - D) CLI連携: CLIからの操作とGUIリアルタイム同期
+
+  個人的な推奨は A → B → C → D の順です。理由：ブロックエディタはアプリの心臓部であり、ページ管理はその上に乗り、データベースはさらにその上に乗る構造だからです。
+
+  2. ユーザーは誰ですか？
+
+  - 自分専用のツール？
+  - チームや他の人にも配布する想定？
+  - （これによりインストーラー、設定管理、データ移行などのスコープが変わります）
+
+  この2点を教えてください。それに基づいてフィーチャー分割案とアプローチを提案します。
+
+❯ 自分専用です。A, B, C, D全部重要で、できる限り自分が出したもの以外でもnotionの体験に寄せたい
+
+⏺ 了解です。自分専用で、Notionの体験をできる限り再現したい。ゴールが明確なので、アーキテクチャのアプローチと分割戦略を提案します。
+
+  ---
+  アプローチ提案
+
+  アプローチ A: ボトムアップ（データモデル中心）
+
+  どう作るか: まずSQLiteのブロック・ページ・データベースのスキーマを堅牢に設計し、その上にCRUD API → React UI
+  の順で積み上げる。TipTapやProseMirrorなどの既存エディタフレームワークは使わず、自前ブロックモデルで構築。
+
+  - Pros: データ構造が最適化される、CLI連携が自然、将来の拡張に強い
+  - Cons: エディタ体験の品質を自力で確保する必要がある、開発量が多い
+  - 規模: 特大
+
+  アプローチ B: エディタフレームワーク活用（推奨）
+
+  どう作るか: BlockNoteやNovel（TipTap/ProseMirror系）をブロックエディタの基盤に採用し、Notionライクなスラッシュコマンド・ドラッグ&ドロップ・インラインスタイルを高速に実現。ページ管理
+  ・データベース・CLIは自前で構築。SQLiteはメインプロセス側でbetter-sqlite3で管理し、IPCでレンダラーと通信。
+
+  - Pros: エディタ体験が最初から高品質、Notionに近いUX を最短で実現、スラッシュコマンド/D&D/インラインスタイルが組み込み済み
+  - Cons: フレームワークの制約に合わせる場面がある、カスタムブロック追加にはフレームワーク理解が必要
+  - 規模: 大（ただしAより大幅に少ない）
+
+  アプローチ C: 既存OSSフォーク
+
+  どう作るか: AFFiNE、AppFlowy等のオープンソースNotionクローンをフォークして、SQLiteローカル完結に改造する。
+
+  - Pros: 完成度の高いUIが最初から手に入る
+  - Cons: 他人のアーキテクチャに縛られる、フォーク元との差分管理が困難、学びが少ない                                                                                                     - 規模: 中（ただし改造コストは予測困難）
+                                                                                                                                                                                         ---
+  推奨: アプローチ B
+
+  理由：ブロックエディタの品質がNotionの体験の8割を決めます。BlockNoteはNotionクローン用途に設計されており、スラッシュコマンド・D&D・インラインスタイルが最初から揃っています。残りのペ
+  ージ管理・データベース・CLI・サイドバーは自前で作り込むことで、自由度とNotionらしさを両立できます。
+
+  ---
+  フィーチャー分割案（アプローチBの場合）
+
+  依存関係順に6つのスペックに分割：
+
+  ┌─────┬─────────────────┬───────────────────────────────────────────────────────────────────────────────────────────┬───────┐
+  │  #  │ フィーチャー名  │                                           内容                                            │ 依存  │
+  ├─────┼─────────────────┼───────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │ 1   │ core-foundation │ Electron+React+SQLiteのプロジェクト基盤、IPCアーキテクチャ、ブロック/ページのデータモデル │ なし  │
+  ├─────┼─────────────────┼───────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │ 2   │ block-editor    │ BlockNote統合、全ブロックタイプ、スラッシュコマンド、D&D、インラインスタイル              │ 1     │
+  ├─────┼─────────────────┼───────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │ 3   │ page-management │ 無限階層ページ、アイコン/カバー画像、サイドバー（ツリー・検索・お気に入り・ゴミ箱）       │ 1,2   │
+  ├─────┼─────────────────┼───────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │ 4   │ database-views  │ テーブル/カンバン/リスト/ギャラリー、プロパティ、フィルタ/ソート、行→ページ展開           │ 1,2,3 │
+  ├─────┼─────────────────┼───────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │ 5   │ cli-integration │ CLIコマンド（ページ作成・ブロック追加・検索・エクスポート）、GUIリアルタイム反映          │ 1,2,3 │
+  ├─────┼─────────────────┼───────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │ 6   │ polish-and-ux   │ Notionらしい細部（アニメーション、キーボードショートカット、ダークモード、パンくず等）    │ 全て  │
+  └─────┴─────────────────┴───────────────────────────────────────────────────────────────────────────────────────────┴───────┘
+
+  このアプローチと分割で進めてよいですか？ 調整したい点があれば教えてください。承認いただければプロジェクト記述をまとめます。
+
+❯ Bでいきましょうか
+
+⏺ Project Description
+
+  Who: 個人開発者（自分専用ツール）
+
+  Current situation: NotionはクラウドベースでローカルDBに依存しておらず、オフライン完結・CLI連携・データ所有の観点で自分の理想と合わない。ローカル完結のNotionクローンは既存OSSにあるが
+  、自分の要件と技術スタックに最適化されたものはない。
+
+  What should change:
+  Notionの体験をできる限り再現したローカルデスクトップアプリを構築する。ブロックエディタ、無限階層ページ、データベース4ビュー、サイドバー、CLI連携をすべて備え、Electron + React +
+  SQLiteでローカル完結する。
+
+  Approach: BlockNote（TipTap/ProseMirror系）をブロックエディタ基盤に採用し、スラッシュコマンド・ドラッグ&ドロップ・インラインスタイルを高速に実現。ページ管理・データベースビュー・CLI
+  連携・サイドバーは自前で構築。SQLiteはメインプロセス側でbetter-sqlite3で管理し、IPCでレンダラーと通信。
+
+  Scope:
+  - In: ブロックエディタ（テキスト/見出し/TODO/箇条書き/番号リスト/トグル/引用/コードブロック/コールアウト/区切り線/画像）、スラッシュコマンド、D&D並び替え、インラインスタイル（太字/
+  斜体/コード/リンク/色）、無限階層ページ（アイコン/カバー画像）、データベース（テーブル/カンバン/リスト/ギャラリー）、プロパティ7種、フィルタ/ソート、行→ページ展開、サイドバー（ペー
+  ジツリー/検索/お気に入り/ゴミ箱）、CLI（ページ作成/ブロック追加/検索/エクスポート→GUIリアルタイム反映）、Notionらしい細部のUX
+  - Out: マルチユーザー/共同編集、クラウド同期、Web公開、APIサーバー、モバイル対応
+
+  Constraints: Electron + React + SQLite（better-sqlite3）、BlockNoteエディタフレームワーク、ローカル完結（ネットワーク不要）
+
+  Feature decomposition (6 specs, dependency order):
+  1. core-foundation — Electron+React+SQLite基盤、IPC、データモデル
+  2. block-editor — BlockNote統合、全ブロックタイプ、スラッシュコマンド、D&D、インラインスタイル
+  3. page-management — 無限階層ページ、アイコン/カバー、サイドバー
+  4. database-views — 4ビュー、プロパティ、フィルタ/ソート、行→ページ
+  5. cli-integration — CLI操作、GUIリアルタイム反映
+  6. polish-and-ux — アニメーション、キーボードショートカット、ダークモード等
+
+  ---
+  最初のスペック作成を始める準備ができました：
+
+  /kiro-spec-init core-foundation
+
+  上記を実行すると、フィーチャー1のスペック駆動開発が始まります。
+
+---
+
+多分別セッションでやることを考えないといけないよね.
+
+---
+
+steeringなのかな...
+
+---
+
+既存プロジェクトならどうしよう...
+
+---
+
+既存プロジェクトでspecs/を更新するだけでOKなやつとかあればどうするの？それも新しく作るの？
+
+---
+
+これってbrainstormがやるべきこと？それとも...
+
+---
+
+本当にそれで大丈夫？
+
+---
+
+あとそもそもfeaturesごとに分けるのがユーザーストーリー？シナリオ？PdMとかのやり方と一致する？大丈夫そうなら問題はないよ あと1.5とか作らないで整数で
+
+---
+
+kiro-brainstormはコンテキストエンジニアリング的に問題ない？
+
+---
+
+修正しましょう
+
+---
+
+superpowersってちなみにどうしてる？
+
+---
+
+brainstormでやったことがsessionを切り替えても伝わる状態になってるかな？
+
+---
+
+specsが複数に分割される時はどう考えるべき？
+
+---
+
+ちなみに実装とともに考え変わっていくけどその時どうするの？一つ一つ進めていくと思うんですが
+
+---
+
+brainstormでやった分析かつこのプロジェクトのアイデアでやらなきゃいけないこと忘れるのでは？
+
+---
+
+brainstormのやつってroadmapに入れるで良いのかな？
+
+---
+
+ユーザーにとって分かりやすいのはどうするの？そうすると複雑じゃない？
+
+---
+
+そうしようか.
+
+---
+
+brainstormやspec-quick等でsubagentsとしてspawnすべきところはspawnするようにしてください(コンテキストは有限です)
+
+その後のstepとかで変更すべきところある？spec-design/requirements/tasks/　とかどうすべきかな？(まだ修正しないで)
+
+---
+
+お願いします
+
+---
+
+修正されたやつでやり直した結果です。これsession切り替えたら終わるのでは？問題や原因あるかな？
+
+❯ /kiro-brainstorm
+Notionをできる限り再現するローカルデスクトップアプリ。ブロックエディタ（テキスト、見出し、TODO、箇条書き、番号リスト、トグル、引用、コードブロック、コールアウト、区切り線、画像）
+
+、スラッシュコマンドでブロック挿入、ドラッグ&ドロップ並び替え、インラインスタイル（太字・斜体・コード・リンク・色）。ページは無限階層でネスト可能、アイコンとカバー画像あり。データベ
+  ース機能はテーブル・カンバン・リスト・ギャラリーの4ビュー、プロパティ（テキスト・数値・セレクト・マルチセレクト・日付・チェックボックス・URL）、フィルタとソート対応、各行がページと
+  して開ける。サイドバーにページツリー・検索・お気に入り・ゴミ箱。CLIからページ作成・ブロック追加・検索・エクスポートができてGUIにリアルタイム反映。Electron + React +
+  SQLiteでローカル完結。
+
+  Searched for 2 patterns, read 1 file (ctrl+o to expand)
+
+⏺ 非常に詳細な構想ですね。技術スタック（Electron + React + SQLite）も明確で、やりたいことがはっきりしています。
+
+  ただし、これは 単一のspecで扱うには大きすぎます。機能を分解すると以下のような規模感です：
+
+  ┌──────────────────────────────────────────────────────────────────────────┬──────────────┐
+  │                                 機能領域                                 │ 概算タスク数 │
+  ├──────────────────────────────────────────────────────────────────────────┼──────────────┤
+  │ ブロックエディタ（11種 + スラッシュコマンド + D&D + インラインスタイル） │ 15-20        │
+  ├──────────────────────────────────────────────────────────────────────────┼──────────────┤
+  │ ページ管理（無限階層 + アイコン/カバー）                                 │ 8-10         │
+  ├──────────────────────────────────────────────────────────────────────────┼──────────────┤
+  │ データベース（4ビュー + 7プロパティ + フィルタ/ソート）                  │ 15-20        │
+  ├──────────────────────────────────────────────────────────────────────────┼──────────────┤
+  │ サイドバー（ツリー + 検索 + お気に入り + ゴミ箱）                        │ 6-8          │
+  ├──────────────────────────────────────────────────────────────────────────┼──────────────┤
+  │ CLI連携 + リアルタイム反映                                               │ 5-8          │
+  ├──────────────────────────────────────────────────────────────────────────┼──────────────┤
+  │ アプリ基盤（Electron + SQLite + プロジェクト構造）                       │ 5-8          │
+  └──────────────────────────────────────────────────────────────────────────┴──────────────┘
+
+  合計: 50-70タスク — 5-6個のspecに分割するのが現実的です。
+
+  そこで2点確認させてください：
+
+  1. MVP（最小限の動くもの）としてどこから始めたいですか？
+
+  - A) アプリ基盤 + ブロックエディタ（まず「書ける」状態を作る）
+  - B) アプリ基盤 + ページ管理（まず「ページのツリー構造」を作る）
+  - C) 全部を薄く一気に（各機能の最小版を同時に作る）
+
+  私の推奨は A → ページ管理 → サイドバー → データベース → CLI の順です。エディタが動かないと他の機能を検証できないためです。
+
+  2. 想定するユーザーは自分だけですか？それとも他の人にも配布する予定ですか？
+  （インストーラー、自動アップデート、データ移行などのスコープに影響します）
+
+❯ 全部しっかりしたものを作りたいです. 今は自分だけです
+
+⏺ 了解です。自分専用なのでインストーラーや自動アップデートは不要、しっかり作り込む方針ですね。
+
+  では、6つのspecに分割する順序戦略を2つ提案します。
+
+  ---
+  アプローチA: レイヤー積み上げ型（推奨）
+
+  各specが前のspecの上に積み上がる。常に動くアプリがある状態で進む。
+
+  ┌──────┬────────────────────┬─────────────────────────────────────────────────────────────────────┬─────────┐
+  │ 順序 │        Spec        │                                内容                                 │  依存   │
+  ├──────┼────────────────────┼─────────────────────────────────────────────────────────────────────┼─────────┤
+  │ 1    │ app-foundation     │ Electron + React + SQLite基盤、データモデル設計、基本ウィンドウ     │ なし    │
+  ├──────┼────────────────────┼─────────────────────────────────────────────────────────────────────┼─────────┤
+  │ 2    │ block-editor       │ 全11ブロック種、スラッシュコマンド、D&D、インラインスタイル         │ 1       │
+  ├──────┼────────────────────┼─────────────────────────────────────────────────────────────────────┼─────────┤
+  │ 3    │ page-management    │ 無限階層ネスト、アイコン、カバー画像、ページCRUD                    │ 1, 2    │
+  ├──────┼────────────────────┼─────────────────────────────────────────────────────────────────────┼─────────┤
+  │ 4    │ sidebar-navigation │ ページツリー、検索、お気に入り、ゴミ箱                              │ 1, 3    │
+  ├──────┼────────────────────┼─────────────────────────────────────────────────────────────────────┼─────────┤
+  │ 5    │ database-views     │ テーブル/カンバン/リスト/ギャラリー、プロパティ7種、フィルタ/ソート │ 1, 2, 3 │
+  ├──────┼────────────────────┼─────────────────────────────────────────────────────────────────────┼─────────┤
+  │ 6    │ cli-integration    │ CLIコマンド群、IPC経由のリアルタイムGUI反映                         │ 1-5     │
+  └──────┴────────────────────┴─────────────────────────────────────────────────────────────────────┴─────────┘
+
+  メリット: 各段階で動くものが確認できる。依存が明確。
+  デメリット: 後半のspecが前提を多く持つので、初期設計が重要。
+
+  ---
+  アプローチB: コア+拡張型
+
+  最初に薄く全体を作り、後から各領域を深掘りする。
+
+  ┌──────┬─────────────────┬────────────────────────────────────────────────────────────────┐
+  │ 順序 │      Spec       │                              内容                              │
+  ├──────┼─────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 1    │ core-app        │ 基盤 + 基本エディタ(3ブロック) + 単階層ページ + 最小サイドバー │
+  ├──────┼─────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 2    │ full-editor     │ 残り8ブロック + スラッシュコマンド + D&D + インラインスタイル  │
+  ├──────┼─────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 3    │ page-hierarchy  │ 無限階層 + アイコン/カバー + ゴミ箱                            │
+  ├──────┼─────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 4    │ sidebar-search  │ ツリー強化 + 全文検索 + お気に入り                             │
+  ├──────┼─────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 5    │ database-views  │ データベース全機能                                             │
+  ├──────┼─────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 6    │ cli-integration │ CLI全機能                                                      │
+  └──────┴─────────────────┴────────────────────────────────────────────────────────────────┘
+
+  メリット: 早期に全体像が見える。
+  デメリット: Spec 1が中途半端になり、後から作り直しが発生しやすい。
+
+  ---
+  「しっかり作りたい」という方針なら アプローチA が合います。Spec 1でデータモデルとアーキテクチャをしっかり設計すれば、後続のspecがブレにくくなります。
+
+  アプローチAで進めてよいですか？ 承認いただければ、まず Spec 1 app-foundation のプロジェクト記述をまとめます。
+
+❯ Aでいきましょうか
+
+⏺ では、6つのspecそれぞれのプロジェクト記述をまとめます。まず Spec 1 から始めて、順次 /kiro-spec-init で進めていく形です。
+
+  ---
+  Spec 1: app-foundation
+
+  Who: 自分（個人開発者）。Notionライクなローカルアプリを構築するための堅牢な基盤が必要。
+
+  Current situation: プロジェクトは空の状態。Electron + React + SQLiteで動く基盤がまだない。
+
+  What should change: 後続の全機能（ブロックエディタ、ページ管理、データベース、CLI）を載せられる堅牢なアプリケーション基盤ができている。具体的には：
+  - Electron + React + TypeScriptのプロジェクト構造（メインプロセス/レンダラープロセス分離）
+  - SQLiteデータベース（better-sqlite3）の初期化とマイグレーション基盤
+  - 全機能を見据えたデータモデル設計（ブロック、ページ、データベース、プロパティのスキーマ）
+  - IPC通信レイヤー（メイン⇔レンダラー間の型安全な通信）
+  - 基本ウィンドウ表示（空のエディタ領域 + サイドバー領域のレイアウト骨格）
+  - 開発環境（ホットリロード、ビルド、lint）
+
+  Approach: Electron + React + TypeScript +
+  better-sqlite3。Viteでレンダラーをバンドル。データモデルはNotionのブロックモデルを参考に、全ブロック・ページ・データベースを統一的に扱えるツリー構造で設計する。
+
+  Scope:
+  - IN: プロジェクト構造、Electron設定、SQLiteスキーマ設計とマイグレーション、IPC基盤、レイアウト骨格、開発環境
+  - OUT: エディタの実装、ページの表示・編集、サイドバーの機能、データベース機能、CLI
+
+  Constraints: Electron + React + TypeScript + SQLite（better-sqlite3）。ローカル完結。パッケージマネージャーは任意（npm/pnpm/yarn）。
+
+  ---
+  後続Specの概要（Spec 2-6）
+
+  ┌─────┬────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │  #  │      Feature       │                                                 概要                                                  │
+  ├─────┼────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ 2   │ block-editor       │ 全11ブロック種、スラッシュコマンド、D&D並び替え、インラインスタイル（太字・斜体・コード・リンク・色） │
+  ├─────┼────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ 3   │ page-management    │ 無限階層ネスト、ページCRUD、アイコン・カバー画像設定                                                  │
+  ├─────┼────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ 4   │ sidebar-navigation │ ページツリー表示、全文検索、お気に入り、ゴミ箱（ソフトデリート・復元）                                │
+  ├─────┼────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ 5   │ database-views     │ テーブル/カンバン/リスト/ギャラリーの4ビュー、7種プロパティ、フィルタ・ソート、行をページとして開く   │
+  ├─────┼────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ 6   │ cli-integration    │ CLIからページ作成・ブロック追加・検索・エクスポート、IPC経由でGUIリアルタイム反映                     │
+  └─────┴────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  ---
+  Spec 1 app-foundation から始めましょう。次のコマンドで仕様策定を開始できます：
+
+  /kiro-spec-init app-foundation
+
+  進めますか？
+
+❯ /kiro-spec-init app-foundation
+
+  Searched for 1 pattern, read 2 files (ctrl+o to expand)
+
+⏺ 名前の衝突なし、テンプレート確認済み。ファイルを作成します。
+
+⏺ Bash(mkdir -p /Users/gota/Documents/projects/zz-cc-sdd/cc-sdd-v3.0.0-test01/.kiro/specs/app-foundation)
+  ⎿  Done
+
+⏺ Write(.kiro/specs/app-foundation/spec.json)
+  ⎿  Wrote 22 lines to .kiro/specs/app-foundation/spec.json
+       1 {
+       2   "feature_name": "app-foundation",
+       3   "created_at": "2026-04-06T00:00:00+09:00",
+       4   "updated_at": "2026-04-06T00:00:00+09:00",
+       5   "language": "ja",
+       6   "phase": "initialized",
+       7   "approvals": {
+       8     "requirements": {
+       9       "generated": false,
+      10       "approved": false
+     … +12 lines (ctrl+o to expand)
+
+⏺ Write(.kiro/specs/app-foundation/requirements.md)
+  ⎿  Wrote 25 lines to .kiro/specs/app-foundation/requirements.md
+       1 # Requirements Document
+       2
+       3 ## Project Description (Input)
+       4 Notionをできる限り再現するローカルデスクトップアプリの基盤構築。Electron + React + TypeScript + SQLite（better-sqlite3）でローカル完結するアプリケーションの土台を作る
+         。
+       5
+       6 **Who**: 個人開発者（自分自身）。Notionライクなローカルアプリを段階的に構築するための堅牢な基盤が必要。
+       7
+       8 **Current situation**: プロジェクトは空の状態。後続機能（ブロックエディタ、ページ管理、データベース、サイドバー、CLI連携）を載せるためのアプリケーション基盤がまだ存在
+         しない。
+       9
+      10 **What should change**: 後続の全機能を載せられる堅牢なアプリケーション基盤ができている。具体的には：
+     … +15 lines (ctrl+o to expand)
+
+⏺ Spec初期化完了: app-foundation
+
+  Feature名: app-foundation — Notionクローンの全機能を支えるアプリケーション基盤であるため。
+
+  概要: Electron + React + TypeScript + SQLiteによるローカルデスクトップアプリの基盤構築。
+
+  作成ファイル:
+  - .kiro/specs/app-foundation/spec.json
+  - .kiro/specs/app-foundation/requirements.md
+
+  次のステップ:
+  /kiro-spec-requirements app-foundation
+
+  補足: 現段階では初期化のみ実施しました。要件定義（requirements）→ 設計（design）→ タスク分解（tasks）→ 実装という段階的なワークフローに従い、各フェーズで承認を得てから次に進みます。
+
+---
+
+単純にnpxで更新されてなかっただけではないよね？
+
+---
+
+brainstormってaskuserquestionあるんだっけ？
+
+---
+
+というか今npxのやつ更新されてる？2.1.1のやつ
+
+---
+
+localでやりたい
+
+---
+
+OK. こうなるのであれば、やらなきゃいけないのが、並列でspec-initからタスクまで作れるようにすべきかな？(そういうskillsとかあった方が良いのかなあ？)
+
+---
+
+brainstormって複数のspecs/のfeaturesが必要になると思うんだけどそれを並列でできないとものすごい時間がかかりそう
+
+---
+
+Aだとユーザー使いたくなくなるのでは？
+
+---
+
+tasks.mdまでautoでできるんだっけ？これで
+
+---
+
+そうだね. そうしましょう
+
+---
+
+spec-batchって複数のspec(tasksまで)を一括でできるで良いんだっけ？
+
+---
+
+OK. コンテキスト分離できるところは分離してね
+
+---
+
+<task-notification>
+<task-id>af408742084079b9f</task-id>
+<tool-use-id>toolu_015ceAe961wzf9eYn8Q88xod</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/203b229e-a801-499b-a6bb-a79f3891ce56/tasks/af408742084079b9f.output</output-file>
+<status>completed</status>
+<summary>Agent "Update brainstorm for all briefs" completed</summary>
+<result>All edits are applied. Here is a summary of changes made to both files:
+
+**Files edited:**
+- `/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-brainstorm/SKILL.md`
+- `/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/templates/agents/codex-skills/skills/kiro-brainstorm/SKILL.md`
+
+**Changes in both files (4 locations each):**
+
+1. **Step 7, Path D file output**: Changed from writing only the first feature's `brief.md` to writing **all** features' `brief.md` files. The claude-code-skills version says "Use the Write tool to create each brief" while the codex-skills version says "Write each brief to disk". Both reference the new `spec-batch` command.
+
+2. **Step 8, Path D next step**: Changed from suggesting `spec-init <first-feature-name>` to suggesting `spec-batch` with a note about parallel creation based on roadmap.md dependency order.
+
+3. **Step 8, Re-entry next step**: Added `spec-batch` as an alternative option when multiple specs remain.
+
+4. **Output Description, Path D**: Changed from "first spec's `brief.md` written + `spec-init` for first spec" to "all specs' `brief.md` written + `spec-batch` for parallel spec creation".
+
+5. **Output Description, Re-entry**: Added `spec-batch` as an alternative to `spec-init` for remaining specs.</result>
+<usage><total_tokens>21763</total_tokens><tool_uses>14</tool_uses><duration_ms>45615</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/203b229e-a801-499b-a6bb-a79f3891ce56/tasks/af408742084079b9f.output
+
+---
+
+npxで使えるようにupdateしてlocalでテストする
+
+---
+
+あれ、今ってAgent Skillsを使えるっけ？(好きなAgent Skills)
+
+---
+
+今技術的に最新情報かどうかとかってbrainstormで判断してないけど、これってdesign側で担保されてるの？
+
+---
+
+そうだね、逆に他にも調べとかなきゃいけないことある？
+
+---
+
+はい
+
+---
+
+yes
+
+---
+
+codex-skillsのskillsって.agents/skills/にインストールされる？
+
+---
+
+codexの--codexが古いことがわからなくない？今のTUIだと色も含めて というかなくす？
+
+---
+
+1でいきましょう
+
+---
+
+そういえば、codexでspawnするとgpt-5.4-mini highになるのですがなんでだろう？
+
+---
+
+そういえば、codexでspawnするとgpt-5.4-mini highになるのですがなんでだろう？実装フェーズはまだ良いとしてplannningフェーズは良いモデル使いたい
+
+---
+
+codexのは特にspec作る段階はgpt-5.4 highが良いと思うんだよね. 個人的に.  確認したいです
+
+---
+
+少なくともspec-batchとかでのrequirements/design/tasks/等のreviewerとかあるならgpt-5.4 highが良さそうね. それか、spec-batchの後にレビューを徹底的にやるかですかね？
+
+---
+
+kiro-spec-batchに最後にcross reviewをspawnするsubagent(gpt-5.4 hith)を入れた方が良いのでは？
+
+---
+
+無限ループは避けるため修正は3回までにするか. .codex/agents/に書かなくても大丈夫な方法ないよね？
+
+---
+
+下記指摘されたのですが？(skills)
+サブエージェントへのプロンプトで .kiro/settings/rules/ という間違ったパスを指定していたため、ルールファイルが読めず、レビューゲートが適用されていない可能性が高いです。
+
+---
+
+kiro-spec-batchでそれぞれのtemplatesファイルって読む必要あるの？
+
+---
+
+コンテキスト分離の考えもそっちである米よね？fix
+
+---
+
+他にコンテキストエンジニアリングとかコンテキスト分離とかでおかしい箇所ないかな？
+
+---
+
+お願いします
+
+---
+
+<task-notification>
+<task-id>a8798119d80587b6d</task-id>
+<tool-use-id>toolu_01YCaCRrMwF4uKgmWCkVUKrv</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/203b229e-a801-499b-a6bb-a79f3891ce56/tasks/a8798119d80587b6d.output</output-file>
+<status>completed</status>
+<summary>Agent "Fix spec-status issues" completed</summary>
+<result>All five fixes have been applied:
+
+1. **`$1` replaced with `$ARGUMENTS`** -- All 4 occurrences (lines 23, 25, 72 in the new file, plus the original "Generate status report for feature **$1**" line which was restructured into the Core Mission section).
+
+2. **`allowed-tools` updated** -- Changed from `Bash, Read, Glob, Write, Edit, MultiEdit, Update` to `Read, Glob, Grep` (line 4), matching the read-only nature of this status reporting skill.
+
+3. **`<background_information>` / `</background_information>` tags removed** -- Content preserved and restructured into the `## Core Mission` section.
+
+4. **`<instructions>` / `</instructions>` tags removed** -- Content preserved and restructured into the `## Execution Steps` and `## Critical Constraints` sections.
+
+5. **Restructured to Markdown-based format** -- Now follows the same structure as other skills (e.g., `kiro-spec-design`, `kiro-validate-design`) with `## Role`, `## Core Mission`, `## Execution Steps` with `### Step N` subsections, `## Critical Constraints`, `## Tool Guidance`, `## Output Description`, and `## Safety & Fallback`.</result>
+<usage><total_tokens>19122</total_tokens><tool_uses>6</tool_uses><duration_ms>39990</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/203b229e-a801-499b-a6bb-a79f3891ce56/tasks/a8798119d80587b6d.output
+
+---
+
+<task-notification>
+<task-id>a080b1a20e6334d6f</task-id>
+<tool-use-id>toolu_01QoGeADWZGADK4DEdghsT6V</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/203b229e-a801-499b-a6bb-a79f3891ce56/tasks/a080b1a20e6334d6f.output</output-file>
+<status>completed</status>
+<summary>Agent "Fix validate-gap persistence" completed</summary>
+<result>Both files look correct. Here is a summary of the changes made:
+
+**claude-code-skills variant** (`/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-validate-gap/SKILL.md`):
+1. Added `Write` to the `allowed-tools` frontmatter line (now: `Read, Write, Grep, Glob, WebSearch, WebFetch`)
+2. Added **Step 5: Write Gap Analysis to Disk** after Step 4, with instructions to save to `{{KIRO_DIR}}/specs/{feature}/research.md`, append if the file already exists, and verify the write
+
+**codex-skills variant** (`/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/templates/agents/codex-skills/skills/kiro-validate-gap/SKILL.md`):
+1. No frontmatter change (codex has no `allowed-tools` field)
+2. Added numbered step **5. Write Gap Analysis to Disk** after step 4, with the same persistence instructions using `$1` for the feature name (matching the codex template's convention)
+
+Both include the note: "Write the gap analysis to disk so it survives session boundaries and can be referenced during design phase." -- matching the pattern used in kiro-brainstorm.</result>
+<usage><total_tokens>26529</total_tokens><tool_uses>10</tool_uses><duration_ms>43182</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/203b229e-a801-499b-a6bb-a79f3891ce56/tasks/a080b1a20e6334d6f.output
+
+---
+
+> cross-spec reviewにコンテキストバジェット(~3000行)追加
+これどういうこと？
+
+---
+
+reviewってsubagentsでやるんだよね？
+
+---
+
+そうだね. ハード制約は削除して
+
+---
+
+あとdesign.mdって1500行制約あったと思うけど、1000行の方が良いのかな？長すぎるとダメだよね？
+
+---
+
+そうしましょうか.
+
+---
+
+他にコンテキストエンジニアリング的におかしいところとか矛盾があるところあれば洗い出して欲しい.
+
+---
+
+他に問題があるところありますかね？
+
+---
+
+一応修正簡単にしておこうか(不要な指示はAgent迷いの原因になるからね)
+
+---
+
+codexの方もちゃんとclaude code skillsの修正反映されてるかな？
+
+---
+
+お願いします.
+
+---
+
+今ってspec-tasksとかってE2Eまで踏み込むようになってたっけ？
+
+---
+
+いや、designは？
+
+---
+
+どうすべきだと思う？
+
+---
+
+そうだよね. テストすべき重要なものとかテストの内容が開発に即した具体的なものになっているとか...
+
+---
+
+コンテキストが無駄に肥大化しているところとかない？あとsuperpowersと戦えるレベルにまでなったかな？
+
+---
+
+gapってどういうこと？
+
+---
+
+どれを入れるべきとかある？
+
+---
+
+skill発見ってhook設計が必要なの？今cc-sddってflagつきTDDでしたっけ？
+
+---
+
+1はやりましょうか. skill発見ってそういうことなの？
+
+---
+
+superpowersってhooksありきなの？
+
+---
+
+session-startのみなの？
+
+---
+
+skillsってclaude codeで最初に読み込まれてるよね？だからどのskillsをいつ使うかって記載する必要ないのでは？
+
+---
+
+skill discoveryにもし書くなら1%でも...というところは真似しても良いかもね(ぎゃくにそれだけ)
+
+---
+
+あと適切なskills(localとかにすでに読み込んでる) testの作り方とかdesignとか諸々該当があるやつあれば使うとかも書いた方が良いのかな？
+
+CLAUDE.mdとかAGENTS.mdはかなり重要かつハーネスエンジニアリングの肝でもありコンテキストを詰め込みすぎるのはダメだからね. 段階的開示が重要で最初から書かない方が良いこともあるかもだがからね
+
+---
+
+red flag防止って自然言語で防げるものなの？
+
+---
+
+そうしましょうか.
+
+---
+
+npmじゃそもそもダメなので(pnpm)ここら辺はありますが, 3はreviewerにまかすで今は良いのでは？本当にダメだった場合に入れるべきだと思います。現状問題起こってないです。変に複雑性を上げるにハーネスエンジニアリングはあくまでもモデルが進化すればハーネスを軽くするような変更容易性を高められる仕組みにすべきです
+
+---
+
+不要なコンテキストとか指示とかってある？Agentが迷わないようにしたいです.
+
+---
+
+もうちょっと具体的に教えてくれない？残すべきところもあるかもなので
+
+---
+
+skillsベースならroleとmissionなくてもよいのかもね。出力が変わってしまうルールとかは除外したらダメだよね？
+
+---
+
+そうですね. 迷うやつは除外しないでね
+
+---
+
+<task-notification>
+<task-id>a8385b30d72b8a284</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a8385b30d72b8a284.output</output-file>
+<status>completed</status>
+<summary>Agent "Trim brainstorm+batch+init" completed</summary>
+<result>All three files are trimmed and coherent. Here is a summary of what was done:
+
+**File 1: kiro-brainstorm/SKILL.md** (removed ~45 lines)
+- Removed "## Role" section (restated frontmatter description)
+- Removed "Mission" line from Core Mission (kept Success Criteria)
+- Removed 9 Critical Constraints items already covered by execution steps; kept "MUST write files before suggesting next command" (critical failure mode)
+- Removed Tool Guidance section (every bullet restated in the steps)
+- Removed Output Description section (Step 8 already specifies output per path)
+- Removed 4 Safety items ("Idea Too Large", "Existing Spec Overlap", "User Already Knows What to Build", "Context Growing Too Large") -- all restated in steps. Kept "Roadmap Already Exists (re-entry)" (complex re-entry flow)
+
+**File 2: kiro-spec-batch/SKILL.md** (removed ~20 lines)
+- Removed "## Role" section (restated frontmatter description)
+- Removed "Mission" line from Core Mission (kept Success Criteria)
+- Removed Tool Guidance section (every bullet restated in steps)
+- Removed Output Description section (Step 5 already specifies the summary format)
+- Removed "Missing brief.md" and "All specs already complete" Safety items (Steps 1 and 2 already handle these). Kept "Subagent failure", "Circular dependencies", "Roadmap not found" (specific error messages/commands)
+
+**File 3: kiro-spec-init/SKILL.md** (removed ~15 lines)
+- Removed `<background_information>` block entirely (Mission + Success Criteria restate frontmatter)
+- Collapsed 4 Important Constraints lines into 1 clear line
+- Removed Tool Guidance section (every bullet restated in steps)
+- Removed "Notes" item from Output Description (wastes tokens explaining what the user already knows)
+- Kept rest of Output Description (defines structured output format distinct from steps)</result>
+<usage><total_tokens>31778</total_tokens><tool_uses>20</tool_uses><duration_ms>161031</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a8385b30d72b8a284.output
+
+---
+
+<task-notification>
+<task-id>a2830ee1644d571b5</task-id>
+<tool-use-id>toolu_01ULdDttAVEuXGB7tZKmAM3d</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a2830ee1644d571b5.output</output-file>
+<status>completed</status>
+<summary>Agent "Trim spec-quick+requirements+design" completed</summary>
+<result>All three files have been trimmed. Here is a summary of the changes:
+
+**File 1: `kiro-spec-quick/SKILL.md`** (270 lines -> 232 lines)
+- Removed `<background_information>` block (Mission + Success Criteria that restated frontmatter)
+- Removed "Phase 1 Implementation Notes" constraint section (restated Phase 1 steps)
+- Removed "Automatic Mode Behavior" constraint section (restated CRITICAL section at top)
+- Removed "Interactive Mode Behavior" constraint section (each Phase already has its interactive prompt)
+- Removed Tool Guidance section (every bullet already stated in execution steps)
+- Removed "Argument Parsing" and "Feature Name Generation" from Safety (restated in Phase 1 steps)
+- Removed "Usage Guidance" section (user-facing advice, not agent instructions)
+- Trimmed Final Completion Summary from ~20 lines to ~10 lines
+- Kept: CRITICAL Automatic Mode section, Error Handling, Mode Banners, all error scenarios
+- Verified the `-y` flag descriptions: line 120 correctly says `-y` auto-approves requirements (for spec-design), line 138 correctly says `-y` auto-approves requirements, design, and tasks (for spec-tasks). No contradiction to fix.
+
+**File 2: `kiro-spec-requirements/SKILL.md`** (146 lines -> 127 lines)
+- Removed "## Role" section (restated frontmatter description)
+- Removed "Mission:" line from Core Mission (kept Success Criteria)
+- Removed "In main context" block in Step 2 Parallel Research (already stated in Step 1)
+- Removed "Requirements must be testable and verifiable" (duplicate of testable/unambiguous constraint)
+- Removed "Context Discipline" constraint (already in Step 1)
+- Removed Tool Guidance section
+- Removed "Ambiguous Requirements" from Safety (already in constraints)
+- Removed "Scope Ambiguity Found During Requirements Review" from Safety (already in Step 4)
+- Fixed missing blank line before "### Next Phase" heading
+- Kept: "Requirements Scope: WHAT, not HOW", Output Description, Next Phase guidance
+
+**File 3: `kiro-spec-design/SKILL.md`** (222 lines -> 200 lines)
+- Removed "## Role" section (restated frontmatter description)
+- Removed "Mission:" line from Core Mission (kept Success Criteria)
+- Removed "Load Design Template" sub-step in Step 4 (Step 1 already loads these)
+- Removed four Critical Constraints: "Latest Information", "Steering Alignment", "Template Adherence", "Design Focus" (all restated in execution steps)
+- Removed "Discovery Complexity Unclear" from Safety (Step 2 classification already handles all cases)
+- Removed Tool Guidance section
+- Kept: "Type Safety" constraint, "Requirements Traceability IDs" constraint, Output Description, all Safety error scenarios with specific messages/commands</result>
+<usage><total_tokens>39061</total_tokens><tool_uses>30</tool_uses><duration_ms>178520</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a2830ee1644d571b5.output
+
+---
+
+<task-notification>
+<task-id>a19d02492caa91342</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a19d02492caa91342.output</output-file>
+<status>completed</status>
+<summary>Agent "Trim tasks+impl+validate+status" completed</summary>
+<result>All four files have been verified and read coherently. Here is a summary of the changes:
+
+**File 1: kiro-spec-tasks/SKILL.md** (178 -> 164 lines)
+- Removed: Role section (restated frontmatter description)
+- Removed: Mission line (kept Success Criteria)
+- Removed: Tool Guidance section (2 lines, obvious from steps)
+- Removed: 6 Critical Constraints that duplicate `tasks-generation.md` rules ("Follow rules strictly", "Phase ordering", "Natural Language", "Complete Coverage", "Maximum 2 Levels", "Sequential Numbering")
+- Kept: 5 specific constraints (Task Integration, Boundary annotations, Explicit dependencies, Executable deliverable granularity, No implicit prerequisites), Output Description, all Safety error scenarios
+
+**File 2: kiro-impl/SKILL.md** (232 -> 199 lines)
+- Removed: First Role sentence (kept mode explanation)
+- Removed: Mission line (kept Success Criteria)
+- Removed: 14 Critical Constraints that duplicate execution steps
+- Removed: Tool Guidance section (5 lines)
+- Removed: "Session Interrupted" safety item (already in Step 3 context management)
+- Removed: "Next Phase: Validation" section (already in Step 4)
+- Kept: 3 constraints with specific numbers (Selective Staging, Bounded Review Rounds, Bounded Remediation), Output Description, remaining Safety error scenarios
+
+**File 3: kiro-validate-impl/SKILL.md** (194 -> 162 lines)
+- Removed: First sentence of Role (kept the "what this skill catches vs doesn't catch" framing)
+- Removed: Mission line (kept Success Criteria)
+- Removed: 7 Important Constraints duplicating steps ("Integration focus", "Mechanical first", "Conversation-aware", "Test-first focus", "Source numbering only", "Context Discipline", "Remediation required")
+- Removed: Tool Guidance section (5 lines)
+- Removed: Output Description section (Step 4 already defines the exact report format)
+- Removed: "Session Interrupted" safety item (validation is read-only)
+- Kept: "Strict Final Gate" constraint (specific 3-way decision logic), "What This Skill Does NOT Do" section, all Safety error scenarios with specific messages
+
+**File 4: kiro-spec-status/SKILL.md** (84 -> 59 lines)
+- Removed: Role section (restated frontmatter description)
+- Removed: Mission line (kept Success Criteria)
+- Removed: Critical Constraints (3 items, all restated in success criteria or steps)
+- Removed: Tool Guidance section (3 lines)
+- Removed: Output Description section (merged format line "Clear, scannable format with emojis for status" into Step 3)
+- Kept: Safety error scenarios, "List All Specs" section</result>
+<usage><total_tokens>38925</total_tokens><tool_uses>26</tool_uses><duration_ms>170953</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a19d02492caa91342.output
+
+---
+
+やる
+
+---
+
+READMEやguide(docs)等で更新すべき箇所は更新したいな！
+
+---
+
+<task-notification>
+<task-id>a3d92002ec3805030</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a3d92002ec3805030.output</output-file>
+<status>completed</status>
+<summary>Agent "Update root README for v3.0" completed</summary>
+<result>All edits are applied and verified. Here is a summary of the changes made to `/Users/gota/Documents/projects/cc-sdd/README.md`:
+
+1. **Skill count 12 to 14** -- Updated the `--codex-skills` comment from "12 skills" to "14 skills" (line 109), and added "with 14 skills" to the installation summary line (line 54).
+
+2. **--codex description** -- Changed from `# Codex CLI legacy mode (non-recommended)` to `# Codex CLI blocked (use --codex-skills)` (line 108).
+
+3. **brainstorm as optional entry point** -- Added `/kiro:brainstorm <idea>` with an "Optional" comment to the Quick Start command listing (line 45). Added `(brainstorm ->)` as an optional step in both the greenfield and brownfield workflows in the Use Cases table (lines 82-83).
+
+4. **kiro-brainstorm and kiro-spec-batch use cases** -- Added two new rows to the Use Cases table: "Rapid ideation" for `brainstorm` (line 84) and "Batch spec generation" for `spec-batch` (line 85).
+
+5. **spec-impl to kiro-impl** -- Updated workflow references from `spec-impl` to `kiro-impl` in the greenfield and brownfield use case rows (lines 82-83).
+
+6. **Version v2.0.0 to v3.0.0** -- Updated the Migration Guide description from "Upgrading from v1.x to v2.0.0" to "Upgrading from v1.x to v3.0.0" (line 148).</result>
+<usage><total_tokens>18520</total_tokens><tool_uses>7</tool_uses><duration_ms>59710</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a3d92002ec3805030.output
+
+---
+
+<task-notification>
+<task-id>a2325cba382f77a22</task-id>
+<tool-use-id>toolu_014oMUTzDhFUkZCGzLG4pKKx</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a2325cba382f77a22.output</output-file>
+<status>completed</status>
+<summary>Agent "Update guides for v3.0" completed</summary>
+<result>All four files look correct. Here is a summary of what was done:
+
+**File 1: `/Users/gota/Documents/projects/cc-sdd/docs/guides/spec-driven.md`**
+- Updated brainstorm description from "Optional" to "Entry Point" with action paths (A/B/C/D), brief.md + roadmap.md output, and session persistence
+- Added `/kiro-spec-batch` row to the Commands vs Skills Equivalents table
+- Added Feature Flag TDD (RED/GREEN) mention to `/kiro-impl` modes
+- Added new subsections: `/kiro-spec-batch` for Parallel Spec Creation (with cross-spec review and `.codex/agents/spec-reviewer.toml` mention) and Session Persistence via `brief.md`
+
+**File 2: `/Users/gota/Documents/projects/cc-sdd/docs/guides/command-reference.md`**
+- Updated brainstorm row in Key Differences table to mention entry point and action paths
+- Added `/kiro-spec-batch` row to the Key Differences table
+- Updated Skill Files list: enhanced brainstorm description, added `/kiro-spec-batch` with `spec-reviewer.toml` mention, enhanced `/kiro-impl` description with subagent dispatch detail
+- No stale `--claude-code` flag found (it was used descriptively, not as a command flag)
+
+**File 3: `/Users/gota/Documents/projects/cc-sdd/docs/guides/claude-subagents.md`**
+- Added "Entry Point: `/kiro-brainstorm`" subsection with action paths and brief.md persistence
+- Added "Parallel Spec Creation: `/kiro-spec-batch`" subsection with cross-spec review and `.codex/agents/spec-reviewer.toml` for Codex
+- Added brainstorm and spec-batch rows to the "When to Use Which Mode" comparison table
+
+**File 4: `/Users/gota/Documents/projects/cc-sdd/docs/guides/migration-guide.md`**
+- Added full "v2.x to v3.0" migration section (section 5) covering all requested changes: unified kiro-impl, Ralph Loop removal, --codex prompts blocked, new skills, brief.md + roadmap.md persistence, Feature Flag TDD, 14 skills, reinstall instructions
+- Renumbered subsequent sections (FAQ became 6, Takeaways became 7)</result>
+<usage><total_tokens>32901</total_tokens><tool_uses>24</tool_uses><duration_ms>142488</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a2325cba382f77a22.output
+
+---
+
+<task-notification>
+<task-id>a3e43b4ef8281e839</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a3e43b4ef8281e839.output</output-file>
+<status>completed</status>
+<summary>Agent "Update 3 READMEs for v3.0" completed</summary>
+<result>All three files are correctly updated. Here is a summary of all changes made:
+
+**Changes across all 3 README files:**
+
+1. **Skill counts: 12/13 -> 14** -- Updated in project structure trees (`.claude/skills/` and `.agents/skills/` comments) and in Codex CLI skill counts in installation commands and agent tables.
+
+2. **`--codex` mode: legacy -> blocked** -- Updated in:
+   - Installation command comments (e.g., "legacy mode (non-recommended)" -> "blocked -- use --codex-skills instead")
+   - Key Features bullet about `--codex` (e.g., "legacy mode kept for compatibility" -> "blocked, use --codex-skills")
+   - Supported AI Agents table row for Codex CLI
+   - Project structure tree comment for `.codex/prompts/`
+
+3. **Version: v2.0.0 -> v3.0.0** -- Updated the footer stable release line in all 3 files.
+
+**Files modified:**
+- `/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/README.md` (7 edits)
+- `/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/README_ja.md` (7 edits)
+- `/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/README_zh-TW.md` (7 edits)</result>
+<usage><total_tokens>44011</total_tokens><tool_uses>38</tool_uses><duration_ms>182234</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a3e43b4ef8281e839.output
+
+---
+
+cc-sdd v3.0の価値ってなんだと思う？
+
+---
+
+このハーネス価値ある？
+
+---
+
+どういう打ち出し方をすれば良いかな？
+
+---
+
+AIでプロダクト開発って今どこでもされてることでは？
+
+---
+
+下記は参考になる？
+結論から言うと、cc-sdd 3.0 の勝ち筋は「全部入りの agent OS」ではなく、**approved spec を executable work に変える、skills-first の軽量ハーネス**です。PR #141 は、もともとの cc-sdd の強みだった `Requirements → Design → Tasks` の規律に、**native subagent-driven implementation、独立 reviewer、feature-level final validation、brainstorm/brief/roadmap による前段整理**を足していて、単なる「仕様書生成器」から「仕様駆動の実行基盤」に寄っています。外部の比較でも、3月時点の cc-sdd は「要件→設計→タスクの規律」が強みで、レビュー工程や一気通貫の実装導線は前面に出ていないと見られていましたが、PR #141 はまさにその弱点を埋める方向です。 ([GitHub][1])
+
+いま一番強く押せるのは、**「少ない部品で end-to-end がつながる」こと**です。PR では外部の Ralph Loop 依存を落として `kiro-impl` に統合し、タスクごとに fresh subagent を立て、reviewer は実装者の自己申告ではなく実際の `git diff` を読む形に変わっています。さらに controller を軽く保つため、Task Brief の具体化や diff 読み取りを subagent 側に寄せ、`NEEDS_CONTEXT / BLOCKED / DONE_WITH_CONCERNS` のような正直な状態遷移も入っています。これは派手ではないですが、**長時間走るときに壊れにくい設計**としてかなり強いです。 ([GitHub][2])
+
+もう一つの強みは、**「変更容易性が高い」ことを実装で証明している**点です。共有ルールを skill ディレクトリに物理コピーせず、`metadata.shared-rules` で install 時解決に変えたことで、agent×skill の重複を減らして single source of truth に寄せています。これは README に書いてある「Customize once」に実体を与える変更で、あなたが言う「シンプルで不要物を減らす」「変えやすい」にかなり一致しています。競合が大きい surface area を持つほど、ここは差別化しやすいです。 ([GitHub][2])
+
+さらに、**spec を“文書”ではなく“制御面”にしている**のも売りやすいです。PR では design に File Structure Plan を追加し、それが task の `_Boundary_` や Task Brief に流れ、brainstorm は `brief.md` と `roadmap.md` を書いて次の skill に文脈を受け渡し、`spec-batch` では multi-spec を dependency wave でさばけるようになっています。つまり cc-sdd 3.0 は「requirements/design/tasks を作る」だけではなく、**その artifact が次工程の挙動を直接決める**構造になっています。ここはかなり本質的です。 ([GitHub][2])
+
+他の harness と並べると、立ち位置はかなり明確です。Everything Claude Code は、skills・instincts・memory optimization・security scanning・MCP・legacy shims まで含む大きなシステムで、2026年4月の公開面では 38 agents / 156 skills / 72 shims まで広がっていますし、Claude Code 側の制約で rules を手動インストールする手順も残っています。Superpowers は、auto-trigger される skills、worktree、TDD、subagent-driven-development まで含めた**完全な開発方法論**として打ち出しています。Claude Harness は 5 verbs と TypeScript guardrail engine を中心に、Plan→Work→Review→Release の**崩れにくい標準フロー**を主張しています。なので cc-sdd は、ここに「全部ある」「最強ガードがある」で戦うより、**最小 surface / spec-native / customize-once / cross-agent portability**で勝つのが自然です。 ([GitHub][3])
+
+なので売り文句は、次の軸が合っています。
+**1. Specs you can run.**
+**2. The lightweight harness for approved work.**
+**3. Kiro-compatible SDD rebuilt as portable skills.**
+
+日本語なら、
+**「仕様書を、読むものから実行するものへ。」**
+**「承認済み requirements / design を、実装・レビュー・最終検証までつなぐ最小ハーネス。」**
+**「全部入りではなく、壊れにくく変えやすい spec-to-implementation 基盤。」**
+あたりが強いです。
+
+README や LP の一行目も、今なら **“long-running autonomous implementation” 単体** より、**“approved specs become executable work”** を前に出すほうが差が伝わります。自律実装は競合も言いますが、「approved spec が実行可能な単位になる」は cc-sdd の artifact 設計とかなり噛み合っています。しかも current branch README 自体もその方向に寄せています。 ([GitHub][4])
+
+2026/4 以降に通用するかで言うと、**かなり通用する**と思います。理由は、agent ecosystem が skills を中心に収束しつつあるからです。Anthropic は Claude Code で custom commands を skills に統合し、skills は open Agent Skills standard に従い、必要時だけ読み込まれ、subagent execution と組み合わせられると説明しています。OpenAI も Codex で skills を reusable workflow の authoring format と位置づけ、CLI/IDE/app で使え、metadata だけ先に見せて必要時に `SKILL.md` を読む progressive disclosure を公式化しています。OpenAI API 側も skills を versioned bundle + `SKILL.md` manifest と定義し、open Agent Skills standard 互換としています。Warp も skills を agent として実行でき、ローカルでは `.claude/skills/`、`.codex/skills/`、`.cursor/skills/` などを自動 discovery し、rules は `AGENTS.md` を使います。つまり **skills-first / repo-native artifact / AGENTS.md 系の設計は、一過性ではなく流れに乗っている**と言えます。 ([Claude API Docs][5])
+
+しかも Codex では、`~/.codex/prompts` の custom prompts が 0.117.0 で消え、cc-sdd 側でも `--codex` prompts mode を deprecated / blocked にして `--codex-skills` へ寄せています。これは単なる互換対応ではなく、**“prompt hacks から skills へ” という市場移行に正面から乗れている**ということです。今このタイミングで 3.0 を skills 中心に振るのは、かなり筋がいいです。 ([GitHub][6])
+
+ただし注意点も一つあります。Codex では、custom prompts の代替として skills に移った結果、**implicit invocation が効きすぎるのでは**という不満も出ています。実際、explicit-only skill injection を求める issue もあり、旧 prompt UX と完全同等ではないという声があります。なので cc-sdd 3.0 は、skills-first を押しつつも、**明示的な `/kiro:*` / `$kiro-*` 導線を分かりやすく保つ**、description を狭く書いて誤発火しにくくする、必要なら manual-first な導入プロファイルを用意する、の3つをやるとかなり安定します。 ([GitHub][7])
+
+要するに、売り出し方はこれです。
+**「cc-sdd 3.0 は、全部入り harness ではない。承認済みの spec を、Claude Code / Codex / 次の skills-capable agents でも動く executable workflow に変える、最小で変えやすい SDD harness だ。」**
+
+この一文を軸に README のヒーロー文と比較表を組むのが、一番ハマると思います。必要なら次に、README のヒーロー文・比較表・Zenn/英語向け launch post の叩き台までそのまま書きます。
+
+[1]: https://github.com/Chachamaru127/claude-code-harness/blob/main/docs/github-harness-plugin-benchmark.md "claude-code-harness/docs/github-harness-plugin-benchmark.md at main · Chachamaru127/claude-code-harness · GitHub"
+[2]: https://github.com/gotalab/cc-sdd/pull/141 "feat(cc-sdd): skills migration with native subagent dispatch by gotalab · Pull Request #141 · gotalab/cc-sdd · GitHub"
+[3]: https://raw.githubusercontent.com/affaan-m/everything-claude-code/main/README.md "raw.githubusercontent.com"
+[4]: https://raw.githubusercontent.com/gotalab/cc-sdd/wip/claude-codex-skills-support/README.md "raw.githubusercontent.com"
+[5]: https://docs.anthropic.com/en/docs/claude-code/skills "Extend Claude with skills - Claude Code Docs"
+[6]: https://github.com/openai/codex/issues/15941 "Custom prompts in ~/.codex/prompts no longer appear after updating to codex-cli 0.117.0 · Issue #15941 · openai/codex · GitHub"
+[7]: https://github.com/openai/codex/issues/16172 "Add support for explicit-only skill injection · Issue #16172 · openai/codex · GitHub"
+
+---
+
+これにlong-runningを足せば良いかもね
+
+---
+
+long-runningって/kiro-implのことだよ？自律して完了させられる
+
+---
+
+そうだね！そういう感じでいきたいね！
+その他どこを変更するの？
