@@ -110,14 +110,15 @@ Recommend one approach and explain why.
   - Consider vertical slices (end-to-end value) vs horizontal layers (one layer at a time) based on the project needs
 - Confirm the final direction
 
-### Step 7: Persist and Next Steps
+### Step 7: Write Files to Disk
 
-Write brainstorm results to disk so they survive session boundaries.
+**CRITICAL: You MUST use the Write tool to create these files BEFORE suggesting any next command. Conversation text does not survive session boundaries. If you skip this step, all brainstorm analysis is lost when the session ends.**
 
 **For Path C (single spec)**:
-Write `{{KIRO_DIR}}/specs/<feature-name>/brief.md`:
 
-```markdown
+Use the Write tool to create `{{KIRO_DIR}}/specs/<feature-name>/brief.md` with this structure:
+
+```
 # Brief: <feature-name>
 
 ## Problem
@@ -140,14 +141,13 @@ Write `{{KIRO_DIR}}/specs/<feature-name>/brief.md`:
 [technology, compatibility, or other constraints]
 ```
 
-Then suggest: `/kiro-spec-init <feature-name>`
-
 **For Path D (multi-spec decomposition)**:
-Write two files:
 
-1. `{{KIRO_DIR}}/steering/roadmap.md` -- project-level context:
+Use the Write tool to create **both** files:
 
-```markdown
+**File 1**: `{{KIRO_DIR}}/steering/roadmap.md`
+
+```
 # Roadmap
 
 ## Overview
@@ -171,22 +171,25 @@ Write two files:
 - [ ] feature-c -- [one-line description]. Dependencies: feature-a, feature-b
 ```
 
-2. `{{KIRO_DIR}}/specs/<first-feature>/brief.md` -- only for the first spec to implement (same format as Path C).
-
-Then suggest: `/kiro-spec-init <first-feature-name>`
+**File 2**: `{{KIRO_DIR}}/specs/<first-feature>/brief.md` (same format as Path C, for the first spec only).
 
 **Re-entry (roadmap.md already exists)**:
-When brainstorm is re-run and roadmap.md exists, this is a continuation of a multi-spec project:
-- Read roadmap.md to restore project-level context
-- Check which specs are completed (via spec.json phase fields)
-- Determine the next spec to implement
-- Write brief.md for that spec only, informed by the current codebase state and lessons from completed specs
-- Update roadmap.md if needed (scope changes, reordering, new specs discovered)
+Use the Write tool to create the next spec's brief.md. Update roadmap.md with Edit tool if scope/ordering changed.
+
+After writing, verify the files exist by reading them back.
+
+### Step 8: Suggest Next Steps
+
+**Only after Step 7 files are confirmed written**, suggest the next command:
+- Path C: `/kiro-spec-init <feature-name>`
+- Path D: `/kiro-spec-init <first-feature-name>`
+- Re-entry: `/kiro-spec-init <next-feature-name>`
 
 ## Critical Constraints
 - **Action path first**: Always determine the action path (Step 2) before brainstorming. Do not brainstorm when the answer is "update existing spec" or "no spec needed."
 - **Lazy context loading**: Step 1 is metadata only. Full content is loaded in Step 3, only for Path C/D.
 - **Delegate heavy exploration**: Use Agent tool for codebase exploration and web research to keep the main context lean.
+- **MUST write files before suggesting next command**: For Path C/D, use the Write tool to create brief.md and roadmap.md. Do NOT just display the content in conversation -- files on disk are the only thing that survives session boundaries.
 - **Only brief.md and roadmap.md**: Do NOT create spec.json, requirements.md, design.md, or tasks.md. Only `brief.md` (per-feature) and `roadmap.md` (steering) are written.
 - **No assumptions**: Ask questions instead of guessing the user's intent
 - **Sequential questions**: Ask 1-2 questions at a time, not a wall of questions
