@@ -93,12 +93,15 @@ For each task (one at a time):
 - **BLOCKED** → append `_Blocked: <reason>_` to the task line in tasks.md, skip to next task
 - **NEEDS_CONTEXT** → re-dispatch once with the requested additional context; if still unresolved, treat as BLOCKED
 
-**c) Dispatch reviewer**:
+**c) Capture changes and dispatch reviewer**:
+- Run `git diff` to capture the actual code changes made by the implementer
 - Read `templates/reviewer-prompt.md` from this skill's directory
 - Construct a review prompt with:
-  - The implementer's status report and changed files
-  - The original task description and acceptance criteria
-  - Relevant spec sections (requirements.md, design.md)
+  - The `git diff` output (actual code changes — the reviewer must read these, not trust the implementer's report)
+  - The implementer's status report (for reference, not as source of truth)
+  - Paths to changed files
+  - The original task description
+  - Paths to relevant spec sections (requirements.md, design.md) so the reviewer can read them directly
 - Dispatch via **Agent tool** as a fresh subagent
 
 **d) Handle reviewer verdict**:
@@ -114,7 +117,7 @@ For each task (one at a time):
 **f) Record learnings**:
 - If this task revealed cross-cutting insights, append a one-line note to the `## Implementation Notes` section at the bottom of tasks.md
 
-**Parallel tasks**: When multiple `(P)` sub-tasks have all dependencies met, they may be dispatched in parallel via multiple Agent tool calls.
+**`(P)` markers**: Tasks marked `(P)` in tasks.md indicate they have no inter-dependencies and could theoretically run in parallel. However, kiro-impl processes them sequentially (one at a time) to avoid git conflicts and simplify review. The `(P)` marker is informational for task planning, not an execution directive.
 
 **Completion check**: If all remaining tasks are BLOCKED, stop and report blocked tasks with reasons to the user.
 
@@ -217,6 +220,10 @@ For tasks that add or change behavior, enforce RED → GREEN with a feature flag
 
 **Spec Conflicts with Reality**:
 - If a requirement or design conflicts with reality (API doesn't exist, platform limitation), block the task with `_Blocked: <reason>_` -- do not silently work around it
+
+**Session Interrupted**:
+- Safe to re-run `/kiro-impl {feature}` — completed tasks are already `[x]` in tasks.md and committed to git
+- The controller re-reads tasks.md on each iteration, so it will pick up where it left off automatically
 
 ### Next Phase: Validation
 
