@@ -24,7 +24,7 @@ You are the entry point when a user wants to build or change something but isn't
 
 Gather **only metadata** to determine the action path. Do NOT read full file contents yet.
 
-- **Specs inventory**: Glob `{{KIRO_DIR}}/specs/*/spec.json`, read each spec.json for `name`, `phase`, `approved` fields only. Note feature names and their current status.
+- **Specs inventory**: Glob `{{KIRO_DIR}}/specs/*/spec.json`, read each spec.json for `name`, `phase` fields and `approvals` status. Note feature names and their current status.
 - **Steering existence**: Check which files exist in `{{KIRO_DIR}}/steering/` (product.md, tech.md, structure.md, roadmap.md). Do NOT read their contents yet.
 - **Roadmap check**: If `{{KIRO_DIR}}/steering/roadmap.md` exists, read it. This contains project-level context (approach, scope, constraints, spec list) from a previous brainstorm session. Use it to restore project context.
 - **Top-level structure**: List the project root directory to note key directories and files. Do NOT recurse into subdirectories.

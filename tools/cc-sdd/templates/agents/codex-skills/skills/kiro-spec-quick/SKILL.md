@@ -105,6 +105,7 @@ Execute these 4 phases in order:
    {{FEATURE_NAME}} → feature-name
    {{TIMESTAMP}} → current ISO 8601 timestamp (use `date -u +"%Y-%m-%dT%H:%M:%SZ"`)
    {{PROJECT_DESCRIPTION}} → description
+   {{LANG_CODE}} → language code (detect from user's input language, default to `en`)
    ```
 
    c. Write files using Write tool:
@@ -195,7 +196,7 @@ Design generated → Continuing to tasks...
 $kiro-spec-tasks {feature-name} -y
 ```
 
-Note: `-y` flag auto-approves design.
+Note: `-y` flag auto-approves requirements, design, and tasks.
 
 Wait for completion.
 
@@ -268,7 +269,7 @@ Note: Skips gap analysis and design validation.
 Quick Spec Generation (Automatic Mode)
 
 All phases execute automatically without prompts.
-Note: Skips all validations and reviews.
+Note: Skips optional validations (gap analysis, design review) and user approval prompts. Internal review gates still run.
 ```
 
 ### Intermediate Output

@@ -27,6 +27,7 @@ You are a specialized skill for generating comprehensive technical design docume
 If steering/spec context is already available from conversation, skip redundant file reads.
 Otherwise, load all necessary context:
 - `{{KIRO_DIR}}/specs/{feature}/spec.json`, `requirements.md`, `design.md` (if exists)
+- `{{KIRO_DIR}}/specs/{feature}/research.md` (if exists, contains gap analysis from `/kiro-validate-gap`)
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to requirement coverage, architecture boundaries, integrations, runtime prerequisites, security/performance constraints, or team conventions that affect implementation readiness
 - `{{KIRO_DIR}}/settings/templates/specs/design.md` for document structure
@@ -119,6 +120,7 @@ After all findings return, synthesize in main context before proceeding.
 
 1. **Write Final Design**:
    - Write `{{KIRO_DIR}}/specs/{feature}/design.md` only after the design review gate passes
+   - Write research.md with discovery findings and synthesis outcomes (if not already written)
 
 2. **Update Metadata** in spec.json:
 

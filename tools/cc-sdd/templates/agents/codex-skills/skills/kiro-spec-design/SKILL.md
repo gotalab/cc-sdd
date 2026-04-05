@@ -27,6 +27,7 @@ Generate technical design document for feature **$1** based on approved requirem
 
 **Read all necessary context**:
 - `{{KIRO_DIR}}/specs/$1/spec.json`, `requirements.md`, `design.md` (if exists)
+- `{{KIRO_DIR}}/specs/$1/research.md` (if exists, contains gap analysis from `$kiro-validate-gap`)
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to requirement coverage, architecture boundaries, integrations, runtime prerequisites, security/performance constraints, or team conventions that affect implementation readiness
 - `{{KIRO_DIR}}/settings/templates/specs/design.md` for document structure
@@ -130,6 +131,7 @@ After all findings return, synthesize in main context before proceeding.
 
 1. **Write Final Design and Research Log**:
    - Write `{{KIRO_DIR}}/specs/$1/design.md` only after the design review gate passes
+   - Write research.md with discovery findings and synthesis outcomes (if not already written)
    - Persist any `research.md` updates that support the finalized design
 
 2. **Update Metadata** in spec.json:
