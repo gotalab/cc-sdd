@@ -1,0 +1,138 @@
+---
+name: kiro-spec-batch
+description: Create complete specs (requirements, design, tasks) for all features in roadmap.md using parallel sub-agent dispatch by dependency wave.
+---
+
+
+# Spec Batch
+
+<background_information>
+- **Mission**: Create requirements.md, design.md, and tasks.md for all features in roadmap.md via parallel spec creation dispatch
+- **Success Criteria**:
+  - All features have complete spec files (spec.json, requirements.md, design.md, tasks.md)
+  - Dependency ordering respected (upstream specs complete before downstream)
+  - Independent features processed in parallel via sub-agent dispatch
+  - Controller context stays lightweight (sub-agents do the heavy work)
+</background_information>
+
+<instructions>
+
+## Step 1: Read Roadmap and Validate
+
+1. Read `{{KIRO_DIR}}/steering/roadmap.md`
+2. Parse the `## Specs (dependency order)` section to extract:
+   - Feature names
+   - One-line descriptions
+   - Dependencies for each feature
+   - Completion status (`[x]` = done, `[ ]` = pending)
+3. For each pending feature, verify `{{KIRO_DIR}}/specs/<feature>/brief.md` exists
+4. If any brief.md is missing, stop and report: "Missing brief.md for: [list]. Run `$kiro-brainstorm` to generate briefs first."
+
+## Step 2: Build Dependency Waves
+
+Group pending features into waves based on dependencies:
+
+- **Wave 1**: Features with no dependencies (or all dependencies already completed `[x]`)
+- **Wave 2**: Features whose dependencies are all in Wave 1 or already completed
+- **Wave N**: Features whose dependencies are all in earlier waves or already completed
+
+Display the execution plan:
+```
+Spec Batch Plan:
+  Wave 1 (parallel): app-foundation
+  Wave 2 (parallel): block-editor, page-management
+  Wave 3 (parallel): sidebar-navigation, database-views
+  Wave 4 (parallel): cli-integration
+  Total: 6 specs across 4 waves
+```
+
+## Step 3: Execute Waves
+
+For each wave, dispatch all features in the wave as **parallel sub-agents**.
+
+**For each feature in the wave**, spawn a sub-agent with this task:
+
+```
+Create a complete specification for feature "{feature-name}".
+
+1. Read the brief at {{KIRO_DIR}}/specs/{feature-name}/brief.md
+2. Read steering context: {{KIRO_DIR}}/steering/product.md, tech.md (if they exist)
+3. Read the roadmap at {{KIRO_DIR}}/steering/roadmap.md for project context
+4. Execute the full spec pipeline:
+   a. Initialize: Create spec.json and requirements.md scaffold from templates in {{KIRO_DIR}}/settings/templates/specs/
+   b. Generate requirements: Read EARS format rules, generate requirements from brief, apply review gate
+   c. Generate design: Read design principles and templates, run discovery, generate design, apply review gate
+   d. Generate tasks: Read task generation rules, generate tasks from requirements+design, apply review gate
+5. Set all approvals to true in spec.json (auto-approve mode)
+6. Report completion with file list and task count
+
+Key files to read:
+- Brief: {{KIRO_DIR}}/specs/{feature-name}/brief.md
+- Templates: {{KIRO_DIR}}/settings/templates/specs/ (init.json, requirements-init.md, requirements.md, design.md, tasks.md)
+- Rules: {{KIRO_DIR}}/settings/rules/ (ears-format.md, requirements-review-gate.md, design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md, tasks-generation.md, tasks-parallel-analysis.md)
+- Steering: {{KIRO_DIR}}/steering/ (product.md, tech.md, structure.md)
+```
+
+If multi-agent is not available, execute features in the wave sequentially.
+
+**After all sub-agents in the wave complete**:
+1. Verify each feature has: spec.json, requirements.md, design.md, tasks.md
+2. If any feature failed, report the error and continue with features that succeeded
+3. Display wave completion: "Wave N complete: [features]. Files verified."
+4. Proceed to next wave
+
+## Step 4: Verify and Summarize
+
+After all waves complete:
+
+1. Scan `{{KIRO_DIR}}/specs/*/tasks.md` to verify all specs exist
+2. For each completed spec, read spec.json to confirm phase and approvals
+3. Update roadmap.md: mark completed specs as `[x]`
+
+Display final summary:
+```
+Spec Batch Complete:
+  ✓ app-foundation: X requirements, Y design components, Z tasks
+  ✓ block-editor: ...
+  ✓ page-management: ...
+  ...
+  Total: N specs created, M tasks generated
+
+Next: Review generated specs, then start implementation with $kiro-impl <feature>
+```
+
+</instructions>
+
+## Critical Constraints
+- **Controller stays lightweight**: Only read roadmap.md and brief.md existence checks in main context. All spec generation happens in sub-agents.
+- **Wave ordering is strict**: Never start a wave until all features in previous waves are complete.
+- **Parallel within waves**: All features in the same wave should be dispatched in parallel if multi-agent is available.
+- **No partial waves**: If a feature in a wave fails, still complete the other features in that wave before reporting.
+- **Skip completed specs**: Features with `[x]` in roadmap.md or existing tasks.md are skipped.
+
+## Output Description
+1. **Execution plan**: Waves with feature groupings
+2. **Wave progress**: Completion status after each wave
+3. **Final summary**: Per-feature results (requirement count, task count) + next steps
+
+## Safety & Fallback
+
+**Missing brief.md**:
+- Stop before execution. Report missing briefs.
+- Suggest: "Run `$kiro-brainstorm` to generate briefs for all features."
+
+**Sub-agent failure**:
+- Log the error, skip the failed feature
+- Continue with remaining features in the wave
+- Report failed features in the summary
+- Suggest: "Run `$kiro-spec-quick <feature> --auto` manually for failed features."
+
+**Circular dependencies**:
+- If dependency graph has cycles, report the cycle and stop
+- Suggest: "Fix dependency ordering in roadmap.md"
+
+**Roadmap not found**:
+- Stop and report: "No roadmap.md found. Run `$kiro-brainstorm` first."
+
+**All specs already complete**:
+- Report: "All specs in roadmap.md are already complete. Nothing to do."

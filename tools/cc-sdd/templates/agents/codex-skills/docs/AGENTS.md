@@ -29,15 +29,16 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
 
 ## Minimal Workflow
 - Phase 0 (optional): `$kiro-steering`, `$kiro-steering-custom`
-- Brainstorm (optional): `$kiro-brainstorm "rough idea"` — refine a vague idea before starting specs
-- Fast path (single command): `$kiro-spec-quick "description" [--auto]`
+- Brainstorm: `$kiro-brainstorm "idea"` — determines action path, writes brief.md + roadmap.md for multi-spec projects
 - Phase 1 (Specification):
-  - `$kiro-spec-init "description"`
-  - `$kiro-spec-requirements {feature}`
-  - `$kiro-validate-gap {feature}` (optional: for existing codebase)
-  - `$kiro-spec-design {feature} [-y]`
-  - `$kiro-validate-design {feature}` (optional: design review)
-  - `$kiro-spec-tasks {feature} [-y]`
+  - Single spec: `$kiro-spec-quick {feature} [--auto]` or step by step:
+    - `$kiro-spec-init "description"`
+    - `$kiro-spec-requirements {feature}`
+    - `$kiro-validate-gap {feature}` (optional: for existing codebase)
+    - `$kiro-spec-design {feature} [-y]`
+    - `$kiro-validate-design {feature}` (optional: design review)
+    - `$kiro-spec-tasks {feature} [-y]`
+  - Multi-spec: `$kiro-spec-batch` — creates all specs from roadmap.md in parallel by dependency wave
 - Phase 2 (Implementation): `$kiro-impl {feature} [tasks]`
   - Without task numbers: autonomous mode (subagent per task + independent review + final validation)
   - With task numbers: manual mode (selected tasks only in main context)

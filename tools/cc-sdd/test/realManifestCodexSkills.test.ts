@@ -171,7 +171,7 @@ describe('real codex-skills manifest', () => {
     expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
     // Skills without shared-rules should NOT have rules/ directories
-    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-impl', 'kiro-validate-impl', 'kiro-brainstorm'];
+    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-batch', 'kiro-impl', 'kiro-validate-impl', 'kiro-brainstorm'];
     for (const skill of noRulesSkills) {
       expect(await exists(join(cwd, `.agents/skills/${skill}/rules`))).toBe(false);
     }
@@ -179,7 +179,7 @@ describe('real codex-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 
-  it('generates exactly 13 skill directories', async () => {
+  it('generates exactly 14 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(
@@ -192,6 +192,7 @@ describe('real codex-skills manifest', () => {
 
     const expectedSkills = [
       'kiro-brainstorm',
+      'kiro-spec-batch',
       'kiro-spec-init',
       'kiro-spec-quick',
       'kiro-spec-requirements',

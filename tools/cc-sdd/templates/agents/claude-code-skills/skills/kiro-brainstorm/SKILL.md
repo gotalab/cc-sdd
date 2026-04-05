@@ -171,7 +171,7 @@ Use the Write tool to create **both** files:
 - [ ] feature-c -- [one-line description]. Dependencies: feature-a, feature-b
 ```
 
-**File 2**: `{{KIRO_DIR}}/specs/<first-feature>/brief.md` (same format as Path C, for the first spec only).
+**File 2+**: `{{KIRO_DIR}}/specs/<feature>/brief.md` for **every** feature listed in roadmap.md (same format as Path C). Use the Write tool to create each brief. This enables parallel spec creation via `/kiro-spec-batch`.
 
 **Re-entry (roadmap.md already exists)**:
 Use the Write tool to create the next spec's brief.md. Update roadmap.md with Edit tool if scope/ordering changed.
@@ -182,8 +182,8 @@ After writing, verify the files exist by reading them back.
 
 **Only after Step 7 files are confirmed written**, suggest the next command:
 - Path C: `/kiro-spec-init <feature-name>`
-- Path D: `/kiro-spec-init <first-feature-name>`
-- Re-entry: `/kiro-spec-init <next-feature-name>`
+- Path D: `/kiro-spec-batch` (creates all specs in parallel based on roadmap.md dependency order)
+- Re-entry: `/kiro-spec-init <next-feature-name>` or `/kiro-spec-batch` if multiple specs remain
 
 ## Critical Constraints
 - **Action path first**: Always determine the action path (Step 2) before brainstorming. Do not brainstorm when the answer is "update existing spec" or "no spec needed."
@@ -212,8 +212,8 @@ Depends on action path:
 - Path A: One-line recommendation + command to run
 - Path B: One-line recommendation (no spec needed)
 - Path C: `brief.md` written + `/kiro-spec-init` command
-- Path D: `roadmap.md` + first spec's `brief.md` written + `/kiro-spec-init` for first spec
-- Re-entry: Next spec's `brief.md` written + roadmap.md updated if needed + `/kiro-spec-init` for next spec
+- Path D: `roadmap.md` + all specs' `brief.md` written + `/kiro-spec-batch` for parallel spec creation
+- Re-entry: Next spec's `brief.md` written + roadmap.md updated if needed + `/kiro-spec-init` or `/kiro-spec-batch` for remaining specs
 
 ## Safety & Fallback
 
