@@ -32,7 +32,7 @@ Generate implementation tasks for feature **$1** based on approved requirements 
 - Additional steering files only when directly relevant to requirements coverage, design boundaries, runtime prerequisites, or team conventions that affect task executability
 
 **Validate approvals**:
-- If `-y` flag provided ($2 == "-y"): Auto-approve requirements and design in spec.json
+- If `-y` flag provided: Auto-approve requirements and design in spec.json. Tasks approval is also handled automatically in Step 4.
 - Otherwise: Verify both approved (stop if not, see Safety & Fallback)
 - Determine sequential mode based on presence of `--sequential`
 
@@ -91,15 +91,20 @@ After all parallel research completes, synthesize findings before generating tas
   - Set `approvals.design.approved: true`
   - Update `updated_at` timestamp
 
-**Present and ask for approval**:
-- Display a summary of the generated tasks (task count, major groups, parallel markers)
-- Ask the user: "Tasks generated. Approve and proceed to implementation?"
-- If the user approves:
+**Approval**:
+- If auto-approve flag (`-y`) is provided:
   - Set `approvals.tasks.approved: true` in spec.json
-  - Respond: "Tasks approved. Start implementation with `$kiro-impl $1`"
-- If the user wants changes:
-  - Keep `approvals.tasks.approved: false`
-  - Respond with guidance on what to adjust and re-run
+  - Display task summary (task count, major groups, parallel markers)
+  - Respond: "Tasks generated and auto-approved. Start implementation with `$kiro-impl $1`"
+- Otherwise (interactive):
+  - Display a summary of the generated tasks (task count, major groups, parallel markers)
+  - Ask the user: "Tasks generated. Approve and proceed to implementation?"
+  - If the user approves:
+    - Set `approvals.tasks.approved: true` in spec.json
+    - Respond: "Tasks approved. Start implementation with `$kiro-impl $1`"
+  - If the user wants changes:
+    - Keep `approvals.tasks.approved: false`
+    - Respond with guidance on what to adjust and re-run
 
 ## Critical Constraints
 - **Follow rules strictly**: All principles in tasks-generation.md are mandatory

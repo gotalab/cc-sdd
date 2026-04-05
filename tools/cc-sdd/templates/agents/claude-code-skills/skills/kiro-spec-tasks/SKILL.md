@@ -35,7 +35,7 @@ Otherwise, load all necessary context:
   - `sequential = (sequential flag is true)`
 
 **Validate approvals**:
-- If auto-approve flag is true: Auto-approve requirements and design in spec.json
+- If auto-approve flag (`-y`) is true: Auto-approve requirements and design in spec.json. Tasks approval is also handled automatically in Step 4.
 - Otherwise: Verify both approved (stop if not, see Safety & Fallback)
 
 ### Step 2: Generate Implementation Tasks
@@ -89,15 +89,20 @@ After all parallel research completes, synthesize findings before generating tas
   - Set `approvals.design.approved: true`
   - Update `updated_at` timestamp
 
-**Present and ask for approval**:
-- Display a summary of the generated tasks (task count, major groups, parallel markers)
-- Ask the user: "Tasks generated. Approve and proceed to implementation?"
-- If the user approves:
+**Approval**:
+- If auto-approve flag (`-y`) is true:
   - Set `approvals.tasks.approved: true` in spec.json
-  - Respond: "Tasks approved. Start implementation with `/kiro-impl {feature}`"
-- If the user wants changes:
-  - Keep `approvals.tasks.approved: false`
-  - Respond with guidance on what to adjust and re-run
+  - Display task summary (task count, major groups, parallel markers)
+  - Respond: "Tasks generated and auto-approved. Start implementation with `/kiro-impl {feature}`"
+- Otherwise (interactive):
+  - Display a summary of the generated tasks (task count, major groups, parallel markers)
+  - Ask the user: "Tasks generated. Approve and proceed to implementation?"
+  - If the user approves:
+    - Set `approvals.tasks.approved: true` in spec.json
+    - Respond: "Tasks approved. Start implementation with `/kiro-impl {feature}`"
+  - If the user wants changes:
+    - Keep `approvals.tasks.approved: false`
+    - Respond with guidance on what to adjust and re-run
 
 ## Critical Constraints
 - **Follow rules strictly**: All principles in tasks-generation.md are mandatory
@@ -142,7 +147,7 @@ Provide brief summary in the language specified in spec.json:
 **Requirements or Design Not Approved**:
 - **Stop Execution**: Cannot proceed without approved requirements and design
 - **User Message**: "Requirements and design must be approved before task generation"
-- **Suggested Action**: "Run `/kiro-spec-tasks {feature} -y` to auto-approve both and proceed"
+- **Suggested Action**: "Run `/kiro-spec-tasks {feature} -y` to auto-approve all (requirements, design, and tasks) and proceed"
 
 **Missing Requirements or Design**:
 - **Stop Execution**: Both documents must exist
