@@ -7,11 +7,12 @@ description: Create complete specs (requirements, design, tasks) for all feature
 # Spec Batch
 
 <background_information>
-- **Mission**: Create requirements.md, design.md, and tasks.md for all features in roadmap.md via parallel spec creation dispatch
+- **Mission**: Create requirements.md, design.md, and tasks.md for all features in roadmap.md via parallel spec creation dispatch, then validate cross-spec consistency
 - **Success Criteria**:
   - All features have complete spec files (spec.json, requirements.md, design.md, tasks.md)
   - Dependency ordering respected (upstream specs complete before downstream)
   - Independent features processed in parallel via sub-agent dispatch
+  - Cross-spec consistency verified (data models, interfaces, naming)
   - Controller context stays lightweight (sub-agents do the heavy work)
 </background_information>
 
@@ -81,9 +82,33 @@ If multi-agent is not available, execute features in the wave sequentially.
 3. Display wave completion: "Wave N complete: [features]. Files verified."
 4. Proceed to next wave
 
-## Step 4: Verify and Summarize
+## Step 4: Cross-Spec Review
 
-After all waves complete:
+After all waves complete, spawn a **single sub-agent** for cross-spec consistency review. Use the `spec-reviewer` custom agent if available (configured with `model = "gpt-5.4"` and `model_reasoning_effort = "high"` in `.codex/agents/spec-reviewer.toml`). This is the highest-value quality gate -- it catches issues that per-spec review gates cannot.
+
+**Sub-agent task**:
+
+Read ALL generated specs and check for consistency across the entire project:
+- `{{KIRO_DIR}}/specs/*/requirements.md`, `design.md`, `tasks.md`
+- `{{KIRO_DIR}}/steering/roadmap.md`
+
+Check:
+1. **Data model consistency**: Same entities defined consistently across specs (field names, types, relationships)
+2. **Interface alignment**: Where spec A outputs what spec B consumes, do contracts match exactly?
+3. **No duplicate functionality**: Any capability specified in more than one spec?
+4. **Dependency completeness**: Every design.md references correct upstream specs? Implicit dependencies not in roadmap?
+5. **Naming conventions**: Component names, file paths, API routes, table names consistent across specs?
+6. **Shared infrastructure**: Shared concerns (auth, error handling, logging) handled in one spec and correctly referenced?
+7. **Task boundary alignment**: Task _Boundary:_ annotations partition codebase cleanly? No files claimed by multiple specs?
+
+Output: CONSISTENT areas + ISSUES with (which specs, what's inconsistent, suggested fix).
+
+**After the review sub-agent returns**:
+- **Critical/important issues found**: Dispatch fix sub-agents for each affected spec to apply the suggested fixes. Re-run cross-spec review after fixes (max 2 remediation rounds).
+- **Minor issues only**: Report them for user awareness, proceed to Step 5.
+- **No issues**: Proceed to Step 5.
+
+## Step 5: Finalize
 
 1. Scan `{{KIRO_DIR}}/specs/*/tasks.md` to verify all specs exist
 2. For each completed spec, read spec.json to confirm phase and approvals
@@ -97,6 +122,7 @@ Spec Batch Complete:
   ✓ page-management: ...
   ...
   Total: N specs created, M tasks generated
+  Cross-spec review: PASSED / N issues found (M fixed)
 
 Next: Review generated specs, then start implementation with $kiro-impl <feature>
 ```

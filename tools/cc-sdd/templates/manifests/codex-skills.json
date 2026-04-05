@@ -21,6 +21,15 @@
       "when": { "agent": "codex-skills" }
     },
     {
+      "id": "codex_agents",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/codex-agents",
+        "toDir": ".codex/agents"
+      },
+      "when": { "agent": "codex-skills" }
+    },
+    {
       "id": "settings_templates",
       "source": {
         "type": "templateDir",
