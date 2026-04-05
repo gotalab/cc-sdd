@@ -1211,3 +1211,33 @@ Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-proj
 <usage><total_tokens>32901</total_tokens><tool_uses>24</tool_uses><duration_ms>142488</duration_ms></usage>
 </task-notification>
 Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a2325cba382f77a22.output
+
+---
+
+<task-notification>
+<task-id>a3e43b4ef8281e839</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a3e43b4ef8281e839.output</output-file>
+<status>completed</status>
+<summary>Agent "Update 3 READMEs for v3.0" completed</summary>
+<result>All three files are correctly updated. Here is a summary of all changes made:
+
+**Changes across all 3 README files:**
+
+1. **Skill counts: 12/13 -> 14** -- Updated in project structure trees (`.claude/skills/` and `.agents/skills/` comments) and in Codex CLI skill counts in installation commands and agent tables.
+
+2. **`--codex` mode: legacy -> blocked** -- Updated in:
+   - Installation command comments (e.g., "legacy mode (non-recommended)" -> "blocked -- use --codex-skills instead")
+   - Key Features bullet about `--codex` (e.g., "legacy mode kept for compatibility" -> "blocked, use --codex-skills")
+   - Supported AI Agents table row for Codex CLI
+   - Project structure tree comment for `.codex/prompts/`
+
+3. **Version: v2.0.0 -> v3.0.0** -- Updated the footer stable release line in all 3 files.
+
+**Files modified:**
+- `/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/README.md` (7 edits)
+- `/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/README_ja.md` (7 edits)
+- `/Users/gota/Documents/projects/cc-sdd/tools/cc-sdd/README_zh-TW.md` (7 edits)</result>
+<usage><total_tokens>44011</total_tokens><tool_uses>38</tool_uses><duration_ms>182234</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-gota-Documents-projects-cc-sdd/096f79a9-33f0-4e5b-a34e-f07f3c49506d/tasks/a3e43b4ef8281e839.output
