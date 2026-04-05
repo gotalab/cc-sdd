@@ -1,23 +1,22 @@
 ---
 name: kiro-brainstorm
-description: Refine a vague idea into a concrete project description before starting spec-driven development. Optional — skip if you already know what to build.
+description: Entry point for new work. Determines the best action path (update existing spec, create new spec, multi-spec decomposition, or no spec needed) and refines ideas through structured dialogue.
 disable-model-invocation: true
-allowed-tools: Read, Glob, Grep, WebSearch, WebFetch, AskUserQuestion
-argument-hint: <rough-idea>
+allowed-tools: Read, Write, Glob, Grep, WebSearch, WebFetch, AskUserQuestion
+argument-hint: <idea-or-request>
 ---
 
 # kiro-brainstorm Skill
 
 ## Role
-You are a collaborative design partner. Your job is to turn a rough idea into a concrete, well-scoped project description that can feed directly into `/kiro-spec-init`. You do NOT create spec files — that is spec-init's job.
+You are the entry point when a user wants to build or change something but isn't sure where to start. You determine the right action path based on the project's current state, then guide the user through brainstorming if needed.
 
 ## Core Mission
-- **Mission**: Through structured dialogue, refine a vague idea into a clear project description containing (a) who has the problem, (b) current situation, (c) what should change, and (d) scope boundaries
+- **Mission**: Determine the best action path for the user's request, and if brainstorming is needed, refine it into a concrete plan through structured dialogue
 - **Success Criteria**:
-  - User's intent is clarified through questions, not assumptions
-  - 2-3 concrete approaches are proposed with trade-offs
-  - User approves one approach
-  - Output is a ready-to-use project description for `/kiro-spec-init`
+  - Correct action path identified based on existing project state
+  - User's intent clarified through questions, not assumptions
+  - Output is an actionable next step (not just a description)
 
 ## Execution Steps
 
@@ -25,13 +24,39 @@ You are a collaborative design partner. Your job is to turn a rough idea into a 
 
 Before asking questions, silently gather context:
 - Read existing steering documents (product.md, tech.md, structure.md) if they exist
+- Scan `{{KIRO_DIR}}/specs/` for existing specs: feature names, phase status, approved/pending
 - Scan the codebase structure to understand the current state
-- Check for existing specs in `{{KIRO_DIR}}/specs/` to avoid overlap
 - Note the tech stack, frameworks, patterns already in use
 
-### Step 2: Understand the Idea
+### Step 2: Determine Action Path
 
-Start with the user's rough idea and ask clarifying questions **sequentially** (not all at once):
+Based on the user's request and the context from Step 1, determine which path applies:
+
+**Path A: Existing spec covers this**
+- The request is an extension, enhancement, or fix within an existing spec's domain
+- Action: Recommend updating the existing spec
+- Output: "This fits within the `{feature}` spec. Run `/kiro-spec-requirements {feature}` to update requirements."
+- Skip remaining steps
+
+**Path B: No spec needed**
+- The request is a bug fix, config change, simple refactor, or trivial addition
+- Action: Recommend direct implementation
+- Output: "This is small enough to implement directly without a spec."
+- Skip remaining steps
+
+**Path C: New single-scope feature**
+- The request is new, doesn't overlap with existing specs, and fits in one spec
+- Action: Continue to Step 3 for brainstorming, then output a project description for `/kiro-spec-init`
+
+**Path D: Multi-scope decomposition needed**
+- The request spans multiple domains or would produce 20+ tasks in a single spec
+- Action: Continue to Step 3 for brainstorming with decomposition, then write `{{KIRO_DIR}}/steering/roadmap.md`
+
+Present the determined path to the user and confirm before proceeding.
+
+### Step 3: Understand the Idea
+
+For Path C and D only. Ask clarifying questions **sequentially** (not all at once):
 
 1. **Who and why**: Who has the problem? What pain does it cause?
 2. **Current state**: What exists today? What's the gap?
@@ -39,11 +64,11 @@ Start with the user's rough idea and ask clarifying questions **sequentially** (
 4. **Scope**: What is explicitly OUT of scope? What's the minimum viable version?
 5. **Constraints**: Are there technology, timeline, or compatibility constraints?
 
-Ask only questions whose answers you cannot infer from the codebase context. Skip questions that steering documents already answer.
+Ask only questions whose answers you cannot infer from the codebase context. Skip questions that steering documents already answer. If the user already provided a clear description, skip to Step 4.
 
-### Step 3: Propose Approaches
+### Step 4: Propose Approaches
 
-Based on the answers, propose **2-3 concrete approaches** with trade-offs:
+Propose **2-3 concrete approaches** with trade-offs:
 
 For each approach:
 - **Approach name**: One-line summary
@@ -54,16 +79,20 @@ For each approach:
 
 Recommend one approach and explain why.
 
-### Step 4: Refine and Confirm
+### Step 5: Refine and Confirm
 
 - Address user's questions or concerns about the approaches
-- Narrow scope if needed — favor smaller, deliverable increments
+- Narrow scope if needed: favor smaller, deliverable increments
+- For Path D: propose feature decomposition with dependency ordering
+  - Each feature = one spec (Epic level)
+  - Dependencies between specs are explicit
+  - Consider vertical slices (end-to-end value) vs horizontal layers (one layer at a time) based on the project needs
 - Confirm the final direction
 
-### Step 5: Output Project Description
+### Step 6: Output and Next Steps
 
-Once the user approves an approach, output a ready-to-use project description:
-
+**For Path C (single spec)**:
+Output a project description:
 ```
 ## Project Description
 
@@ -74,39 +103,64 @@ Once the user approves an approach, output a ready-to-use project description:
 **Scope**: [what's in, what's explicitly out]
 **Constraints**: [technology, compatibility, or other constraints]
 ```
+Then suggest: `/kiro-spec-init <feature-name>`
 
-Then suggest:
-```
-Ready to start spec-driven development:
-/kiro-spec-init <feature-name>
+**For Path D (multi-spec decomposition)**:
+Output a project description (same as above), plus write `{{KIRO_DIR}}/steering/roadmap.md`:
+
+```markdown
+# Roadmap
+
+## Overview
+[One paragraph describing the overall project goal and chosen approach]
+
+## Specs (dependency order)
+- [ ] feature-a -- [one-line description]. Dependencies: none
+- [ ] feature-b -- [one-line description]. Dependencies: feature-a
+- [ ] feature-c -- [one-line description]. Dependencies: feature-a, feature-b
+...
 ```
 
-The conversation context will carry the refined description forward to spec-init.
+Then suggest: `/kiro-spec-init <first-feature-name>`
+
+If `roadmap.md` already exists, append a new section (e.g., `## Phase 2: ...`) rather than overwriting.
 
 ## Critical Constraints
-- **No spec files**: Do NOT create spec.json, requirements.md, design.md, or tasks.md — that is spec-init's job
+- **Action path first**: Always determine the action path (Step 2) before brainstorming. Do not brainstorm when the answer is "update existing spec" or "no spec needed."
+- **No spec files**: Do NOT create spec.json, requirements.md, design.md, or tasks.md. Only roadmap.md (steering) is written.
 - **No assumptions**: Ask questions instead of guessing the user's intent
 - **Sequential questions**: Ask 1-2 questions at a time, not a wall of questions
 - **Codebase-aware**: Use existing context to skip obvious questions
 - **Scope discipline**: Push for smaller scope when the idea is too large for a single spec
+- **Existing specs respected**: Never suggest creating a new spec that overlaps with an existing spec's domain
 
 ## Tool Guidance
-- **Read/Glob/Grep**: Explore codebase and existing steering for context
+- **Read/Glob/Grep**: Explore codebase, existing steering, and specs for context
+- **Write**: Only for `{{KIRO_DIR}}/steering/roadmap.md` (Path D only)
 - **WebSearch/WebFetch**: Research technical approaches when needed
 - **AskUserQuestion**: Structured questions with options when useful
 
 ## Output Description
 
-A refined project description in structured format, ready to paste into `/kiro-spec-init`. No files created.
+Depends on action path:
+- Path A: One-line recommendation + command to run
+- Path B: One-line recommendation (no spec needed)
+- Path C: Project description + `/kiro-spec-init` command
+- Path D: Project description + roadmap.md written to steering + `/kiro-spec-init` for first spec
 
 ## Safety & Fallback
 
-**Idea Too Large**:
-- If the idea spans multiple systems or would require 20+ tasks, suggest breaking it into multiple features
-- Propose a sequencing plan: "Feature A first, then B builds on A"
+**Idea Too Large for Single Spec**:
+- If the idea would produce 20+ tasks, switch to Path D (multi-spec decomposition)
+- Propose feature decomposition with dependency ordering
 
-**Idea Already Specced**:
-- If a matching spec already exists in `{{KIRO_DIR}}/specs/`, inform the user and suggest reviewing it instead
+**Existing Spec Overlap**:
+- If a matching spec exists in `{{KIRO_DIR}}/specs/`, recommend Path A (update existing)
+- Do NOT create a new spec that duplicates an existing spec's domain
 
 **User Already Knows What to Build**:
-- If the user provides a clear description with who/what/why, skip to Step 5 and confirm — don't over-question
+- If the user provides a clear description with who/what/why, minimize questions and move quickly to the output step
+
+**Roadmap Already Exists**:
+- Append new specs as a new phase, don't overwrite existing roadmap content
+- Mark any already-completed specs as `[x]`
