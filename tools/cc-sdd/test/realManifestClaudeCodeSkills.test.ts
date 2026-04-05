@@ -174,7 +174,7 @@ describe('real claude-code-skills manifest', () => {
     expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
     // Skills without shared-rules should NOT have rules/ directories
-    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-impl', 'kiro-validate-impl'];
+    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-impl', 'kiro-validate-impl', 'kiro-brainstorm'];
     for (const skill of noRulesSkills) {
       expect(await exists(join(cwd, `.claude/skills/${skill}/rules`))).toBe(false);
     }
@@ -185,12 +185,13 @@ describe('real claude-code-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
   });
 
-  it('generates exactly 12 skill directories', async () => {
+  it('generates exactly 13 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force', '--claude-skills'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
 
     const expectedSkills = [
+      'kiro-brainstorm',
       'kiro-spec-init',
       'kiro-spec-status',
       'kiro-spec-quick',

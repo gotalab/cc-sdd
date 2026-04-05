@@ -29,6 +29,7 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
 
 ## Minimal Workflow
 - Phase 0 (optional): `$kiro-steering`, `$kiro-steering-custom`
+- Brainstorm (optional): `$kiro-brainstorm "rough idea"` — refine a vague idea before starting specs
 - Fast path (single command): `$kiro-spec-quick "description" [--auto]`
 - Phase 1 (Specification):
   - `$kiro-spec-init "description"`

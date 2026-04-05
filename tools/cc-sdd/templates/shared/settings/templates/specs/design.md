@@ -65,6 +65,32 @@ When modifying existing systems:
 
 > Keep rationale concise here and, when more depth is required (trade-offs, benchmarks), add a short summary plus pointer to the Supporting References section and `research.md` for raw investigation notes.
 
+## File Structure Plan
+
+Map which files will be created or modified, and each file's single responsibility. This section directly drives task boundaries and implementation briefs.
+
+### New Files
+| File Path | Responsibility | Component |
+|-----------|---------------|-----------|
+| | | |
+
+### Modified Files
+| File Path | Change Summary | Component |
+|-----------|---------------|-----------|
+| | | |
+
+### Directory Layout (if new directories are introduced)
+```
+project/
+├── ...existing structure...
+└── new-directory/
+    ├── file.ts          # responsibility
+    └── file.test.ts     # tests for file.ts
+```
+
+> Each file should have one clear responsibility. If a file has multiple responsibilities, split it. Group files that change together; split files that change independently.
+> This section is required for features that create new files. For modifications-only features, the Modified Files table alone is sufficient.
+
 ## System Flows
 
 Provide only the diagrams needed to explain non-trivial flows. Use pure Mermaid syntax. Common patterns:

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Brainstorm"
+  short_description: "Refine a vague idea into a concrete project description"
+
+policy:
+  allow_implicit_invocation: false
