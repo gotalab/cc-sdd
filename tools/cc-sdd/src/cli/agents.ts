@@ -20,11 +20,14 @@ export const agentOptions: AgentOption[] = agentList.map((value) => {
   };
 });
 
+const DEFAULT_AGENT: AgentType = 'claude-code-skills';
+
 export const ensureAgentSelection = async (
   current: AgentType | undefined,
   io: CliIO,
-): Promise<AgentType | undefined> => {
-  if (current || !isInteractive()) return current;
+): Promise<AgentType> => {
+  if (current) return current;
+  if (!isInteractive()) return DEFAULT_AGENT;
 
   io.log(formatHeading('Select the agent you want to set up:'));
 
