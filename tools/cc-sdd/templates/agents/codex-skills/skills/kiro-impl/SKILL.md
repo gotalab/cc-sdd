@@ -72,13 +72,23 @@ After all parallel research completes, synthesize implementation brief before st
 
 If multi-agent capability is available, for each task in the queue:
 
-**a) Dispatch implementer**:
+**a) Build Task Brief**:
+Before dispatching, synthesize a concrete Task Brief from the abstract task description in tasks.md by cross-referencing requirements.md and design.md. The Task Brief must include:
+- **Acceptance criteria**: Extract from the requirement sections this task must satisfy. What observable behaviors must be true when done? (e.g., "POST /auth/login returns JWT on valid credentials, 401 on invalid")
+- **Completion definition**: What files, functions, tests, or artifacts must exist? Derive from design.md component structure and task boundary.
+- **Design constraints**: How must this be built? Extract specific technical decisions from design.md (e.g., "use bcrypt for hashing", "implement as Express middleware")
+- **Verification method**: How to confirm the task works. Derive from the requirement's testability and the project's validation commands.
+- **Behavioral classification**: Is this a behavioral change (requires Feature Flag Protocol) or non-behavioral (standard TDD)?
+
+This step turns kiro-compatible abstract tasks into concrete, actionable implementation briefs without modifying tasks.md.
+
+**b) Dispatch implementer**:
 - Read `templates/implementer-prompt.md` from this skill's directory
-- Construct a prompt by combining the template with task-specific context:
+- Construct a prompt by combining the template with the Task Brief:
+  - The synthesized Task Brief (acceptance criteria, completion definition, constraints, verification)
   - Task description and boundary scope
   - Exact requirement and design section numbers (using source numbering, NOT invented `REQ-*` aliases)
   - Task-relevant steering context and validation commands
-  - Whether the task is behavioral (Feature Flag Protocol) or non-behavioral
 - Spawn a fresh sub-agent with this prompt
 
 **b) Handle implementer status**:
@@ -113,13 +123,17 @@ If multi-agent capability is available, for each task in the queue:
 
 ### Manual Mode (main context)
 
-For each selected task, follow Kent Beck's TDD cycle directly:
+For each selected task:
 
-1. **RED - Write Failing Test**: Write test for the next small piece of functionality. Test should fail.
-2. **GREEN - Write Minimal Code**: Implement simplest solution to make test pass.
-3. **REFACTOR - Clean Up**: Improve code structure, remove duplication. All tests must still pass.
-4. **VERIFY**: All tests pass (new and existing), no regressions.
-5. **MARK COMPLETE**: Update checkbox from `- [ ]` to `- [x]` in tasks.md.
+**1. Build Task Brief** (same as autonomous mode):
+Synthesize acceptance criteria, completion definition, design constraints, and verification method from requirements.md and design.md before writing any code.
+
+**2. Execute TDD cycle** (Kent Beck's RED → GREEN → REFACTOR):
+- **RED**: Write test for the next small piece of functionality based on the acceptance criteria. Test should fail.
+- **GREEN**: Implement simplest solution to make test pass, following the design constraints.
+- **REFACTOR**: Improve code structure, remove duplication. All tests must still pass.
+- **VERIFY**: All tests pass (new and existing), no regressions. Confirm verification method passes.
+- **MARK COMPLETE**: Update checkbox from `- [ ]` to `- [x]` in tasks.md.
 
 ## Step 4: Final Validation
 
