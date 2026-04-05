@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "6ab88b56ad19",
+  "session_id": "203b229e-a801-499b-a6bb-a79f3891ce56",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-05T20:38:04.645366Z",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-brainstorm/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-batch/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-design/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-init/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-quick/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-requirements/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-status/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-tasks/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-validate-impl/SKILL.md",
+    "tools/cc-sdd/test/realManifestClaudeCodeSkills.test.ts"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6[1m]",
+  "turn_id": "767e97cf392f",
+  "token_usage": {
+    "input_tokens": 6540,
+    "cache_creation_tokens": 1242444,
+    "cache_read_tokens": 227821990,
+    "output_tokens": 333437,
+    "api_call_count": 885
+  },
+  "session_metrics": {
+    "turn_count": 125
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-05T20:38:00.222344Z",
+    "agent_lines": 0,
+    "agent_removed": 70,
+    "human_added": 0,
+    "human_modified": 18,
+    "human_removed": 235,
+    "total_committed": 0,
+    "total_lines_changed": 323,
+    "agent_percentage": 21.671826625387,
+    "metric_version": 2
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "6ab88b56ad19",
+  "strategy": "manual-commit",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-brainstorm/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-batch/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-design/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-init/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-quick/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-requirements/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-status/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-spec-tasks/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-validate-impl/SKILL.md",
+    "tools/cc-sdd/test/realManifestClaudeCodeSkills.test.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/6a/b88b56ad19/0/metadata.json",
+      "transcript": "/6a/b88b56ad19/0/full.jsonl",
+      "content_hash": "/6a/b88b56ad19/0/content_hash.txt",
+      "prompt": "/6a/b88b56ad19/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6540,
+    "cache_creation_tokens": 1242444,
+    "cache_read_tokens": 227821990,
+    "output_tokens": 333437,
+    "api_call_count": 885
+  }
+}
