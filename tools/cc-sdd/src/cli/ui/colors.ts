@@ -41,11 +41,7 @@ export const formatSectionTitle = (label: string): string => {
 };
 
 export const formatBox = (title: string): string => {
-  const padding = 2;
-  const width = title.length + padding * 2 + 2;
-  const top = `┌${'─'.repeat(width - 2)}┐`;
-  const mid = `│${' '.repeat(padding)}${title}${' '.repeat(padding)}│`;
-  const bot = `└${'─'.repeat(width - 2)}┘`;
-  if (!supportsColor) return `${top}\n${mid}\n${bot}`;
-  return `${colors.cyan(top)}\n${colors.cyan('│')}${' '.repeat(padding)}${colors.bold(title)}${' '.repeat(padding)}${colors.cyan('│')}\n${colors.cyan(bot)}`;
+  const line = '─'.repeat(title.length + 4);
+  if (!supportsColor) return `${line}\n  ${title}\n${line}`;
+  return `${colors.dim(line)}\n  ${colors.bold(title)}\n${colors.dim(line)}`;
 };
