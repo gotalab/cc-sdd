@@ -82,8 +82,12 @@ After all waves complete, spawn a **single sub-agent** for cross-spec consistenc
 **Sub-agent task**:
 
 Read ALL generated specs and check for consistency across the entire project:
-- `{{KIRO_DIR}}/specs/*/requirements.md`, `design.md`, `tasks.md`
+- `{{KIRO_DIR}}/specs/*/design.md` (primary: contains interfaces, data models, architecture)
+- `{{KIRO_DIR}}/specs/*/requirements.md` (for scope and acceptance criteria)
+- `{{KIRO_DIR}}/specs/*/tasks.md` (for boundary annotations only -- read _Boundary:_ lines, skip task descriptions)
 - `{{KIRO_DIR}}/steering/roadmap.md`
+
+Context budget: Prioritize design.md files. For requirements.md, read section headings and acceptance criteria. For tasks.md, only read _Boundary:_ annotations. If total content exceeds ~3000 lines, skip tasks.md and check boundaries from design.md's File Structure Plan instead.
 
 Check:
 1. **Data model consistency**: Same entities defined consistently across specs (field names, types, relationships)

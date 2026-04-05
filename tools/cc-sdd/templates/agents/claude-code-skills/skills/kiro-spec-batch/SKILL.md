@@ -85,10 +85,12 @@ After all waves complete, dispatch a **single subagent** (use `model: "opus"` fo
 You are a cross-spec reviewer. Read ALL generated specs and check for consistency across the entire project.
 
 Read these files for every feature in the roadmap:
-- {{KIRO_DIR}}/specs/*/requirements.md
-- {{KIRO_DIR}}/specs/*/design.md
-- {{KIRO_DIR}}/specs/*/tasks.md
+- {{KIRO_DIR}}/specs/*/design.md (primary: contains interfaces, data models, architecture)
+- {{KIRO_DIR}}/specs/*/requirements.md (for scope and acceptance criteria)
+- {{KIRO_DIR}}/specs/*/tasks.md (for boundary annotations only -- read _Boundary:_ lines, skip task descriptions)
 - {{KIRO_DIR}}/steering/roadmap.md
+
+Context budget: Prioritize design.md files (they contain the interfaces). For requirements.md, read section headings and acceptance criteria. For tasks.md, only read _Boundary:_ annotations. If total content exceeds ~3000 lines, skip tasks.md and check boundaries from design.md's File Structure Plan instead.
 
 Check the following:
 

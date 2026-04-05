@@ -1,7 +1,7 @@
 ---
 name: kiro-spec-quick
 description: Quick spec generation with interactive or automatic mode
-allowed-tools: Read, SlashCommand, TodoWrite, Bash, Write, Glob
+allowed-tools: Read, Skill, Bash, Write, Glob
 argument-hint: <project-description> [--auto]
 ---
 
@@ -22,16 +22,9 @@ argument-hint: <project-description> [--auto]
 
 In Automatic Mode:
 - Execute ALL 4 phases in a continuous loop without stopping
-- Use TodoWrite to track progress (4 tasks: init, requirements, design, tasks)
-- Each phase completion updates TodoWrite and continues immediately
+- Display progress after each phase (e.g., "Phase 1/4 complete: spec initialized")
 - IGNORE any "Next Step" messages from Phase 2-4 (they are for standalone usage)
 - Stop ONLY after Phase 4 completes or if error occurs
-
-**Progress tracking with TodoWrite**:
-- Phase 1 complete = 1/4 tasks done → Continue to Phase 2
-- Phase 2 complete = 2/4 tasks done → Continue to Phase 3
-- Phase 3 complete = 3/4 tasks done → Continue to Phase 4
-- Phase 4 complete = 4/4 tasks done → Output summary and exit
 
 ---
 
@@ -51,16 +44,6 @@ Example:
 ```
 "User profile with avatar upload --auto" → mode=automatic, description="User profile with avatar upload"
 "User profile feature" → mode=interactive, description="User profile feature"
-```
-
-**Create TodoWrite task list**:
-```json
-[
-  {"content": "Initialize spec", "activeForm": "Initializing spec", "status": "pending"},
-  {"content": "Generate requirements", "activeForm": "Generating requirements", "status": "pending"},
-  {"content": "Generate design", "activeForm": "Generating design", "status": "pending"},
-  {"content": "Generate tasks", "activeForm": "Generating tasks", "status": "pending"}
-]
 ```
 
 Display mode banner and proceed to Step 2.
@@ -115,12 +98,7 @@ Execute these 4 phases in order:
    - {{KIRO_DIR}}/specs/{feature-name}/requirements.md
    ```
 
-6. **Update TodoWrite**: Mark task 1 as `completed`, task 2 as `in_progress`.
-
-7. **Output Progress**:
-   ```
-   Spec initialized at {{KIRO_DIR}}/specs/{feature-name}/
-   ```
+6. **Output Progress**: "Phase 1/4 complete: Spec initialized at {{KIRO_DIR}}/specs/{feature-name}/"
 
 **Automatic Mode**: IMMEDIATELY continue to Phase 2.
 
@@ -132,25 +110,13 @@ Execute these 4 phases in order:
 
 #### Phase 2: Generate Requirements
 
-**Task 2 is already `in_progress` from Phase 1.**
+Invoke `/kiro-spec-requirements {feature-name}` via the Skill tool.
 
-**Execute SlashCommand**:
-```
-/kiro-spec-requirements {feature-name}
-```
+Wait for completion. IGNORE any "Next Step" message (it is for standalone usage).
 
-Wait for completion. Subagent will return with "Next Step" message.
+**Output Progress**: "Phase 2/4 complete: Requirements generated"
 
-**IMPORTANT**: In Automatic Mode, IGNORE the "Next Step" message. It is for standalone usage.
-
-**Update TodoWrite**: Mark task 2 as `completed`, task 3 as `in_progress`.
-
-**Output Progress**:
-```
-Requirements generated → Continuing to design...
-```
-
-**Automatic Mode**: Task list shows 2/4 complete. IMMEDIATELY continue to Phase 3.
+**Automatic Mode**: IMMEDIATELY continue to Phase 3.
 
 **Interactive Mode**: Prompt "Continue to design generation? (yes/no)"
 - If "no": Stop, show current state
@@ -160,27 +126,13 @@ Requirements generated → Continuing to design...
 
 #### Phase 3: Generate Design
 
-**Task 3 is already `in_progress` from Phase 2.**
+Invoke `/kiro-spec-design {feature-name} -y` via the Skill tool. The `-y` flag auto-approves requirements.
 
-**Execute SlashCommand**:
-```
-/kiro-spec-design {feature-name} -y
-```
+Wait for completion. IGNORE any "Next Step" message.
 
-Note: `-y` flag auto-approves requirements.
+**Output Progress**: "Phase 3/4 complete: Design generated"
 
-Wait for completion. Subagent will return with "Next Step" message.
-
-**IMPORTANT**: In Automatic Mode, IGNORE the "Next Step" message.
-
-**Update TodoWrite**: Mark task 3 as `completed`, task 4 as `in_progress`.
-
-**Output Progress**:
-```
-Design generated → Continuing to tasks...
-```
-
-**Automatic Mode**: Task list shows 3/4 complete. IMMEDIATELY continue to Phase 4.
+**Automatic Mode**: IMMEDIATELY continue to Phase 4.
 
 **Interactive Mode**: Prompt "Continue to tasks generation? (yes/no)"
 - If "no": Stop, show current state
@@ -190,20 +142,15 @@ Design generated → Continuing to tasks...
 
 #### Phase 4: Generate Tasks
 
-**Task 4 is already `in_progress` from Phase 3.**
-
-**Execute SlashCommand**:
-```
-/kiro-spec-tasks {feature-name} -y
-```
+Invoke `/kiro-spec-tasks {feature-name} -y` via the Skill tool.
 
 Note: `-y` flag auto-approves design.
 
 Wait for completion.
 
-**Update TodoWrite**: Mark task 4 as `completed`.
+**Output Progress**: "Phase 4/4 complete: Tasks generated"
 
-**All 4 tasks complete. Loop is DONE.**
+**All 4 phases complete. Loop is DONE.**
 
 Output final completion summary (see Output Description section) and exit.
 
@@ -221,7 +168,7 @@ Output final completion summary (see Output Description section) and exit.
 - Do NOT stop between phases
 - Do NOT wait for user input
 - Do NOT be influenced by "Next Step" messages from Phases 2-4
-- Update TodoWrite after each phase to maintain progress visibility
+- Display progress after each phase
 - Continue loop until all 4 phases complete
 
 ### Interactive Mode Behavior
@@ -246,12 +193,7 @@ Output final completion summary (see Output Description section) and exit.
 - **Write**: Create `spec.json` and `requirements.md` in spec directory
 
 ### Phase 2-4 Tools
-- **SlashCommand**: Execute `/kiro-spec-requirements`, `/kiro-spec-design`, `/kiro-spec-tasks`
-
-### TodoWrite Usage
-- Initialize with 4 pending tasks
-- Update after each phase: current task `completed`, next task `in_progress`
-- Provides visual progress tracking in UI
+- **Skill**: Invoke `/kiro-spec-requirements`, `/kiro-spec-design`, `/kiro-spec-tasks`
 
 ## Output Description
 

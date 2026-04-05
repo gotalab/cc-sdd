@@ -1,30 +1,28 @@
 ---
 name: kiro-spec-status
 description: Show specification status and progress
-allowed-tools: Bash, Read, Glob, Write, Edit, MultiEdit, Update
+allowed-tools: Read, Glob, Grep
 argument-hint: <feature-name>
 ---
 
-# Specification Status
+# kiro-spec-status Skill
 
-<background_information>
+## Role
+You are a specialized skill for displaying comprehensive status and progress reports for specifications.
+
+## Core Mission
 - **Mission**: Display comprehensive status and progress for a specification
 - **Success Criteria**:
   - Show current phase and completion status
   - Identify next actions and blockers
   - Provide clear visibility into progress
-</background_information>
-
-<instructions>
-## Core Task
-Generate status report for feature **$1** showing progress across all phases.
 
 ## Execution Steps
 
 ### Step 1: Load Spec Context
-- Read `{{KIRO_DIR}}/specs/$1/spec.json` for metadata and phase status
+- Read `{{KIRO_DIR}}/specs/$ARGUMENTS/spec.json` for metadata and phase status
 - Read existing files: `requirements.md`, `design.md`, `tasks.md` (if they exist)
-- Check `{{KIRO_DIR}}/specs/$1/` directory for available files
+- Check `{{KIRO_DIR}}/specs/$ARGUMENTS/` directory for available files
 
 ### Step 2: Analyze Status
 
@@ -47,7 +45,6 @@ Create report in the language specified in spec.json covering:
 - Use language from spec.json
 - Calculate accurate completion percentages
 - Identify specific next action commands
-</instructions>
 
 ## Tool Guidance
 - **Read**: Load spec.json first, then other spec files as needed
@@ -72,7 +69,7 @@ Provide status report in the language specified in spec.json:
 ### Error Scenarios
 
 **Spec Not Found**:
-- **Message**: "No spec found for `$1`. Check available specs in `{{KIRO_DIR}}/specs/`"
+- **Message**: "No spec found for `$ARGUMENTS`. Check available specs in `{{KIRO_DIR}}/specs/`"
 - **Action**: List available spec directories
 
 **Incomplete Spec**:

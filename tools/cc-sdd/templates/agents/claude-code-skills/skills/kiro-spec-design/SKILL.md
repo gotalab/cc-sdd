@@ -94,9 +94,9 @@ After all findings return, synthesize in main context before proceeding.
 
 ### Step 4: Generate Design Draft
 
-1. **Load Design Template and Rules**:
+1. **Load Design Template**:
    - Read `{{KIRO_DIR}}/settings/templates/specs/design.md` for structure
-   - Read `rules/design-principles.md` from this skill's directory for principles
+   - Apply `rules/design-principles.md` (already loaded in Step 1)
 
 2. **Generate Design Draft**:
    - **Follow specs/design.md template structure and generation instructions strictly**

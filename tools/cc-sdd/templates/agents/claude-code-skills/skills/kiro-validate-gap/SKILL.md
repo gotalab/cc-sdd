@@ -1,7 +1,7 @@
 ---
 name: kiro-validate-gap
 description: Analyze implementation gap between requirements and existing codebase. Use when planning integration with existing systems.
-allowed-tools: Read, Grep, Glob, WebSearch, WebFetch
+allowed-tools: Read, Write, Grep, Glob, WebSearch, WebFetch
 argument-hint: <feature-name>
 metadata:
   shared-rules: "gap-analysis.md"
@@ -54,6 +54,14 @@ After all parallel research completes, synthesize findings for gap analysis.
 - Create comprehensive gap analysis following the output guidelines in gap-analysis.md
 - Present multiple viable options with trade-offs
 - Flag areas requiring further research
+
+### Step 5: Write Gap Analysis to Disk
+
+**Write the gap analysis to disk so it survives session boundaries and can be referenced during design phase.**
+
+- Use the Write tool to save the gap analysis to `{{KIRO_DIR}}/specs/{feature}/research.md`
+- If the file already exists, append the new analysis (separated by a horizontal rule `---`) rather than overwriting previous research
+- Verify the file was written by reading it back
 
 ## Important Constraints
 - **Information over Decisions**: Provide analysis and options, not final implementation choices
