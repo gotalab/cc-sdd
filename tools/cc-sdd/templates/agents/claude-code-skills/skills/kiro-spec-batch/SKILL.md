@@ -120,7 +120,7 @@ Output format:
 ```
 
 **After the review subagent returns**:
-- **Critical/important issues found**: Dispatch fix subagents for each affected spec to apply the suggested fixes. Re-run cross-spec review after fixes (max 2 remediation rounds).
+- **Critical/important issues found**: Dispatch fix subagents for each affected spec to apply the suggested fixes. Re-run cross-spec review after fixes (max 3 remediation rounds).
 - **Minor issues only**: Report them for user awareness, proceed to Step 5.
 - **No issues**: Proceed to Step 5.
 
