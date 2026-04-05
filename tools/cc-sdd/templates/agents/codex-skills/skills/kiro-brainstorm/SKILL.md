@@ -95,6 +95,10 @@ If technical research is needed (unfamiliar framework, library evaluation), spaw
 
 Recommend one approach and explain why.
 
+**After the user selects an approach**, spawn a sub-agent to verify viability before proceeding to Step 6. Ask it to check: (1) Are these technologies still actively maintained? (2) Any license incompatibilities (e.g., GPL contamination)? (3) Do the components actually work together for the use case? (4) Any known showstoppers (critical bugs, security vulnerabilities, platform limitations)? Return only issues found, or "No issues found" if everything checks out.
+
+If the viability check reveals issues, present them to the user and revisit the approach selection. If no issues, proceed to Step 6.
+
 ## Step 6: Refine and Confirm
 
 - Address user's questions or concerns about the approaches
