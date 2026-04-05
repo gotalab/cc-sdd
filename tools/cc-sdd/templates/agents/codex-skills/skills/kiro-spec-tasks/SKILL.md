@@ -9,7 +9,6 @@ metadata:
 # Implementation Tasks Generator
 
 <background_information>
-- **Mission**: Generate detailed, actionable implementation tasks that translate technical design into executable work items
 - **Success Criteria**:
   - All requirements mapped to specific tasks
   - Tasks properly sized (1-3 hours each)
@@ -18,9 +17,6 @@ metadata:
 </background_information>
 
 <instructions>
-## Core Task
-Generate implementation tasks for feature **$1** based on approved requirements and design.
-
 ## Execution Steps
 
 ### Step 1: Load Context
@@ -107,22 +103,12 @@ After all parallel research completes, synthesize findings before generating tas
     - Respond with guidance on what to adjust and re-run
 
 ## Critical Constraints
-- **Follow rules strictly**: All principles in tasks-generation.md are mandatory
-- **Phase ordering**: Foundation → Core → Integration → Validation (ordering implies dependency)
-- **Natural Language**: Describe what to do, not code structure details
-- **Complete Coverage**: ALL requirements must map to tasks
-- **Maximum 2 Levels**: Major tasks and sub-tasks only (no deeper nesting)
-- **Sequential Numbering**: Major tasks increment (1, 2, 3...), never repeat
 - **Task Integration**: Every task must connect to the system (no orphaned work)
 - **Boundary annotations**: Required for `(P)` tasks, recommended for all (`_Boundary: ComponentName_`)
 - **Explicit dependencies**: Cross-boundary non-obvious dependencies declared with `_Depends: X.X_`
 - **Executable deliverable granularity**: Each task must produce a verifiable deliverable (file, endpoint, UI component, config). Infrastructure tasks (project scaffolding, manifest, host integration, build config) must be explicit — never assume they exist
 - **No implicit prerequisites**: If a task requires a runtime, SDK, framework setup, or config file, that setup must be a separate preceding task
 </instructions>
-
-## Tool Guidance
-- **Read first**: Load all context, rules, and templates before generation
-- **Write last**: Generate tasks.md only after complete analysis and verification
 
 ## Output Description
 
@@ -178,6 +164,3 @@ Provide brief summary in the language specified in spec.json:
 Tasks are approved in Step 4 via user confirmation. Once approved:
 - Autonomous implementation: `$kiro-impl $1`
 - Specific tasks only: `$kiro-impl $1 1.1,1.2`
-- Existing tasks used as reference (merge mode)
-
-**Note**: The implementation phase will guide you through executing tasks with appropriate context and validation.

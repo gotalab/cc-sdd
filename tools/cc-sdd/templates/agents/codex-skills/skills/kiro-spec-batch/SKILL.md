@@ -7,7 +7,6 @@ description: Create complete specs (requirements, design, tasks) for all feature
 # Spec Batch
 
 <background_information>
-- **Mission**: Create requirements.md, design.md, and tasks.md for all features in roadmap.md via parallel spec creation dispatch, then validate cross-spec consistency
 - **Success Criteria**:
   - All features have complete spec files (spec.json, requirements.md, design.md, tasks.md)
   - Dependency ordering respected (upstream specs complete before downstream)
@@ -133,16 +132,7 @@ Next: Review generated specs, then start implementation with $kiro-impl <feature
 - **No partial waves**: If a feature in a wave fails, still complete the other features in that wave before reporting.
 - **Skip completed specs**: Features with `[x]` in roadmap.md or existing tasks.md are skipped.
 
-## Output Description
-1. **Execution plan**: Waves with feature groupings
-2. **Wave progress**: Completion status after each wave
-3. **Final summary**: Per-feature results (requirement count, task count) + next steps
-
 ## Safety & Fallback
-
-**Missing brief.md**:
-- Stop before execution. Report missing briefs.
-- Suggest: "Run `$kiro-brainstorm` to generate briefs for all features."
 
 **Sub-agent failure**:
 - Log the error, skip the failed feature

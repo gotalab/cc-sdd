@@ -7,17 +7,16 @@ description: Implement approved tasks using TDD with subagent dispatch. Runs all
 # kiro-impl Skill
 
 <background_information>
-- **Mission**: Implement all pending or selected tasks via TDD, with subagent dispatch for autonomous execution and adversarial review for quality assurance
+You operate in two modes:
+- **Autonomous mode** (no task numbers): Dispatch a fresh sub-agent per task, with independent review after each
+- **Manual mode** (task numbers provided): Execute selected tasks directly in the main context
+
 - **Success Criteria**:
   - All tests written before implementation code
   - Code passes all tests with no regressions
   - Tasks marked as completed in tasks.md
   - Implementation aligns with design and requirements
   - Independent reviewer approves each task (autonomous mode)
-
-**Modes**:
-- **Autonomous mode** (no task numbers): Dispatch a fresh sub-agent per task, with independent review after each
-- **Manual mode** (task numbers provided): Execute selected tasks directly in the main context
 </background_information>
 
 <instructions>
@@ -163,20 +162,6 @@ For tasks that add or change behavior, enforce RED → GREEN with a feature flag
 </instructions>
 
 ## Critical Constraints
-- **One Sub-Task Per Iteration**: NEVER batch multiple sub-tasks (e.g., 3.1 and 3.2) into a single sub-agent dispatch. Each sub-task gets its own implementer → reviewer → commit cycle.
-- **Re-Read tasks.md Every Iteration**: Determine the next task from the file, not from memory. This prevents context drift over long runs.
-- **Discard Iteration Details**: After each task completes, keep only a one-line summary. Do not accumulate full status reports or reviewer details across iterations.
-- **TDD Mandatory**: Tests MUST be written before implementation code
-- **Task Scope**: Implement only what the specific task requires
-- **Test Coverage**: All new code must have tests
-- **No Regressions**: Existing tests must continue to pass
-- **Design Alignment**: Implementation must follow design.md specifications
-- **Boundary Scope**: Respect `_Boundary:_` annotations -- limit changes to declared components
-- **Dependency Check**: Verify `_Depends:_` prerequisites are complete before starting a task
-- **Context Discipline**: Start with core steering and expand only with task-relevant steering or use-case-aligned local skills/playbooks
-- **Honest Completion**: Never mark a task complete if implementation deviates from design.md or does not satisfy requirements.md
-- **Section Number Preservation**: Use exact section numbering from requirements.md and design.md; do NOT invent `REQ-*` aliases
-- **Parent Owns State**: In autonomous mode, parent owns task-state updates, commits, and remediation decisions; sub-agents own implementation and review only
 - **Selective Staging**: NEVER use `git add -A` or `git add .`; always stage explicit file paths
 - **Bounded Review Rounds**: Max 2 implementer re-dispatch rounds per reviewer rejection
 - **Bounded Remediation**: Cap final-validation remediation at 3 rounds

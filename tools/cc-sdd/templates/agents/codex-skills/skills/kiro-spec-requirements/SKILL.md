@@ -9,7 +9,6 @@ metadata:
 # Requirements Generation
 
 <background_information>
-- **Mission**: Generate comprehensive, testable requirements in EARS format based on the project description from spec initialization
 - **Success Criteria**:
   - Create complete requirements document aligned with steering context
   - Follow the project's EARS patterns and constraints for all acceptance criteria
@@ -18,9 +17,6 @@ metadata:
 </background_information>
 
 <instructions>
-## Core Task
-Generate complete requirements for feature **$1** based on the project description in requirements.md.
-
 ## Execution Steps
 
 1. **Load Context**:
@@ -95,17 +91,9 @@ Requirements describe user-observable behavior, not implementation. Use this to 
 
 ### Other Constraints
 - Each requirement must be testable and unambiguous. If the project description leaves room for multiple interpretations on scope, behavior, or boundary conditions, ask the user to clarify before generating that requirement. Ask as many questions as needed; do not generate requirements that contain your own assumptions.
-- Requirements must be testable and verifiable
 - Choose appropriate subject for EARS statements (system/service name for software)
 - Requirement headings in requirements.md MUST include a leading numeric ID only (for example: "Requirement 1", "1.", "2 Feature ..."); do not use alphabetic IDs like "Requirement A".
-- **Context Discipline**: Start with core steering and expand only with requirement-relevant steering or use-case-aligned local agent skills/playbooks
 </instructions>
-
-## Tool Guidance
-- **Read first**: Load spec, brief.md, core steering, rules, and templates in main context before generation
-- **Sub-agent dispatch**: Delegate codebase exploration, domain research, and bulk steering scanning to sub-agents. Each returns a findings summary, keeping the main context clean for generation.
-- **Write last**: Update requirements.md only after complete generation
-- **WebSearch/WebFetch**: For domain knowledge. Prefer delegating via sub-agent to avoid loading raw results into main context.
 
 ## Output Description
 Provide output in the language specified in spec.json with:
@@ -124,7 +112,6 @@ Provide output in the language specified in spec.json with:
 
 ### Error Scenarios
 - **Missing Project Description**: If requirements.md lacks project description, ask user for feature details
-- **Ambiguous Requirements**: Ask the user to clarify before generating. Do not generate requirements based on assumptions.
 - **Template Missing**: If template files don't exist, use inline fallback structure with warning
 - **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
 - **Incomplete Requirements**: After generation, explicitly ask user if requirements cover all expected functionality
@@ -144,5 +131,3 @@ Provide output in the language specified in spec.json with:
 
 **If Modifications Needed**:
 - Provide feedback and re-run `$kiro-spec-requirements $1`
-
-**Note**: Approval is mandatory before proceeding to design phase.

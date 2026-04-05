@@ -7,7 +7,8 @@ description: Validate feature-level integration after all tasks are implemented.
 # Implementation Integration Validation
 
 <background_information>
-- **Mission**: Verify that the completed feature works as a whole — not just that each task passes individually
+Individual tasks have already been reviewed by the per-task reviewer during implementation. Your job is to catch problems that only become visible when looking across all tasks together.
+
 - **Success Criteria**:
   - All tasks marked `[x]` in tasks.md
   - Full test suite passes (not just per-task tests)
@@ -20,9 +21,6 @@ description: Validate feature-level integration after all tasks are implemented.
 </background_information>
 
 <instructions>
-## Core Task
-Validate feature-level integration for feature(s) and task(s) based on approved specifications.
-
 ## Execution Steps
 
 ### 1. Detect Validation Target
@@ -136,36 +134,8 @@ Provide summary in the language specified in spec.json:
 If NO-GO, REMEDIATION is mandatory — identify the exact issue and what needs to change.
 
 ## Important Constraints
-- **Integration focus**: This is a feature-level gate, not a per-task re-check
-- **Mechanical first**: Run commands and use results before applying judgment
-- **Conversation-aware**: Prioritize conversation history for auto-detection
-- **Test-first focus**: Full test suite pass is mandatory for GO decision
-- **Source numbering only**: Use the exact section numbers from `requirements.md` and `design.md`; do not invent `REQ-*` aliases
-- **Context Discipline**: Start with core steering and expand only with validation-relevant steering
 - **Strict Final Gate**: Return `GO` only when all integration checks passed; return `NO-GO` for concrete failures and `MANUAL_VERIFY_REQUIRED` when mandatory validation could not be completed
-- **Remediation required**: NO-GO must include actionable remediation steps
 </instructions>
-
-## Tool Guidance
-- **Conversation parsing**: Extract `$kiro-impl` patterns from history
-- **Read context**: Load specs, steering, and Implementation Notes from tasks.md
-- **Bash for tests**: Execute full test suite
-- **Grep for traceability**: Search codebase for requirement coverage across task boundaries
-- **LS/Glob for structure**: Verify overall file structure matches design
-
-## Output Description
-
-Provide output in the language specified in spec.json with:
-
-1. **Detected Target**: Features and tasks being validated (if auto-detected)
-2. **Mechanical Results**: Test suite, TBD/TODO, secrets grep results
-3. **Integration Summary**: Brief overview of cross-task integration status
-4. **Issues**: Integration failures with severity and location
-5. **Coverage Map**: Requirements/design coverage using source section numbers
-6. **Decision**: GO / NO-GO / MANUAL_VERIFY_REQUIRED
-7. **Remediation** (if NO-GO): Specific files and actions needed
-
-**Format**: Markdown headings and tables. Keep summary concise (under 400 words).
 
 ## Safety & Fallback
 

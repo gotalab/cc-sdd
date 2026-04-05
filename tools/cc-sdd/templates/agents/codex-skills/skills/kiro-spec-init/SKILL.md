@@ -6,14 +6,6 @@ description: Initialize a new specification with detailed project description
 
 # Spec Initialization
 
-<background_information>
-- **Mission**: Initialize the first phase of spec-driven development by creating directory structure and metadata for a new specification
-- **Success Criteria**:
-  - Generate appropriate feature name from project description
-  - Create unique spec structure without conflicts
-  - Provide clear path to next phase (requirements generation)
-</background_information>
-
 <instructions>
 ## Core Task
 Generate a unique feature name from the project description ($ARGUMENTS) and initialize the specification structure.
@@ -34,17 +26,8 @@ Generate a unique feature name from the project description ($ARGUMENTS) and ini
    - Write `spec.json` and `requirements.md` to spec directory
 
 ## Important Constraints
-- DO NOT generate requirements/design/tasks at this stage
-- Follow stage-by-stage development principles
-- Maintain strict phase separation
-- Only initialization is performed in this phase
+- Do NOT generate requirements, design, or tasks. This skill only creates spec.json and requirements.md.
 </instructions>
-
-## Tool Guidance
-- Use **Glob** to check existing spec directories for name uniqueness
-- Use **Read** to fetch templates: `init.json` and `requirements-init.md`
-- Use **Write** to create spec.json and requirements.md after placeholder replacement
-- Perform validation before any file write operation
 
 ## Output Description
 Provide output in the language specified in `spec.json` with the following structure:
@@ -53,7 +36,6 @@ Provide output in the language specified in `spec.json` with the following struc
 2. **Project Summary**: Brief summary (1 sentence)
 3. **Created Files**: Bullet list with full paths
 4. **Next Step**: Command block showing `$kiro-spec-requirements <feature-name>`
-5. **Notes**: Explain why only initialization was performed (2-3 sentences on phase separation)
 
 **Format Requirements**:
 - Use Markdown headings (##, ###)

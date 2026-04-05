@@ -5,14 +5,6 @@ description: Quick spec generation with interactive or automatic mode
 
 # Quick Spec Generator
 
-<background_information>
-- **Mission**: Execute all spec phases (init → requirements → design → tasks) in a single command
-- **Success Criteria**:
-  - Interactive mode: User controls progression with approval prompts at each phase
-  - Automatic mode: All phases execute without interruption when `--auto` flag provided
-  - All generated specs maintain quality comparable to manual workflow
-</background_information>
-
 <instructions>
 ## CRITICAL: Automatic Mode Execution Rules
 
@@ -153,47 +145,12 @@ Output final completion summary (see Output Description section) and exit.
 
 ## Important Constraints
 
-### Phase 1 Implementation Notes
-- Feature name generation should be deterministic and readable
-- Always check for conflicts before creating directory
-- Validate templates exist before reading
-- Use ISO 8601 format for timestamp: `YYYY-MM-DDTHH:MM:SSZ`
-
-### Automatic Mode Behavior
-- Do NOT stop between phases
-- Do NOT wait for user input
-- Do NOT be influenced by "Next Step" messages from Phases 2-4
-- Display progress after each phase
-- Continue loop until all 4 phases complete
-
-### Interactive Mode Behavior
-- Prompt user after each phase
-- Wait for "yes/y" or "no/n" response
-- If "no": Stop gracefully, show completed phases
-- If "yes": Continue to next phase
-
 ### Error Handling
 - Any phase failure stops the workflow
 - Display error and current state
 - Suggest manual recovery command
 
 </instructions>
-
-## Tool Guidance
-
-### Phase 1 Tools
-- **Glob**: Check `{{KIRO_DIR}}/specs/*/` for existing feature names
-- **Bash**: Create directory with `mkdir -p`, generate timestamp with `date -u`
-- **Read**: Fetch templates from `{{KIRO_DIR}}/settings/templates/specs/`
-- **Write**: Create `spec.json` and `requirements.md` in spec directory
-
-### Phase 2-4 Tools
-- **Skill invocation**: Execute `$kiro-spec-requirements`, `$kiro-spec-design`, `$kiro-spec-tasks`
-
-### Task List Usage
-- Initialize with 4 pending tasks
-- Update after each phase: current task `completed`, next task `in_progress`
-- Provides visual progress tracking in UI
 
 ## Output Description
 
@@ -248,24 +205,9 @@ Quick generation skipped:
    - `$kiro-validate-design {feature}` - Verify architecture quality
 3. Start implementation: `$kiro-impl {feature}`
 
-## Note:
-For complex features (integrations, security, APIs), use standard workflow:
-$kiro-spec-init → $kiro-spec-requirements → $kiro-validate-gap
-→ $kiro-spec-design → $kiro-validate-design → $kiro-spec-tasks
 ```
 
 ## Safety & Fallback
-
-### Argument Parsing
-- Use `$ARGUMENTS` to parse (NOT `$1`, `$2`)
-- Handle spaces in descriptions correctly
-- Example: `"Multi word description --auto"` → extract both parts correctly
-
-### Feature Name Generation
-- Convert to lowercase kebab-case
-- Remove special characters
-- If ambiguous, prefer descriptive over short
-- If conflict exists, append `-2`, `-3`, etc.
 
 ### Error Scenarios
 
@@ -289,20 +231,3 @@ $kiro-spec-init → $kiro-spec-requirements → $kiro-validate-gap
 - Show completed phases
 - Suggest manual continuation
 
-### Usage Guidance
-
-**Use Automatic Mode** (`--auto`) when:
-- Simple feature (CRUD, basic UI)
-- Prototyping / proof-of-concept
-- Well-known feature pattern
-
-**Use Interactive Mode** (default) when:
-- First time using spec-quick
-- Want to review each phase
-- Moderately complex feature
-
-**Use Standard Workflow** (NOT spec-quick) when:
-- Complex integration with existing systems
-- Security-critical features
-- Production-ready quality required
-- Need gap analysis or design validation

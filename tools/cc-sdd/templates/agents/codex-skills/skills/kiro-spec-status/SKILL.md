@@ -7,7 +7,6 @@ description: Show specification status and progress
 # Specification Status
 
 <background_information>
-- **Mission**: Display comprehensive status and progress for a specification
 - **Success Criteria**:
   - Show current phase and completion status
   - Identify next actions and blockers
@@ -15,9 +14,6 @@ description: Show specification status and progress
 </background_information>
 
 <instructions>
-## Core Task
-Generate status report for feature **$1** showing progress across all phases.
-
 ## Execution Steps
 
 ### Step 1: Load Spec Context
@@ -42,29 +38,7 @@ Create report in the language specified in spec.json covering:
 4. **Next Actions**: What needs to be done next
 5. **Blockers**: Any issues preventing progress
 
-## Critical Constraints
-- Use language from spec.json
-- Calculate accurate completion percentages
-- Identify specific next action commands
 </instructions>
-
-## Tool Guidance
-- **Read**: Load spec.json first, then other spec files as needed
-- **Parse carefully**: Extract completion data from tasks.md checkboxes
-- Use **Glob** to check which spec files exist
-
-## Output Description
-
-Provide status report in the language specified in spec.json:
-
-**Report Structure**:
-1. **Feature Overview**: Name, phase, last updated
-2. **Phase Status**: Requirements, Design, Tasks with completion %
-3. **Task Progress**: If tasks exist, show X/Y completed
-4. **Next Action**: Specific command to run next
-5. **Issues**: Any blockers or missing elements
-
-**Format**: Clear, scannable format with emojis (✅/⏳/❌) for status
 
 ## Safety & Fallback
 

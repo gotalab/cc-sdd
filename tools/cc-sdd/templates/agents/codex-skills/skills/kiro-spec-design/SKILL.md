@@ -9,7 +9,6 @@ metadata:
 # Technical Design Generator
 
 <background_information>
-- **Mission**: Generate comprehensive technical design document that translates requirements (WHAT) into architectural design (HOW)
 - **Success Criteria**:
   - All requirements mapped to technical components with clear interfaces
   - Appropriate architecture discovery and research completed
@@ -18,9 +17,6 @@ metadata:
 </background_information>
 
 <instructions>
-## Core Task
-Generate technical design document for feature **$1** based on approved requirements.
-
 ## Execution Steps
 
 ### Step 1: Load Context
@@ -148,21 +144,8 @@ After all findings return, synthesize in main context before proceeding.
    - For TypeScript, never use `any`; prefer precise types and generics.
    - For dynamically typed languages, provide type hints/annotations where available (e.g., Python type hints) and validate inputs at boundaries.
    - Document public interfaces and contracts clearly to ensure cross-component type safety.
-- **Latest Information**: Use WebSearch/WebFetch for external dependencies and best practices
-- **Steering Alignment**: Respect existing architecture patterns from steering context
-- **Template Adherence**: Follow specs/design.md template structure and generation instructions strictly
-- **Design Focus**: Architecture and interfaces ONLY, no implementation code
 - **Requirements Traceability IDs**: Use numeric requirement IDs only (e.g. "1.1", "1.2", "3.1", "3.3") exactly as defined in requirements.md. Do not invent new IDs or use alphabetic labels.
-
-### Language Reminder
-- Markdown prompt content must remain in English, even when spec.json requests another language for design output. The generated design.md and research.md should use the spec language.
 </instructions>
-
-## Tool Guidance
-- **Read first**: Load all context before taking action (specs, steering, templates, rules)
-- **Research when uncertain**: Use WebSearch/WebFetch for external dependencies, APIs, and latest best practices
-- **Analyze existing code**: Use Grep to find patterns and integration points in codebase
-- **Write last**: Generate design.md (and research.md updates) only after all research, synthesis, and design review complete
 
 ## Output Description
 
@@ -204,10 +187,7 @@ Provide brief summary in the language specified in spec.json:
 - **Warning**: "Steering directory empty or missing - design may not align with project standards"
 - **Proceed**: Continue with generation but note limitation in output
 
-**Discovery Complexity Unclear**:
-- **Default**: Use full discovery process (`rules/design-discovery-full.md` from this skill's directory)
-- **Rationale**: Better to over-research than miss critical context
-- **Invalid Requirement IDs**:
+**Invalid Requirement IDs**:
   - **Stop Execution**: If requirements.md is missing numeric IDs or uses non-numeric headings (for example, "Requirement A"), stop and instruct the user to fix requirements.md before continuing.
 
 **Spec Gap Found During Design Review**:
@@ -225,5 +205,3 @@ Provide brief summary in the language specified in spec.json:
 **If Modifications Needed**:
 - Provide feedback and re-run `$kiro-spec-design $1`
 - Existing design used as reference (merge mode)
-
-**Note**: Design approval is mandatory before proceeding to task generation.
