@@ -16,7 +16,7 @@ cc-sdd は、承認済み仕様を executable work に変えます。要件 → 
 
 **cc-sdd を使う理由:**
 - ✅ **承認済み仕様が executable work になる** — `/kiro:spec-init` から承認済みの要件・設計・タスクまで、自己流プロセスを組まずに進められる
-- ✅ **Subagent dispatch が大きい仕事を回せる** — 大きめの承認済みタスクセットを、タスクごとの subagent dispatch と independent review で自律実装できる
+- ✅ **長時間自律実装** — 承認済みタスクセットをタスクごとの subagent dispatch と independent review で自律実装。外部依存なし、そのまま動く
 - ✅ **レビューと最終検証フローを内蔵** — 作業を再チェックし、具体的な findings を修正し、blocked / not-ready のときは正直に止まる前提で設計されている
 - ✅ **チーム向けテンプレートが導入しやすい** — 一度カスタマイズすれば、生成される要件・設計レビュー・タスク・ステアリング文書を承認フローに合わせられる
 
@@ -115,7 +115,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 ### cc-sdd を選ぶ理由
 1. **承認済み仕様が executable work になる** — 要件・設計・タスク・Supporting References が揃ったまま、実装の駆動源として使えます。
-2. **Subagent dispatch が大きい仕事を回せる** — 大きいタスクセットを fragile な one-shot prompt ではなく、タスクごとの subagent dispatch と independent review で自律実装できます。
+2. **長時間自律実装** — 大きいタスクセットを fragile な one-shot prompt ではなく、タスクごとの subagent dispatch と independent review で長時間自律実装。外部依存なし、そのまま動きます。
 3. **Agent Skills が長期的な surface** — 同じ skill-based workflow を Claude Code、Codex、そして今後の skills-capable agents に持ち運べます。
 4. **レビューと最終検証フローを内蔵** — spec mismatch、placeholder 実装、blocked state を完了宣言前に拾う方向で設計されています。
 5. **チーム向けカスタマイズは一度だけ** — `.kiro/settings/templates/` を編集すれば全エージェントへ反映。非スキルエージェントは `.kiro/settings/rules/` も使用します。
@@ -123,7 +123,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 ## ✨ 主要機能
 
 - **📋 Spec-Governed Development** — 構造化仕様（要件 → 調査 → 設計 → タスク）を、単なる計画書ではなく実装を支配する契約として扱います
-- **🔁 Subagent-Driven Implementation** — 承認済みタスクセットを、タスクごとの subagent dispatch・adversarial review・bounded remediation で自律実装に変えます
+- **🔁 長時間自律実装** — `/kiro-impl` を実行して放置: 各タスクに fresh subagent + independent reviewer が付き、bounded remediation で回る。外部依存なし、ネイティブ agent 機能のみ
 - **✅ レビュー + 最終検証フロー** — task-local review、validation passes、final validation flow を内蔵し、honest completion と NO-GO outcomes を目指します
 - **🚀 AI-DLC 手法** — AI実行、人間が各フェーズで検証。[集中「ボルト」](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)が週単位のスプリントを置き換え
 - **🧠 永続的プロジェクトメモリ** — ステアリング文書がアーキテクチャ・パターン・ルール・ドメイン知識を全セッション間で維持

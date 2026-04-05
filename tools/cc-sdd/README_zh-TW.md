@@ -16,7 +16,7 @@ cc-sdd 會把已核准規格轉成 executable work，串起需求 → 設計 →
 
 **團隊為什麼選 cc-sdd:**
 - ✅ **已核准規格會變成 executable work** — 從 `/kiro:spec-init` 一路走到已核准的需求、設計與任務，不必自己拼湊流程
-- ✅ **Subagent dispatch 適合更大的工作** — 較大的已核准任務集可以透過 per-task subagent dispatch 與 independent review 進入自律實作
+- ✅ **長時間自律實作** — 較大的已核准任務集可以透過 per-task subagent dispatch 與 independent review 進入自律實作，無需外部依賴，開箱即用
 - ✅ **內建審查與最終驗證流程** — 重新檢查工作、修正具體 findings，並在 blocked / not-ready 時誠實停止
 - ✅ **團隊對齊模板讓導入更務實** — 自訂一次後，產生的需求、設計審查、任務與 steering 文件就能貼合團隊的批准流程
 
@@ -112,7 +112,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 
 ### 為何團隊選擇 cc-sdd
 1. **已核准規格會變成 executable work** — 需求、設計、任務與 supporting references 保持對齊，能直接驅動實作，而不是逐漸過期。
-2. **Subagent dispatch 適合更大的工作** — 大型任務集可以透過 per-task subagent dispatch 與 independent review 進入 autonomous implementation，而不是脆弱的 one-shot prompt。
+2. **長時間自律實作** — 大型任務集可以透過 per-task subagent dispatch 與 independent review 進入長時間自律實作，無需外部依賴，開箱即用。
 3. **Agent Skills 是更耐久的 surface** — 同一套 skill-based workflow 可以在 Claude Code、Codex 與未來的 skills-capable agents 間移動。
 4. **內建審查與最終驗證流程** — 系統在宣告完成前，會朝著抓出 spec mismatch、placeholder 實作與 blocked state 的方向設計。
 5. **團隊化自訂只做一次** — 編輯 `.kiro/settings/templates/` 後，每個代理／slash command 都會反映你的工作流；非 skills 代理也會使用 `.kiro/settings/rules/`。
@@ -120,7 +120,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 ## ✨ 主要功能
 
 - **📋 Spec-Governed Development** — 結構化規格（需求 → 研究 → 設計 → 任務）不是只有規劃用途，而是作為約束實作的 governing contract
-- **🔁 Subagent-Driven Implementation** — 把已核准任務集透過 per-task subagent dispatch、adversarial review 與 bounded remediation 轉成自律實作
+- **🔁 長時間自律實作** — 執行 `/kiro-impl` 後放手：每個任務獲得 fresh subagent + independent adversarial reviewer + bounded remediation，無需外部依賴，僅使用原生 agent 能力
 - **✅ 審查 + 最終驗證流程** — 內建 task-local review、validation passes 與 final validation flow，朝 honest completion 與 NO-GO outcomes 前進
 - **🚀 AI-DLC 方法論** — AI 執行，人類在各階段驗證。[集中式「快衝」](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)取代數周衝刺
 - **🧠 持久專案記憶** — 指導文件在所有會話間維持架構、模式、規則與領域知識

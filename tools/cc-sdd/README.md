@@ -16,7 +16,7 @@ cc-sdd turns approved specs into executable work: requirements → design → ta
 
 **Why teams pick cc-sdd:**
 - ✅ **Approved specs become executable work** — Go from `/kiro:spec-init` to approved requirements, design, and tasks without inventing your own process
-- ✅ **Subagent dispatch handles bigger work** — Hand larger approved task sets to bounded autonomous implementation with per-task subagent dispatch and independent review
+- ✅ **Long-running autonomous implementation** — Run all approved tasks autonomously with per-task subagent dispatch and independent review — no external dependencies, works out of the box
 - ✅ **Review and final validation flows are built in** — Re-check work, remediate concrete findings, and stop honestly when the work is blocked or not ready to claim complete
 - ✅ **Team-aligned templates keep adoption practical** — Customize once and generated requirements, design reviews, tasks, and steering docs fit your approval process
 
@@ -115,7 +115,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 ### Why teams install cc-sdd
 1. **Approved specs become executable work** – requirements, design, tasks, and supporting references stay aligned and can drive implementation instead of going stale.
-2. **Subagent dispatch is built for bigger work** – large task sets can run through autonomous implementation with per-task subagent dispatch, independent review, and bounded stop conditions instead of fragile one-shot prompting.
+2. **Long-running autonomous implementation** – large task sets run through autonomous implementation with per-task subagent dispatch, independent review, and bounded stop conditions — no external dependencies, works out of the box.
 3. **Agent Skills are the durable surface** – the same skill-based workflow can move across Claude Code, Codex, and future skills-capable agents.
 4. **Review and final validation flows are built in** – the system is designed to catch mismatches, placeholders, and blocked states before claiming completion.
 5. **Customize once for your team** – edit `.kiro/settings/templates/` and every agent/slash command reflects your workflow. Non-skills agents also use `.kiro/settings/rules/`.
@@ -123,7 +123,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 ## ✨ Key Features
 
 - **📋 Spec-Governed Development** — Structured specs (requirements → research → design → tasks) stay as the governing contract for implementation, not just planning documents
-- **🔁 Subagent-Driven Implementation** — Turn approved task sets into autonomous implementation with per-task subagent dispatch, adversarial review, and bounded remediation
+- **🔁 Long-Running Autonomous Implementation** — Run `/kiro-impl` and walk away: each task gets a fresh subagent, an independent adversarial reviewer, and bounded remediation — just native agent capabilities, no external dependencies
 - **✅ Review + Final Validation Flows** — Task-local review, validation passes, and final validation flows are built in so the system aims for honest completion and NO-GO outcomes
 - **🚀 AI-DLC Methodology** — AI executes, human validates at each phase. [Intensive "bolts"](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/) replace weeks-long sprints
 - **🧠 Persistent Project Memory** — Steering documents maintain architecture, patterns, rules, and domain knowledge across all sessions

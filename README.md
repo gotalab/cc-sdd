@@ -9,17 +9,17 @@
 <a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-## Turn approved requirements and design into long-running autonomous implementation with Ralph Loop
+## Turn approved requirements and design into long-running autonomous implementation
 
 **One command. Hours instead of weeks. Requirements → Design → Tasks → Implementation, review, and final validation.**
 
 👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 
-cc-sdd turns approved specs into executable work instead of leaving them as passive documents. It brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, OpenCode, and Windsurf, with Ralph Loop for larger approved task sets.
+cc-sdd turns approved specs into executable work instead of leaving them as passive documents. It brings structured **AI-DLC** (AI-Driven Development Lifecycle) and **Spec-Driven Development** to Claude Code, Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, OpenCode, and Windsurf, with native subagent-driven autonomous implementation for larger approved task sets.
 
 ### What you get:
 - ✅ **Approved specs become executable work** — Requirements, design, tasks, implementation, review, and final validation stay connected instead of drifting apart
-- ✅ **Ralph Loop handles bigger work** — Large approved task sets can run through bounded long-running autonomous implementation instead of fragile one-shot prompting
+- ✅ **Long-running autonomous implementation** — Large approved task sets run autonomously with per-task subagent dispatch and independent review, no external dependencies
 - ✅ **Review and final validation flows are built in** — The system is designed to re-check work, remediate concrete findings, and stop honestly when work is blocked or not ready to claim complete
 - ✅ **Team-aligned templates keep adoption practical** — Customize once and generated requirements, design reviews, tasks, and steering docs fit your approval process
 
@@ -48,7 +48,7 @@ Then start with:
 /kiro:spec-tasks <feature-name>
 ```
 
-For larger approved task sets, move from task generation into Ralph Loop driven implementation.
+For larger approved task sets, run `/kiro-impl` to start autonomous implementation with per-task subagent dispatch and review.
 
 **Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages, plus Codex Skills mode.
 
