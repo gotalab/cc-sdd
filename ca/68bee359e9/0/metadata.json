@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "ca68bee359e9",
+  "session_id": "203b229e-a801-499b-a6bb-a79f3891ce56",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-05T17:22:18.026529Z",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-brainstorm/SKILL.md",
+    "tools/cc-sdd/templates/agents/codex-skills/skills/kiro-brainstorm/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6[1m]",
+  "turn_id": "cfd67025e2db",
+  "token_usage": {
+    "input_tokens": 6208,
+    "cache_creation_tokens": 796235,
+    "cache_read_tokens": 163820769,
+    "output_tokens": 260792,
+    "api_call_count": 653
+  },
+  "session_metrics": {
+    "turn_count": 76
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-05T17:22:14.960532Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 8,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 8,
+    "total_lines_changed": 8,
+    "agent_percentage": 0,
+    "metric_version": 2
+  }
+}

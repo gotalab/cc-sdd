@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "ca68bee359e9",
+  "strategy": "manual-commit",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-brainstorm/SKILL.md",
+    "tools/cc-sdd/templates/agents/codex-skills/skills/kiro-brainstorm/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ca/68bee359e9/0/metadata.json",
+      "transcript": "/ca/68bee359e9/0/full.jsonl",
+      "content_hash": "/ca/68bee359e9/0/content_hash.txt",
+      "prompt": "/ca/68bee359e9/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6208,
+    "cache_creation_tokens": 796235,
+    "cache_read_tokens": 163820769,
+    "output_tokens": 260792,
+    "api_call_count": 653
+  }
+}
