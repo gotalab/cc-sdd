@@ -55,13 +55,18 @@ Present the determined path to the user and confirm before proceeding.
 
 ## Step 3: Deep Context Loading
 
-**Only for Path C and D.** Now load the context needed for brainstorming:
+**Only for Path C and D.** Now load the context needed for brainstorming.
 
+**In main context** (essential for dialogue with user):
 - **Steering documents**: Read product.md and tech.md (if they exist) for project goals, constraints, and tech stack
 - **Relevant specs**: If the request is adjacent to an existing spec, read that spec's requirements.md to understand boundaries and avoid overlap
-- **Codebase exploration** (delegate to sub-agent): When architecture understanding is needed (especially Path D), spawn a sub-agent to explore the codebase structure, key patterns, and dependencies. The sub-agent returns a summary, keeping exploration details out of the main context.
 
-**Context budget**: Keep total loaded content under ~500 lines. Read selectively: summaries and section headers first, detailed content only when needed for a specific decision.
+**Delegate to sub-agent** (keeps exploration out of main context):
+- **Codebase exploration**: Spawn a sub-agent to explore the codebase and return a structured summary. Ask it to summarize: (1) tech stack and frameworks, (2) directory structure and key modules, (3) patterns and conventions used, (4) areas relevant to the user's request. The sub-agent returns findings under 200 lines.
+- For Path D (multi-scope), also ask the sub-agent to identify natural domain boundaries and existing module separation.
+- Skip sub-agent dispatch for small/obvious requests where the top-level directory listing from Step 1 is sufficient.
+
+**Context budget**: Keep total content loaded into main context under ~500 lines. The sub-agent handles the heavy exploration.
 
 ## Step 4: Understand the Idea
 
@@ -86,7 +91,7 @@ For each approach:
 - **Cons**: What are the risks or downsides
 - **Scope estimate**: Rough complexity (small / medium / large)
 
-If technical research is needed (unfamiliar framework, library evaluation), spawn a sub-agent for web research rather than loading raw search results into the main context.
+If technical research is needed (unfamiliar framework, library evaluation), spawn a sub-agent to research and return a concise summary. Ask it to compare options, check latest versions, and note known issues. Raw search results never enter the main context.
 
 Recommend one approach and explain why.
 

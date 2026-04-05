@@ -59,13 +59,19 @@ Present the determined path to the user and confirm before proceeding.
 
 ### Step 3: Deep Context Loading
 
-**Only for Path C and D.** Now load the context needed for brainstorming:
+**Only for Path C and D.** Now load the context needed for brainstorming.
 
+**In main context** (essential for dialogue with user):
 - **Steering documents**: Read product.md and tech.md (if they exist) for project goals, constraints, and tech stack
 - **Relevant specs**: If the request is adjacent to an existing spec, read that spec's requirements.md to understand boundaries and avoid overlap
-- **Codebase exploration** (delegate to subagent): When architecture understanding is needed (especially Path D), dispatch a subagent via Agent tool to explore the codebase structure, key patterns, and dependencies. The subagent returns a summary, keeping exploration details out of the main context.
 
-**Context budget**: Keep total loaded content under ~500 lines. Read selectively: summaries and section headers first, detailed content only when needed for a specific decision.
+**Delegate to subagent via Agent tool** (keeps exploration out of main context):
+- **Codebase exploration**: Dispatch a subagent to explore the codebase and return a structured summary. Example prompt: "Explore this project's codebase. Summarize: (1) tech stack and frameworks, (2) directory structure and key modules, (3) patterns and conventions used, (4) areas relevant to [user's request]. Return a summary under 200 lines."
+- The subagent uses Read/Glob/Grep to explore, then returns findings. Only the summary enters the main context.
+- For Path D (multi-scope), also ask the subagent to identify natural domain boundaries and existing module separation.
+- Skip subagent dispatch for small/obvious requests where the top-level directory listing from Step 1 is sufficient.
+
+**Context budget**: Keep total content loaded into main context under ~500 lines. The subagent handles the heavy exploration.
 
 ### Step 4: Understand the Idea
 
@@ -90,7 +96,7 @@ For each approach:
 - **Cons**: What are the risks or downsides
 - **Scope estimate**: Rough complexity (small / medium / large)
 
-If technical research is needed (unfamiliar framework, library evaluation), delegate WebSearch/WebFetch to a subagent via Agent tool rather than loading raw search results into the main context.
+If technical research is needed (unfamiliar framework, library evaluation), dispatch a subagent via Agent tool. Example prompt: "Research [topic]: compare options, check latest versions, note known issues. Return a summary of findings with recommendation." The subagent uses WebSearch/WebFetch and returns a concise summary. Raw search results never enter the main context.
 
 Recommend one approach and explain why.
 
