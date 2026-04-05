@@ -50,6 +50,7 @@ Skills are located in `.agents/skills/kiro-*/SKILL.md`
 - Each skill is a directory with a `SKILL.md` file
 - Use `/skills` to inspect currently available skills
 - Invoke a skill directly with `$kiro-<skill-name>`
+- **If there is even a 1% chance a skill applies to the current task, invoke it.** Do not skip skills because the task seems simple.
 
 ## Collaboration Modes (Optional)
 Enable collaboration modes in `~/.codex/config.toml` to let Codex choose focused execution modes for longer tasks:

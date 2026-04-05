@@ -44,6 +44,7 @@ Skills are located in `.claude/skills/kiro-*/SKILL.md`
 - Skills run inline with access to conversation context
 - Skills may delegate parallel research to subagents for efficiency
 - Additional files (templates, examples) can be added to skill directories
+- **If there is even a 1% chance a skill applies to the current task, invoke it.** Do not skip skills because the task seems simple.
 
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation
