@@ -27,16 +27,8 @@ export interface AgentDefinition {
   templateFallbacks?: Record<string, string>;
 }
 
-const codexCopyInstruction = String.raw`Move Codex Custom prompts to ~/.codex/prompts by running:
-    mkdir -p ~/.codex/prompts \
-      && cp -Ri ./.codex/prompts/. ~/.codex/prompts/ \
-      && printf '\n==== COPY PHASE DONE ====\n' \
-      && printf 'Remove original ./.codex/prompts ? [y/N]: ' \
-      && IFS= read -r a \
-      && case "$a" in [yY]) rm -rf ./.codex/prompts && echo 'Removed.' ;; *) echo 'Kept original.' ;; esac`;
-
 const codexLegacyPromptNotice =
-  'Deprecated: Codex prompts mode (`--codex`) is deprecated. Use `npx cc-sdd@latest --codex-skills` for subagent-driven autonomous implementation with `/kiro-impl`.';
+  'Deprecated: Codex prompts mode (`--codex`) is deprecated. Codex no longer supports `.codex/prompts/`. Use `npx cc-sdd@latest --codex-skills` instead.';
 
 const skillsUpgradeNotice =
   'Upgrade available: `npx cc-sdd@latest --claude-skills` installs Agent Skills with subagent-driven autonomous implementation, independent review, and the unified `/kiro-impl` command. Recommended for new setups.';
@@ -117,7 +109,7 @@ export const agentDefinitions = {
   codex: {
     label: 'Codex CLI',
     description:
-      'Installs kiro prompts in `.codex/prompts/` as a legacy compatibility mode (non-recommended), shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart. Prefer `--codex-skills`.',
+      'Deprecated: Codex no longer supports `.codex/prompts/`. Use `--codex-skills` instead.',
     aliasFlags: ['--codex', '--codex-cli'],
     recommendedModels: ['gpt-5.4 high or xhigh', 'gpt-5.4'],
     layout: {
