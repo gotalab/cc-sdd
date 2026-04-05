@@ -75,19 +75,24 @@ Execute these 4 phases in order:
 
 **Core Logic**:
 
-1. **Generate Feature Name**:
+1. **Check for Brief**:
+   - If `{{KIRO_DIR}}/specs/{feature-name}/brief.md` exists (created by `$kiro-brainstorm`), read it for brainstorm context (problem, approach, scope, constraints)
+   - Use brief content as the project description instead of `$ARGUMENTS`
+
+2. **Generate Feature Name**:
    - Convert description to kebab-case
    - Example: "User profile with avatar upload" → "user-profile-avatar-upload"
    - Keep name concise (2-4 words ideally)
 
-2. **Check Uniqueness**:
+3. **Check Uniqueness**:
    - Use Glob to check `{{KIRO_DIR}}/specs/*/`
-   - If feature name exists, append `-2`, `-3`, etc.
+   - If directory exists with only `brief.md` (no `spec.json`), use that directory (brainstorm created it)
+   - Otherwise if feature name exists, append `-2`, `-3`, etc.
 
-3. **Create Directory**:
-   - Use Bash: `mkdir -p {{KIRO_DIR}}/specs/{feature-name}`
+4. **Create Directory**:
+   - Use Bash: `mkdir -p {{KIRO_DIR}}/specs/{feature-name}` (skip if already exists from brainstorm)
 
-4. **Initialize Files from Templates**:
+5. **Initialize Files from Templates**:
 
    a. Read templates:
    ```
@@ -108,9 +113,9 @@ Execute these 4 phases in order:
    - {{KIRO_DIR}}/specs/{feature-name}/requirements.md
    ```
 
-5. **Update task list**: Mark task 1 as `completed`, task 2 as `in_progress`.
+6. **Update task list**: Mark task 1 as `completed`, task 2 as `in_progress`.
 
-6. **Output Progress**:
+7. **Output Progress**:
    ```
    Spec initialized at {{KIRO_DIR}}/specs/{feature-name}/
    ```

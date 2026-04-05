@@ -26,6 +26,7 @@ You are a specialized skill for generating comprehensive, testable requirements 
 If steering/spec context is already available from conversation, skip redundant file reads.
 Otherwise, load all necessary context:
 - Read `{{KIRO_DIR}}/specs/{feature}/spec.json` for language and metadata
+- Read `{{KIRO_DIR}}/specs/{feature}/brief.md` if it exists (brainstorm context: problem, approach, scope decisions)
 - Read `{{KIRO_DIR}}/specs/{feature}/requirements.md` for project description
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to feature scope, user personas, business/domain rules, compliance/security constraints, operational constraints, or existing product boundaries

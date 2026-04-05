@@ -2,7 +2,7 @@
 name: kiro-brainstorm
 description: Entry point for new work. Determines the best action path (update existing spec, create new spec, multi-spec decomposition, or no spec needed) and refines ideas through structured dialogue.
 disable-model-invocation: true
-allowed-tools: Read, Write, Glob, Grep, WebSearch, WebFetch, AskUserQuestion
+allowed-tools: Read, Write, Glob, Grep, Agent, WebSearch, WebFetch, AskUserQuestion
 argument-hint: <idea-or-request>
 ---
 
@@ -20,17 +20,20 @@ You are the entry point when a user wants to build or change something but isn't
 
 ## Execution Steps
 
-### Step 1: Explore Context
+### Step 1: Lightweight Scan
 
-Before asking questions, silently gather context:
-- Read existing steering documents (product.md, tech.md, structure.md) if they exist
-- Scan `{{KIRO_DIR}}/specs/` for existing specs: feature names, phase status, approved/pending
-- Scan the codebase structure to understand the current state
-- Note the tech stack, frameworks, patterns already in use
+Gather **only metadata** to determine the action path. Do NOT read full file contents yet.
+
+- **Specs inventory**: Glob `{{KIRO_DIR}}/specs/*/spec.json`, read each spec.json for `name`, `phase`, `approved` fields only. Note feature names and their current status.
+- **Steering existence**: Check which files exist in `{{KIRO_DIR}}/steering/` (product.md, tech.md, structure.md, roadmap.md). Do NOT read their contents yet.
+- **Roadmap check**: If `{{KIRO_DIR}}/steering/roadmap.md` exists, read it. This contains project-level context (approach, scope, constraints, spec list) from a previous brainstorm session. Use it to restore project context.
+- **Top-level structure**: List the project root directory to note key directories and files. Do NOT recurse into subdirectories.
+
+This step should consume minimal context. If `specs/` is empty and no steering exists, note "greenfield project" and move to Step 2.
 
 ### Step 2: Determine Action Path
 
-Based on the user's request and the context from Step 1, determine which path applies:
+Based on the user's request and the metadata from Step 1, determine which path applies:
 
 **Path A: Existing spec covers this**
 - The request is an extension, enhancement, or fix within an existing spec's domain
@@ -46,17 +49,27 @@ Based on the user's request and the context from Step 1, determine which path ap
 
 **Path C: New single-scope feature**
 - The request is new, doesn't overlap with existing specs, and fits in one spec
-- Action: Continue to Step 3 for brainstorming, then output a project description for `/kiro-spec-init`
+- Action: Continue to Step 3
 
 **Path D: Multi-scope decomposition needed**
 - The request spans multiple domains or would produce 20+ tasks in a single spec
-- Action: Continue to Step 3 for brainstorming with decomposition, then write `{{KIRO_DIR}}/steering/roadmap.md`
+- Action: Continue to Step 3
 
 Present the determined path to the user and confirm before proceeding.
 
-### Step 3: Understand the Idea
+### Step 3: Deep Context Loading
 
-For Path C and D only. Ask clarifying questions **sequentially** (not all at once):
+**Only for Path C and D.** Now load the context needed for brainstorming:
+
+- **Steering documents**: Read product.md and tech.md (if they exist) for project goals, constraints, and tech stack
+- **Relevant specs**: If the request is adjacent to an existing spec, read that spec's requirements.md to understand boundaries and avoid overlap
+- **Codebase exploration** (delegate to subagent): When architecture understanding is needed (especially Path D), dispatch a subagent via Agent tool to explore the codebase structure, key patterns, and dependencies. The subagent returns a summary, keeping exploration details out of the main context.
+
+**Context budget**: Keep total loaded content under ~500 lines. Read selectively: summaries and section headers first, detailed content only when needed for a specific decision.
+
+### Step 4: Understand the Idea
+
+Ask clarifying questions **sequentially** (not all at once):
 
 1. **Who and why**: Who has the problem? What pain does it cause?
 2. **Current state**: What exists today? What's the gap?
@@ -64,9 +77,9 @@ For Path C and D only. Ask clarifying questions **sequentially** (not all at onc
 4. **Scope**: What is explicitly OUT of scope? What's the minimum viable version?
 5. **Constraints**: Are there technology, timeline, or compatibility constraints?
 
-Ask only questions whose answers you cannot infer from the codebase context. Skip questions that steering documents already answer. If the user already provided a clear description, skip to Step 4.
+Ask only questions whose answers you cannot infer from the context already loaded. Skip questions that steering documents already answer. If the user already provided a clear description, skip to Step 5.
 
-### Step 4: Propose Approaches
+### Step 5: Propose Approaches
 
 Propose **2-3 concrete approaches** with trade-offs:
 
@@ -77,9 +90,11 @@ For each approach:
 - **Cons**: What are the risks or downsides
 - **Scope estimate**: Rough complexity (small / medium / large)
 
+If technical research is needed (unfamiliar framework, library evaluation), delegate WebSearch/WebFetch to a subagent via Agent tool rather than loading raw search results into the main context.
+
 Recommend one approach and explain why.
 
-### Step 5: Refine and Confirm
+### Step 6: Refine and Confirm
 
 - Address user's questions or concerns about the approaches
 - Narrow scope if needed: favor smaller, deliverable increments
@@ -89,55 +104,97 @@ Recommend one approach and explain why.
   - Consider vertical slices (end-to-end value) vs horizontal layers (one layer at a time) based on the project needs
 - Confirm the final direction
 
-### Step 6: Output and Next Steps
+### Step 7: Persist and Next Steps
+
+Write brainstorm results to disk so they survive session boundaries.
 
 **For Path C (single spec)**:
-Output a project description:
-```
-## Project Description
+Write `{{KIRO_DIR}}/specs/<feature-name>/brief.md`:
 
-**Who**: [who has the problem]
-**Current situation**: [what exists today, what's the gap]
-**What should change**: [desired outcome]
-**Approach**: [chosen approach summary]
-**Scope**: [what's in, what's explicitly out]
-**Constraints**: [technology, compatibility, or other constraints]
+```markdown
+# Brief: <feature-name>
+
+## Problem
+[who has the problem, what pain it causes]
+
+## Current State
+[what exists today, what's the gap]
+
+## Desired Outcome
+[what should be true when done]
+
+## Approach
+[chosen approach and why]
+
+## Scope
+- **In**: [what this feature includes]
+- **Out**: [what's explicitly excluded]
+
+## Constraints
+[technology, compatibility, or other constraints]
 ```
+
 Then suggest: `/kiro-spec-init <feature-name>`
 
 **For Path D (multi-spec decomposition)**:
-Output a project description (same as above), plus write `{{KIRO_DIR}}/steering/roadmap.md`:
+Write two files:
+
+1. `{{KIRO_DIR}}/steering/roadmap.md` -- project-level context:
 
 ```markdown
 # Roadmap
 
 ## Overview
-[One paragraph describing the overall project goal and chosen approach]
+[Project goal and chosen approach -- 1-2 paragraphs]
+
+## Approach Decision
+- **Chosen**: [approach name and summary]
+- **Why**: [key reasoning]
+- **Rejected alternatives**: [what was considered and why it was rejected]
+
+## Scope
+- **In**: [what the overall project includes]
+- **Out**: [what is explicitly excluded]
+
+## Constraints
+[technology, compatibility, timeline, or other project-wide constraints]
 
 ## Specs (dependency order)
 - [ ] feature-a -- [one-line description]. Dependencies: none
 - [ ] feature-b -- [one-line description]. Dependencies: feature-a
 - [ ] feature-c -- [one-line description]. Dependencies: feature-a, feature-b
-...
 ```
+
+2. `{{KIRO_DIR}}/specs/<first-feature>/brief.md` -- only for the first spec to implement (same format as Path C).
 
 Then suggest: `/kiro-spec-init <first-feature-name>`
 
-If `roadmap.md` already exists, append a new section (e.g., `## Phase 2: ...`) rather than overwriting.
+**Re-entry (roadmap.md already exists)**:
+When brainstorm is re-run and roadmap.md exists, this is a continuation of a multi-spec project:
+- Read roadmap.md to restore project-level context
+- Check which specs are completed (via spec.json phase fields)
+- Determine the next spec to implement
+- Write brief.md for that spec only, informed by the current codebase state and lessons from completed specs
+- Update roadmap.md if needed (scope changes, reordering, new specs discovered)
 
 ## Critical Constraints
 - **Action path first**: Always determine the action path (Step 2) before brainstorming. Do not brainstorm when the answer is "update existing spec" or "no spec needed."
-- **No spec files**: Do NOT create spec.json, requirements.md, design.md, or tasks.md. Only roadmap.md (steering) is written.
+- **Lazy context loading**: Step 1 is metadata only. Full content is loaded in Step 3, only for Path C/D.
+- **Delegate heavy exploration**: Use Agent tool for codebase exploration and web research to keep the main context lean.
+- **Only brief.md and roadmap.md**: Do NOT create spec.json, requirements.md, design.md, or tasks.md. Only `brief.md` (per-feature) and `roadmap.md` (steering) are written.
 - **No assumptions**: Ask questions instead of guessing the user's intent
 - **Sequential questions**: Ask 1-2 questions at a time, not a wall of questions
-- **Codebase-aware**: Use existing context to skip obvious questions
+- **Codebase-aware**: Use loaded context to skip obvious questions
 - **Scope discipline**: Push for smaller scope when the idea is too large for a single spec
 - **Existing specs respected**: Never suggest creating a new spec that overlaps with an existing spec's domain
 
 ## Tool Guidance
-- **Read/Glob/Grep**: Explore codebase, existing steering, and specs for context
-- **Write**: Only for `{{KIRO_DIR}}/steering/roadmap.md` (Path D only)
-- **WebSearch/WebFetch**: Research technical approaches when needed
+- **Glob**: Discover spec.json files and steering documents (Step 1 lightweight scan)
+- **Read**: Load spec.json metadata (Step 1), steering content and spec details (Step 3 only)
+- **Grep**: Quick targeted searches when a specific pattern is needed
+- **Agent**: Delegate codebase exploration (Step 3) and web research (Step 5) to subagents. Pass specific questions, receive summaries.
+- **Write**: For `brief.md` (Path C and D) and `roadmap.md` (Path D only)
+- **WebSearch/WebFetch**: Research technical approaches. Prefer delegating via Agent to avoid loading raw results into main context.
 - **AskUserQuestion**: Structured questions with options when useful
 
 ## Output Description
@@ -145,8 +202,9 @@ If `roadmap.md` already exists, append a new section (e.g., `## Phase 2: ...`) r
 Depends on action path:
 - Path A: One-line recommendation + command to run
 - Path B: One-line recommendation (no spec needed)
-- Path C: Project description + `/kiro-spec-init` command
-- Path D: Project description + roadmap.md written to steering + `/kiro-spec-init` for first spec
+- Path C: `brief.md` written + `/kiro-spec-init` command
+- Path D: `roadmap.md` + first spec's `brief.md` written + `/kiro-spec-init` for first spec
+- Re-entry: Next spec's `brief.md` written + roadmap.md updated if needed + `/kiro-spec-init` for next spec
 
 ## Safety & Fallback
 
@@ -161,6 +219,13 @@ Depends on action path:
 **User Already Knows What to Build**:
 - If the user provides a clear description with who/what/why, minimize questions and move quickly to the output step
 
-**Roadmap Already Exists**:
-- Append new specs as a new phase, don't overwrite existing roadmap content
-- Mark any already-completed specs as `[x]`
+**Roadmap Already Exists (re-entry)**:
+- Read roadmap.md to restore project context before asking questions
+- Determine next spec based on completed specs' status
+- Write brief.md for the next spec only (just-in-time)
+- Update roadmap.md if scope/ordering changed based on implementation experience
+- Append new specs as a new phase if the request expands the project, don't overwrite existing content
+
+**Context Growing Too Large**:
+- If the conversation exceeds ~15 turns, summarize decisions made so far and proceed to the output step
+- Do not loop indefinitely on refinement

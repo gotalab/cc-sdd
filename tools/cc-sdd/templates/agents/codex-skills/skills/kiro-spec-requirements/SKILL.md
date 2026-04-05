@@ -25,6 +25,7 @@ Generate complete requirements for feature **$1** based on the project descripti
 
 1. **Load Context**:
    - Read `{{KIRO_DIR}}/specs/$1/spec.json` for language and metadata
+   - Read `{{KIRO_DIR}}/specs/$1/brief.md` if it exists (brainstorm context: problem, approach, scope decisions)
    - Read `{{KIRO_DIR}}/specs/$1/requirements.md` for project description
    - Core steering context: `product.md`, `tech.md`, `structure.md`
    - Additional steering files only when directly relevant to feature scope, user personas, business/domain rules, compliance/security constraints, operational constraints, or existing product boundaries

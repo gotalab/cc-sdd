@@ -20,16 +20,17 @@ argument-hint: <project-description>
 Generate a unique feature name from the project description ($ARGUMENTS) and initialize the specification structure.
 
 ## Execution Steps
-1. **Clarify Intent**: The Project Description in requirements.md must contain three elements: (a) who has the problem, (b) current situation, (c) what should change. If any of these cannot be determined from the user's input, ask the user to clarify before proceeding. Ask as many questions as needed; do not fill in gaps with your own assumptions.
-2. **Check Uniqueness**: Verify `{{KIRO_DIR}}/specs/` for naming conflicts (append number suffix if needed)
-3. **Create Directory**: `{{KIRO_DIR}}/specs/[feature-name]/`
-4. **Initialize Files Using Templates**:
+1. **Check for Brief**: If `{{KIRO_DIR}}/specs/{feature-name}/brief.md` exists (created by `/kiro-brainstorm`), read it. The brief contains problem, approach, scope, and constraints from the brainstorm session. Use this to pre-fill the project description and skip clarification questions that the brief already answers.
+2. **Clarify Intent**: The Project Description in requirements.md must contain three elements: (a) who has the problem, (b) current situation, (c) what should change. If a brief.md exists and covers these, skip to step 3. Otherwise, ask the user to clarify before proceeding. Ask as many questions as needed; do not fill in gaps with your own assumptions.
+3. **Check Uniqueness**: Verify `{{KIRO_DIR}}/specs/` for naming conflicts. If the directory already exists with only `brief.md` (no `spec.json`), use that directory (brainstorm created it).
+4. **Create Directory**: `{{KIRO_DIR}}/specs/[feature-name]/` (skip if already exists from brainstorm)
+5. **Initialize Files Using Templates**:
    - Read `{{KIRO_DIR}}/settings/templates/specs/init.json`
    - Read `{{KIRO_DIR}}/settings/templates/specs/requirements-init.md`
    - Replace placeholders:
      - `{{FEATURE_NAME}}` → generated feature name
      - `{{TIMESTAMP}}` → current ISO 8601 timestamp
-     - `{{PROJECT_DESCRIPTION}}` → $ARGUMENTS
+     - `{{PROJECT_DESCRIPTION}}` → from brief.md if available, otherwise $ARGUMENTS
    - Write `spec.json` and `requirements.md` to spec directory
 
 ## Important Constraints
