@@ -8,24 +8,24 @@
 English | <a href="./README_ja.md">日本語</a> | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-✨ **Turn approved requirements and design into long-running autonomous implementation with native subagent dispatch.**
+✨ **Turn approved specs into long-running autonomous implementation. A minimal, adaptable SDD harness.**
 
-👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
+👻 **Kiro-inspired** — Spec-Driven, AI-DLC style compatible with Kiro IDE. Existing Kiro specs remain portable.
 
-cc-sdd turns approved specs into executable work: requirements → design → tasks → implementation, review, and final validation. It is designed for honest completion and NO-GO outcomes, not just checked boxes.
+cc-sdd turns approved specs into executable work: requirements → design → tasks → autonomous implementation with adversarial review and final validation. Specs are not documents to read -- they are the control plane that drives each phase.
 
-**Why teams pick cc-sdd:**
-- ✅ **Approved specs become executable work** — Go from `/kiro:spec-init` to approved requirements, design, and tasks without inventing your own process
-- ✅ **Long-running autonomous implementation** — Run all approved tasks autonomously with per-task subagent dispatch and independent review — no external dependencies, works out of the box
-- ✅ **Review and final validation flows are built in** — Re-check work, remediate concrete findings, and stop honestly when the work is blocked or not ready to claim complete
-- ✅ **Team-aligned templates keep adoption practical** — Customize once and generated requirements, design reviews, tasks, and steering docs fit your approval process
+**Why cc-sdd:**
+- ✅ **Specs you can run** — Each artifact (requirements, design, tasks) directly controls the next phase. File Structure Plan drives task boundaries. Task Brief drives implementation. git diff drives review.
+- ✅ **Long-running autonomous implementation** — `/kiro-impl` runs all tasks with fresh subagent per task, independent adversarial reviewer, and Feature Flag TDD. No external dependencies.
+- ✅ **Scales to real products** — `/kiro-brainstorm` decomposes large ideas into multiple specs with dependency ordering. `/kiro-spec-batch` creates all specs in parallel with cross-spec consistency review.
+- ✅ **Customize once, adapt as models improve** — 14 skills, shared rules as single source of truth. Team-aligned templates fit your approval process. As models improve, lighten the harness -- the design makes that easy.
 
-**Why Agent Skills matter:**
-- Agent Skills package workflow instructions, domain knowledge, playbooks, and tool restrictions into composable units instead of scattering them across ad hoc docs
-- The same skills-based workflow can move across Claude Code, Codex, and future skills-capable agents with less translation work
-- `claude-code-skills` and `codex-skills` are the recommended installs when you want the most durable long-running setup
+**Why Agent Skills:**
+- Skills package workflow as composable units that load on demand (progressive disclosure)
+- Same skills-based workflow works across Claude Code, Codex, and future skills-capable agents
+- `claude-code-skills` and `codex-skills` are the recommended installs
 
-> If you've used specs as passive documents, cc-sdd is the opposite: approved specs become executable work.
+> Specs are not passive documents. Approved specs become executable work.
 
 ---
 

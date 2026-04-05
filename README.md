@@ -9,9 +9,9 @@
 <a href="./tools/cc-sdd/README.md">English</a> | <a href="./tools/cc-sdd/README_ja.md">日本語</a> | <a href="./tools/cc-sdd/README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-## Turn approved requirements and design into long-running autonomous implementation
+## Turn approved specs into long-running autonomous implementation
 
-**One command. Hours instead of weeks. Requirements → Design → Tasks → Implementation, review, and final validation.**
+**One command. Specs become executable work: Requirements → Design → Tasks → Autonomous implementation with adversarial review. Minimal, adaptable, cross-agent portable.**
 
 👻 **Kiro-inspired** — Similar Spec-Driven, AI-DLC style as Kiro IDE, so existing Kiro specs remain compatible and portable.
 

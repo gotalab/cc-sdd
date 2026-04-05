@@ -8,24 +8,24 @@
 <a href="./README.md">English</a> | 日本語 | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-✨ **承認済みの要件と設計を、ネイティブ subagent dispatch で長時間の自律実装に変える。**
+✨ **承認済みの仕様を、長時間でも壊れない自律実装ワークフローに変える。最小で変えやすい SDD ハーネス。**
 
-👻 **Kiro互換** — Kiro IDE に似た Spec-Driven / AI-DLC スタイルで、既存の Kiro 仕様書もそのまま扱えます。
+👻 **Kiro互換** — Kiro IDE の Spec-Driven / AI-DLC スタイル互換。既存の Kiro 仕様書もそのまま使える。
 
-cc-sdd は、承認済み仕様を executable work に変えます。要件 → 設計 → タスク → 実装 → レビュー → 最終検証までをつなぎ、チェックボックスが埋まっただけで完了扱いにせず、正直な完了判定と NO-GO を重視します。
+cc-sdd は承認済みの仕様を実行可能なワークフローに変える: 要件 → 設計 → タスク → 自律実装 + 対立的レビュー + 最終検証。仕様は読むものではなく、各フェーズの挙動を直接制御する仕組み。
 
 **cc-sdd を使う理由:**
-- ✅ **承認済み仕様が executable work になる** — `/kiro:spec-init` から承認済みの要件・設計・タスクまで、自己流プロセスを組まずに進められる
-- ✅ **長時間自律実装** — 承認済みタスクセットをタスクごとの subagent dispatch と independent review で自律実装。外部依存なし、そのまま動く
-- ✅ **レビューと最終検証フローを内蔵** — 作業を再チェックし、具体的な findings を修正し、blocked / not-ready のときは正直に止まる前提で設計されている
-- ✅ **チーム向けテンプレートが導入しやすい** — 一度カスタマイズすれば、生成される要件・設計レビュー・タスク・ステアリング文書を承認フローに合わせられる
+- ✅ **仕様が実行可能になる** — 各 artifact (要件, 設計, タスク) が次工程を直接制御。File Structure Plan がタスク境界を、Task Brief が実装を、git diff がレビューを駆動
+- ✅ **長時間自律実装** — `/kiro-impl` がタスクごとに fresh subagent + 独立レビュアー + Feature Flag TDD で自律実装。外部依存なし
+- ✅ **プロダクト規模に対応** — `/kiro-brainstorm` が大きなアイデアを依存順の複数 spec に分解。`/kiro-spec-batch` が並列で spec 作成 + cross-spec 整合性検証
+- ✅ **一度カスタマイズ、モデル進化に追従** — 14 skills、shared rules は single source of truth。チーム向けテンプレートで承認フローに合わせられる。モデルが進化したらハーネスを軽くする設計
 
-**なぜ Agent Skills が重要か:**
-- Agent Skills は workflow instructions、ドメイン知識、手順書、tool restrictions を composable な単位としてまとめ、ad hoc なドキュメントへの分散を避けられる
-- 同じ skill-based workflow を Claude Code、Codex、今後の skills-capable agents に比較的少ない翻訳コストで持ち運べる
-- 長時間運用を前提にするなら、`claude-code-skills` と `codex-skills` が推奨インストールになる
+**なぜ Agent Skills:**
+- Skills は on-demand ロードされる composable な単位 (progressive disclosure)
+- 同じ workflow が Claude Code、Codex、今後の skills-capable agents で動く
+- `claude-code-skills` と `codex-skills` が推奨
 
-> 仕様を「読むだけの文書」として扱ってきたなら、cc-sdd はその逆です。承認済み仕様を executable work に変えます。
+> 仕様書を、読むものから実行するものへ。
 
 
 > インストール手順だけ知りたい場合は [インストール](#-インストール) へジャンプ。v1.1.5 維持なら `npx cc-sdd@1.1.5 --claude-code ...`、v2 移行は [Migration Guide](../../docs/guides/migration-guide.md) / [日本語版](../../docs/guides/ja/migration-guide.md) を参照。

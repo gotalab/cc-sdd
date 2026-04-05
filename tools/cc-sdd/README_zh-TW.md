@@ -8,24 +8,24 @@
 <a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
-✨ **把已核准的需求與設計，透過原生 subagent dispatch 轉成長時間自律實作。**
+✨ **把已核准規格轉成長時間自律實作工作流。最小、易調整的 SDD harness。**
 
-👻 **Kiro 相容** — 與 Kiro IDE 相似的 Spec-Driven / AI-DLC 風格，可沿用既有 Kiro 規格並保持互通。
+👻 **Kiro 相容** — Kiro IDE 的 Spec-Driven / AI-DLC 風格互通。既有 Kiro 規格可直接使用。
 
-cc-sdd 會把已核准規格轉成 executable work，串起需求 → 設計 → 任務 → 實作 → 審查 → 最終驗證。它強調 honest completion 與 NO-GO outcomes，而不是只看 checkbox 是否勾完。
+cc-sdd 把已核准規格轉成可執行工作流：需求 → 設計 → 任務 → 自律實作 + 對抗式審查 + 最終驗證。規格不是用來讀的文件，而是直接控制每個階段行為的機制。
 
-**團隊為什麼選 cc-sdd:**
-- ✅ **已核准規格會變成 executable work** — 從 `/kiro:spec-init` 一路走到已核准的需求、設計與任務，不必自己拼湊流程
-- ✅ **長時間自律實作** — 較大的已核准任務集可以透過 per-task subagent dispatch 與 independent review 進入自律實作，無需外部依賴，開箱即用
-- ✅ **內建審查與最終驗證流程** — 重新檢查工作、修正具體 findings，並在 blocked / not-ready 時誠實停止
-- ✅ **團隊對齊模板讓導入更務實** — 自訂一次後，產生的需求、設計審查、任務與 steering 文件就能貼合團隊的批准流程
+**為什麼選 cc-sdd:**
+- ✅ **規格可執行** — 每個 artifact（需求、設計、任務）直接控制下一階段。File Structure Plan 驅動任務邊界，Task Brief 驅動實作，git diff 驅動審查
+- ✅ **長時間自律實作** — `/kiro-impl` 為每個任務啟動 fresh subagent + 獨立審查者 + Feature Flag TDD。無外部依賴
+- ✅ **產品級規模** — `/kiro-brainstorm` 將大型構想分解為依賴排序的多個 spec。`/kiro-spec-batch` 平行建立所有 spec + cross-spec 一致性驗證
+- ✅ **自訂一次，隨模型進化調整** — 14 個 skills，共享規則為 single source of truth。團隊模板貼合批准流程。模型進化時可輕量化 harness
 
-**為什麼 Agent Skills 很重要:**
-- Agent Skills 可以把 workflow instructions、領域知識、操作手冊與 tool restrictions 封裝成可組合的單位，而不是散落在各種 ad hoc 文件裡
-- 同一套 skill-based workflow 能以較低的轉換成本移動到 Claude Code、Codex 與未來的 skills-capable agents
-- 如果你要的是更耐久的長時間運作方式，`claude-code-skills` 與 `codex-skills` 會是建議安裝方式
+**為什麼 Agent Skills:**
+- Skills 是按需載入的可組合單位（progressive disclosure）
+- 同一套工作流適用於 Claude Code、Codex 及未來的 skills-capable agents
+- 推薦安裝 `claude-code-skills` 與 `codex-skills`
 
-> 如果你過去把規格當成「只讀文件」，cc-sdd 則是相反：它把已核准規格轉成 executable work。
+> 規格，從讀的文件變成執行的工具。
 
 > 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
 

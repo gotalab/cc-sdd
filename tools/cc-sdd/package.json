@@ -1,7 +1,7 @@
 {
   "name": "cc-sdd",
   "version": "2.1.1",
-  "description": "Transform your coding workflow with AI-DLC and Spec-Driven Development. One command installs 11 powerful slash commands, Project Memory, and structured development workflows for 8 AI coding agents.",
+  "description": "Turn approved specs into long-running autonomous implementation. A minimal, adaptable SDD harness with skills-first workflow for Claude Code, Codex, and 9 more AI coding agents.",
   "keywords": [
     "claude-code",
     "cursor",
