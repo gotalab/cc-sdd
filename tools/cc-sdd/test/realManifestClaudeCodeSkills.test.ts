@@ -76,14 +76,13 @@ describe('real claude-code-skills manifest', () => {
     const skillValidateImpl = join(cwd, '.claude/skills/kiro-validate-impl/SKILL.md');
     expect(await exists(skillValidateImpl)).toBe(true);
     const skillValidateImplText = await readFile(skillValidateImpl, 'utf8');
-    expect(skillValidateImplText).not.toMatch(/context: fork/);
-    expect(skillValidateImplText).toContain('Parallel Research');
-    expect(skillValidateImplText).toContain('Implementation integrity');
+    expect(skillValidateImplText).toContain('feature-level integration validation');
+    expect(skillValidateImplText).toContain('Cross-Task Integration');
+    expect(skillValidateImplText).toContain('Requirements Coverage Gaps');
     expect(skillValidateImplText).toContain('do not invent `REQ-*` aliases');
     expect(skillValidateImplText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
-    expect(skillValidateImplText).toContain('validation-relevant steering or use-case-aligned local agent skills/playbooks');
     expect(skillValidateImplText).toContain('MANUAL_VERIFY_REQUIRED');
-    expect(skillValidateImplText).toContain('do not return `GO`');
+    expect(skillValidateImplText).toContain('Does NOT Do');
 
     const skillValidateDesign = join(cwd, '.claude/skills/kiro-validate-design/SKILL.md');
     expect(await exists(skillValidateDesign)).toBe(true);

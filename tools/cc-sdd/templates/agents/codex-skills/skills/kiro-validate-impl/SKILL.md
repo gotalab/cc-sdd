@@ -1,25 +1,27 @@
 ---
 name: kiro-validate-impl
-description: Validate implementation against requirements, design, and tasks
+description: Validate feature-level integration after all tasks are implemented. Checks cross-task consistency, full test suite, and overall spec coverage.
 ---
 
 
-# Implementation Validation
+# Implementation Integration Validation
 
 <background_information>
-- **Mission**: Verify that implementation aligns with approved requirements, design, and tasks
+- **Mission**: Verify that the completed feature works as a whole — not just that each task passes individually
 - **Success Criteria**:
-  - All specified tasks marked as completed
-  - Tests exist and pass for implemented functionality
-  - Requirements traceability confirmed (EARS requirements covered)
-  - Design structure reflected in implementation
-  - Real implementation present for required behavior (not only mocks/stubs/placeholders)
-  - No regressions in existing functionality
+  - All tasks marked `[x]` in tasks.md
+  - Full test suite passes (not just per-task tests)
+  - Cross-task integration works (data flows between components, interfaces match)
+  - Requirements coverage is complete across all tasks (no gaps between tasks)
+  - Design structure is reflected end-to-end (not just per-component)
+  - No orphaned code, conflicting implementations, or integration seams
+
+**What This Skill Does NOT Do**: Per-task checks are the reviewer's responsibility during `$kiro-impl`. This skill does NOT re-check individual task acceptance criteria, per-file reality checks, or single-task spec alignment.
 </background_information>
 
 <instructions>
 ## Core Task
-Validate implementation for feature(s) and task(s) based on approved specifications.
+Validate feature-level integration for feature(s) and task(s) based on approved specifications.
 
 ## Execution Steps
 
@@ -41,11 +43,11 @@ Validate implementation for feature(s) and task(s) based on approved specificati
 
 #### Parallel Research
 
-The following validation checks are independent and can be executed in parallel:
-1. **Test execution & coverage**: Run test suite, check for test existence per task, verify no regressions
-2. **Requirements traceability**: Map requirement IDs to implementation code locations
-3. **Design alignment**: Verify components, interfaces, and file structure match design.md
-4. **Implementation integrity**: Verify claimed behavior is backed by real runtime code, not mocks/stubs/placeholders/TODO-only paths
+The following integration checks are independent and can be executed in parallel:
+1. **Full test suite**: Run the complete test suite, verify no regressions across the entire codebase
+2. **Cross-task integration**: Verify data flows, API contracts, and interfaces between components implemented by different tasks
+3. **Requirements coverage map**: Build a complete requirements → implementation matrix across all tasks
+4. **Design end-to-end alignment**: Verify the overall architecture matches design.md
 
 If multi-agent is enabled, spawn sub-agents for each check above. Otherwise execute sequentially.
 
@@ -57,112 +59,95 @@ For each detected feature:
 - Read `{{KIRO_DIR}}/specs/<feature>/spec.json` for metadata
 - Read `{{KIRO_DIR}}/specs/<feature>/requirements.md` for requirements
 - Read `{{KIRO_DIR}}/specs/<feature>/design.md` for design structure
-- Read `{{KIRO_DIR}}/specs/<feature>/tasks.md` for task list
+- Read `{{KIRO_DIR}}/specs/<feature>/tasks.md` for task list and Implementation Notes
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to the validated boundaries, runtime prerequisites, integrations, domain rules, security/performance constraints, or team conventions that affect the GO/NO-GO call
-- Relevant local agent skills or playbooks only when they clearly match the feature's host environment or use case and provide validation-relevant constraints or procedures
 
-### 3. Execute Validation
+### 3. Execute Integration Validation
 
-For each task, verify:
+#### A. Full Test Suite
+- Run full test suite (e.g., `npm test`, `pytest`, `go test ./...`)
+- Verify no regressions — not just "my task's tests pass" but "everything passes"
+- If the canonical test command cannot be identified, flag as `MANUAL_VERIFY_REQUIRED`
 
-#### Task Completion Check
-- Checkbox is `[x]` in tasks.md
-- If not completed, flag as "Task not marked complete"
+#### B. Cross-Task Integration
+- Identify where tasks share interfaces, data models, or API contracts
+- Verify that Task A's output format matches Task B's expected input
+- Check for conflicting assumptions between tasks (naming conventions, error codes, data shapes)
+- Verify shared state (database schemas, config, environment) is consistent across tasks
 
-#### Test Coverage Check
-- Tests exist for task-related functionality
-- Tests pass (no failures or errors)
-- Use Bash to run test commands (e.g., `npm test`, `pytest`)
-- If tests fail or don't exist, flag as "Test coverage issue"
-- If the canonical validation/test command cannot be identified, flag the task as "Manual verification required" and do not allow a GO decision
+#### C. Requirements Coverage Gaps
+- Map every requirement section to at least one completed task
+- Identify requirements that no single task fully covers (cross-cutting requirements)
+- Identify requirements partially covered by multiple tasks but not fully by any
+- Use the original section numbering from `requirements.md`; do NOT invent `REQ-*` aliases
 
-#### Requirements Traceability
-- Identify EARS requirements related to the task
-- Use the original section numbering from `requirements.md` in findings and coverage output
-- Use Grep to search implementation for evidence of requirement coverage
-- If requirement not traceable to code, flag as "Requirement not implemented"
+#### D. Design End-to-End Alignment
+- Verify the overall component graph matches design.md
+- Check that integration patterns (event flow, API boundaries, dependency injection) work as designed
+- Identify any architectural drift from the original design
+- Use the original section numbering from `design.md`
 
-#### Design Alignment
-- Check if design.md structure is reflected in implementation
-- Use the original section numbering from `design.md` in findings and coverage output
-- Verify key interfaces, components, and modules exist
-- Use Grep/LS to confirm file structure matches design
-- If misalignment found, flag as "Design deviation"
-
-#### Implementation Integrity
-- Verify the task is implemented with concrete runtime code, not just mocks, stubs, placeholders, fake adapters, or TODO-only branches unless the spec explicitly allows them
-- Confirm the codebase contains the real files, functions, handlers, components, routes, or services needed for the claimed behavior
-- If the implementation only simulates success or scaffolds the path without real behavior, flag as "Placeholder implementation"
-
-#### Regression Check
-- Run full test suite (if available)
-- Verify no existing tests are broken
-- If regressions detected, flag as "Regression detected"
+#### E. Blocked Tasks & Implementation Notes
+- Check for any tasks still marked `_Blocked:_` — report why and assess impact on feature completeness
+- Review `## Implementation Notes` in tasks.md for cross-cutting insights that need attention
 
 ### 4. Generate Report
 
 Provide summary in the language specified in spec.json:
-- Validation summary by feature
-- Coverage report (tasks, requirements, design)
-- Issues and deviations with severity (Critical/Warning)
-- GO/NO-GO decision
-- Use `MANUAL_VERIFY_REQUIRED` instead of `GO` when a mandatory validation step could not be executed or completed confidently
+1. **Detected Target**: Features and tasks being validated
+2. **Integration Summary**: Cross-task integration status, shared interfaces verified
+3. **Coverage Map**: Requirements → tasks matrix (gaps highlighted)
+4. **Full Test Results**: Complete test suite outcome, regression status
+5. **Issues**: Integration failures with severity (Critical/Warning)
+6. **Blocked Tasks**: Any remaining blocked tasks and their impact
+7. **Decision**: GO / NO-GO / MANUAL_VERIFY_REQUIRED
 
 ## Important Constraints
+- **Integration focus**: This is a feature-level gate, not a per-task re-check
 - **Conversation-aware**: Prioritize conversation history for auto-detection
-- **Non-blocking warnings**: Design deviations are warnings unless critical
-- **Test-first focus**: Test coverage is mandatory for GO decision
-- **Traceability required**: All requirements must be traceable to implementation
+- **Test-first focus**: Full test suite pass is mandatory for GO decision
 - **Source numbering only**: Use the exact section numbers from `requirements.md` and `design.md`; do not invent `REQ-*` aliases
-- **Context Discipline**: Start with core steering and expand only with validation-relevant steering or use-case-aligned local agent skills/playbooks
-- **Strict Final Gate**: Return `GO` only when all mandatory validation checks ran and passed; return `NO-GO` for concrete failures and `MANUAL_VERIFY_REQUIRED` when mandatory validation could not be completed
+- **Context Discipline**: Start with core steering and expand only with validation-relevant steering
+- **Strict Final Gate**: Return `GO` only when all integration checks passed; return `NO-GO` for concrete failures and `MANUAL_VERIFY_REQUIRED` when mandatory validation could not be completed
 </instructions>
 
 ## Tool Guidance
 - **Conversation parsing**: Extract `$kiro-impl` patterns from history
-- **Read context**: Load specs, core steering, and only the local playbooks/agent skills relevant to the validation target
-- **Bash for tests**: Execute test commands to verify pass status
-- **Grep for traceability**: Search codebase for requirement evidence
-- **LS/Glob for structure**: Verify file structure matches design
+- **Read context**: Load specs, steering, and Implementation Notes from tasks.md
+- **Bash for tests**: Execute full test suite
+- **Grep for traceability**: Search codebase for requirement coverage across task boundaries
+- **LS/Glob for structure**: Verify overall file structure matches design
 
 ## Output Description
 
 Provide output in the language specified in spec.json with:
 
 1. **Detected Target**: Features and tasks being validated (if auto-detected)
-2. **Validation Summary**: Brief overview per feature (pass/fail counts)
-3. **Issues**: List of validation failures with severity and location
-4. **Coverage Report**: Requirements/design/task coverage percentages using the source section numbers from the spec
+2. **Integration Summary**: Brief overview of cross-task integration status
+3. **Issues**: Integration failures with severity and location
+4. **Coverage Map**: Requirements/design coverage using source section numbers
 5. **Decision**: GO / NO-GO / MANUAL_VERIFY_REQUIRED
 
-**Format Requirements**:
-- Use Markdown headings and tables for clarity
-- Flag critical issues with ⚠️ or 🔴
-- Keep summary concise (under 400 words)
+**Format**: Markdown headings and tables. Keep summary concise (under 400 words).
 
 ## Safety & Fallback
 
 ### Error Scenarios
 - **No Implementation Found**: If no `$kiro-impl` in history and no `[x]` tasks, report "No implementations detected"
-- **Test Command Unknown**: If test framework unclear, return `MANUAL_VERIFY_REQUIRED` and explain which validation command is missing; do not return `GO`
-- **Missing Spec Files**: If spec.json/requirements.md/design.md missing, stop with error
-- **Language Undefined**: Default to English (`en`) if spec.json doesn't specify language
+- **Test Command Unknown**: Return `MANUAL_VERIFY_REQUIRED` and explain which validation command is missing; do not return `GO`
+- **Missing Spec Files**: Stop with error if spec.json/requirements.md/design.md missing
 
 ### Next Steps Guidance
 
 **If GO Decision**:
-- Implementation validated and ready
-- Proceed to deployment or next feature
+- Feature validated end-to-end and ready for deployment or next feature
 
 **If NO-GO Decision**:
-- Address critical issues listed
-- Re-run `$kiro-impl <feature> [tasks]` for fixes
-- Re-validate with `$kiro-validate-impl [feature] [tasks]`
+- Address integration issues listed
+- Re-run `$kiro-impl <feature> [tasks]` for targeted fixes
+- Re-validate with `$kiro-validate-impl [feature]`
 
 **If MANUAL_VERIFY_REQUIRED**:
 - Do not treat the feature as complete
 - Provide the exact missing validation step or environment prerequisite
-- Re-run `$kiro-validate-impl [feature] [tasks]` after the missing verification path is available
-
-**Note**: Validation is recommended after implementation to ensure spec alignment and quality.
