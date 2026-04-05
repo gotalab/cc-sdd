@@ -162,7 +162,7 @@ const runPlanExecution = async (
     }
 
     io.log('');
-    io.log(formatBox(`cc-sdd v${version} — ${agentDef.label}`));
+    io.log(formatBox(`cc-sdd v${version} / ${agentDef.label}`));
 
     const plan = await planFromFile(manifestPath, resolvedConfig);
     const operations = await buildFileOperations(plan, resolvedConfig, execOpts);

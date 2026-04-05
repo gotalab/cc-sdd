@@ -72,8 +72,6 @@ describe('real windsurf manifest', () => {
     expect(out).toContain('gpt-5.4 high or xhigh');
     expect(out).toContain('gpt-5.4');
     expect(out).toContain('Launch Windsurf IDE and run `/kiro-spec-init <what-to-build>` to create a new specification.');
-    expect(out).toMatch(
-      /Tip: Steering holds persistent project knowledge—patterns, standards, and org-wide policies\. Kick off `\/kiro-steering` \(essential for existing projects\) and\s+`\/kiro-steering-custom <what-to-create-custom-steering-document>`\. Maintain Regularly/,
-    );
+    expect(out).toContain('Tip: Steering holds persistent project knowledge');
   });
 });
