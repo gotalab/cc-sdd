@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "e8a14fac5725",
+  "strategy": "manual-commit",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-impl/templates/reviewer-prompt.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e8/a14fac5725/0/metadata.json",
+      "transcript": "/e8/a14fac5725/0/full.jsonl",
+      "content_hash": "/e8/a14fac5725/0/content_hash.txt",
+      "prompt": "/e8/a14fac5725/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 3582,
+    "cache_creation_tokens": 388827,
+    "cache_read_tokens": 47740886,
+    "output_tokens": 106195,
+    "api_call_count": 253
+  }
+}
