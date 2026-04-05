@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "3cd2486b5e3f",
+  "strategy": "manual-commit",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "README.md",
+    "docs/guides/claude-subagents.md",
+    "docs/guides/command-reference.md",
+    "docs/guides/migration-guide.md",
+    "docs/guides/spec-driven.md",
+    "tools/cc-sdd/README.md",
+    "tools/cc-sdd/README_ja.md",
+    "tools/cc-sdd/README_zh-TW.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3c/d2486b5e3f/0/metadata.json",
+      "transcript": "/3c/d2486b5e3f/0/full.jsonl",
+      "content_hash": "/3c/d2486b5e3f/0/content_hash.txt",
+      "prompt": "/3c/d2486b5e3f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6579,
+    "cache_creation_tokens": 1264264,
+    "cache_read_tokens": 237932203,
+    "output_tokens": 340764,
+    "api_call_count": 912
+  }
+}
