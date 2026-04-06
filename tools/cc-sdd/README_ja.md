@@ -16,14 +16,14 @@ cc-sdd は承認済みの仕様を実行可能なワークフローに変える:
 
 **cc-sdd を使う理由:**
 - ✅ **仕様が実行可能になる** — 各 artifact (要件, 設計, タスク) が次工程を直接制御。File Structure Plan がタスク境界を、Task Brief が実装を、git diff がレビューを駆動
-- ✅ **長時間自律実装** — `/kiro-impl` がタスクごとに fresh subagent + 独立レビュアー + Feature Flag TDD で自律実装。外部依存なし
+- ✅ **長時間自律実装** — `/kiro-impl` がタスクごとに fresh subagent + 独立レビュアー + 失敗時の自動デバッグ（Web検索付き、最大2ラウンド）+ タスク間の知見引き継ぎで自律実装。外部依存なし
 - ✅ **プロダクト規模に対応** — `/kiro-brainstorm` が大きなアイデアを依存順の複数 spec に分解。`/kiro-spec-batch` が並列で spec 作成 + cross-spec 整合性検証
 - ✅ **一度カスタマイズ、モデル進化に追従** — 14 skills、shared rules は single source of truth。チーム向けテンプレートで承認フローに合わせられる。モデルが進化したらハーネスを軽くする設計
 
 **なぜ Agent Skills:**
 - Skills は on-demand ロードされる composable な単位 (progressive disclosure)
-- 同じ workflow が Claude Code、Codex、今後の skills-capable agents で動く
-- `claude-code-skills` と `codex-skills` が推奨
+- 同じ workflow が Claude Code、Codex、Cursor、Copilot、Windsurf、OpenCode、Gemini CLI、Antigravity で動く
+- Skills モードが推奨 — レガシーコマンドモードは将来削除予定
 
 > 仕様書を、読むものから実行するものへ。
 
@@ -115,15 +115,15 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 ### cc-sdd を選ぶ理由
 1. **承認済み仕様が executable work になる** — 要件・設計・タスク・Supporting References が揃ったまま、実装の駆動源として使えます。
-2. **長時間自律実装** — 大きいタスクセットを fragile な one-shot prompt ではなく、タスクごとの subagent dispatch と independent review で長時間自律実装。外部依存なし、そのまま動きます。
-3. **Agent Skills が長期的な surface** — 同じ skill-based workflow を Claude Code、Codex、そして今後の skills-capable agents に持ち運べます。
+2. **長時間自律実装** — タスクごとの subagent dispatch + independent review + 失敗時の自動デバッグ（Web検索付き）+ タスク間知見引き継ぎ。外部依存なし。
+3. **Agent Skills が長期的な surface** — 同じ skill-based workflow を Claude Code、Codex、Cursor、Copilot、Windsurf、OpenCode、Gemini CLI、Antigravity で利用可能。
 4. **レビューと最終検証フローを内蔵** — spec mismatch、placeholder 実装、blocked state を完了宣言前に拾う方向で設計されています。
 5. **チーム向けカスタマイズは一度だけ** — `.kiro/settings/templates/` を編集すれば全エージェントへ反映。非スキルエージェントは `.kiro/settings/rules/` も使用します。
 
 ## ✨ 主要機能
 
 - **📋 Spec-Governed Development** — 構造化仕様（要件 → 調査 → 設計 → タスク）を、単なる計画書ではなく実装を支配する契約として扱います
-- **🔁 長時間自律実装** — `/kiro-impl` を実行して放置: 各タスクに fresh subagent + independent reviewer が付き、bounded remediation で回る。外部依存なし、ネイティブ agent 機能のみ
+- **🔁 長時間自律実装** — `/kiro-impl` を実行して放置: 各タスクに fresh implementer + independent reviewer + 失敗時の auto-debug（Web検索付き）。タスク間で知見が引き継がれる。外部依存なし
 - **✅ レビュー + 最終検証フロー** — task-local review、validation passes、final validation flow を内蔵し、honest completion と NO-GO outcomes を目指します
 - **🚀 AI-DLC 手法** — AI実行、人間が各フェーズで検証。[集中「ボルト」](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)が週単位のスプリントを置き換え
 - **🧠 永続的プロジェクトメモリ** — ステアリング文書がアーキテクチャ・パターン・ルール・ドメイン知識を全セッション間で維持

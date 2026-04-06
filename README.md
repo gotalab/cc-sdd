@@ -19,7 +19,7 @@ cc-sdd turns approved specs into executable work instead of leaving them as pass
 
 ### What you get:
 - ✅ **Approved specs become executable work** — Requirements, design, tasks, implementation, review, and final validation stay connected instead of drifting apart
-- ✅ **Long-running autonomous implementation** — Large approved task sets run autonomously with per-task subagent dispatch and independent review, no external dependencies
+- ✅ **Long-running autonomous implementation** — Large approved task sets run autonomously with per-task subagent dispatch, independent adversarial review, and auto-debug on failure (max 2 debug rounds with web search), no external dependencies
 - ✅ **Review and final validation flows are built in** — The system is designed to re-check work, remediate concrete findings, and stop honestly when work is blocked or not ready to claim complete
 - ✅ **Team-aligned templates keep adoption practical** — Customize once and generated requirements, design reviews, tasks, and steering docs fit your approval process
 
