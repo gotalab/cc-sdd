@@ -64,7 +64,7 @@ Skills mode (`--claude-skills` / `--codex-skills`) provides an alternative workf
 
 ### `/kiro-impl` Modes
 
-- **Autonomous mode** (no task args): Dispatches a fresh implementer subagent per task plus an independent adversarial reviewer subagent. Each implementer synthesizes a **Task Brief** with concrete acceptance criteria from the spec before coding. Uses native Agent tool, no external dependencies.
+- **Autonomous mode** (no task args): Dispatches a fresh implementer subagent per task plus an independent adversarial reviewer subagent. If the implementer is blocked or the reviewer rejects after 2 remediation rounds, a **debug subagent** is spawned in a fresh context to investigate root causes (with web search) and produce a fix plan. A new implementer then retries with the debug findings. Max 2 debug rounds per task. Cross-cutting insights are recorded as **Implementation Notes** and injected into subsequent implementer prompts.
 - **Manual mode** (with task args): Runs TDD in the main conversation context, similar to the commands-based `/kiro:spec-impl`.
 
 Both modes enforce **1-task-per-iteration** discipline for context hygiene during long runs and are **session-resume safe** -- you can re-run `/kiro-impl` after an interruption without losing progress. Both modes also follow the **Feature Flag TDD** protocol (RED then GREEN) for safe, incremental delivery.

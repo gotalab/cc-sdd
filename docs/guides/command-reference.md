@@ -54,7 +54,7 @@ Skills mode (3.0) replaces the commands-based implementation and validation work
 Refer to the installed `SKILL.md` files for full skill documentation:
 - `/kiro-brainstorm` -- Entry point with action paths (A/B/C/D); writes brief.md + roadmap.md for session persistence
 - `/kiro-spec-batch` -- Parallel multi-spec creation with cross-spec review (uses `.codex/agents/spec-reviewer.toml` for Codex installs)
-- `/kiro-impl` -- Unified implementation with subagent dispatch (implementer + reviewer); supports autonomous and manual modes
+- `/kiro-impl` -- Unified implementation with subagent dispatch (implementer + reviewer + debugger); auto-debug on failure (max 2 rounds), learnings propagation between tasks
 - `/kiro-validate-impl` -- Integration-focused validation with mechanical enforcement
 
 ---

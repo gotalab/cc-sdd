@@ -92,9 +92,11 @@ In skills mode, `/kiro-brainstorm` is the recommended entry point for new work. 
 Unlike `--claude-agent` mode, which relies on pre-defined subagent definitions in `.claude/agents/kiro/`, skills mode dispatches implementation subagents **dynamically** at runtime:
 
 - **No pre-defined agent files** -- there is no `tdd-task-implementer.md` or similar file in `.claude/agents/`. Subagents are created on-the-fly by `/kiro-impl` using prompt templates.
-- **Per-task subagent pair** -- each task gets a fresh **implementer subagent** and an independent **reviewer subagent** dispatched via the native Agent tool.
-- **Task Brief synthesis** -- before coding, the implementer subagent synthesizes a concrete Task Brief with acceptance criteria derived from the spec, ensuring alignment with requirements and design.
-- **Adversarial review** -- the reviewer subagent performs mechanical enforcement: grep for leftover TODOs, run the test suite, and check boundary correctness via `git diff`. This happens independently of the implementer.
+- **Per-task subagent trio** -- each task can involve up to three subagent roles dispatched via the native Agent tool:
+  - **Implementer** -- fresh subagent that builds a Task Brief from the spec, then implements with TDD
+  - **Reviewer** -- independent adversarial subagent that runs `git diff`, grep for TODOs, test suite, and boundary checks
+  - **Debugger** -- fresh subagent spawned when implementer is BLOCKED or reviewer rejects after 2 rounds. Investigates root causes with web search in a clean context (no failed implementation history), then a new implementer retries with the fix plan. Max 2 debug rounds per task.
+- **Learnings propagation** -- when a task reveals cross-cutting insights (e.g., "better-sqlite3 needs Electron-specific ABI rebuild"), findings are recorded in `## Implementation Notes` in tasks.md and injected into subsequent implementer prompts.
 - **1-task-per-iteration** -- each iteration processes a single task to maintain context hygiene across long runs.
 
 ### When to Use Which Mode
@@ -107,6 +109,7 @@ Unlike `--claude-agent` mode, which relies on pre-defined subagent definitions i
 | Implementation dispatch | Manual via `/kiro:spec-impl` | Autonomous or manual via `/kiro-impl` |
 | Subagent definitions | Static files in `.claude/agents/kiro/` | Dynamic prompt templates |
 | Review process | Manual or via validate-impl | Built-in adversarial reviewer subagent |
+| Debug on failure | N/A | Auto debug subagent (max 2 rounds) with web search |
 | Session resume | Start fresh | Safe to re-run after interruption |
 | External dependencies | None | None (native Agent tool only) |
 
