@@ -1,0 +1,52 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "10180cb87bc8",
+  "session_id": "203b229e-a801-499b-a6bb-a79f3891ce56",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-06T00:43:45.134733Z",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "tools/cc-sdd/templates/agents/antigravity-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/antigravity-skills/skills/kiro-impl/templates/debugger-prompt.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/claude-code-skills/skills/kiro-impl/templates/debugger-prompt.md",
+    "tools/cc-sdd/templates/agents/codex-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/codex-skills/skills/kiro-impl/templates/debugger-prompt.md",
+    "tools/cc-sdd/templates/agents/cursor-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/cursor-skills/skills/kiro-impl/templates/debugger-prompt.md",
+    "tools/cc-sdd/templates/agents/gemini-cli-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/gemini-cli-skills/skills/kiro-impl/templates/debugger-prompt.md",
+    "tools/cc-sdd/templates/agents/github-copilot-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/github-copilot-skills/skills/kiro-impl/templates/debugger-prompt.md",
+    "tools/cc-sdd/templates/agents/opencode-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/opencode-skills/skills/kiro-impl/templates/debugger-prompt.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-impl/templates/debugger-prompt.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6[1m]",
+  "turn_id": "a58608d920dd",
+  "token_usage": {
+    "input_tokens": 6951,
+    "cache_creation_tokens": 1573783,
+    "cache_read_tokens": 292626378,
+    "output_tokens": 444846,
+    "api_call_count": 1154
+  },
+  "session_metrics": {
+    "turn_count": 189
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-06T00:43:38.978506Z",
+    "agent_lines": 600,
+    "agent_removed": 32,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 600,
+    "total_lines_changed": 632,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
