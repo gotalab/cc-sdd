@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "5c7362e643c0",
+  "session_id": "203b229e-a801-499b-a6bb-a79f3891ce56",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-06T00:53:25.933174Z",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 1,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6[1m]",
+  "turn_id": "b29f1d42a916",
+  "token_usage": {
+    "input_tokens": 7020,
+    "cache_creation_tokens": 1606287,
+    "cache_read_tokens": 309714690,
+    "output_tokens": 459510,
+    "api_call_count": 1217
+  },
+  "session_metrics": {
+    "turn_count": 192
+  }
+}
