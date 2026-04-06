@@ -1,0 +1,60 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "3fdfd8b3fb03",
+  "strategy": "manual-commit",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 27,
+  "files_touched": [
+    "README.md",
+    "tools/cc-sdd/README.md",
+    "tools/cc-sdd/package.json",
+    "tools/cc-sdd/src/agents/registry.ts",
+    "tools/cc-sdd/src/cli/agents.ts",
+    "tools/cc-sdd/templates/agents/windsurf-skills/docs/AGENTS.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-brainstorm/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-impl/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-impl/templates/implementer-prompt.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-impl/templates/reviewer-prompt.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-spec-batch/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-spec-design/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-spec-init/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-spec-quick/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-spec-requirements/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-spec-status/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-spec-tasks/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-steering-custom/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-steering/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-validate-design/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-validate-gap/SKILL.md",
+    "tools/cc-sdd/templates/agents/windsurf-skills/skills/kiro-validate-impl/SKILL.md",
+    "tools/cc-sdd/templates/manifests/antigravity-skills.json",
+    "tools/cc-sdd/templates/manifests/cursor-skills.json",
+    "tools/cc-sdd/templates/manifests/gemini-cli-skills.json",
+    "tools/cc-sdd/templates/manifests/github-copilot-skills.json",
+    "tools/cc-sdd/templates/manifests/opencode-skills.json",
+    "tools/cc-sdd/templates/manifests/windsurf-skills.json",
+    "tools/cc-sdd/test/realManifestAntigravitySkills.test.ts",
+    "tools/cc-sdd/test/realManifestCursor.test.ts",
+    "tools/cc-sdd/test/realManifestCursorSkills.test.ts",
+    "tools/cc-sdd/test/realManifestGeminiCliSkills.test.ts",
+    "tools/cc-sdd/test/realManifestGithubCopilotSkills.test.ts",
+    "tools/cc-sdd/test/realManifestOpencodeSkills.test.ts",
+    "tools/cc-sdd/test/realManifestWindsurf.test.ts",
+    "tools/cc-sdd/test/realManifestWindsurfSkills.test.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3f/dfd8b3fb03/0/metadata.json",
+      "transcript": "/3f/dfd8b3fb03/0/full.jsonl",
+      "content_hash": "/3f/dfd8b3fb03/0/content_hash.txt",
+      "prompt": "/3f/dfd8b3fb03/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6870,
+    "cache_creation_tokens": 1517727,
+    "cache_read_tokens": 280850757,
+    "output_tokens": 422892,
+    "api_call_count": 1104
+  }
+}
