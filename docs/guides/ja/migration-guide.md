@@ -96,7 +96,42 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 
 ---
 
-## 5. FAQ / トラブルシューティング
+## 5. v2.x → v3.0
+
+> v3.0 は全 `--*-skills` インストールに適用。Skills モードは8プラットフォームで利用可能: Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity。コマンドベースのエージェント（`--claude`, `--cursor` 等）は引き続き動作するが非推奨、将来削除予定。
+
+| 領域 | v2.x | v3.0 |
+| --- | --- | --- |
+| スキル数 | 12-13 | **14** |
+| ブレインストーム | 基本的なアイデア整理 | **エントリポイント**（アクションパス A/B/C/D）; `brief.md` + `roadmap.md` を書き出す |
+| スペックバッチ | なし | **`/kiro-spec-batch`** — 並列マルチスペック作成 + cross-spec レビュー |
+| 実装 | `kiro-spec-impl` + `kiro-ralph-impl`（別スキル） | **`/kiro-impl`** — 統合スキル（implementer + reviewer + debugger） |
+| 失敗時デバッグ | なし | **Debug subagent** — フレッシュコンテキストで根本原因調査（最大2ラウンド） |
+| 知見引き継ぎ | なし | **Implementation Notes** がタスク間で次の implementer に注入される |
+| Skills 対応 | Claude Code, Codex | **8プラットフォーム**: Claude, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity |
+| TDD | 基本 TDD | **Feature Flag TDD**: RED → GREEN プロトコル |
+| セッション永続化 | なし | **`brief.md`** がセッション間で永続化 |
+
+### 主な移行手順
+
+1. **再インストール**（お使いのプラットフォームの Skills モードで）:
+   ```bash
+   npx cc-sdd@latest --claude-skills     # Claude Code（デフォルト）
+   npx cc-sdd@latest --codex-skills      # Codex CLI
+   npx cc-sdd@latest --cursor-skills     # Cursor IDE
+   npx cc-sdd@latest --copilot-skills    # GitHub Copilot
+   npx cc-sdd@latest --windsurf-skills   # Windsurf IDE
+   npx cc-sdd@latest --opencode-skills   # OpenCode
+   npx cc-sdd@latest --gemini-skills     # Gemini CLI
+   npx cc-sdd@latest --antigravity       # Antigravity
+   ```
+2. **レガシーモードから移行** — `--claude`, `--cursor`, `--copilot`, `--windsurf`, `--opencode`, `--gemini` は非推奨。`--codex` はブロック済み。対応する `--*-skills` フラグを使用。
+3. **`/kiro-brainstorm`** をエントリポイントとして使用 — `brief.md` + `roadmap.md` が下流スキルに引き継がれる。
+4. **`/kiro-spec-batch`** をマルチフィーチャー作業に使用。
+
+---
+
+## 6. FAQ / トラブルシューティング
 
 **Q. v2で旧バージョンのテンプレートをそのまま使用したい**  
 テンプレートファイルのコピーは可能だが、要件カバレッジ（Req Coverage）や参考文献（Supporting References）といったv2の構造化データが欠落するため、生成物の品質が低下する可能性がある。新テンプレートへ内容を移植する方が安全である。
@@ -109,8 +144,8 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 
 ---
 
-## 6. まとめ
+## 7. まとめ
 
 - **v1.1.5の継続利用者**: `npx cc-sdd@1.1.5` のようにバージョンを固定し、従来通りテンプレートやコマンドプロンプトを直接編集する。
-- **v2.0.0への移行者**: 非連続的なアップデートであることを前提に、テンプレートとルールファイルのみでカスタマイズを完結させる。これにより、参考文献（Supporting References）の分離や調査と設計の分離など、最新の仕様駆動開発（SDD）の利点を享受できる。
-- 今後の機能追加やバグ修正はv2系に集中して行われるため、仕様駆動開発（Spec-Driven Development）の利点を最大限に活用したい場合は、v2への移行を推奨する。
+- **v2.xの利用者**: Skills モード（`--*-skills`）への移行を推奨。レガシーコマンドモードは将来削除予定。
+- **v3.0への移行者**: Skills モードで再インストールし、`/kiro-brainstorm` → `/kiro-spec-batch` → `/kiro-impl` のワークフローを活用する。8プラットフォーム対応、デバッグ自動化、タスク間知見引き継ぎが利用可能。

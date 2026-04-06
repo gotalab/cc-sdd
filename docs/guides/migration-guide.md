@@ -98,7 +98,7 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 
 ## 5. v2.x to v3.0
 
-> v3.0 applies to `--claude-skills` and `--codex-skills` install targets. Commands-based agents (`--claude-code`, `--cursor`, etc.) are unaffected by these changes.
+> v3.0 applies to all `--*-skills` install targets. Skills modes are now available for 8 platforms: Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity. Commands-based agents (`--claude-code`, `--cursor`, etc.) still work but are deprecated and will be removed in a future release.
 
 ### TL;DR
 
@@ -107,19 +107,28 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 | Skill count | 12-13 | **14** |
 | Brainstorm | Basic idea refinement | **Entry point** with action paths (A/B/C/D); writes `brief.md` + `roadmap.md` |
 | Spec batch | N/A | **`/kiro-spec-batch`** -- parallel multi-spec creation with cross-spec review |
-| Implementation | `kiro-spec-impl` + `kiro-ralph-impl` (separate skills) | **`/kiro-impl`** -- unified skill with native subagent dispatch (implementer + reviewer) |
+| Implementation | `kiro-spec-impl` + `kiro-ralph-impl` (separate skills) | **`/kiro-impl`** -- unified skill with native subagent dispatch (implementer + reviewer + debugger) |
 | Ralph Loop | External plugin dependency | **Removed**; replaced by native Agent tool dispatch |
 | `--codex prompts` mode | Supported | **Blocked** (use `--codex-skills` instead) |
 | Session persistence | None | **`brief.md`** persists across sessions; downstream skills read it automatically |
 | TDD protocol | Basic TDD | **Feature Flag TDD**: RED then GREEN protocol for safe incremental delivery |
 | Codex cross-spec review | N/A | **`.codex/agents/spec-reviewer.toml`** for Codex installs |
+| Debug on failure | N/A | **Debug subagent** -- fresh context investigation with web search (max 2 rounds) |
+| Learnings propagation | N/A | **Implementation Notes** in tasks.md injected into subsequent implementer prompts |
+| Skills platforms | Claude Code, Codex | **8 platforms**: Claude, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity |
 
 ### Key migration steps
 
-1. **Reinstall** with the latest version:
+1. **Reinstall** with the latest version (skills mode for your platform):
    ```bash
-   npx cc-sdd@latest --claude-skills   # Claude Code skills mode
-   npx cc-sdd@latest --codex-skills    # Codex CLI skills mode
+   npx cc-sdd@latest --claude-skills     # Claude Code (default)
+   npx cc-sdd@latest --codex-skills      # Codex CLI
+   npx cc-sdd@latest --cursor-skills     # Cursor IDE
+   npx cc-sdd@latest --copilot-skills    # GitHub Copilot
+   npx cc-sdd@latest --windsurf-skills   # Windsurf IDE
+   npx cc-sdd@latest --opencode-skills   # OpenCode
+   npx cc-sdd@latest --gemini-skills     # Gemini CLI
+   npx cc-sdd@latest --antigravity       # Antigravity
    ```
 
 2. **Remove legacy skill references** -- if you have custom scripts or documentation referencing `kiro-spec-impl` or `kiro-ralph-impl`, update them to `/kiro-impl`.
@@ -128,7 +137,7 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 
 4. **Use `/kiro-spec-batch`** for multi-feature work -- when your roadmap contains multiple specs, `/kiro-spec-batch` creates them in parallel and runs a cross-spec review to catch contradictions.
 
-5. **Stop using `--codex prompts`** -- this mode is blocked in v3.0. Use `--codex-skills` for Codex CLI integration.
+5. **Migrate from legacy modes** -- all non-skills modes (`--claude`, `--cursor`, `--copilot`, `--windsurf`, `--opencode`, `--gemini`) are deprecated and will be removed. `--codex` is already blocked. Use the corresponding `--*-skills` flag.
 
 6. **Leverage `brief.md` for session continuity** -- after brainstorming, you can close the session and resume later. The brief file preserves the feature context so you do not need to re-explain scope.
 

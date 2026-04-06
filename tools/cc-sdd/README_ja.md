@@ -47,17 +47,23 @@ npx cc-sdd@latest --lang es    # スペイン語
 ...（対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el）
 
 # エージェントオプション（デフォルト: claude-code-skills / --claude-skills）
-npx cc-sdd@latest --claude --lang ja        # Claude Code（11コマンド、対応言語は任意）
-npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents（12コマンド + 9サブエージェント）
-npx cc-sdd@latest --cursor --lang ja        # Cursor IDE
-npx cc-sdd@latest --gemini --lang ja        # Gemini CLI
-npx cc-sdd@latest --codex --lang ja         # Codex CLI（ブロック済み — --codex-skills を使用）
-npx cc-sdd@latest --codex-skills --lang ja  # Codex CLI の Skills モード（推奨、14スキル）
-npx cc-sdd@latest --copilot --lang ja       # GitHub Copilot
+# Skills モード（推奨）
+npx cc-sdd@latest --claude-skills --lang ja     # Claude Code Skills（デフォルト、14スキル）
+npx cc-sdd@latest --codex-skills --lang ja      # Codex CLI Skills（14スキル）
+npx cc-sdd@latest --cursor-skills --lang ja     # Cursor IDE Skills（14スキル）
+npx cc-sdd@latest --copilot-skills --lang ja    # GitHub Copilot Skills（14スキル）
+npx cc-sdd@latest --windsurf-skills --lang ja   # Windsurf IDE Skills（14スキル）
+npx cc-sdd@latest --opencode-skills --lang ja   # OpenCode Skills（14スキル）
+npx cc-sdd@latest --gemini-skills --lang ja     # Gemini CLI Skills（14スキル）
+npx cc-sdd@latest --antigravity --lang ja       # Antigravity Skills（14スキル）
+# レガシーモード（非推奨 — 将来削除予定）
+npx cc-sdd@latest --claude --lang ja        # --claude-skills を使用してください
+npx cc-sdd@latest --cursor --lang ja        # --cursor-skills を使用してください
+npx cc-sdd@latest --copilot --lang ja       # --copilot-skills を使用してください
+npx cc-sdd@latest --windsurf --lang ja      # --windsurf-skills を使用してください
+npx cc-sdd@latest --opencode --lang ja      # --opencode-skills を使用してください
+npx cc-sdd@latest --gemini --lang ja        # --gemini-skills を使用してください
 npx cc-sdd@latest --qwen --lang ja          # Qwen Code
-npx cc-sdd@latest --opencode --lang ja      # OpenCode（11コマンド）
-npx cc-sdd@latest --opencode-agent --lang ja # OpenCode Subagents（12コマンド + 9サブエージェント）
-npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 # 注: @nextは今後のアルファ/ベータ版用に予約されています
 ```
@@ -133,17 +139,17 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 ## 🤖 対応AIエージェント
 
-| エージェント | 状態 | コマンド数 |
-|-------|--------|----------|
-| **Claude Code** | ✅ 完全対応 | 11 スラッシュコマンド |
-| **Claude Code Subagents** | ✅ 完全対応 | 12 コマンド + 9 サブエージェント |
-| **Cursor IDE** | ✅ 完全対応 | 11 コマンド |
-| **Gemini CLI** | ✅ 完全対応 | 11 コマンド |
-| **Codex CLI** | ✅ 完全対応 | `--codex` ブロック済み — `--codex-skills` で14スキル |
-| **GitHub Copilot** | ✅ 完全対応 | 11 プロンプト |
-| **Qwen Code** | ✅ 完全対応 | 11 コマンド |
-| **Windsurf IDE** | ✅ 完全対応 | 11 ワークフロー |
-| その他（Factory AI Droid） | 📅 予定 | - |
+| エージェント | Skills モード（推奨） | レガシーモード |
+|-------|--------------------------|-------------|
+| **Claude Code** | `--claude-skills` — 14スキル | `--claude` / `--claude-agent`（非推奨） |
+| **Codex CLI** | `--codex-skills` — 14スキル | `--codex`（ブロック済み） |
+| **Cursor IDE** | `--cursor-skills` — 14スキル | `--cursor`（非推奨） |
+| **GitHub Copilot** | `--copilot-skills` — 14スキル | `--copilot`（非推奨） |
+| **Windsurf IDE** | `--windsurf-skills` — 14スキル | `--windsurf`（非推奨） |
+| **OpenCode** | `--opencode-skills` — 14スキル | `--opencode` / `--opencode-agent`（非推奨） |
+| **Gemini CLI** | `--gemini-skills` — 14スキル | `--gemini`（非推奨） |
+| **Antigravity** | `--antigravity` — 14スキル | — |
+| **Qwen Code** | — | `--qwen` |
  
 ## 📋 コマンド
 

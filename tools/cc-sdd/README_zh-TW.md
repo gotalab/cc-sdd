@@ -44,17 +44,23 @@ npx cc-sdd@latest --lang es    # 西班牙語
 ...（支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el）
 
 # 代理選項（預設：claude-code-skills / --claude-skills）
-npx cc-sdd@latest --claude --lang zh-TW           # Claude Code（11 個指令，語言可任選）
-npx cc-sdd@latest --claude-agent --lang zh-TW     # Claude Code Subagents（12 個指令 + 9 個子代理）
-npx cc-sdd@latest --cursor --lang zh-TW           # Cursor IDE
-npx cc-sdd@latest --gemini --lang zh-TW           # Gemini CLI
-npx cc-sdd@latest --codex --lang zh-TW            # Codex CLI（已封鎖 — 請改用 --codex-skills）
-npx cc-sdd@latest --codex-skills --lang zh-TW     # Codex CLI Skills 模式（建議，14 個技能）
-npx cc-sdd@latest --copilot --lang zh-TW          # GitHub Copilot
-npx cc-sdd@latest --qwen --lang zh-TW             # Qwen Code
-npx cc-sdd@latest --opencode --lang zh-TW         # OpenCode（11 個指令）
-npx cc-sdd@latest --opencode-agent --lang zh-TW   # OpenCode Subagents（12 個指令 + 9 個子代理）
-npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
+# Skills 模式（建議）
+npx cc-sdd@latest --claude-skills --lang zh-TW     # Claude Code Skills（預設，14 個技能）
+npx cc-sdd@latest --codex-skills --lang zh-TW      # Codex CLI Skills（14 個技能）
+npx cc-sdd@latest --cursor-skills --lang zh-TW     # Cursor IDE Skills（14 個技能）
+npx cc-sdd@latest --copilot-skills --lang zh-TW    # GitHub Copilot Skills（14 個技能）
+npx cc-sdd@latest --windsurf-skills --lang zh-TW   # Windsurf IDE Skills（14 個技能）
+npx cc-sdd@latest --opencode-skills --lang zh-TW   # OpenCode Skills（14 個技能）
+npx cc-sdd@latest --gemini-skills --lang zh-TW     # Gemini CLI Skills（14 個技能）
+npx cc-sdd@latest --antigravity --lang zh-TW       # Antigravity Skills（14 個技能）
+# 舊版模式（已棄用 — 將在未來版本移除）
+npx cc-sdd@latest --claude --lang zh-TW        # 請改用 --claude-skills
+npx cc-sdd@latest --cursor --lang zh-TW        # 請改用 --cursor-skills
+npx cc-sdd@latest --copilot --lang zh-TW       # 請改用 --copilot-skills
+npx cc-sdd@latest --windsurf --lang zh-TW      # 請改用 --windsurf-skills
+npx cc-sdd@latest --opencode --lang zh-TW      # 請改用 --opencode-skills
+npx cc-sdd@latest --gemini --lang zh-TW        # 請改用 --gemini-skills
+npx cc-sdd@latest --qwen --lang zh-TW          # Qwen Code
 
 # 注意：@next 現已保留給未來的 alpha/beta 版本
 ```
@@ -130,17 +136,17 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 
 ## 🤖 支援的 AI 代理
 
-| 代理 | 狀態 | 指令 | 設定 |
-|------|------|------|------|
-| **Claude Code** | ✅ 完全支援 | 11 個斜線指令 | `CLAUDE.md` |
-| **Claude Code Subagents** | ✅ 完全支援 | 12 個指令 + 9 個子代理 | `CLAUDE.md`, `.claude/agents/kiro/` |
-| **Cursor IDE** | ✅ 完全支援 | 11 個指令 | `AGENTS.md` |
-| **Gemini CLI** | ✅ 完全支援 | 11 個指令 | `GEMINI.md` |
-| **Codex CLI** | ✅ 完全支援 | `--codex` 已封鎖 — `--codex-skills` 提供 14 個技能 | `AGENTS.md`, `.agents/skills/` |
-| **GitHub Copilot** | ✅ 完全支援 | 11 個提示 | `AGENTS.md` |
-| **Qwen Code** | ✅ 完全支援 | 11 個指令 | `QWEN.md` |
-| **Windsurf IDE** | ✅ 完全支援 | 11 個工作流程 | `AGENTS.md` |
-| 其他（Factory AI Droid） | 📅 規劃中 | - | - |
+| 代理 | Skills 模式（建議） | 舊版模式 |
+|------|--------------------------|-------------|
+| **Claude Code** | `--claude-skills` — 14 個技能 | `--claude` / `--claude-agent`（已棄用） |
+| **Codex CLI** | `--codex-skills` — 14 個技能 | `--codex`（已封鎖） |
+| **Cursor IDE** | `--cursor-skills` — 14 個技能 | `--cursor`（已棄用） |
+| **GitHub Copilot** | `--copilot-skills` — 14 個技能 | `--copilot`（已棄用） |
+| **Windsurf IDE** | `--windsurf-skills` — 14 個技能 | `--windsurf`（已棄用） |
+| **OpenCode** | `--opencode-skills` — 14 個技能 | `--opencode` / `--opencode-agent`（已棄用） |
+| **Gemini CLI** | `--gemini-skills` — 14 個技能 | `--gemini`（已棄用） |
+| **Antigravity** | `--antigravity` — 14 個技能 | — |
+| **Qwen Code** | — | `--qwen` |
 
 ## 📋 指令
 
