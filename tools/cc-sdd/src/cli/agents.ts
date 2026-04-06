@@ -62,6 +62,17 @@ const buildGuideSteps = (agent: AgentType): string[] => {
 
 export const printCompletionGuide = (agent: AgentType, io: CliIO): void => {
   const definition = getAgentDefinition(agent);
+
+  if (definition.upgradeNotice) {
+    const line = '─'.repeat(60);
+    io.log('');
+    io.log(colors.yellow(line));
+    io.log(formatAttention('  DEPRECATED: This mode is no longer recommended.'));
+    io.log(formatAttention(`  ${definition.upgradeNotice}`));
+    io.log(colors.yellow(line));
+    io.log('');
+  }
+
   const models = definition.recommendedModels;
   if (models && models.length > 0) {
     io.log(formatHeading('  Recommended models:'));

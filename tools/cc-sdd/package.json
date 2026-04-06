@@ -1,7 +1,7 @@
 {
   "name": "cc-sdd",
   "version": "2.1.1",
-  "description": "Turn approved specs into long-running autonomous implementation. A minimal, adaptable SDD harness with skills-first workflow for Claude Code, Codex, and 9 more AI coding agents.",
+  "description": "Turn approved specs into long-running autonomous implementation. A minimal, adaptable SDD harness with Agent Skills for Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity.",
   "keywords": [
     "claude-code",
     "cursor",

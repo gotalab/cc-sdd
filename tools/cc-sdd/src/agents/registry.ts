@@ -25,16 +25,11 @@ export interface AgentDefinition {
   manifestId?: string;
   completionGuide?: AgentCompletionGuide;
   templateFallbacks?: Record<string, string>;
+  upgradeNotice?: string;
 }
 
-const codexLegacyPromptNotice =
-  'Deprecated: Codex prompts mode (`--codex`) is deprecated. Codex no longer supports `.codex/prompts/`. Use `npx cc-sdd@latest --codex-skills` instead.';
-
-const skillsUpgradeNotice =
-  'Upgrade available: `npx cc-sdd@latest --claude-skills` installs Agent Skills with subagent-driven autonomous implementation, independent review, and the unified `/kiro-impl` command. Recommended for new setups.';
-
-const codexSkillsUpgradeNotice =
-  'Upgrade available: `npx cc-sdd@latest --codex-skills` installs Agent Skills with subagent-driven autonomous implementation and the unified `$kiro-impl` command. Recommended for new setups.';
+const makeUpgradeNotice = (flag: string): string =>
+  `This mode will be removed in a future release. Migrate now: npx cc-sdd@latest ${flag}`;
 
 export const agentDefinitions = {
   'claude-code': {
@@ -53,9 +48,7 @@ export const agentDefinitions = {
       steering: '`/kiro:steering`',
       steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
     },
-    completionGuide: {
-      prependSteps: [skillsUpgradeNotice],
-    },
+    upgradeNotice: makeUpgradeNotice('--claude-skills'),
     templateFallbacks: {
       'CLAUDE.md': '../../CLAUDE.md',
     },
@@ -77,9 +70,7 @@ export const agentDefinitions = {
       steering: '`/kiro:steering`',
       steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
     },
-    completionGuide: {
-      prependSteps: [skillsUpgradeNotice],
-    },
+    upgradeNotice: makeUpgradeNotice('--claude-skills'),
     templateFallbacks: {
       'CLAUDE.md': '../../CLAUDE.md',
     },
@@ -111,7 +102,7 @@ export const agentDefinitions = {
     description:
       'Deprecated: Codex no longer supports `.codex/prompts/`. Use `--codex-skills` instead.',
     aliasFlags: ['--codex', '--codex-cli'],
-    recommendedModels: ['gpt-5.4 high or xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4'],
     layout: {
       commandsDir: '.codex/prompts',
       agentDir: '.codex',
@@ -122,9 +113,7 @@ export const agentDefinitions = {
       steering: '`/prompts:kiro-steering`',
       steeringCustom: '`/prompts:kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
-    completionGuide: {
-      prependSteps: [codexLegacyPromptNotice, codexSkillsUpgradeNotice],
-    },
+    upgradeNotice: makeUpgradeNotice('--codex-skills'),
     manifestId: 'codex',
   },
   'codex-skills': {
@@ -132,7 +121,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro skills in `.agents/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--codex-skills'],
-    recommendedModels: ['gpt-5.4 high or xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4'],
     layout: {
       commandsDir: '.agents/skills',
       agentDir: '.agents',
@@ -150,7 +139,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.cursor/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--cursor'],
-    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer', 'Implementation: Claude Sonnet 4.6 or newer', 'gpt-5.4 high or xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4 / Composer 2'],
     layout: {
       commandsDir: '.cursor/commands/kiro',
       agentDir: '.cursor',
@@ -161,14 +150,33 @@ export const agentDefinitions = {
       steering: '`/kiro/steering`',
       steeringCustom: '`/kiro/steering-custom <what-to-create-custom-steering-document>`',
     },
+    upgradeNotice: makeUpgradeNotice('--cursor-skills'),
     manifestId: 'cursor',
+  },
+  'cursor-skills': {
+    label: 'Cursor Skills',
+    description:
+      'Installs kiro skills in `.cursor/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--cursor-skills'],
+    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4 / Composer 2'],
+    layout: {
+      commandsDir: '.cursor/skills',
+      agentDir: '.cursor',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'cursor-skills',
   },
   'github-copilot': {
     label: 'GitHub Copilot',
     description:
       'Installs kiro prompts in `.github/prompts/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--copilot', '--github-copilot'],
-    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer', 'Implementation: Claude Sonnet 4.6 or newer', 'gpt-5.4 high or xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4'],
     layout: {
       commandsDir: '.github/prompts',
       agentDir: '.github',
@@ -179,14 +187,33 @@ export const agentDefinitions = {
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
+    upgradeNotice: makeUpgradeNotice('--copilot-skills'),
     manifestId: 'github-copilot',
+  },
+  'github-copilot-skills': {
+    label: 'GitHub Copilot Skills',
+    description:
+      'Installs kiro skills in `.github/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--copilot-skills', '--github-copilot-skills'],
+    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4'],
+    layout: {
+      commandsDir: '.github/skills',
+      agentDir: '.github',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'github-copilot-skills',
   },
   'gemini-cli': {
     label: 'Gemini CLI',
     description:
       'Installs kiro prompts in `.gemini/commands/kiro/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--gemini-cli', '--gemini'],
-    recommendedModels: ['Gemini 3 Flash or newer'],
+    recommendedModels: ['Planning / review: Gemini 3.1 Pro or newer', 'Implementation: Gemini 3 Flash or newer'],
     layout: {
       commandsDir: '.gemini/commands/kiro',
       agentDir: '.gemini',
@@ -197,14 +224,33 @@ export const agentDefinitions = {
       steering: '`/kiro:steering`',
       steeringCustom: '`/kiro:steering-custom <what-to-create-custom-steering-document>`',
     },
+    upgradeNotice: makeUpgradeNotice('--gemini-skills'),
     manifestId: 'gemini-cli',
+  },
+  'gemini-cli-skills': {
+    label: 'Gemini CLI Skills',
+    description:
+      'Installs kiro skills in `.gemini/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and a GEMINI.md quickstart.',
+    aliasFlags: ['--gemini-cli-skills', '--gemini-skills'],
+    recommendedModels: ['Planning / review: Gemini 3.1 Pro or newer', 'Implementation: Gemini 3 Flash or newer'],
+    layout: {
+      commandsDir: '.gemini/skills',
+      agentDir: '.gemini',
+      docFile: 'GEMINI.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'gemini-cli-skills',
   },
   windsurf: {
     label: 'Windsurf IDE',
     description:
       'Installs kiro workflows in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--windsurf'],
-    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer', 'Implementation: Claude Sonnet 4.6 or newer', 'gpt-5.4 high or xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4'],
     layout: {
       commandsDir: '.windsurf/workflows',
       agentDir: '.windsurf',
@@ -215,7 +261,26 @@ export const agentDefinitions = {
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
+    upgradeNotice: makeUpgradeNotice('--windsurf-skills'),
     manifestId: 'windsurf',
+  },
+  'windsurf-skills': {
+    label: 'Windsurf Skills',
+    description:
+      'Installs kiro skills in `.windsurf/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--windsurf-skills'],
+    recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4'],
+    layout: {
+      commandsDir: '.windsurf/skills',
+      agentDir: '.windsurf',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`@kiro-spec-quick <what-to-build> [--auto]`',
+      steering: '`@kiro-steering`',
+      steeringCustom: '`@kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'windsurf-skills',
   },
   'qwen-code': {
     label: 'Qwen Code',
@@ -239,7 +304,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.opencode/commands/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode'],
-    recommendedModels: ['gpt-5.4 high or xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4'],
     layout: {
       commandsDir: '.opencode/commands',
       agentDir: '.opencode',
@@ -250,6 +315,7 @@ export const agentDefinitions = {
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
+    upgradeNotice: makeUpgradeNotice('--opencode-skills'),
     manifestId: 'opencode',
   },
   'opencode-agent': {
@@ -257,7 +323,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro commands in `.opencode/commands/`, a kiro agent library in `.opencode/agents/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode-agent'],
-    recommendedModels: ['gpt-5.4 high or xhigh', 'gpt-5.4'],
+    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4'],
     layout: {
       commandsDir: '.opencode/commands',
       agentDir: '.opencode',
@@ -268,10 +334,46 @@ export const agentDefinitions = {
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
+    upgradeNotice: makeUpgradeNotice('--opencode-skills'),
     templateFallbacks: {
       'AGENTS.md': '../../AGENTS.md',
     },
     manifestId: 'opencode-agent',
+  },
+  'opencode-skills': {
+    label: 'OpenCode Skills',
+    description:
+      'Installs kiro skills in `.opencode/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--opencode-skills'],
+    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4'],
+    layout: {
+      commandsDir: '.opencode/skills',
+      agentDir: '.opencode',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'opencode-skills',
+  },
+  'antigravity-skills': {
+    label: 'Antigravity Skills',
+    description:
+      'Installs kiro skills in `.agent/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--antigravity-skills', '--antigravity'],
+    layout: {
+      commandsDir: '.agent/skills',
+      agentDir: '.agent',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    manifestId: 'antigravity-skills',
   },
 } as const satisfies Record<string, AgentDefinition>;
 

@@ -25,8 +25,8 @@ cc-sdd turns approved specs into executable work instead of leaving them as pass
 
 ### Why Agent Skills matter:
 - Agent Skills package workflow instructions, domain knowledge, playbooks, and tool restrictions into composable units instead of scattering them across ad hoc docs
-- The same skills-based workflow can move across Claude Code, Codex, and future skills-capable agents with less translation work
-- `claude-code-skills` and `codex-skills` are the recommended installs when you want the most durable long-running setup
+- The same skills-based workflow works across Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity
+- Skills modes (`--claude-skills`, `--codex-skills`, `--cursor-skills`, etc.) are the recommended installs -- legacy command modes will be removed in a future release
 
 ## 🚀 Quick Start
 
@@ -36,7 +36,7 @@ cd your-project
 npx cc-sdd@latest
 
 # Default install targets Claude Code Skills.
-# Choose a different agent with flags like --codex-skills, --cursor, or --windsurf.
+# Choose a different agent with flags like --codex-skills, --cursor-skills, or --windsurf-skills.
 ```
 
 Then start with:
@@ -51,7 +51,7 @@ Then start with:
 
 For larger approved task sets, run `/kiro-impl` to start autonomous implementation with per-task subagent dispatch and review.
 
-**Installation takes 30 seconds.** Supports 8 agents (Claude (Commands / Subagents), Cursor, Gemini, Codex, Copilot, Qwen, OpenCode, Windsurf) × 13 languages, plus Codex Skills mode with 14 skills.
+**Installation takes 30 seconds.** 8 skills-based agents (Claude, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity) with 14 skills each × 13 languages. Legacy command modes also available but deprecated.
 
 📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
@@ -98,20 +98,33 @@ Common use cases: PRD-style requirements, API/database schemas, approval gates, 
 
 ## ⚙️ Advanced Installation
 
-### Choose Your Agent
+### Choose Your Agent (Skills Mode — Recommended)
 
 ```bash
-npx cc-sdd@latest --claude         # Claude Code (11 commands) [default]
-npx cc-sdd@latest --claude-agent   # Claude Code Subagents (12 commands + 9 subagents)
-npx cc-sdd@latest --cursor         # Cursor IDE
-npx cc-sdd@latest --gemini         # Gemini CLI
-npx cc-sdd@latest --codex          # Codex CLI blocked (use --codex-skills)
-npx cc-sdd@latest --codex-skills   # Codex CLI skills mode (recommended, 14 skills)
-npx cc-sdd@latest --copilot        # GitHub Copilot
+npx cc-sdd@latest                     # Claude Code Skills (default, 14 skills)
+npx cc-sdd@latest --claude-skills     # Claude Code Skills
+npx cc-sdd@latest --codex-skills      # Codex CLI Skills (14 skills)
+npx cc-sdd@latest --cursor-skills     # Cursor IDE Skills (14 skills)
+npx cc-sdd@latest --copilot-skills    # GitHub Copilot Skills (14 skills)
+npx cc-sdd@latest --windsurf-skills   # Windsurf IDE Skills (14 skills)
+npx cc-sdd@latest --opencode-skills   # OpenCode Skills (14 skills)
+npx cc-sdd@latest --gemini-skills     # Gemini CLI Skills (14 skills)
+npx cc-sdd@latest --antigravity       # Antigravity Skills (14 skills)
+```
+
+### Legacy Modes (Deprecated — will be removed)
+
+```bash
+npx cc-sdd@latest --claude         # Claude Code commands (use --claude-skills)
+npx cc-sdd@latest --claude-agent   # Claude Code subagents (use --claude-skills)
+npx cc-sdd@latest --cursor         # Cursor IDE commands (use --cursor-skills)
+npx cc-sdd@latest --copilot        # GitHub Copilot prompts (use --copilot-skills)
+npx cc-sdd@latest --windsurf       # Windsurf IDE workflows (use --windsurf-skills)
+npx cc-sdd@latest --opencode       # OpenCode commands (use --opencode-skills)
+npx cc-sdd@latest --opencode-agent # OpenCode subagents (use --opencode-skills)
+npx cc-sdd@latest --gemini         # Gemini CLI commands (use --gemini-skills)
+npx cc-sdd@latest --codex          # Codex CLI (blocked, use --codex-skills)
 npx cc-sdd@latest --qwen           # Qwen Code
-npx cc-sdd@latest --opencode       # OpenCode (11 commands)
-npx cc-sdd@latest --opencode-agent # OpenCode Subagents (12 commands + 9 subagents)
-npx cc-sdd@latest --windsurf       # Windsurf IDE
 ```
 
 ### Choose Your Language

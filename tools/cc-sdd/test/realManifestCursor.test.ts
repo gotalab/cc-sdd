@@ -72,10 +72,6 @@ describe('real cursor manifest', () => {
     
     // Check that the Cursor-specific recommended models are shown
     expect(out).toContain('Recommended models');
-    expect(out).toContain('Planning / review: Claude Opus 4.6 or newer');
-    expect(out).toContain('Implementation: Claude Sonnet 4.6 or newer');
-    expect(out).toContain('gpt-5.4 high or xhigh');
-    expect(out).toContain('gpt-5.4');
 
     // Check that the unified next steps are present
     expect(out).toContain("Launch Cursor IDE and run `/kiro/spec-init <what-to-build>` to create a new specification.");

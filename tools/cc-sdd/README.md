@@ -22,8 +22,8 @@ cc-sdd turns approved specs into executable work: requirements → design → ta
 
 **Why Agent Skills:**
 - Skills package workflow as composable units that load on demand (progressive disclosure)
-- Same skills-based workflow works across Claude Code, Codex, and future skills-capable agents
-- `claude-code-skills` and `codex-skills` are the recommended installs
+- Same skills-based workflow works across Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity
+- Skills modes are the recommended installs -- legacy command modes will be removed in a future release
 
 > Specs are not passive documents. Approved specs become executable work.
 
@@ -47,17 +47,23 @@ npx cc-sdd@latest --lang es    # Spanish
 ... (en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el supported)
 
 # With agent options (default: claude-code-skills / --claude-skills)
-npx cc-sdd@latest --claude        # Claude Code (11 commands, en/ja/zh-TW/...)
-npx cc-sdd@latest --claude-agent --lang ja  # Claude Code Subagents (12 commands + 9 subagents)
-npx cc-sdd@latest --cursor --lang zh-TW     # Cursor IDE (choose any supported lang)
-npx cc-sdd@latest --gemini --lang es        # Gemini CLI
-npx cc-sdd@latest --codex --lang fr         # Codex CLI (blocked — use --codex-skills instead)
-npx cc-sdd@latest --codex-skills --lang fr  # Codex CLI skills mode (recommended)
-npx cc-sdd@latest --copilot --lang pt       # GitHub Copilot
-npx cc-sdd@latest --qwen --lang de          # Qwen Code
-npx cc-sdd@latest --opencode --lang en      # OpenCode (11 commands)
-npx cc-sdd@latest --opencode-agent --lang ja # OpenCode Subagents (12 commands + 9 subagents)
-npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
+# Skills Mode (recommended)
+npx cc-sdd@latest --claude-skills            # Claude Code Skills (default, 14 skills)
+npx cc-sdd@latest --codex-skills --lang fr   # Codex CLI Skills
+npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE Skills
+npx cc-sdd@latest --copilot-skills --lang pt    # GitHub Copilot Skills
+npx cc-sdd@latest --windsurf-skills --lang ja   # Windsurf IDE Skills
+npx cc-sdd@latest --opencode-skills --lang en   # OpenCode Skills
+npx cc-sdd@latest --gemini-skills --lang es     # Gemini CLI Skills
+npx cc-sdd@latest --antigravity                 # Antigravity Skills
+# Legacy modes (deprecated — will be removed)
+npx cc-sdd@latest --claude        # Use --claude-skills instead
+npx cc-sdd@latest --cursor        # Use --cursor-skills instead
+npx cc-sdd@latest --copilot       # Use --copilot-skills instead
+npx cc-sdd@latest --windsurf      # Use --windsurf-skills instead
+npx cc-sdd@latest --opencode      # Use --opencode-skills instead
+npx cc-sdd@latest --gemini        # Use --gemini-skills instead
+npx cc-sdd@latest --qwen          # Qwen Code
 
 # Note: @next is now reserved for future alpha/beta versions
 ```
@@ -133,17 +139,17 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 
 ## 🤖 Supported AI Agents
 
-| Agent | Status | Commands |
-|-------|--------|----------|
-| **Claude Code** | ✅ Full | 11 slash commands |
-| **Claude Code Subagents** | ✅ Full | 12 commands + 9 subagents |
-| **Cursor IDE** | ✅ Full | 11 commands |
-| **Gemini CLI** | ✅ Full | 11 commands |
-| **Codex CLI** | ✅ Full | `--codex` blocked — 14 skills via `--codex-skills` |
-| **GitHub Copilot** | ✅ Full | 11 prompts |
-| **Qwen Code** | ✅ Full | 11 commands |
-| **Windsurf IDE** | ✅ Full | 11 workflows |
-| Others (Factory AI Droid) | 📅 Planned | - |
+| Agent | Skills Mode (Recommended) | Legacy Mode |
+|-------|--------------------------|-------------|
+| **Claude Code** | `--claude-skills` — 14 skills | `--claude` / `--claude-agent` (deprecated) |
+| **Codex CLI** | `--codex-skills` — 14 skills | `--codex` (blocked) |
+| **Cursor IDE** | `--cursor-skills` — 14 skills | `--cursor` (deprecated) |
+| **GitHub Copilot** | `--copilot-skills` — 14 skills | `--copilot` (deprecated) |
+| **Windsurf IDE** | `--windsurf-skills` — 14 skills | `--windsurf` (deprecated) |
+| **OpenCode** | `--opencode-skills` — 14 skills | `--opencode` / `--opencode-agent` (deprecated) |
+| **Gemini CLI** | `--gemini-skills` — 14 skills | `--gemini` (deprecated) |
+| **Antigravity** | `--antigravity` — 14 skills | — |
+| **Qwen Code** | — | `--qwen` |
  
 ## 📋 Commands
 
