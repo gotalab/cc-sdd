@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "c42468bed66b",
+  "strategy": "manual-commit",
+  "branch": "wip/claude-codex-skills-support",
+  "checkpoints_count": 1,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/c4/2468bed66b/0/metadata.json",
+      "transcript": "/c4/2468bed66b/0/full.jsonl",
+      "content_hash": "/c4/2468bed66b/0/content_hash.txt",
+      "prompt": "/c4/2468bed66b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 7052,
+    "cache_creation_tokens": 1624729,
+    "cache_read_tokens": 317995905,
+    "output_tokens": 469809,
+    "api_call_count": 1245
+  }
+}
