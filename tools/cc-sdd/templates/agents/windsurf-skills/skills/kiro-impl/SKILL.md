@@ -83,13 +83,14 @@ If multi-agent capability is available, for each task (one at a time):
   - Exact requirement and design section numbers this task must satisfy (using source numbering, NOT invented `REQ-*` aliases)
   - Task-relevant steering context and validation commands
   - Whether the task is behavioral (Feature Flag Protocol) or non-behavioral
+  - **Previous learnings**: Include any `## Implementation Notes` entries from tasks.md that are relevant to this task's boundary or dependencies (e.g., "better-sqlite3 requires separate rebuild for Electron"). This prevents the same mistakes from recurring.
 - The implementer sub-agent will read the spec files and build its own Task Brief (acceptance criteria, completion definition, design constraints, verification method) before implementation
 - Spawn a fresh sub-agent with this prompt
 
 **b) Handle implementer status**:
 - **DONE** / **DONE_WITH_CONCERNS** → proceed to review
-- **BLOCKED** → append `_Blocked: <reason>_` to the task line in tasks.md, skip to next task
-- **NEEDS_CONTEXT** → re-dispatch once with the requested additional context; if still unresolved, treat as BLOCKED
+- **BLOCKED** → dispatch debug subagent (see section below); do NOT immediately skip
+- **NEEDS_CONTEXT** → re-dispatch once with the requested additional context; if still unresolved → dispatch debug subagent
 
 **c) Dispatch reviewer**:
 - Read `templates/reviewer-prompt.md` from this skill's directory
@@ -102,7 +103,8 @@ If multi-agent capability is available, for each task (one at a time):
 
 **d) Handle reviewer verdict**:
 - **APPROVED** → mark task `[x]` in tasks.md, selective git commit
-- **REJECTED** → re-dispatch implementer with review feedback (max 2 rounds per task); if still rejected after 2 rounds, mark as `_Blocked: review failed_` and skip
+- **REJECTED (round 1-2)** → re-dispatch implementer with review feedback
+- **REJECTED (round 3)** → dispatch debug subagent (see section below)
 
 **e) Commit** (parent-only, selective staging):
 - Stage only the files actually changed for this task, plus tasks.md
@@ -112,6 +114,26 @@ If multi-agent capability is available, for each task (one at a time):
 
 **f) Record learnings**:
 - If this task revealed cross-cutting insights, append a one-line note to the `## Implementation Notes` section at the bottom of tasks.md
+
+**g) Debug subagent** (triggered by BLOCKED, NEEDS_CONTEXT unresolved, or REJECTED after 2 remediation rounds):
+
+The debug subagent runs in a **fresh context** — it receives only the error information, not the failed implementation history. This avoids the context pollution that causes infinite retry loops.
+
+- Read `templates/debugger-prompt.md` from this skill's directory
+- Construct a debug prompt with:
+  - The error description / blocker reason / reviewer rejection findings
+  - `git diff` of the current uncommitted changes
+  - The task description and relevant spec section numbers
+  - Paths to spec files so the debugger can read them
+- Spawn a fresh sub-agent with this prompt
+
+**Handle debug report**:
+- If `REQUIRES_HUMAN: true` → append `_Blocked: <ROOT_CAUSE>_` to tasks.md, skip to next task
+- If `REQUIRES_HUMAN: false` → discard the failed implementation (`git checkout .`), then spawn a **new** implementer sub-agent with the debug report's `FIX_PLAN` and `NOTES` included in the prompt alongside the standard task context
+  - If the new implementer succeeds (DONE → reviewer APPROVED) → normal flow
+  - If the new implementer also fails → repeat debug cycle (max 2 debug rounds total). After 2 failed debug rounds → append `_Blocked: debug attempted twice, still failing — <ROOT_CAUSE>_` to tasks.md, skip
+- **Max 2 debug rounds per task**. Each round: fresh debug subagent → fresh implementer. If still failing after 2 rounds, the task is blocked.
+- Record debug findings in `## Implementation Notes` (this helps subsequent tasks avoid the same issue)
 
 **`(P)` markers**: Tasks marked `(P)` in tasks.md indicate they have no inter-dependencies and could theoretically run in parallel. However, kiro-impl processes them sequentially (one at a time) to avoid git conflicts and simplify review. The `(P)` marker is informational for task planning, not an execution directive.
 
@@ -163,7 +185,8 @@ For tasks that add or change behavior, enforce RED → GREEN with a feature flag
 
 ## Critical Constraints
 - **Selective Staging**: NEVER use `git add -A` or `git add .`; always stage explicit file paths
-- **Bounded Review Rounds**: Max 2 implementer re-dispatch rounds per reviewer rejection
+- **Bounded Review Rounds**: Max 2 implementer re-dispatch rounds per reviewer rejection, then debug
+- **Bounded Debug**: Max 2 debug rounds per task (debug + re-implementation per round); if still failing → BLOCKED
 - **Bounded Remediation**: Cap final-validation remediation at 3 rounds
 
 ## Output Description
