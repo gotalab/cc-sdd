@@ -16,7 +16,7 @@ cc-sdd は承認済みの仕様を実行可能なワークフローに変える:
 
 **cc-sdd を使う理由:**
 - ✅ **仕様が実行可能になる** — 各 artifact (要件, 設計, タスク) が次工程を直接制御。File Structure Plan がタスク境界を、Task Brief が実装を、git diff がレビューを駆動
-- ✅ **長時間自律実装** — `/kiro-impl` がタスクごとに fresh subagent + 独立レビュアー + 失敗時の自動デバッグ（Web検索付き、最大2ラウンド）+ タスク間の知見引き継ぎで自律実装。外部依存なし
+- ✅ **長時間自律実装** — `/kiro-impl` がタスクごとに TDD (Feature Flag Protocol) + fresh subagent + 独立レビュアー + 失敗時の自動デバッグ + タスク間の知見引き継ぎで自律実装。外部依存なし
 - ✅ **プロダクト規模に対応** — `/kiro-brainstorm` が大きなアイデアを依存順の複数 spec に分解。`/kiro-spec-batch` が並列で spec 作成 + cross-spec 整合性検証
 - ✅ **一度カスタマイズ、モデル進化に追従** — 14 skills、shared rules は single source of truth。チーム向けテンプレートで承認フローに合わせられる。モデルが進化したらハーネスを軽くする設計
 
@@ -123,7 +123,7 @@ npx cc-sdd@latest --windsurf --lang ja      # Windsurf IDE
 ## ✨ 主要機能
 
 - **📋 Spec-Governed Development** — 構造化仕様（要件 → 調査 → 設計 → タスク）を、単なる計画書ではなく実装を支配する契約として扱います
-- **🔁 長時間自律実装** — `/kiro-impl` を実行して放置: 各タスクに fresh implementer + independent reviewer + 失敗時の auto-debug（Web検索付き）。タスク間で知見が引き継がれる。外部依存なし
+- **🔁 長時間自律実装** — `/kiro-impl` を実行して放置: TDD (Feature Flag Protocol) + fresh implementer + independent reviewer + 失敗時の auto-debug。タスク間で知見が引き継がれる。外部依存なし
 - **✅ レビュー + 最終検証フロー** — task-local review、validation passes、final validation flow を内蔵し、honest completion と NO-GO outcomes を目指します
 - **🚀 AI-DLC 手法** — AI実行、人間が各フェーズで検証。[集中「ボルト」](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)が週単位のスプリントを置き換え
 - **🧠 永続的プロジェクトメモリ** — ステアリング文書がアーキテクチャ・パターン・ルール・ドメイン知識を全セッション間で維持

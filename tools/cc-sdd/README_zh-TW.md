@@ -16,7 +16,7 @@ cc-sdd 把已核准規格轉成可執行工作流：需求 → 設計 → 任務
 
 **為什麼選 cc-sdd:**
 - ✅ **規格可執行** — 每個 artifact（需求、設計、任務）直接控制下一階段。File Structure Plan 驅動任務邊界，Task Brief 驅動實作，git diff 驅動審查
-- ✅ **長時間自律實作** — `/kiro-impl` 為每個任務啟動 fresh implementer + 獨立審查者 + 失敗時自動 debug（Web 搜尋，最多 2 輪）+ 任務間知見傳遞。無外部依賴
+- ✅ **長時間自律實作** — `/kiro-impl` 為每個任務執行 TDD (Feature Flag Protocol) + fresh implementer + 獨立審查者 + 失敗時自動 debug + 任務間知見傳遞。無外部依賴
 - ✅ **產品級規模** — `/kiro-brainstorm` 將大型構想分解為依賴排序的多個 spec。`/kiro-spec-batch` 平行建立所有 spec + cross-spec 一致性驗證
 - ✅ **自訂一次，隨模型進化調整** — 14 個 skills，共享規則為 single source of truth。團隊模板貼合批准流程。模型進化時可輕量化 harness
 
@@ -112,7 +112,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 
 ### 為何團隊選擇 cc-sdd
 1. **已核准規格會變成 executable work** — 需求、設計、任務與 supporting references 保持對齊，能直接驅動實作，而不是逐漸過期。
-2. **長時間自律實作** — per-task subagent dispatch + independent review + 失敗時自動 debug（Web 搜尋付き）+ 任務間知見傳遞。無需外部依賴，開箱即用。
+2. **長時間自律實作** — per-task subagent dispatch + TDD + independent review + 失敗時自動 debug + 任務間知見傳遞。無需外部依賴，開箱即用。
 3. **Agent Skills 是更耐久的 surface** — 同一套 skill-based workflow 適用於 Claude Code、Codex、Cursor、Copilot、Windsurf、OpenCode、Gemini CLI、Antigravity。
 4. **內建審查與最終驗證流程** — 系統在宣告完成前，會朝著抓出 spec mismatch、placeholder 實作與 blocked state 的方向設計。
 5. **團隊化自訂只做一次** — 編輯 `.kiro/settings/templates/` 後，每個代理／slash command 都會反映你的工作流；非 skills 代理也會使用 `.kiro/settings/rules/`。
@@ -120,7 +120,7 @@ npx cc-sdd@latest --windsurf --lang zh-TW         # Windsurf IDE
 ## ✨ 主要功能
 
 - **📋 Spec-Governed Development** — 結構化規格（需求 → 研究 → 設計 → 任務）不是只有規劃用途，而是作為約束實作的 governing contract
-- **🔁 長時間自律實作** — 執行 `/kiro-impl` 後放手：每個任務獲得 fresh implementer + independent reviewer + 失敗時 auto-debug（Web 搜尋）。任務間知見自動傳遞。無外部依賴
+- **🔁 長時間自律實作** — 執行 `/kiro-impl` 後放手：TDD (Feature Flag Protocol) + fresh implementer + independent reviewer + 失敗時 auto-debug。任務間知見自動傳遞。無外部依賴
 - **✅ 審查 + 最終驗證流程** — 內建 task-local review、validation passes 與 final validation flow，朝 honest completion 與 NO-GO outcomes 前進
 - **🚀 AI-DLC 方法論** — AI 執行，人類在各階段驗證。[集中式「快衝」](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)取代數周衝刺
 - **🧠 持久專案記憶** — 指導文件在所有會話間維持架構、模式、規則與領域知識

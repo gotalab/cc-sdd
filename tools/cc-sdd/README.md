@@ -121,7 +121,7 @@ npx cc-sdd@latest --qwen          # Qwen Code
 
 ### Why teams install cc-sdd
 1. **Approved specs become executable work** – requirements, design, tasks, and supporting references stay aligned and can drive implementation instead of going stale.
-2. **Long-running autonomous implementation** – large task sets run through autonomous implementation with per-task subagent dispatch, independent review, auto-debug on failure (max 2 rounds with web search), and learnings propagation between tasks — no external dependencies, works out of the box.
+2. **Long-running autonomous implementation** – per-task subagent dispatch, TDD with Feature Flag Protocol, independent adversarial review, auto-debug on failure, and learnings propagation between tasks — no external dependencies, works out of the box.
 3. **Agent Skills are the durable surface** – the same skill-based workflow works across Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity.
 4. **Review and final validation flows are built in** – the system is designed to catch mismatches, placeholders, and blocked states before claiming completion.
 5. **Customize once for your team** – edit `.kiro/settings/templates/` and every agent/slash command reflects your workflow. Non-skills agents also use `.kiro/settings/rules/`.
@@ -129,7 +129,7 @@ npx cc-sdd@latest --qwen          # Qwen Code
 ## ✨ Key Features
 
 - **📋 Spec-Governed Development** — Structured specs (requirements → research → design → tasks) stay as the governing contract for implementation, not just planning documents
-- **🔁 Long-Running Autonomous Implementation** — Run `/kiro-impl` and walk away: each task gets a fresh implementer, independent adversarial reviewer, and auto-debug on failure with web search. Learnings propagate between tasks. No external dependencies.
+- **🔁 Long-Running Autonomous Implementation** — Run `/kiro-impl` and walk away: each task gets TDD with Feature Flag Protocol, fresh implementer, independent adversarial reviewer, and auto-debug on failure. Learnings propagate between tasks. No external dependencies.
 - **✅ Review + Final Validation Flows** — Task-local review, validation passes, and final validation flows are built in so the system aims for honest completion and NO-GO outcomes
 - **🚀 AI-DLC Methodology** — AI executes, human validates at each phase. [Intensive "bolts"](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/) replace weeks-long sprints
 - **🧠 Persistent Project Memory** — Steering documents maintain architecture, patterns, rules, and domain knowledge across all sessions
