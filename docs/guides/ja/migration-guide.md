@@ -100,17 +100,17 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 
 > v3.0 は全 `--*-skills` インストールに適用。Skills モードは8プラットフォームで利用可能: Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity。コマンドベースのエージェント（`--claude`, `--cursor` 等）は引き続き動作するが非推奨、将来削除予定。
 
-| 領域 | v2.x | v3.0 |
+| Area | v2.x | v3.0 |
 | --- | --- | --- |
-| スキル数 | 12-13 | **14** |
-| ブレインストーム | 基本的なアイデア整理 | **エントリポイント**（アクションパス A/B/C/D）; `brief.md` + `roadmap.md` を書き出す |
-| スペックバッチ | なし | **`/kiro-spec-batch`** — 並列マルチスペック作成 + cross-spec レビュー |
-| 実装 | `kiro-spec-impl` + `kiro-ralph-impl`（別スキル） | **`/kiro-impl`** — 統合スキル（implementer + reviewer + debugger） |
-| 失敗時デバッグ | なし | **Debug subagent** — フレッシュコンテキストで根本原因調査（最大2ラウンド） |
-| 知見引き継ぎ | なし | **Implementation Notes** がタスク間で次の implementer に注入される |
-| Skills 対応 | Claude Code, Codex | **8プラットフォーム**: Claude, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity |
-| TDD | 基本 TDD | **Feature Flag TDD**: RED → GREEN プロトコル |
-| セッション永続化 | なし | **`brief.md`** がセッション間で永続化 |
+| Skill count | 12-13 | **14** |
+| Brainstorm | Basic idea refinement | **Entry point** (action paths A/B/C/D); writes `brief.md` + `roadmap.md` |
+| Spec batch | N/A | **`/kiro-spec-batch`** -- parallel multi-spec creation with cross-spec review |
+| Implementation | `kiro-spec-impl` + `kiro-ralph-impl` (separate skills) | **`/kiro-impl`** -- unified skill (implementer + reviewer + debugger) |
+| Debug on failure | N/A | **Debug subagent** -- fresh context root cause investigation (max 2 rounds) |
+| Learnings propagation | N/A | **Implementation Notes** injected into subsequent implementer prompts |
+| Skills platforms | Claude Code, Codex | **8 platforms**: Claude, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity |
+| TDD | Basic TDD | **Feature Flag TDD**: RED → GREEN protocol |
+| Session persistence | N/A | **`brief.md`** persists across sessions |
 
 ### 主な移行手順
 
