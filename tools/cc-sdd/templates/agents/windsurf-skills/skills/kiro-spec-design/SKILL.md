@@ -11,6 +11,7 @@ metadata:
 <background_information>
 - **Success Criteria**:
   - All requirements mapped to technical components with clear interfaces
+  - The design makes responsibility boundaries explicit enough to guide task generation and review
   - Appropriate architecture discovery and research completed
   - Design aligns with steering context and existing patterns
   - Visual diagrams included for complex architectures
@@ -81,8 +82,7 @@ After all findings return, synthesize in main context before proceeding.
    - Existing patterns to follow or extend
    - Integration points and dependencies
    - Identified risks and mitigation strategies
-   - Potential architecture patterns and boundary options (note details in `research.md`)
-   - Parallelization considerations for future tasks (capture dependencies in `research.md`)
+   - Boundary candidates, out-of-boundary decisions, and likely revalidation triggers
 
 4. **Persist Findings to Research Log**:
    - Create or update `{{KIRO_DIR}}/specs/$1/research.md` using the shared template
@@ -107,13 +107,13 @@ After all findings return, synthesize in main context before proceeding.
 
 2. **Generate Design Draft**:
    - **Follow specs/design.md template structure and generation instructions strictly**
+   - **Boundary-first requirement**: Before expanding supporting sections, make the boundary explicit. The draft must clearly define what this spec owns, what it does not own, which dependencies are allowed, and what changes would require downstream revalidation.
    - **Integrate all discovery findings and synthesis outcomes**: Use researched information (APIs, patterns, technologies) and synthesis decisions (generalizations, build-vs-adopt, simplifications) throughout component definitions, architecture decisions, and integration points
    - **File Structure Plan** (required): Populate the File Structure Plan section with concrete file paths and responsibilities. Analyze the codebase to determine which files need to be created vs. modified. Each file must have one clear responsibility. This section directly drives task `_Boundary:_` annotations and implementation Task Briefs — vague file structures produce vague implementations.
    - **Testing Strategy**: Derive test items from requirements' acceptance criteria, not generic patterns. Each test item should reference specific components and behaviors from this design. E2E paths must map to the critical user flows identified in requirements. Avoid vague entries like "test login works" -- instead specify what is being verified and why it matters.
    - If existing design.md found in Step 1, use it as reference context (merge mode)
    - Apply design rules: Type Safety, Visual Communication, Formal Tone
    - Use language specified in spec.json
-   - Ensure sections reflect updated headings ("Architecture Pattern & Boundary Map", "Technology Stack & Alignment", "Components & Interface Contracts") and reference supporting details from `research.md`
    - Keep this as a draft until the review gate passes; do not write `design.md` yet
 
 ### Step 5: Review Design Draft

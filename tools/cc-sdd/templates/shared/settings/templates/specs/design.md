@@ -31,10 +31,38 @@
 - Future considerations outside current scope
 - Integration points deferred
 
+## Boundary Commitments
+
+State the responsibility boundary of this spec in concrete terms. Treat this as the anchor for architecture, tasks, and later validation.
+
+### This Spec Owns
+- Capabilities and behaviors this spec is responsible for
+- Data it owns or is authoritative for
+- Interfaces or contracts it defines or stabilizes
+
+### Out of Boundary
+- Related concerns this spec explicitly does NOT own
+- Work deferred to another spec, existing subsystem, or later phase
+- Changes this spec must not absorb as "just one more thing"
+
+### Allowed Dependencies
+- Upstream systems/specs/components this design may depend on
+- Shared infrastructure this design may use
+- Dependency constraints that must not be violated
+
+### Revalidation Triggers
+List the kinds of changes that should force dependent specs or consumers to re-check integration.
+
+- Contract shape changes
+- Data ownership changes
+- Dependency direction changes
+- Startup/runtime prerequisite changes
+
 ## Architecture
 
 > Reference detailed discovery notes in `research.md` only for background; keep design.md self-contained for reviewers by capturing all decisions and contracts here.
 > Capture key decisions in text and let diagrams carry structural detail—avoid repeating the same information in prose.
+> Supporting sections below should remain as light as possible unless they materially clarify the responsibility boundary, dependency rules, or integration seams.
 
 ### Existing Architecture Analysis (if applicable)
 When modifying existing systems:

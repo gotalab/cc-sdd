@@ -12,6 +12,7 @@ description: Create complete specs (requirements, design, tasks) for all feature
   - Dependency ordering respected (upstream specs complete before downstream)
   - Independent features processed in parallel via sub-agent dispatch
   - Cross-spec consistency verified (data models, interfaces, naming)
+  - Mixed roadmap context understood without breaking `## Specs (dependency order)` parsing
   - Controller context stays lightweight (sub-agents do the heavy work)
 </background_information>
 
@@ -25,8 +26,12 @@ description: Create complete specs (requirements, design, tasks) for all feature
    - One-line descriptions
    - Dependencies for each feature
    - Completion status (`[x]` = done, `[ ]` = pending)
-3. For each pending feature, verify `{{KIRO_DIR}}/specs/<feature>/brief.md` exists
-4. If any brief.md is missing, stop and report: "Missing brief.md for: [list]. Run `/kiro-brainstorm` to generate briefs first."
+3. If present, also read for context:
+   - `## Existing Spec Updates`
+   - `## Direct Implementation Candidates`
+   Do not include these in dependency-wave execution; they are awareness-only inputs for sequencing and consistency review.
+4. For each pending feature in `## Specs (dependency order)`, verify `{{KIRO_DIR}}/specs/<feature>/brief.md` exists
+5. If any brief.md is missing, stop and report: "Missing brief.md for: [list]. Run `/kiro-discovery` to generate briefs first."
 
 ## Step 2: Build Dependency Waves
 
@@ -45,6 +50,8 @@ Spec Batch Plan:
   Wave 4 (parallel): cli-integration
   Total: 6 specs across 4 waves
 ```
+
+If roadmap contains `## Existing Spec Updates` or `## Direct Implementation Candidates`, mention them separately as non-batch items so the user can see the whole decomposition.
 
 ## Step 3: Execute Waves
 
@@ -96,6 +103,7 @@ Check:
 5. **Naming conventions**: Component names, file paths, API routes, table names consistent across specs?
 6. **Shared infrastructure**: Shared concerns (auth, error handling, logging) handled in one spec and correctly referenced?
 7. **Task boundary alignment**: Task _Boundary:_ annotations partition codebase cleanly? No files claimed by multiple specs?
+8. **Roadmap boundary continuity**: If roadmap includes `Existing Spec Updates` or `Direct Implementation Candidates`, do the generated new specs avoid absorbing that work by accident?
 
 Output: CONSISTENT areas + ISSUES with (which specs, what's inconsistent, suggested fix).
 
@@ -109,6 +117,7 @@ Output: CONSISTENT areas + ISSUES with (which specs, what's inconsistent, sugges
 1. Scan `{{KIRO_DIR}}/specs/*/tasks.md` to verify all specs exist
 2. For each completed spec, read spec.json to confirm phase and approvals
 3. Update roadmap.md: mark completed specs as `[x]`
+4. If roadmap.md includes `Existing Spec Updates` or `Direct Implementation Candidates`, leave them untouched and mention them as remaining follow-up items unless already explicitly completed elsewhere
 
 Display final summary:
 ```
@@ -119,6 +128,8 @@ Spec Batch Complete:
   ...
   Total: N specs created, M tasks generated
   Cross-spec review: PASSED / N issues found (M fixed)
+  Existing spec updates pending: <count or none>
+  Direct implementation candidates pending: <count or none>
 
 Next: Review generated specs, then start implementation with /kiro-impl <feature>
 ```
@@ -131,6 +142,7 @@ Next: Review generated specs, then start implementation with /kiro-impl <feature
 - **Parallel within waves**: All features in the same wave should be dispatched in parallel if multi-agent is available.
 - **No partial waves**: If a feature in a wave fails, still complete the other features in that wave before reporting.
 - **Skip completed specs**: Features with `[x]` in roadmap.md or existing tasks.md are skipped.
+- **`## Specs (dependency order)` remains authoritative for batch execution**: Other roadmap sections are context, not wave inputs.
 
 ## Safety & Fallback
 
@@ -145,7 +157,7 @@ Next: Review generated specs, then start implementation with /kiro-impl <feature
 - Suggest: "Fix dependency ordering in roadmap.md"
 
 **Roadmap not found**:
-- Stop and report: "No roadmap.md found. Run `/kiro-brainstorm` first."
+- Stop and report: "No roadmap.md found. Run `/kiro-discovery` first."
 
 **All specs already complete**:
 - Report: "All specs in roadmap.md are already complete. Nothing to do."

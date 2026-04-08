@@ -13,6 +13,7 @@ metadata:
   - Create complete requirements document aligned with steering context
   - Follow the project's EARS patterns and constraints for all acceptance criteria
   - Focus on core functionality without implementation details
+  - Make inclusion/exclusion boundaries explicit when scope could otherwise be misread
   - Update metadata to track generation status
 
 ## Execution Steps
@@ -22,7 +23,7 @@ metadata:
 If steering/spec context is already available from conversation, skip redundant file reads.
 Otherwise, load all necessary context:
 - Read `{{KIRO_DIR}}/specs/{feature}/spec.json` for language and metadata
-- Read `{{KIRO_DIR}}/specs/{feature}/brief.md` if it exists (brainstorm context: problem, approach, scope decisions)
+- Read `{{KIRO_DIR}}/specs/{feature}/brief.md` if it exists (discovery context: problem, approach, scope decisions, boundary candidates)
 - Read `{{KIRO_DIR}}/specs/{feature}/requirements.md` for project description
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to feature scope, user personas, business/domain rules, compliance/security constraints, operational constraints, or existing product boundaries
@@ -51,11 +52,17 @@ After all research completes, synthesize findings in main context before generat
 - Group related functionality into logical requirement areas
 - Apply EARS format to all acceptance criteria
 - Use language specified in spec.json
+- Preserve terminology continuity across phases:
+  - discovery = `Boundary Candidates`
+  - requirements = explicit inclusion/exclusion and adjacent expectations when needed
+  - design = `Boundary Commitments`
+  - tasks = `_Boundary:_`
+- If scope could be misread, add lightweight boundary context without introducing implementation or architecture ownership detail
 - Keep this as a draft until the review gate passes; do not write `requirements.md` yet
 
 ### Step 4: Review Requirements Draft
 - Run the `Requirements Review Gate` from `rules/requirements-review-gate.md`
-- Review coverage, EARS compliance, ambiguity, and scope boundaries before finalizing
+- Review coverage, EARS compliance, ambiguity, adjacent expectations, and scope boundaries before finalizing
 - If issues are local to the draft, repair the requirements and review again
 - Keep the review bounded to at most 2 repair passes
 - If the draft exposes a real scope ambiguity or contradiction, stop and ask the user to clarify instead of writing guessed requirements
@@ -76,12 +83,14 @@ Requirements describe user-observable behavior, not implementation. Use this to 
 - User-observable behavior — "when X happens, what should the user see/experience?"
 - Business rules and edge cases — limits, error conditions, special cases
 - Non-functional requirements visible to users — response time expectations, availability, security level
+- Adjacent expectations only when they change user-visible behavior or operator expectations — what this feature relies on, and what it explicitly does not own
 
 **Do not ask about (design scope — defer to design phase):**
 - Technology stack choices (database, framework, language)
 - Architecture patterns (microservices, monolith, event-driven)
 - API design, data models, internal component structure
 - How to achieve non-functional requirements (caching strategy, scaling approach)
+- Internal ownership mapping, component seams, or implementation boundaries that belong in design
 
 **Litmus test**: If an EARS acceptance criterion can be written without mentioning any technology, it belongs in requirements. If it requires a technology choice, it belongs in design.
 

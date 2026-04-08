@@ -2,6 +2,13 @@
 
 ## Core Design Principles
 
+### 0. Boundary First
+- **Boundary is mandatory; owner is optional**
+- A design is not ready when it explains components but leaves responsibility seams ambiguous
+- Define what the spec owns before elaborating how it works
+- Explicitly record what is out of boundary
+- Do not leak downstream-specific behavior or assumptions into upstream boundaries
+
 ### 1. Type Safety is Mandatory
 - **NEVER** use `any` type in TypeScript interfaces
 - Define explicit types for all parameters and returns
@@ -23,9 +30,11 @@
 ### 4. Component Design Rules
 - **Single Responsibility**: One clear purpose per component
 - **Clear Boundaries**: Explicit domain ownership
+- **Boundary Commitments First**: Before detailing components, state the responsibility boundary this design commits to
 - **Dependency Direction**: Follow architectural layers
 - **Interface Segregation**: Minimal, focused interfaces
 - **Team-safe Interfaces**: Design boundaries that allow parallel implementation without merge conflicts
+- **No Hidden Shared Ownership**: If two areas appear to co-own the same behavior or data, the design is incomplete
 - **Research Traceability**: Record boundary decisions and rationale in `research.md`
 
 ### 5. Data Modeling Standards
@@ -71,7 +80,7 @@
 ## Section Authoring Guidance
 
 ### Global Ordering
-- Default flow: Overview → Goals/Non-Goals → Requirements Traceability → Architecture → Technology Stack → System Flows → Components & Interfaces → Data Models → Optional sections.
+- Default flow: Overview → Goals/Non-Goals → Boundary Commitments → Architecture → File Structure Plan → Components & Interfaces → Optional sections.
 - Teams may swap Traceability earlier or place Data Models nearer Architecture when it improves clarity, but keep section headings intact.
 - Within each section, follow **Summary → Scope → Decisions → Impacts/Risks** so reviewers can scan consistently.
 
@@ -100,6 +109,7 @@
 - Re-run this mapping whenever requirements or components change to avoid drift.
 
 ### Components & Interfaces Authoring
+- Boundary Commitments should already make the ownership seam explicit before this section begins.
 - Group components by domain/layer and provide one block per component.
 - Begin with a summary table listing Component, Domain, Intent, Requirement coverage, key dependencies, and selected contracts.
 - Table fields: Intent (one line), Requirements (`2.1, 2.3`), Owner/Reviewers (optional).

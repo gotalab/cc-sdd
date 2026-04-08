@@ -16,6 +16,15 @@ Before writing `design.md`, review the draft design and repair local issues unti
 - Build-vs-adopt decisions that materially affect architecture must be captured in `design.md`, with deeper investigation left in `research.md` when present.
 - Runtime prerequisites, migrations, rollout constraints, validation hooks, and failure modes must be surfaced when they materially affect implementation order or risk.
 
+## Boundary Readiness Review
+
+- The design must explicitly state what this spec owns.
+- The design must explicitly state what is out of boundary.
+- Allowed dependencies must be concrete enough that reviewers can detect boundary violations later.
+- If data, behavior, or integration responsibility appears shared across multiple areas without a clear seam, stop and repair the design.
+- If downstream assumptions are embedded in upstream components "for convenience," stop and repair the design.
+- If the boundary cannot be explained in a few direct bullets, it is probably still too vague for task generation.
+
 ## Executability Review
 
 - The design must be implementable as a sequence of bounded tasks without hidden prerequisites.
@@ -27,7 +36,9 @@ Before writing `design.md`, review the draft design and repair local issues unti
 
 Before applying judgment, verify these mechanically:
 - **Requirements traceability**: Extract all numeric requirement IDs from `requirements.md`. Scan the design draft for each ID. Report any IDs not found in the design.
+- **Boundary section populated**: `Boundary Commitments`, `Out of Boundary`, `Allowed Dependencies`, and `Revalidation Triggers` must not be empty or placeholder-only.
 - **File Structure Plan populated**: The File Structure Plan section must contain concrete file paths (not just "TBD" or empty). Scan for placeholder text in that section.
+- **Boundary ↔ file structure alignment**: The File Structure Plan must reflect the stated responsibility boundary. If files imply broader ownership than the boundary section claims, report a mismatch.
 - **No orphan components**: Every component mentioned in the design must appear in the File Structure Plan with a file path. Scan for component names that have no corresponding file entry.
 
 ## Review Loop

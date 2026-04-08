@@ -1,7 +1,7 @@
 ---
 name: kiro-spec-tasks
 description: Generate implementation tasks from requirements and design. Use when creating actionable task lists.
-allowed-tools: Read, Write, Edit, Glob, Grep
+allowed-tools: Read, Write, Edit, Glob, Grep, Agent
 argument-hint: <feature-name> [-y] [--sequential]
 metadata:
   shared-rules: "tasks-generation.md, tasks-parallel-analysis.md"
@@ -15,6 +15,7 @@ metadata:
   - Tasks properly sized (1-3 hours each)
   - Clear task progression with proper hierarchy
   - Natural language descriptions focused on capabilities
+  - A lightweight task-plan sanity review confirms the task graph is executable before `tasks.md` is written
 
 ## Execution Steps
 
@@ -53,6 +54,8 @@ After all parallel research completes, synthesize findings before generating tas
 - Map all requirements to tasks and list numeric requirement IDs only (comma-separated) without descriptive suffixes, parentheses, translations, or free-form labels
 - Ensure all design components included
 - Verify task progression is logical and incremental
+- Ensure each executable sub-task includes at least one detail bullet that states what "done" looks like in observable terms
+- Keep normal implementation tasks within a single responsibility boundary; if work crosses boundaries, make it an explicit integration task
 - Apply `(P)` markers to tasks that satisfy parallel criteria when `!sequential`
 - Explicitly note dependencies preventing `(P)` when tasks appear parallel but are not safe
 - If sequential mode is true, omit `(P)` entirely
@@ -68,11 +71,32 @@ After all parallel research completes, synthesize findings before generating tas
 - Review executability:
   - Each sub-task is an executable 1-3 hour work unit
   - Each sub-task has a verifiable deliverable
+  - Each executable sub-task includes an observable completion bullet
   - No implicit prerequisites remain hidden
   - `_Depends:_`, `_Boundary:_`, and `(P)` markers still match the dependency graph and architecture boundaries
 - If issues are task-plan-local, repair the draft and re-run the review gate before writing
 - Keep the review bounded to at most 2 repair passes
 - If review exposes a real requirements/design gap or contradiction, stop and send the user back to requirements/design instead of inventing filler tasks
+
+### Step 3.5: Run Task-Graph Sanity Review
+
+Before writing `tasks.md`, run one lightweight independent sanity review of the task graph.
+
+- If fresh subagent dispatch is available, spawn one fresh review subagent for this step. Otherwise perform the same review in the current context.
+- Provide only file paths, the draft task plan, and merge context if an existing `tasks.md` is being updated. The reviewer should read `requirements.md`, `design.md`, and the task-generation rules directly instead of relying on a parent-synthesized coverage summary.
+- Check only:
+  - hidden prerequisites or missing setup tasks
+  - dependency or ordering mistakes
+  - boundary overlap or ambiguous ownership between tasks
+  - tasks that are too large, too vague, cross boundaries without being explicit integration tasks, or are missing a verifiable deliverable
+  - contradictions introduced between requirements, design, and the task graph
+- Return one verdict:
+  - `PASS`
+  - `NEEDS_FIXES`
+  - `RETURN_TO_DESIGN`
+- If `NEEDS_FIXES`, repair the draft once and re-run the sanity review one time.
+- If `RETURN_TO_DESIGN`, stop without writing `tasks.md` and point back to the exact gap in requirements/design.
+- Keep this bounded. Do not turn it into a second full planning cycle.
 
 ### Step 4: Finalize
 
@@ -105,6 +129,7 @@ After all parallel research completes, synthesize findings before generating tas
 - **Boundary annotations**: Required for `(P)` tasks, recommended for all (`_Boundary: ComponentName_`)
 - **Explicit dependencies**: Cross-boundary non-obvious dependencies declared with `_Depends: X.X_`
 - **Executable deliverable granularity**: Each task must produce a verifiable deliverable (file, endpoint, UI component, config). Infrastructure tasks (project scaffolding, manifest, host integration, build config) must be explicit — never assume they exist
+- **Observable done state**: Each executable sub-task must include at least one detail bullet that makes the completed state visible without adding new bookkeeping fields
 - **No implicit prerequisites**: If a task requires a runtime, SDK, framework setup, or config file, that setup must be a separate preceding task
 
 ## Output Description
@@ -121,6 +146,7 @@ Provide brief summary in the language specified in spec.json:
    - Design coverage and runtime prerequisites reviewed
    - Task dependencies verified
    - Task plan review gate passed
+   - Independent task-graph sanity review passed
    - Testing tasks included
 4. **Next Action**: Review tasks and proceed when ready
 

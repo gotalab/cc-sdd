@@ -9,15 +9,23 @@ description: Validate feature-level integration after all tasks are implemented.
 <background_information>
 Individual tasks have already been reviewed by the per-task reviewer during implementation. Your job is to catch problems that only become visible when looking across all tasks together.
 
+Boundary terminology continuity:
+- discovery identifies `Boundary Candidates`
+- design fixes `Boundary Commitments`
+- tasks constrain execution with `_Boundary:_`
+- feature validation checks for cross-task `Boundary Violations`
+
 - **Success Criteria**:
   - All tasks marked `[x]` in tasks.md
   - Full test suite passes (not just per-task tests)
   - Cross-task integration works (data flows between components, interfaces match)
   - Requirements coverage is complete across all tasks (no gaps between tasks)
   - Design structure is reflected end-to-end (not just per-component)
-  - No orphaned code, conflicting implementations, or integration seams
+  - No orphaned code, conflicting implementations, integration seams, or boundary spillover
 
 **What This Skill Does NOT Do**: Per-task checks are the reviewer's responsibility during `@kiro-impl`. This skill does NOT re-check individual task acceptance criteria, per-file reality checks, or single-task spec alignment.
+
+This skill's main question is: when the completed tasks are viewed together, do they still respect the designed boundary seams and dependency direction?
 </background_information>
 
 <instructions>
@@ -63,12 +71,19 @@ For each detected feature:
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to the validated boundaries, runtime prerequisites, integrations, domain rules, security/performance constraints, or team conventions that affect the GO/NO-GO call
 
+**Discover canonical validation commands**:
+- Inspect repository-local sources of truth in this order: project scripts/manifests (`package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, app manifests), task runners (`Makefile`, `justfile`), CI/workflow files, existing e2e/integration configs, then `README*`
+- Derive a feature-level validation set for this repo: `TEST_COMMANDS`, `BUILD_COMMANDS`, and `SMOKE_COMMANDS`
+- Prefer commands already used by repo automation over ad hoc shell pipelines
+- For `SMOKE_COMMANDS`, choose the lightest trustworthy runtime-liveness check for the app shape (for example: root URL load, Electron launch, CLI `--help`, service health endpoint, mobile simulator/e2e harness if one already exists)
+- If multiple candidates exist, prefer the command with the smallest setup cost that still exercises the real built artifact
+
 ### 3. Execute Integration Validation
 
 #### Mechanical Checks (run commands, use results)
 
 **A. Full Test Suite**
-- Run full test suite (e.g., `npm test`, `pytest`, `go test ./...`). Use the exit code.
+- Run the discovered canonical full-test command. Use the exit code.
 - If tests fail → NO-GO. No judgment needed.
 - If the canonical test command cannot be identified → `MANUAL_VERIFY_REQUIRED`
 
@@ -80,21 +95,28 @@ For each detected feature:
 - Run: `grep -rn "password\s*=\|api_key\s*=\|secret\s*=\|token\s*=" <files-in-feature-boundary>` (case-insensitive)
 - If matches found that aren't environment variable references → flag as Critical
 
+**D. Runtime Liveness (Smoke Boot)**
+- Run the discovered canonical smoke command that proves the built artifact actually starts and reaches its first usable state.
+- Examples if relevant: open the root URL in a headless browser and require zero boot-time console errors; launch Electron and wait for the main process ready signal and first renderer load; run a CLI with `--help`; start a service and hit its health endpoint.
+- If boot produces a runtime crash, unhandled exception, module-load failure, native ABI mismatch, or missing required env/config → NO-GO.
+- If no trustworthy smoke command can be identified, or the required runtime environment is unavailable → `MANUAL_VERIFY_REQUIRED`
+
 #### Judgment Checks (read code, compare to spec)
 
-**D. Cross-Task Integration**
+**E. Cross-Task Integration**
 - Identify where tasks share interfaces, data models, or API contracts
 - Verify that Task A's output format matches Task B's expected input
 - Check for conflicting assumptions between tasks (naming conventions, error codes, data shapes)
 - Verify shared state (database schemas, config, environment) is consistent across tasks
+- Verify integration work happens at the intended seams rather than by leaking one boundary's behavior into another
 
-**E. Requirements Coverage Gaps**
+**F. Requirements Coverage Gaps**
 - Map every requirement section to at least one completed task
 - Identify requirements that no single task fully covers (cross-cutting requirements)
 - Identify requirements partially covered by multiple tasks but not fully by any
 - Use the original section numbering from `requirements.md`; do NOT invent `REQ-*` aliases
 
-**F. Design End-to-End Alignment**
+**G. Design End-to-End Alignment**
 - Verify the overall component graph matches design.md
 - Check that integration patterns (event flow, API boundaries, dependency injection) work as designed
 - Verify dependency direction follows design.md's architecture (no upward imports)
@@ -102,11 +124,27 @@ For each detected feature:
 - Identify any architectural drift from the original design
 - Use the original section numbering from `design.md`
 
-**G. Blocked Tasks & Implementation Notes**
+**G.5 Boundary Audit**
+- Compare completed work against the design's `Boundary Commitments`, `Out of Boundary`, `Allowed Dependencies`, and `Revalidation Triggers`
+- Identify cross-task spillover where one area quietly absorbed another boundary's responsibility
+- Identify downstream-specific workarounds embedded upstream "to make integration easier"
+- Identify new hidden dependencies or shared ownership that were not declared in the design
+- If a revalidation trigger fired, verify the affected adjacent specs or integration points were actually re-checked
+
+**H. Blocked Tasks & Implementation Notes**
 - Check for any tasks still marked `_Blocked:_` — report why and assess impact on feature completeness
 - Review `## Implementation Notes` in tasks.md for cross-cutting insights that need attention
 
 ### 4. Generate Report
+
+Before returning `GO`, apply the `kiro-verify-completion` protocol to the feature-level claim. Tests alone are insufficient: include full-suite, runtime liveness, coverage, integration, design-alignment, and blocked-task status in the evidence.
+
+Classify concrete failures by ownership before writing remediation:
+- `LOCAL` if the defect belongs to the feature being validated
+- `UPSTREAM` if the root cause belongs to a dependency, foundation, shared platform, or earlier spec
+- `UNCLEAR` if ownership cannot be established from the available evidence
+
+If ownership is `UPSTREAM`, do not collapse the issue into local remediation for this feature. Name the owning upstream spec and explain which dependent specs should be revalidated after that upstream fix lands.
 
 Provide summary in the language specified in spec.json:
 
@@ -117,9 +155,11 @@ Provide summary in the language specified in spec.json:
   - Tests: PASS | FAIL (command and exit code)
   - TBD/TODO grep: CLEAN | <count> matches
   - Secrets grep: CLEAN | <count> matches
+  - Smoke boot: PASS | FAIL | MANUAL_REQUIRED
 - INTEGRATION:
   - Cross-task contracts: <status>
   - Shared state consistency: <status>
+  - Boundary audit: <status>
 - COVERAGE:
   - Requirements mapped: <X/Y sections covered>
   - Coverage gaps: <list of uncovered requirement sections>
@@ -127,6 +167,8 @@ Provide summary in the language specified in spec.json:
   - Architecture drift: <findings>
   - Dependency direction: <violations if any>
   - File Structure Plan vs actual: <match/mismatch>
+- OWNERSHIP: LOCAL | UPSTREAM | UNCLEAR
+- UPSTREAM_SPEC: <feature-name | N/A>
 - BLOCKED_TASKS: <list and impact assessment>
 - REMEDIATION: <if NO-GO: specific, actionable steps to fix each issue>
 ```
@@ -135,6 +177,7 @@ If NO-GO, REMEDIATION is mandatory — identify the exact issue and what needs t
 
 ## Important Constraints
 - **Strict Final Gate**: Return `GO` only when all integration checks passed; return `NO-GO` for concrete failures and `MANUAL_VERIFY_REQUIRED` when mandatory validation could not be completed
+- **Boundary integrity over convenience**: Do not return `GO` if the feature only works by smearing responsibilities across boundaries, even when tests pass
 </instructions>
 
 ## Safety & Fallback

@@ -11,6 +11,7 @@ description: Show specification status and progress
   - Show current phase and completion status
   - Identify next actions and blockers
   - Provide clear visibility into progress
+  - Surface boundary readiness, upstream/downstream context, and likely revalidation needs when available
 </background_information>
 
 <instructions>
@@ -18,16 +19,22 @@ description: Show specification status and progress
 
 ### Step 1: Load Spec Context
 - Read `{{KIRO_DIR}}/specs/$1/spec.json` for metadata and phase status
+- Read `{{KIRO_DIR}}/specs/$1/brief.md` if it exists
 - Read existing files: `requirements.md`, `design.md`, `tasks.md` (if they exist)
 - Check `{{KIRO_DIR}}/specs/$1/` directory for available files
+- Read `{{KIRO_DIR}}/steering/roadmap.md` if it exists and this spec appears in it
 
 ### Step 2: Analyze Status
 
 **Parse each phase**:
 - **Requirements**: Count requirements and acceptance criteria
-- **Design**: Check for architecture, components, diagrams
+- **Design**: Check for architecture, components, diagrams, and whether boundary sections are present
 - **Tasks**: Count completed vs total tasks (parse `- [x]` vs `- [ ]`)
 - **Approvals**: Check approval status in spec.json
+- **Boundary context**:
+  - From brief.md: note `Boundary Candidates`, `Upstream / Downstream`, and `Existing Spec Touchpoints` if present
+  - From design.md: note `Boundary Commitments`, `Out of Boundary`, `Allowed Dependencies`, and `Revalidation Triggers` if present
+  - From roadmap.md: note upstream dependencies and whether this spec is adjacent to `Existing Spec Updates`
 
 ### Step 3: Generate Report
 
@@ -35,8 +42,9 @@ Create report in the language specified in spec.json covering:
 1. **Current Phase & Progress**: Where the spec is in the workflow
 2. **Completion Status**: Percentage complete for each phase
 3. **Task Breakdown**: If tasks exist, show completed/remaining counts
-4. **Next Actions**: What needs to be done next
-5. **Blockers**: Any issues preventing progress
+4. **Boundary Context**: Upstream/downstream, out-of-boundary, and revalidation notes when available
+5. **Next Actions**: What needs to be done next
+6. **Blockers**: Any issues preventing progress
 
 </instructions>
 

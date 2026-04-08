@@ -67,6 +67,11 @@ Focus on capabilities and outcomes, not code structure.
 
 **When to use**: Required for tasks marked `(P)` to validate parallel safety. Omit for sequential tasks where scope is obvious from the description.
 
+**Boundary rule**:
+- Each executable task should stay within a single responsibility boundary
+- If work must cross boundaries, make it an explicit integration task rather than a normal implementation task
+- Do not hide cross-boundary coordination inside a task that appears local
+
 ### 6. Flexible Task Sizing
 
 **Guidelines**:
@@ -82,6 +87,14 @@ Focus on capabilities and outcomes, not code structure.
 - `_Requirements: X.X, Y.Y_` listing **only numeric requirement IDs** (comma-separated). Never append descriptive text, parentheses, translations, or free-form labels.
 - For cross-cutting requirements, list every relevant requirement ID. All requirements MUST have numeric IDs in requirements.md. If an ID is missing, stop and correct requirements.md before generating tasks.
 - Reference components/interfaces from design.md when helpful (e.g., `_Contracts: AuthService API`)
+
+### 7.5 Observable Completion
+
+**Each executable task must include at least one detail bullet that describes the observable completed state**:
+- Phrase it as a deliverable, runtime behavior, persisted state, UI state, endpoint behavior, test result, or integration outcome
+- Avoid vague bullets like "implement support", "wire things up", or "handle logic" unless paired with a concrete observable result
+- Prefer making one detail bullet clearly answer: "What will be true when this task is done?"
+- Keep this within the existing task body; do not add extra bookkeeping fields
 
 ### 8. Code-Only Focus
 
@@ -111,7 +124,9 @@ Before writing `tasks.md`, review the draft task plan and repair local issues un
 
 - Every sub-task must be executable as written, usually within 1-3 hours.
 - Every sub-task must produce a verifiable deliverable (behavior, artifact, endpoint, UI state, config, migration, test, or integration result).
+- Every executable sub-task must include at least one detail bullet that states the observable completion condition.
 - Split tasks that combine multiple independently verifiable outcomes.
+- Split tasks that combine multiple responsibility boundaries unless they are explicit integration tasks.
 - Merge or collapse tasks that are too small, bookkeeping-only, or not meaningful execution units.
 - Make implicit prerequisites explicit as preceding tasks.
 - Re-check `_Depends:_`, `_Boundary:_`, and `(P)` markers after edits so concurrency claims still match the design boundaries and dependency graph.
@@ -169,22 +184,26 @@ Before writing `tasks.md`, review the draft task plan and repair local issues un
 - [ ] 1.1 Sub-task description
   - Detail item 1
   - Detail item 2
+  - Observable completion condition
   - _Requirements: X.X_
 
 - [ ] 2. Core feature A
 - [ ] 2.1 (P) Sub-task description
   - Detail items...
+  - Observable completion condition
   - _Requirements: Y.Y_
   - _Boundary: AuthService_
 
 - [ ] 2.2 (P) Sub-task description
   - Detail items...
+  - Observable completion condition
   - _Requirements: Z.Z_
   - _Boundary: UserRepository_
 
 - [ ] 3. Integration and wiring
 - [ ] 3.1 Sub-task description
   - Detail items...
+  - Observable completion condition
   - _Depends: 2.1, 2.2_
   - _Requirements: W.W_
 ```

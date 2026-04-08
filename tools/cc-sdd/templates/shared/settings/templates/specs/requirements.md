@@ -3,6 +3,12 @@
 ## Introduction
 {{INTRODUCTION}}
 
+<!-- Optional when scope could be misread or the feature touches adjacent systems/specs -->
+## Boundary Context (Optional)
+- **In scope**: {{IN_SCOPE_BEHAVIORS}}
+- **Out of scope**: {{OUT_OF_SCOPE_BEHAVIORS}}
+- **Adjacent expectations**: {{ADJACENT_SYSTEM_OR_SPEC_EXPECTATIONS}}
+
 ## Requirements
 
 ### Requirement 1: {{REQUIREMENT_AREA_1}}
