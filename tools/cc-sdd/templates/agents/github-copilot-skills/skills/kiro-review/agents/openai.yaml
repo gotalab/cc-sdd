@@ -1,0 +1,6 @@
+interface:
+  display_name: "Review Task"
+  short_description: "Review task implementation against spec, design, and evidence"
+
+policy:
+  allow_implicit_invocation: false

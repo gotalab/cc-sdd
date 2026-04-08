@@ -24,6 +24,7 @@ Before writing `design.md`, review the draft design and repair local issues unti
 - If data, behavior, or integration responsibility appears shared across multiple areas without a clear seam, stop and repair the design.
 - If downstream assumptions are embedded in upstream components "for convenience," stop and repair the design.
 - If the boundary cannot be explained in a few direct bullets, it is probably still too vague for task generation.
+- If the design reveals multiple independent responsibility seams that could move separately, stop and split the spec or return to roadmap discovery instead of forcing them into one spec.
 
 ## Executability Review
 

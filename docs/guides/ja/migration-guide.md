@@ -102,8 +102,8 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 
 | 領域 | v2.x | v3.0 |
 | --- | --- | --- |
-| スキル数 | 12-13 | **14** |
-| `/kiro-brainstorm` | 基本的なアイデア整理 | **エントリポイント**（アクションパス A/B/C/D）; `brief.md` + `roadmap.md` を書き出す |
+| スキル数 | 12-13 | **17** |
+| `/kiro-discovery` | 基本的なアイデア整理 | **ルーティング/スコープ整理のエントリポイント**; `brief.md` を作成し、必要な場合のみ `roadmap.md` も書き出す |
 | `/kiro-spec-batch` | なし | 並列マルチスペック作成 + cross-spec レビュー |
 | `/kiro-impl` | `kiro-spec-impl` + `kiro-ralph-impl`（別スキル） | 統合スキル（implementer + reviewer + debugger） |
 | 失敗時デバッグ | なし | **Debug subagent** — フレッシュコンテキストで根本原因調査（最大2ラウンド） |
@@ -126,7 +126,7 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
    npx cc-sdd@latest --antigravity       # Antigravity
    ```
 2. **レガシーモードから移行** — `--claude`, `--cursor`, `--copilot`, `--windsurf`, `--opencode`, `--gemini` は非推奨。`--codex` はブロック済み。対応する `--*-skills` フラグを使用。
-3. **`/kiro-brainstorm`** をエントリポイントとして使用 — `brief.md` + `roadmap.md` が下流スキルに引き継がれる。
+3. **`/kiro-discovery`** をエントリポイントとして使用 — `brief.md` + `roadmap.md` が下流スキルに引き継がれる。
 4. **`/kiro-spec-batch`** をマルチフィーチャー作業に使用。
 
 ---
@@ -148,4 +148,4 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 
 - **v1.1.5の継続利用者**: `npx cc-sdd@1.1.5` のようにバージョンを固定し、従来通りテンプレートやコマンドプロンプトを直接編集する。
 - **v2.xの利用者**: Skills モード（`--*-skills`）への移行を推奨。レガシーコマンドモードは将来削除予定。
-- **v3.0への移行者**: Skills モードで再インストールし、`/kiro-brainstorm` → `/kiro-spec-batch` → `/kiro-impl` のワークフローを活用する。8プラットフォーム対応、デバッグ自動化、タスク間知見引き継ぎが利用可能。
+- **v3.0への移行者**: Skills モードで再インストールし、`/kiro-discovery` → `/kiro-spec-batch` → `/kiro-impl` のワークフローを活用する。8プラットフォーム対応、デバッグ自動化、タスク間知見引き継ぎが利用可能。

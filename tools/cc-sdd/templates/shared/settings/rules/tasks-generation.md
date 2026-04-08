@@ -127,6 +127,7 @@ Before writing `tasks.md`, review the draft task plan and repair local issues un
 - Every executable sub-task must include at least one detail bullet that states the observable completion condition.
 - Split tasks that combine multiple independently verifiable outcomes.
 - Split tasks that combine multiple responsibility boundaries unless they are explicit integration tasks.
+- If many tasks require broad `_Boundary:_` scopes or repeated cross-boundary coordination, stop and return to design or roadmap decomposition instead of forcing the spec through task generation.
 - Merge or collapse tasks that are too small, bookkeeping-only, or not meaningful execution units.
 - Make implicit prerequisites explicit as preceding tasks.
 - Re-check `_Depends:_`, `_Boundary:_`, and `(P)` markers after edits so concurrency claims still match the design boundaries and dependency graph.

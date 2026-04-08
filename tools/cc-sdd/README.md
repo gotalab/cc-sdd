@@ -17,8 +17,15 @@ cc-sdd turns approved specs into executable work: requirements → design → ta
 **Why cc-sdd:**
 - ✅ **Specs you can run** — Each artifact (requirements, design, tasks) directly controls the next phase. File Structure Plan drives task boundaries. Task Brief drives implementation. git diff drives review.
 - ✅ **Long-running autonomous implementation** — `/kiro-impl` runs all tasks with fresh subagent per task, independent adversarial reviewer, and Feature Flag TDD. No external dependencies.
-- ✅ **Scales to real products** — `/kiro-brainstorm` decomposes large ideas into multiple specs with dependency ordering. `/kiro-spec-batch` creates all specs in parallel with cross-spec consistency review.
-- ✅ **Customize once, adapt as models improve** — 14 skills, shared rules as single source of truth. Team-aligned templates fit your approval process. As models improve, lighten the harness -- the design makes that easy.
+- ✅ **Scales from small requests to real products** — `/kiro-discovery` is the entry point for new work, from a small feature to a multi-spec initiative. `/kiro-spec-batch` creates all specs in parallel with cross-spec consistency review.
+- ✅ **Customize once, adapt as models improve** — 17 skills across all skills-mode agents, with shared rules as single source of truth. Team-aligned templates fit your approval process. As models improve, lighten the harness -- the design makes that easy.
+
+## Core Ideas
+
+- **Boundary-first** -- Specs are most useful when they make responsibility boundaries and contracts explicit enough that teams and agents can work independently.
+- **Spec-centered, mechanically grounded** -- Markdown specs carry intent, scope, and boundaries, while tests, builds, linting, and runtime checks keep that intent connected to reality.
+- **Change-friendly by design** -- cc-sdd stays intentionally simple and customizable so teams can adapt templates, rules, and workflows to fit their own operating model instead of conforming to one rigid process.
+- **Autonomy with explicit stopping points** -- `/kiro-impl` can execute `tasks.md` task by task through TDD and review until the final task is complete, but it is designed to stop when human approval, clarification, or judgment is genuinely required.
 
 **Why Agent Skills:**
 - Skills package workflow as composable units that load on demand (progressive disclosure)
@@ -48,8 +55,8 @@ npx cc-sdd@latest --lang es    # Spanish
 
 # With agent options (default: claude-code-skills / --claude-skills)
 # Skills Mode (recommended)
-npx cc-sdd@latest --claude-skills            # Claude Code Skills (default, 14 skills)
-npx cc-sdd@latest --codex-skills --lang fr   # Codex CLI Skills
+npx cc-sdd@latest --claude-skills            # Claude Code Skills (default, 17 skills)
+npx cc-sdd@latest --codex-skills --lang fr   # Codex CLI Skills (17 skills)
 npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE Skills
 npx cc-sdd@latest --copilot-skills --lang pt    # GitHub Copilot Skills
 npx cc-sdd@latest --windsurf-skills --lang ja   # Windsurf IDE Skills
@@ -90,14 +97,24 @@ npx cc-sdd@latest --qwen          # Qwen Code
 
 ## ✨ Quick Start
 
+### Start Here
+
+Pick the workflow that matches the work:
+
+| You want to... | Skills mode | Legacy mode |
+| --- | --- | --- |
+| Start new work (feature to initiative) | `kiro-discovery` → `kiro-spec-init` → `kiro-spec-requirements` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:spec-init` → `kiro:spec-requirements` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
+| Extend an existing system | `kiro:steering` → `kiro-discovery` or `kiro:spec-init` → optional `kiro:validate-gap` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:steering` → `kiro:spec-init` → optional `kiro:validate-gap` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
+| Break down a large initiative | `kiro-discovery` → `kiro-spec-batch` | Not available |
+| Ship a small change with no spec | `kiro-discovery` → direct implementation | direct implementation |
+
 ### For New Projects
 ```bash
-# Launch AI agent and start spec-driven development immediately
-/kiro:spec-init Build a user authentication system with OAuth  # AI creates structured plan
-/kiro:spec-requirements auth-system                            # AI asks clarifying questions
-/kiro:spec-design auth-system                                  # Human validates, AI designs
-/kiro:spec-tasks auth-system                                   # Break into implementation tasks
-/kiro:spec-impl auth-system                                    # Execute with TDD
+# Skills mode: if you are new to cc-sdd, start here
+/kiro-discovery Build a user authentication system with OAuth
+
+# Legacy mode
+/kiro:spec-init Build a user authentication system with OAuth
 ```
 
 ![design.md - System Flow Diagram](https://raw.githubusercontent.com/gotalab/cc-sdd/refs/heads/main/assets/design-system_flow.png)
@@ -118,6 +135,16 @@ npx cc-sdd@latest --qwen          # Qwen Code
 ```
 
 **30-second setup** → **AI-driven "bolts" (not sprints)** → **Hours-to-delivery results**
+
+### After Discovery
+
+In skills mode, `kiro-discovery` is the easiest entry point for first-time users. Its job is not to finish the workflow for you. Its job is to choose the right workflow, write `brief.md` / `roadmap.md` when needed, suggest the next command, and then stop.
+
+- Existing spec: continue with `kiro-spec-requirements {feature}`
+- No spec needed: implement directly
+- Single spec: default to `kiro-spec-init <feature>`; use `kiro-spec-quick <feature>` only when you intentionally want the fast path
+- Multi-spec: default to `kiro-spec-batch`; use `kiro-spec-init <first-feature>` first if you want to validate one slice before batching the rest
+- Mixed decomposition: let discovery separate existing-spec updates, new specs, and direct-implementation candidates before choosing the next step
 
 ### Why teams install cc-sdd
 1. **Approved specs become executable work** – requirements, design, tasks, and supporting references stay aligned and can drive implementation instead of going stale.
@@ -141,14 +168,14 @@ npx cc-sdd@latest --qwen          # Qwen Code
 
 | Agent | Skills Mode (Recommended) | Legacy Mode |
 |-------|--------------------------|-------------|
-| **Claude Code** | `--claude-skills` — 14 skills | `--claude` / `--claude-agent` (deprecated) |
-| **Codex CLI** | `--codex-skills` — 14 skills | `--codex` (blocked) |
-| **Cursor IDE** | `--cursor-skills` — 14 skills | `--cursor` (deprecated) |
-| **GitHub Copilot** | `--copilot-skills` — 14 skills | `--copilot` (deprecated) |
-| **Windsurf IDE** | `--windsurf-skills` — 14 skills | `--windsurf` (deprecated) |
-| **OpenCode** | `--opencode-skills` — 14 skills | `--opencode` / `--opencode-agent` (deprecated) |
-| **Gemini CLI** | `--gemini-skills` — 14 skills | `--gemini` (deprecated) |
-| **Antigravity** | `--antigravity` — 14 skills | — |
+| **Claude Code** | `--claude-skills` — 17 skills | `--claude` / `--claude-agent` (deprecated) |
+| **Codex CLI** | `--codex-skills` — 17 skills | `--codex` (blocked) |
+| **Cursor IDE** | `--cursor-skills` — 17 skills | `--cursor` (deprecated) |
+| **GitHub Copilot** | `--copilot-skills` — 17 skills | `--copilot` (deprecated) |
+| **Windsurf IDE** | `--windsurf-skills` — 17 skills | `--windsurf` (deprecated) |
+| **OpenCode** | `--opencode-skills` — 17 skills | `--opencode` / `--opencode-agent` (deprecated) |
+| **Gemini CLI** | `--gemini-skills` — 17 skills | `--gemini` (deprecated) |
+| **Antigravity** | `--antigravity` — 17 skills | — |
 | **Qwen Code** | — | `--qwen` |
  
 ## 📋 Commands
@@ -167,7 +194,9 @@ npx cc-sdd@latest --qwen          # Qwen Code
 
 > **Kiro IDE Integration**: Specs are portable to [Kiro IDE](https://kiro.dev) for enhanced implementation with guardrails and team collaboration features.
 
-📖 **[Complete Command Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - Detailed usage, parameters, examples, and troubleshooting for all commands
+📖 **[Skill Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/skill-reference.md)** - Skills-mode workflow, supporting skills, and when to use each one
+
+📖 **[Complete Command Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md)** - Detailed usage, parameters, examples, and troubleshooting for legacy `/kiro:*` commands
 
 ### Quality Validation (Optional - Brownfield Development)
 ```bash
@@ -222,9 +251,9 @@ After installation, your project gets:
 
 ```
 project/
-├── .claude/skills/           # 14 skills (Claude Code Skills mode, default)
+├── .claude/skills/           # 17 skills (Claude Code Skills mode, default)
 ├── .claude/commands/kiro/    # 11 slash commands (Claude Code)
-├── .agents/skills/           # 14 skills (Codex CLI skills mode)
+├── .agents/skills/           # 17 skills (Codex CLI skills mode)
 ├── .codex/prompts/           # 11 prompt commands (Codex CLI — blocked, use skills)
 ├── .github/prompts/          # 11 prompt commands (GitHub Copilot)
 ├── .windsurf/workflows/      # 11 workflow files (Windsurf IDE)
@@ -239,6 +268,7 @@ project/
 
 ## 📚 Documentation & Support
 
+- Skill Reference: [English](../../docs/guides/skill-reference.md) | [日本語](../../docs/guides/ja/skill-reference.md)
 - Command Reference: [English](../../docs/guides/command-reference.md) | [日本語](../../docs/guides/ja/command-reference.md)
 - Customization Guide: [English](../../docs/guides/customization-guide.md) | [日本語](../../docs/guides/ja/customization-guide.md)
 - Spec-Driven Guide: [English](../../docs/guides/spec-driven.md) | [日本語](../../docs/guides/ja/spec-driven.md)

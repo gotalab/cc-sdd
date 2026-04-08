@@ -2,7 +2,9 @@
 
 > 📖 **日本語ガイドはこちら:** [コマンドリファレンス (日本語)](ja/command-reference.md)
 
-Complete reference for all cc-sdd commands with detailed usage, examples, and troubleshooting.
+Complete reference for the legacy `/kiro:*` commands in cc-sdd with detailed usage, examples, and troubleshooting.
+
+If you are using skills mode, start with the [Skill Reference](skill-reference.md) instead.
 
 > **Note**: This reference is based on Claude Code command templates. While the core functionality is consistent across all supported agents (Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf), command syntax and features may vary slightly depending on your agent. Refer to your agent's specific documentation for platform-specific details.
 
@@ -31,31 +33,9 @@ Complete reference for all cc-sdd commands with detailed usage, examples, and tr
 
 ---
 
-## Skills Mode Reference
+## Skills Mode Note
 
-> **Applies to**: `--claude-skills` and `--codex-skills` install targets only. Commands-based agents (`--claude-code`, `--cursor`, etc.) continue to use the `/kiro:*` commands documented below.
-
-Skills mode (3.0) replaces the commands-based implementation and validation workflow with skill files that leverage native Agent tool dispatch. The spec phases (steering, init, requirements, design, tasks) remain the same across both modes.
-
-### Key Differences
-
-| Area | Commands Mode | Skills Mode |
-|------|--------------|-------------|
-| Brainstorm | N/A | `/kiro-brainstorm` -- entry point with action paths (A/B/C/D); writes brief.md + roadmap.md |
-| Spec Batch | N/A | `/kiro-spec-batch` -- parallel multi-spec creation with cross-spec review |
-| Implementation | `/kiro:spec-impl <feature> [tasks]` | `/kiro-impl` -- autonomous (subagent per task) or manual (TDD in main context) |
-| Validation | `/kiro:validate-impl` | `/kiro-validate-impl` -- focuses on integration validation across tasks |
-| Subagent dispatch | Pre-defined in `.claude/agents/` | Dynamic per-task dispatch via prompt templates |
-| External dependencies | None | None (Ralph Loop plugin removed; uses native Agent tool) |
-| Session safety | N/A | `/kiro-impl` is session-resume safe |
-
-### Skill Files
-
-Refer to the installed `SKILL.md` files for full skill documentation:
-- `/kiro-brainstorm` -- Entry point with action paths (A/B/C/D); writes brief.md + roadmap.md for session persistence
-- `/kiro-spec-batch` -- Parallel multi-spec creation with cross-spec review (uses `.codex/agents/spec-reviewer.toml` for Codex installs)
-- `/kiro-impl` -- Unified implementation with subagent dispatch (implementer + reviewer + debugger); auto-debug on failure (max 2 rounds), learnings propagation between tasks
-- `/kiro-validate-impl` -- Integration-focused validation with mechanical enforcement
+> **Applies to**: commands-based installs. Skills-mode installs (`--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--windsurf-skills`, `--opencode-skills`, `--gemini-skills`, `--antigravity`) should use the [Skill Reference](skill-reference.md).
 
 ---
 

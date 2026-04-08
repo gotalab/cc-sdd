@@ -22,7 +22,7 @@ Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life
 
 ## Minimal Workflow
 - Phase 0 (optional): `/kiro-steering`, `/kiro-steering-custom`
-- Brainstorm: `/kiro-brainstorm "idea"` — determines action path, writes brief.md + roadmap.md for multi-spec projects
+- Discovery: `/kiro-discovery "idea"` — determines action path, writes brief.md + roadmap.md for multi-spec projects
 - Phase 1 (Specification):
   - Single spec: `/kiro-spec-quick {feature} [--auto]` or step by step:
     - `/kiro-spec-init "description"`
@@ -34,7 +34,7 @@ Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life
   - Multi-spec: `/kiro-spec-batch` — creates all specs from roadmap.md in parallel by dependency wave
 - Phase 2 (Implementation): `/kiro-impl {feature} [tasks]`
   - Without task numbers: autonomous mode (subagent per task + independent review + final validation)
-  - With task numbers: manual mode (selected tasks only in main context)
+  - With task numbers: manual mode (selected tasks in main context, still reviewer-gated before completion)
   - `/kiro-validate-impl {feature}` (standalone re-validation)
 - Progress check: `/kiro-spec-status {feature}` (use anytime)
 
@@ -44,6 +44,9 @@ Skills are located in `.claude/skills/kiro-*/SKILL.md`
 - Skills run inline with access to conversation context
 - Skills may delegate parallel research to subagents for efficiency
 - Additional files (templates, examples) can be added to skill directories
+- `kiro-review` — task-local adversarial review protocol used by reviewer subagents
+- `kiro-debug` — root-cause-first debug protocol used by debugger subagents
+- `kiro-verify-completion` — fresh-evidence gate before success or completion claims
 - **If there is even a 1% chance a skill applies to the current task, invoke it.** Do not skip skills because the task seems simple.
 
 ## Development Rules

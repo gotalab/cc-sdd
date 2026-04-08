@@ -102,11 +102,13 @@ Check:
 6. **Shared infrastructure**: Shared concerns (auth, error handling, logging) handled in one spec and correctly referenced?
 7. **Task boundary alignment**: Task _Boundary:_ annotations partition codebase cleanly? No files claimed by multiple specs?
 8. **Roadmap boundary continuity**: If roadmap includes `Existing Spec Updates` or `Direct Implementation Candidates`, do the generated new specs avoid absorbing that work by accident?
+9. **Architecture boundary integrity**: Do the specs preserve clean responsibility seams, avoid shared ownership, keep dependency direction coherent, and include enough revalidation triggers to catch downstream impact?
+10. **Change-friendly decomposition**: Has any spec absorbed multiple independent seams that should probably be split instead of kept together?
 
 Output: CONSISTENT areas + ISSUES with (which specs, what's inconsistent, suggested fix).
 
 **After the review completes**:
-- **Critical/important issues found**: Fix each affected spec to apply the suggested fixes. Re-run cross-spec review after fixes (max 3 remediation rounds).
+- **Critical/important issues found**: Fix each affected spec to apply the suggested fixes. If the issue is really a decomposition problem (for example boundary overlap or one spec carrying multiple independent seams), stop and return to roadmap/discovery instead of papering over it locally. Re-run cross-spec review after fixes (max 3 remediation rounds).
 - **Minor issues only**: Report them for user awareness, proceed to Step 5.
 - **No issues**: Proceed to Step 5.
 

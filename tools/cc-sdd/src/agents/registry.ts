@@ -88,9 +88,17 @@ export const agentDefinitions = {
       docFile: 'CLAUDE.md',
     },
     commands: {
-      spec: '`/kiro-spec-quick <what-to-build>`',
+      spec: '`/kiro-spec-init <what-to-build>`',
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [
+        'If you are not sure whether the work should become one spec, many specs, or no spec at all, start with `/kiro-discovery <idea>`.',
+      ],
+      appendSteps: [
+        'Use `/kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
+      ],
     },
     templateFallbacks: {
       'CLAUDE.md': '../../CLAUDE.md',
@@ -128,9 +136,17 @@ export const agentDefinitions = {
       docFile: 'AGENTS.md',
     },
     commands: {
-      spec: '`$kiro-spec-quick <what-to-build> [--auto]`',
+      spec: '`$kiro-spec-init <what-to-build>`',
       steering: '`$kiro-steering`',
       steeringCustom: '`$kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [
+        'If you are not sure whether the work should become one spec, many specs, or no spec at all, start with `$kiro-discovery <idea>`.',
+      ],
+      appendSteps: [
+        'Use `$kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
+      ],
     },
     manifestId: 'codex-skills',
   },
@@ -165,9 +181,17 @@ export const agentDefinitions = {
       docFile: 'AGENTS.md',
     },
     commands: {
-      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      spec: '`/kiro-spec-init <what-to-build>`',
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [
+        'If you are not sure whether the work should become one spec, many specs, or no spec at all, start with `/kiro-discovery <idea>`.',
+      ],
+      appendSteps: [
+        'Use `/kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
+      ],
     },
     manifestId: 'cursor-skills',
   },
@@ -202,9 +226,17 @@ export const agentDefinitions = {
       docFile: 'AGENTS.md',
     },
     commands: {
-      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      spec: '`/kiro-spec-init <what-to-build>`',
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [
+        'If you are not sure whether the work should become one spec, many specs, or no spec at all, start with `/kiro-discovery <idea>`.',
+      ],
+      appendSteps: [
+        'Use `/kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
+      ],
     },
     manifestId: 'github-copilot-skills',
   },
@@ -239,9 +271,17 @@ export const agentDefinitions = {
       docFile: 'GEMINI.md',
     },
     commands: {
-      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      spec: '`/kiro-spec-init <what-to-build>`',
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [
+        'If you are not sure whether the work should become one spec, many specs, or no spec at all, start with `/kiro-discovery <idea>`.',
+      ],
+      appendSteps: [
+        'Use `/kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
+      ],
     },
     manifestId: 'gemini-cli-skills',
   },
@@ -276,9 +316,17 @@ export const agentDefinitions = {
       docFile: 'AGENTS.md',
     },
     commands: {
-      spec: '`@kiro-spec-quick <what-to-build> [--auto]`',
+      spec: '`@kiro-spec-init <what-to-build>`',
       steering: '`@kiro-steering`',
       steeringCustom: '`@kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [
+        'If you are not sure whether the work should become one spec, many specs, or no spec at all, start with `@kiro-discovery <idea>`.',
+      ],
+      appendSteps: [
+        'Use `@kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
+      ],
     },
     manifestId: 'windsurf-skills',
   },
@@ -352,9 +400,17 @@ export const agentDefinitions = {
       docFile: 'AGENTS.md',
     },
     commands: {
-      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      spec: '`/kiro-spec-init <what-to-build>`',
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [
+        'If you are not sure whether the work should become one spec, many specs, or no spec at all, start with `/kiro-discovery <idea>`.',
+      ],
+      appendSteps: [
+        'Use `/kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
+      ],
     },
     manifestId: 'opencode-skills',
   },
@@ -369,9 +425,17 @@ export const agentDefinitions = {
       docFile: 'AGENTS.md',
     },
     commands: {
-      spec: '`/kiro-spec-quick <what-to-build> [--auto]`',
+      spec: '`/kiro-spec-init <what-to-build>`',
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [
+        'If you are not sure whether the work should become one spec, many specs, or no spec at all, start with `/kiro-discovery <idea>`.',
+      ],
+      appendSteps: [
+        'Use `/kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
+      ],
     },
     manifestId: 'antigravity-skills',
   },

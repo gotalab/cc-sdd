@@ -17,8 +17,8 @@ cc-sdd 把已核准規格轉成可執行工作流：需求 → 設計 → 任務
 **為什麼選 cc-sdd:**
 - ✅ **規格可執行** — 每個 artifact（需求、設計、任務）直接控制下一階段。File Structure Plan 驅動任務邊界，Task Brief 驅動實作，git diff 驅動審查
 - ✅ **長時間自律實作** — `/kiro-impl` 為每個任務執行 TDD (Feature Flag Protocol) + fresh implementer + 獨立審查者 + 失敗時自動 debug + 任務間知見傳遞。無外部依賴
-- ✅ **產品級規模** — `/kiro-brainstorm` 將大型構想分解為依賴排序的多個 spec。`/kiro-spec-batch` 平行建立所有 spec + cross-spec 一致性驗證
-- ✅ **自訂一次，隨模型進化調整** — 14 個 skills，共享規則為 single source of truth。團隊模板貼合批准流程。模型進化時可輕量化 harness
+- ✅ **從小需求到產品級規模都適用** — `/kiro-discovery` 是新工作入口，從單一功能到多個 spec 的大型 initiative 都能處理。`/kiro-spec-batch` 平行建立所有 spec + cross-spec 一致性驗證
+- ✅ **自訂一次，隨模型進化調整** — 17 個 skills，共享規則為 single source of truth。團隊模板貼合批准流程。模型進化時可輕量化 harness
 
 **為什麼 Agent Skills:**
 - Skills 是按需載入的可組合單位（progressive disclosure）
@@ -45,14 +45,14 @@ npx cc-sdd@latest --lang es    # 西班牙語
 
 # 代理選項（預設：claude-code-skills / --claude-skills）
 # Skills 模式（建議）
-npx cc-sdd@latest --claude-skills --lang zh-TW     # Claude Code Skills（預設，14 個技能）
-npx cc-sdd@latest --codex-skills --lang zh-TW      # Codex CLI Skills（14 個技能）
-npx cc-sdd@latest --cursor-skills --lang zh-TW     # Cursor IDE Skills（14 個技能）
-npx cc-sdd@latest --copilot-skills --lang zh-TW    # GitHub Copilot Skills（14 個技能）
-npx cc-sdd@latest --windsurf-skills --lang zh-TW   # Windsurf IDE Skills（14 個技能）
-npx cc-sdd@latest --opencode-skills --lang zh-TW   # OpenCode Skills（14 個技能）
-npx cc-sdd@latest --gemini-skills --lang zh-TW     # Gemini CLI Skills（14 個技能）
-npx cc-sdd@latest --antigravity --lang zh-TW       # Antigravity Skills（14 個技能）
+npx cc-sdd@latest --claude-skills --lang zh-TW     # Claude Code Skills（預設，17 個技能）
+npx cc-sdd@latest --codex-skills --lang zh-TW      # Codex CLI Skills（17 個技能）
+npx cc-sdd@latest --cursor-skills --lang zh-TW     # Cursor IDE Skills（17 個技能）
+npx cc-sdd@latest --copilot-skills --lang zh-TW    # GitHub Copilot Skills（17 個技能）
+npx cc-sdd@latest --windsurf-skills --lang zh-TW   # Windsurf IDE Skills（17 個技能）
+npx cc-sdd@latest --opencode-skills --lang zh-TW   # OpenCode Skills（17 個技能）
+npx cc-sdd@latest --gemini-skills --lang zh-TW     # Gemini CLI Skills（17 個技能）
+npx cc-sdd@latest --antigravity --lang zh-TW       # Antigravity Skills（17 個技能）
 # 舊版模式（已棄用 — 將在未來版本移除）
 npx cc-sdd@latest --claude --lang zh-TW        # 請改用 --claude-skills
 npx cc-sdd@latest --cursor --lang zh-TW        # 請改用 --cursor-skills
@@ -87,14 +87,22 @@ npx cc-sdd@latest --qwen --lang zh-TW          # Qwen Code
 
 ## ✨ 快速開始
 
+### 先選工作流
+
+| 你想做的事 | Skills 模式 | 舊版模式 |
+| --- | --- | --- |
+| 開始新的工作（從功能到大型 initiative） | `kiro-discovery` → `kiro-spec-init` → `kiro-spec-requirements` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:spec-init` → `kiro:spec-requirements` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
+| 擴充既有系統 | `kiro:steering` → `kiro-discovery` 或 `kiro:spec-init` → 可選 `kiro:validate-gap` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:steering` → `kiro:spec-init` → 可選 `kiro:validate-gap` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
+| 分解大型 initiative | `kiro-discovery` → `kiro-spec-batch` | 不支援 |
+| 直接做小改動 | `kiro-discovery` → 直接實作 | 直接實作 |
+
 ### 新專案
 ```bash
-# 啟動 AI 代理並立即開始規格驅動開發
-/kiro:spec-init 使用 OAuth 建構使用者認證系統  # AI 建立結構化計劃
-/kiro:spec-requirements auth-system                 # AI 提出澄清問題
-/kiro:spec-design auth-system                      # 人類驗證，AI 設計
-/kiro:spec-tasks auth-system                       # 分解為實作任務
-/kiro:spec-impl auth-system                        # 以 TDD 執行
+# Skills 模式：第一次使用時建議從這裡開始
+/kiro-discovery 使用 OAuth 建構使用者認證系統
+
+# 舊版模式
+/kiro:spec-init 使用 OAuth 建構使用者認證系統
 ```
 
 ![design.md - System Flow Diagram](https://raw.githubusercontent.com/gotalab/cc-sdd/refs/heads/main/assets/design-system_flow.png)
@@ -115,6 +123,15 @@ npx cc-sdd@latest --qwen --lang zh-TW          # Qwen Code
 ```
 
 **30 秒設定** → **AI 驅動「快速衝刺」（非衝刺）** → **小時交付結果**
+
+### Discovery 之後
+
+在 Skills 模式中，`kiro-discovery` 是第一次使用時最容易理解的入口。它不會替你一路跑到底，而是先決定應該走哪個 workflow，必要時寫入 `brief.md` / `roadmap.md`，給出下一個指令，然後停止。
+
+- Existing spec: 繼續執行 `kiro-spec-requirements {feature}`
+- 不需要 spec: 直接實作
+- Single spec: 預設走 `kiro-spec-init <feature>`；只有在明確想走 fast path 時才用 `kiro-spec-quick <feature>`
+- Multi-spec: 預設走 `kiro-spec-batch`；如果想先驗證第一個 slice，再執行 `kiro-spec-init <first-feature>`
 
 ### 為何團隊選擇 cc-sdd
 1. **已核准規格會變成 executable work** — 需求、設計、任務與 supporting references 保持對齊，能直接驅動實作，而不是逐漸過期。
@@ -138,14 +155,14 @@ npx cc-sdd@latest --qwen --lang zh-TW          # Qwen Code
 
 | 代理 | Skills 模式（建議） | 舊版模式 |
 |------|--------------------------|-------------|
-| **Claude Code** | `--claude-skills` — 14 個技能 | `--claude` / `--claude-agent`（已棄用） |
-| **Codex CLI** | `--codex-skills` — 14 個技能 | `--codex`（已封鎖） |
-| **Cursor IDE** | `--cursor-skills` — 14 個技能 | `--cursor`（已棄用） |
-| **GitHub Copilot** | `--copilot-skills` — 14 個技能 | `--copilot`（已棄用） |
-| **Windsurf IDE** | `--windsurf-skills` — 14 個技能 | `--windsurf`（已棄用） |
-| **OpenCode** | `--opencode-skills` — 14 個技能 | `--opencode` / `--opencode-agent`（已棄用） |
-| **Gemini CLI** | `--gemini-skills` — 14 個技能 | `--gemini`（已棄用） |
-| **Antigravity** | `--antigravity` — 14 個技能 | — |
+| **Claude Code** | `--claude-skills` — 17 個技能 | `--claude` / `--claude-agent`（已棄用） |
+| **Codex CLI** | `--codex-skills` — 17 個技能 | `--codex`（已封鎖） |
+| **Cursor IDE** | `--cursor-skills` — 17 個技能 | `--cursor`（已棄用） |
+| **GitHub Copilot** | `--copilot-skills` — 17 個技能 | `--copilot`（已棄用） |
+| **Windsurf IDE** | `--windsurf-skills` — 17 個技能 | `--windsurf`（已棄用） |
+| **OpenCode** | `--opencode-skills` — 17 個技能 | `--opencode` / `--opencode-agent`（已棄用） |
+| **Gemini CLI** | `--gemini-skills` — 17 個技能 | `--gemini`（已棄用） |
+| **Antigravity** | `--antigravity` — 17 個技能 | — |
 | **Qwen Code** | — | `--qwen` |
 
 ## 📋 指令
@@ -217,9 +234,9 @@ npx cc-sdd@latest --kiro-dir docs
 
 ```
 project/
-├── .claude/skills/           # 14 個技能（Claude Code Skills 模式，預設）
+├── .claude/skills/           # 17 個技能（Claude Code Skills 模式，預設）
 ├── .claude/commands/kiro/    # 11 個斜線指令（Claude Code）
-├── .agents/skills/           # 14 個技能（Codex CLI Skills 模式）
+├── .agents/skills/           # 17 個技能（Codex CLI Skills 模式）
 ├── .codex/prompts/           # 11 個提示指令（Codex CLI — 已封鎖，請使用 skills）
 ├── .github/prompts/          # 11 個提示指令（GitHub Copilot）
 ├── .windsurf/workflows/      # 11 個工作流程檔案（Windsurf IDE）
@@ -234,6 +251,7 @@ project/
 
 ## 📚 文件與支援
 
+- Skills 參考: [English](../../docs/guides/skill-reference.md) | [日本語](../../docs/guides/ja/skill-reference.md)
 - 指令參考: [English](../../docs/guides/command-reference.md) | [日本語](../../docs/guides/ja/command-reference.md)
 - 自訂指南: [English](../../docs/guides/customization-guide.md) | [日本語](../../docs/guides/ja/customization-guide.md)
 - 規格驅動開發指南: [English](../../docs/guides/spec-driven.md) | [日本語](../../docs/guides/ja/spec-driven.md)

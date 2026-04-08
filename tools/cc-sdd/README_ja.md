@@ -17,8 +17,8 @@ cc-sdd は承認済みの仕様を実行可能なワークフローに変える:
 **cc-sdd を使う理由:**
 - ✅ **仕様が実行可能になる** — 各 artifact (要件, 設計, タスク) が次工程を直接制御。File Structure Plan がタスク境界を、Task Brief が実装を、git diff がレビューを駆動
 - ✅ **長時間自律実装** — `/kiro-impl` がタスクごとに TDD (Feature Flag Protocol) + fresh subagent + 独立レビュアー + 失敗時の自動デバッグ + タスク間の知見引き継ぎで自律実装。外部依存なし
-- ✅ **プロダクト規模に対応** — `/kiro-brainstorm` が大きなアイデアを依存順の複数 spec に分解。`/kiro-spec-batch` が並列で spec 作成 + cross-spec 整合性検証
-- ✅ **一度カスタマイズ、モデル進化に追従** — 14 skills、shared rules は single source of truth。チーム向けテンプレートで承認フローに合わせられる。モデルが進化したらハーネスを軽くする設計
+- ✅ **小さな依頼からプロダクト規模まで対応** — `/kiro-discovery` は新しい仕事の入口で、単機能から複数 spec に分かれる大きな構想まで扱える。`/kiro-spec-batch` が並列で spec 作成 + cross-spec 整合性検証
+- ✅ **一度カスタマイズ、モデル進化に追従** — エージェントに応じて 17 skills、shared rules は single source of truth。チーム向けテンプレートで承認フローに合わせられる。モデルが進化したらハーネスを軽くする設計
 
 **なぜ Agent Skills:**
 - Skills は on-demand ロードされる composable な単位 (progressive disclosure)
@@ -48,14 +48,14 @@ npx cc-sdd@latest --lang es    # スペイン語
 
 # エージェントオプション（デフォルト: claude-code-skills / --claude-skills）
 # Skills モード（推奨）
-npx cc-sdd@latest --claude-skills --lang ja     # Claude Code Skills（デフォルト、14スキル）
-npx cc-sdd@latest --codex-skills --lang ja      # Codex CLI Skills（14スキル）
-npx cc-sdd@latest --cursor-skills --lang ja     # Cursor IDE Skills（14スキル）
-npx cc-sdd@latest --copilot-skills --lang ja    # GitHub Copilot Skills（14スキル）
-npx cc-sdd@latest --windsurf-skills --lang ja   # Windsurf IDE Skills（14スキル）
-npx cc-sdd@latest --opencode-skills --lang ja   # OpenCode Skills（14スキル）
-npx cc-sdd@latest --gemini-skills --lang ja     # Gemini CLI Skills（14スキル）
-npx cc-sdd@latest --antigravity --lang ja       # Antigravity Skills（14スキル）
+npx cc-sdd@latest --claude-skills --lang ja     # Claude Code Skills（デフォルト、17スキル）
+npx cc-sdd@latest --codex-skills --lang ja      # Codex CLI Skills（17スキル）
+npx cc-sdd@latest --cursor-skills --lang ja     # Cursor IDE Skills（17スキル）
+npx cc-sdd@latest --copilot-skills --lang ja    # GitHub Copilot Skills（17スキル）
+npx cc-sdd@latest --windsurf-skills --lang ja   # Windsurf IDE Skills（17スキル）
+npx cc-sdd@latest --opencode-skills --lang ja   # OpenCode Skills（17スキル）
+npx cc-sdd@latest --gemini-skills --lang ja     # Gemini CLI Skills（17スキル）
+npx cc-sdd@latest --antigravity --lang ja       # Antigravity Skills（17スキル）
 # レガシーモード（非推奨 — 将来削除予定）
 npx cc-sdd@latest --claude --lang ja        # --claude-skills を使用してください
 npx cc-sdd@latest --cursor --lang ja        # --cursor-skills を使用してください
@@ -90,14 +90,22 @@ npx cc-sdd@latest --qwen --lang ja          # Qwen Code
 
 ## ✨ クイックスタート
 
+### まずどこから始めるか
+
+| やりたいこと | Skills モード | レガシーモード |
+| --- | --- | --- |
+| 新しい仕事を始める（機能から大きな構想まで） | `kiro-discovery` → `kiro-spec-init` → `kiro-spec-requirements` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:spec-init` → `kiro:spec-requirements` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
+| 既存機能を拡張する | `kiro:steering` → `kiro-discovery` または `kiro:spec-init` → 任意で `kiro:validate-gap` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:steering` → `kiro:spec-init` → 任意で `kiro:validate-gap` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
+| 大きい構想を分解する | `kiro-discovery` → `kiro-spec-batch` | 非対応 |
+| spec 不要の小変更を入れる | `kiro-discovery` → 直接実装 | 直接実装 |
+
 ### 新規プロジェクトの場合
 ```bash
-# AIエージェントを起動して、即座に仕様駆動開発を開始
-/kiro:spec-init ユーザー認証システムをOAuthで構築  # AIが構造化計画を作成
-/kiro:spec-requirements auth-system                  # AIが明確化のための質問
-/kiro:spec-design auth-system                       # 人間が検証、AIが設計
-/kiro:spec-tasks auth-system                        # 実装タスクに分解
-/kiro:spec-impl auth-system                         # TDDで実行
+# Skills モード: 初めて使うならここから始める
+/kiro-discovery ユーザー認証システムをOAuthで構築
+
+# レガシーモード
+/kiro:spec-init ユーザー認証システムをOAuthで構築
 ```
 
 ![design.md - System Flow Diagram](https://raw.githubusercontent.com/gotalab/cc-sdd/refs/heads/main/assets/design-system_flow.png)
@@ -119,12 +127,29 @@ npx cc-sdd@latest --qwen --lang ja          # Qwen Code
 
 **30秒セットアップ** → **AI駆動「ボルト」（スプリントではなく）** → **時間単位の結果**
 
+### Discovery の後
+
+Skills モードでは、`kiro-discovery` は初めて使う人向けの入口です。最後まで勝手に進めるのではなく、どの workflow に進むべきかを決め、必要なら `brief.md` / `roadmap.md` を書き、次コマンドを示して止まるのが基本です。
+
+- Existing spec: `kiro-spec-requirements {feature}` に進む
+- Spec 不要: そのまま実装する
+- Single spec: 既定は `kiro-spec-init <feature>`。明示的に fast path を使いたいときだけ `kiro-spec-quick <feature>`
+- Multi-spec: 既定は `kiro-spec-batch`。最初の 1 spec を先に確かめたいなら `kiro-spec-init <first-feature>`
+- Mixed decomposition: 既存 spec 更新・新規 spec・直接実装候補を分けてから次の一手を選ぶ
+
 ### cc-sdd を選ぶ理由
 1. **承認済み仕様が executable work になる** — 要件・設計・タスク・Supporting References が揃ったまま、実装の駆動源として使えます。
 2. **長時間自律実装** — タスクごとの subagent dispatch + independent review + 失敗時の自動デバッグ（Web検索付き）+ タスク間知見引き継ぎ。外部依存なし。
 3. **Agent Skills が長期的な surface** — 同じ skill-based workflow を Claude Code、Codex、Cursor、Copilot、Windsurf、OpenCode、Gemini CLI、Antigravity で利用可能。
 4. **レビューと最終検証フローを内蔵** — spec mismatch、placeholder 実装、blocked state を完了宣言前に拾う方向で設計されています。
 5. **チーム向けカスタマイズは一度だけ** — `.kiro/settings/templates/` を編集すれば全エージェントへ反映。非スキルエージェントは `.kiro/settings/rules/` も使用します。
+
+### Core Ideas
+
+- **境界中心** — spec の価値は、責務境界と契約を明確にして、チームや agent が独立して動けるようにすることにあります。
+- **spec 中心、機械的検証に支えられる** — Markdown spec が意図・スコープ・境界を担い、テスト・build・lint・runtime checks がその意図を現実につなぎます。
+- **変更容易性を前提に設計** — cc-sdd 自体をできるだけシンプルで変更しやすく保ち、templates / rules / workflows をチームの operating model に合わせて調整できることを重視します。
+- **止まるべき場所が明示された自律** — `/kiro-impl` は `tasks.md` を task ごとに TDD と review で進められますが、人間の承認・確認・判断が必要な箇所では止まる設計です。
 
 ## ✨ 主要機能
 
@@ -141,14 +166,14 @@ npx cc-sdd@latest --qwen --lang ja          # Qwen Code
 
 | エージェント | Skills モード（推奨） | レガシーモード |
 |-------|--------------------------|-------------|
-| **Claude Code** | `--claude-skills` — 14スキル | `--claude` / `--claude-agent`（非推奨） |
-| **Codex CLI** | `--codex-skills` — 14スキル | `--codex`（ブロック済み） |
-| **Cursor IDE** | `--cursor-skills` — 14スキル | `--cursor`（非推奨） |
-| **GitHub Copilot** | `--copilot-skills` — 14スキル | `--copilot`（非推奨） |
-| **Windsurf IDE** | `--windsurf-skills` — 14スキル | `--windsurf`（非推奨） |
-| **OpenCode** | `--opencode-skills` — 14スキル | `--opencode` / `--opencode-agent`（非推奨） |
-| **Gemini CLI** | `--gemini-skills` — 14スキル | `--gemini`（非推奨） |
-| **Antigravity** | `--antigravity` — 14スキル | — |
+| **Claude Code** | `--claude-skills` — 17スキル | `--claude` / `--claude-agent`（非推奨） |
+| **Codex CLI** | `--codex-skills` — 17スキル | `--codex`（ブロック済み） |
+| **Cursor IDE** | `--cursor-skills` — 17スキル | `--cursor`（非推奨） |
+| **GitHub Copilot** | `--copilot-skills` — 17スキル | `--copilot`（非推奨） |
+| **Windsurf IDE** | `--windsurf-skills` — 17スキル | `--windsurf`（非推奨） |
+| **OpenCode** | `--opencode-skills` — 17スキル | `--opencode` / `--opencode-agent`（非推奨） |
+| **Gemini CLI** | `--gemini-skills` — 17スキル | `--gemini`（非推奨） |
+| **Antigravity** | `--antigravity` — 17スキル | — |
 | **Qwen Code** | — | `--qwen` |
  
 ## 📋 コマンド
@@ -220,9 +245,9 @@ npx cc-sdd@latest --kiro-dir docs
 
 ```
 project/
-├── .claude/skills/           # 14のスキル（Claude Code Skills モード、デフォルト）
+├── .claude/skills/           # 17のスキル（Claude Code Skills モード、デフォルト）
 ├── .claude/commands/kiro/    # 11のスラッシュコマンド（Claude Code）
-├── .agents/skills/           # 14のスキル（Codex CLI Skills モード）
+├── .agents/skills/           # 17のスキル（Codex CLI Skills モード）
 ├── .codex/prompts/           # 11のプロンプトコマンド（Codex CLI — ブロック済み、skillsを使用）
 ├── .github/prompts/          # 11のプロンプトコマンド（GitHub Copilot）
 ├── .windsurf/workflows/      # 11のワークフローファイル（Windsurf IDE）
@@ -237,6 +262,7 @@ project/
 
 ## 📚 ドキュメント & サポート
 
+- スキルリファレンス: [日本語](../../docs/guides/ja/skill-reference.md) | [English](../../docs/guides/skill-reference.md)
 - コマンドリファレンス: [日本語](../../docs/guides/ja/command-reference.md) | [English](../../docs/guides/command-reference.md)
 - カスタマイズガイド: [日本語](../../docs/guides/ja/customization-guide.md) | [English](../../docs/guides/customization-guide.md)
 - 仕様駆動開発ガイド: [日本語](../../docs/guides/ja/spec-driven.md) | [English](../../docs/guides/spec-driven.md)

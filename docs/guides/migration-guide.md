@@ -104,8 +104,8 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 
 | Area | v2.x | v3.0 |
 | --- | --- | --- |
-| Skill count | 12-13 | **14** |
-| Brainstorm | Basic idea refinement | **Entry point** with action paths (A/B/C/D); writes `brief.md` + `roadmap.md` |
+| Skill count | 12-13 | **17** |
+| Discovery | Basic idea refinement | **Routing/scoping entry point**; writes `brief.md` and, when needed, `roadmap.md` |
 | Spec batch | N/A | **`/kiro-spec-batch`** -- parallel multi-spec creation with cross-spec review |
 | Implementation | `kiro-spec-impl` + `kiro-ralph-impl` (separate skills) | **`/kiro-impl`** -- unified skill with native subagent dispatch (implementer + reviewer + debugger) |
 | Ralph Loop | External plugin dependency | **Removed**; replaced by native Agent tool dispatch |
@@ -133,13 +133,13 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 
 2. **Remove legacy skill references** -- if you have custom scripts or documentation referencing `kiro-spec-impl` or `kiro-ralph-impl`, update them to `/kiro-impl`.
 
-3. **Adopt the new entry point** -- start new features with `/kiro-brainstorm` instead of jumping straight to `/kiro:spec-init`. The brainstorm now produces `brief.md` and `roadmap.md` that feed into downstream skills.
+3. **Adopt the new entry point** -- start new features with `/kiro-discovery` instead of jumping straight to `/kiro:spec-init`. Discovery now produces `brief.md` and `roadmap.md` that feed into downstream skills.
 
 4. **Use `/kiro-spec-batch`** for multi-feature work -- when your roadmap contains multiple specs, `/kiro-spec-batch` creates them in parallel and runs a cross-spec review to catch contradictions.
 
 5. **Migrate from legacy modes** -- all non-skills modes (`--claude`, `--cursor`, `--copilot`, `--windsurf`, `--opencode`, `--gemini`) are deprecated and will be removed. `--codex` is already blocked. Use the corresponding `--*-skills` flag.
 
-6. **Leverage `brief.md` for session continuity** -- after brainstorming, you can close the session and resume later. The brief file preserves the feature context so you do not need to re-explain scope.
+6. **Leverage `brief.md` for session continuity** -- after discovery, you can close the session and resume later. The brief file preserves the feature context so you do not need to re-explain scope.
 
 ### What carries over unchanged
 

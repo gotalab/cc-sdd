@@ -171,7 +171,7 @@ describe('real cursor-skills manifest', () => {
     expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
     // Skills without shared-rules should NOT have rules/ directories
-    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-batch', 'kiro-impl', 'kiro-validate-impl', 'kiro-brainstorm'];
+    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-batch', 'kiro-impl', 'kiro-validate-impl', 'kiro-discovery'];
     for (const skill of noRulesSkills) {
       expect(await exists(join(cwd, `.cursor/skills/${skill}/rules`))).toBe(false);
     }
@@ -179,7 +179,7 @@ describe('real cursor-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 
-  it('generates exactly 14 skill directories', async () => {
+  it('generates exactly 17 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(
@@ -191,7 +191,7 @@ describe('real cursor-skills manifest', () => {
     );
 
     const expectedSkills = [
-      'kiro-brainstorm',
+      'kiro-discovery',
       'kiro-spec-batch',
       'kiro-spec-init',
       'kiro-spec-quick',
@@ -205,6 +205,9 @@ describe('real cursor-skills manifest', () => {
       'kiro-validate-gap',
       'kiro-validate-design',
       'kiro-validate-impl',
+      'kiro-review',
+      'kiro-debug',
+      'kiro-verify-completion',
     ];
 
     for (const skill of expectedSkills) {
@@ -217,13 +220,16 @@ describe('real cursor-skills manifest', () => {
     expect(await exists(implPrompt)).toBe(true);
     const implPromptText = await readFile(implPrompt, 'utf8');
     expect(implPromptText).toContain('TDD');
-    expect(implPromptText).toContain('STATUS: DONE');
+    expect(implPromptText).toContain('STATUS: READY_FOR_REVIEW');
     expect(implPromptText).toContain('Do NOT update `tasks.md`');
+    expect(implPromptText).toContain('The parent controller parses the exact `- STATUS:` line');
 
     const reviewPrompt = join(cwd, '.cursor/skills/kiro-impl/templates/reviewer-prompt.md');
     expect(await exists(reviewPrompt)).toBe(true);
     const reviewPromptText = await readFile(reviewPrompt, 'utf8');
+    expect(reviewPromptText).toContain('Apply the `kiro-review` protocol');
     expect(reviewPromptText).toContain('Reality Check');
     expect(reviewPromptText).toContain('Do Not Trust the Report');
+    expect(reviewPromptText).toContain('The parent controller parses the exact `- VERDICT:` line');
   });
 });

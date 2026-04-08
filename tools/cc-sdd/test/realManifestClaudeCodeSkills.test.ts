@@ -117,22 +117,62 @@ describe('real claude-code-skills manifest', () => {
     expect(skillImplText).toContain('kiro-validate-impl');
     expect(skillImplText).toContain('BLOCKED');
     expect(skillImplText).toContain('Bounded Remediation');
+    expect(skillImplText).toContain('Parse implementer status only from the exact `## Status Report` block');
+    expect(skillImplText).toContain('Parse reviewer verdict only from the exact `## Review Verdict` block');
+    expect(skillImplText).toContain('Strict Handoff Parsing');
+    expect(skillImplText).toContain('No Destructive Reset');
+    expect(skillImplText).toContain('stop the feature run');
+    expect(skillImplText).not.toContain('discard the failed implementation (`git checkout .`)');
 
     const implPrompt = join(cwd, '.claude/skills/kiro-impl/templates/implementer-prompt.md');
     expect(await exists(implPrompt)).toBe(true);
     const implPromptText = await readFile(implPrompt, 'utf8');
     expect(implPromptText).toContain('TDD');
-    expect(implPromptText).toContain('STATUS: DONE');
+    expect(implPromptText).toContain('STATUS: READY_FOR_REVIEW');
     expect(implPromptText).toContain('Do NOT update `tasks.md`');
     expect(implPromptText).toContain('Do NOT create commits');
+    expect(implPromptText).toContain('The parent controller parses the exact `- STATUS:` line');
+    expect(skillImplText).toContain('Only after review returns `APPROVED`');
 
     const reviewPrompt = join(cwd, '.claude/skills/kiro-impl/templates/reviewer-prompt.md');
     expect(await exists(reviewPrompt)).toBe(true);
     const reviewPromptText = await readFile(reviewPrompt, 'utf8');
+    expect(reviewPromptText).toContain('Apply the `kiro-review` protocol');
     expect(reviewPromptText).toContain('Reality Check');
     expect(reviewPromptText).toContain('APPROVED');
     expect(reviewPromptText).toContain('REJECTED');
     expect(reviewPromptText).toContain('Do Not Trust the Report');
+    expect(reviewPromptText).toContain('mechanical checks');
+    expect(reviewPromptText).toContain('The parent controller parses the exact `- VERDICT:` line');
+
+    const debugPrompt = join(cwd, '.claude/skills/kiro-impl/templates/debugger-prompt.md');
+    expect(await exists(debugPrompt)).toBe(true);
+    const debugPromptText = await readFile(debugPrompt, 'utf8');
+    expect(debugPromptText).toContain('Apply the `kiro-debug` protocol');
+    expect(debugPromptText).toContain('web or official docs research');
+    expect(debugPromptText).toContain('repo-fixability judgment');
+
+    const skillReview = join(cwd, '.claude/skills/kiro-review/SKILL.md');
+    expect(await exists(skillReview)).toBe(true);
+    const skillReviewText = await readFile(skillReview, 'utf8');
+    expect(skillReviewText).toContain('task-local adversarial review');
+    expect(skillReviewText).toContain('RED phase');
+    expect(skillReviewText).toContain('MECHANICAL_RESULTS');
+
+    const skillDebug = join(cwd, '.claude/skills/kiro-debug/SKILL.md');
+    expect(await exists(skillDebug)).toBe(true);
+    const skillDebugText = await readFile(skillDebug, 'utf8');
+    expect(skillDebugText).toContain('root cause investigation');
+    expect(skillDebugText).toContain('Search the Web if Available');
+    expect(skillDebugText).toContain('NEXT_ACTION: RETRY_TASK | BLOCK_TASK | STOP_FOR_HUMAN');
+    expect(skillDebugText).toContain('TASK_ORDERING_PROBLEM');
+
+    const skillVerifyCompletion = join(cwd, '.claude/skills/kiro-verify-completion/SKILL.md');
+    expect(await exists(skillVerifyCompletion)).toBe(true);
+    const skillVerifyCompletionText = await readFile(skillVerifyCompletion, 'utf8');
+    expect(skillVerifyCompletionText).toContain('fresh evidence');
+    expect(skillVerifyCompletionText).toContain('FEATURE_GO');
+    expect(skillVerifyCompletionText).toContain('MANUAL_VERIFY_REQUIRED');
 
     // Shared rules resolved from templates/shared/settings/rules/
     const designRules = [
@@ -174,7 +214,18 @@ describe('real claude-code-skills manifest', () => {
     expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
     // Skills without shared-rules should NOT have rules/ directories
-    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-batch', 'kiro-impl', 'kiro-validate-impl', 'kiro-brainstorm'];
+    const noRulesSkills = [
+      'kiro-spec-init',
+      'kiro-spec-status',
+      'kiro-spec-quick',
+      'kiro-spec-batch',
+      'kiro-impl',
+      'kiro-validate-impl',
+      'kiro-discovery',
+      'kiro-review',
+      'kiro-debug',
+      'kiro-verify-completion',
+    ];
     for (const skill of noRulesSkills) {
       expect(await exists(join(cwd, `.claude/skills/${skill}/rules`))).toBe(false);
     }
@@ -185,13 +236,15 @@ describe('real claude-code-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 
-  it('generates exactly 14 skill directories', async () => {
+  it('generates exactly 17 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force', '--claude-skills'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
 
     const expectedSkills = [
-      'kiro-brainstorm',
+      'kiro-debug',
+      'kiro-discovery',
+      'kiro-review',
       'kiro-spec-batch',
       'kiro-spec-init',
       'kiro-spec-status',
@@ -205,6 +258,7 @@ describe('real claude-code-skills manifest', () => {
       'kiro-validate-design',
       'kiro-validate-gap',
       'kiro-validate-impl',
+      'kiro-verify-completion',
     ];
 
     for (const skill of expectedSkills) {
@@ -215,6 +269,7 @@ describe('real claude-code-skills manifest', () => {
     // kiro-impl has prompt templates
     expect(await exists(join(cwd, '.claude/skills/kiro-impl/templates/implementer-prompt.md'))).toBe(true);
     expect(await exists(join(cwd, '.claude/skills/kiro-impl/templates/reviewer-prompt.md'))).toBe(true);
+    expect(await exists(join(cwd, '.claude/skills/kiro-impl/templates/debugger-prompt.md'))).toBe(true);
 
     // No agents directory (tdd-task-implementer removed)
     expect(await exists(join(cwd, '.claude/agents'))).toBe(false);

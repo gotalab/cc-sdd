@@ -110,6 +110,14 @@ describe('real codex-skills manifest', () => {
     expect(skillValidateImplText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
     expect(skillValidateImplText).toContain('MANUAL_VERIFY_REQUIRED');
     expect(skillValidateImplText).toContain('Does NOT Do');
+    expect(skillValidateImplText).toContain('kiro-verify-completion');
+
+    const skillImpl = join(cwd, '.agents/skills/kiro-impl/SKILL.md');
+    expect(await exists(skillImpl)).toBe(true);
+    const skillImplText = await readFile(skillImpl, 'utf8');
+    expect(skillImplText).toContain('No Destructive Reset');
+    expect(skillImplText).toContain('stop the feature run');
+    expect(skillImplText).not.toContain('discard the failed implementation (`git checkout .`)');
 
     const skillValidateDesign = join(cwd, '.agents/skills/kiro-validate-design/SKILL.md');
     expect(await exists(skillValidateDesign)).toBe(true);
@@ -171,7 +179,18 @@ describe('real codex-skills manifest', () => {
     expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
     // Skills without shared-rules should NOT have rules/ directories
-    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-batch', 'kiro-impl', 'kiro-validate-impl', 'kiro-brainstorm'];
+    const noRulesSkills = [
+      'kiro-spec-init',
+      'kiro-spec-status',
+      'kiro-spec-quick',
+      'kiro-spec-batch',
+      'kiro-impl',
+      'kiro-validate-impl',
+      'kiro-discovery',
+      'kiro-review',
+      'kiro-debug',
+      'kiro-verify-completion',
+    ];
     for (const skill of noRulesSkills) {
       expect(await exists(join(cwd, `.agents/skills/${skill}/rules`))).toBe(false);
     }
@@ -179,7 +198,7 @@ describe('real codex-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 
-  it('generates exactly 14 skill directories', async () => {
+  it('generates exactly 17 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(
@@ -191,7 +210,9 @@ describe('real codex-skills manifest', () => {
     );
 
     const expectedSkills = [
-      'kiro-brainstorm',
+      'kiro-debug',
+      'kiro-discovery',
+      'kiro-review',
       'kiro-spec-batch',
       'kiro-spec-init',
       'kiro-spec-quick',
@@ -205,6 +226,7 @@ describe('real codex-skills manifest', () => {
       'kiro-validate-gap',
       'kiro-validate-design',
       'kiro-validate-impl',
+      'kiro-verify-completion',
     ];
 
     for (const skill of expectedSkills) {
@@ -217,14 +239,47 @@ describe('real codex-skills manifest', () => {
     expect(await exists(implPrompt)).toBe(true);
     const implPromptText = await readFile(implPrompt, 'utf8');
     expect(implPromptText).toContain('TDD');
-    expect(implPromptText).toContain('STATUS: DONE');
+    expect(implPromptText).toContain('STATUS: READY_FOR_REVIEW');
     expect(implPromptText).toContain('Do NOT update `tasks.md`');
+    expect(implPromptText).toContain('The parent controller parses the exact `- STATUS:` line');
 
     const reviewPrompt = join(cwd, '.agents/skills/kiro-impl/templates/reviewer-prompt.md');
     expect(await exists(reviewPrompt)).toBe(true);
     const reviewPromptText = await readFile(reviewPrompt, 'utf8');
+    expect(reviewPromptText).toContain('Apply the `kiro-review` protocol');
     expect(reviewPromptText).toContain('Reality Check');
     expect(reviewPromptText).toContain('Do Not Trust the Report');
+    expect(reviewPromptText).toContain('mechanical checks');
+    expect(reviewPromptText).toContain('The parent controller parses the exact `- VERDICT:` line');
+
+    const debugPrompt = join(cwd, '.agents/skills/kiro-impl/templates/debugger-prompt.md');
+    expect(await exists(debugPrompt)).toBe(true);
+    const debugPromptText = await readFile(debugPrompt, 'utf8');
+    expect(debugPromptText).toContain('Apply the `kiro-debug` protocol');
+    expect(debugPromptText).toContain('web or official docs research');
+    expect(debugPromptText).toContain('repo-fixability judgment');
+
+    const skillReview = join(cwd, '.agents/skills/kiro-review/SKILL.md');
+    expect(await exists(skillReview)).toBe(true);
+    const skillReviewText = await readFile(skillReview, 'utf8');
+    expect(skillReviewText).toContain('task-local adversarial review');
+    expect(skillReviewText).toContain('RED phase');
+    expect(skillReviewText).toContain('MECHANICAL_RESULTS');
+
+    const skillDebug = join(cwd, '.agents/skills/kiro-debug/SKILL.md');
+    expect(await exists(skillDebug)).toBe(true);
+    const skillDebugText = await readFile(skillDebug, 'utf8');
+    expect(skillDebugText).toContain('root cause investigation');
+    expect(skillDebugText).toContain('Search the Web if Available');
+    expect(skillDebugText).toContain('NEXT_ACTION: RETRY_TASK | BLOCK_TASK | STOP_FOR_HUMAN');
+    expect(skillDebugText).toContain('TASK_ORDERING_PROBLEM');
+
+    const skillVerifyCompletion = join(cwd, '.agents/skills/kiro-verify-completion/SKILL.md');
+    expect(await exists(skillVerifyCompletion)).toBe(true);
+    const skillVerifyCompletionText = await readFile(skillVerifyCompletion, 'utf8');
+    expect(skillVerifyCompletionText).toContain('fresh evidence');
+    expect(skillVerifyCompletionText).toContain('FEATURE_GO');
+    expect(skillVerifyCompletionText).toContain('MANUAL_VERIFY_REQUIRED');
 
     // every skill has agents/openai.yaml
     for (const skill of expectedSkills) {

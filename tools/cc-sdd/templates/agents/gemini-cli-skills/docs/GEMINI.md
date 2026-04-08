@@ -29,7 +29,7 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
 
 ## Minimal Workflow
 - Phase 0 (optional): `/kiro-steering`, `/kiro-steering-custom`
-- Brainstorm: `/kiro-brainstorm "idea"` — determines action path, writes brief.md + roadmap.md for multi-spec projects
+- Discovery: `/kiro-discovery "idea"` — determines action path, writes brief.md + roadmap.md for multi-spec projects
 - Phase 1 (Specification):
   - Single spec: `/kiro-spec-quick {feature} [--auto]` or step by step:
     - `/kiro-spec-init "description"`
@@ -41,7 +41,7 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
   - Multi-spec: `/kiro-spec-batch` — creates all specs from roadmap.md in parallel by dependency wave
 - Phase 2 (Implementation): `/kiro-impl {feature} [tasks]`
   - Without task numbers: autonomous mode (subagent per task + independent review + final validation)
-  - With task numbers: manual mode (selected tasks only in main context)
+  - With task numbers: manual mode (selected tasks in main context, still reviewer-gated before completion)
   - `/kiro-validate-impl {feature}` (standalone re-validation)
 - Progress check: `/kiro-spec-status {feature}` (use anytime)
 
@@ -51,6 +51,9 @@ Skills are located in `.gemini/skills/kiro-*/SKILL.md`
 - Use `/skills` to inspect currently available skills
 - Invoke a skill directly with `/kiro-<skill-name>`
 - **If there is even a 1% chance a skill applies to the current task, invoke it.** Do not skip skills because the task seems simple.
+- `kiro-review` — task-local adversarial review protocol used by reviewer subagents
+- `kiro-debug` — root-cause-first debug protocol used by debugger subagents
+- `kiro-verify-completion` — fresh-evidence gate before success or completion claims
 
 ## Multi-Agent
 Gemini CLI supports agent-as-tool for sub-agent dispatch. Skills with "Parallel Research" sections list independent work items that benefit from sub-agent spawning.

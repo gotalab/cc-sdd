@@ -79,13 +79,13 @@ Need to re-run just one phase? Mention `@agents-spec-design`, `@agents-spec-task
 
 Skills mode (3.0) uses a fundamentally different subagent approach from the `--claude-agent` mode described above. Both are valid modes; choose the one that fits your workflow.
 
-### Entry Point: `/kiro-brainstorm`
+### Entry Point: `/kiro-discovery`
 
-In skills mode, `/kiro-brainstorm` is the recommended entry point for new work. It presents four action paths (A: new feature, B: enhance existing, C: fix bug, D: refactor/chore) and produces `brief.md` + `roadmap.md`. The brief persists across sessions for context continuity.
+In skills mode, `/kiro-discovery` is the recommended entry point for new work. It routes the request into one of four outcomes: extend an existing spec, implement directly with no spec, create one new spec, or decompose the work into multiple specs. For new single-spec or multi-spec work it writes `brief.md` and, when needed, `roadmap.md`, so the next step can resume with persisted context.
 
 ### Parallel Spec Creation: `/kiro-spec-batch`
 
-`/kiro-spec-batch` creates multiple specs in parallel from the roadmap produced by brainstorm. After generation, it runs a **cross-spec review** to catch contradictions, duplicated responsibilities, and interface mismatches. For Codex installs (`--codex-skills`), the cross-spec reviewer is defined in `.codex/agents/spec-reviewer.toml`.
+`/kiro-spec-batch` creates multiple specs in parallel from the roadmap produced by discovery. After generation, it runs a **cross-spec review** to catch contradictions, duplicated responsibilities, and interface mismatches. For Codex installs (`--codex-skills`), the cross-spec reviewer is defined in `.codex/agents/spec-reviewer.toml`.
 
 ### How Skills Mode Dispatches Subagents
 
@@ -103,7 +103,7 @@ Unlike `--claude-agent` mode, which relies on pre-defined subagent definitions i
 
 | Consideration | `--claude-agent` | `--claude-skills` / `--codex-skills` |
 |--------------|------------------|--------------------------------------|
-| Brainstorm | N/A | `/kiro-brainstorm` entry point with action paths |
+| Discovery | N/A | `/kiro-discovery` skills-mode entry point for routing/scoping and next-step selection |
 | Spec generation (spec-quick) | Subagent-accelerated | Same spec commands |
 | Parallel spec batch | N/A | `/kiro-spec-batch` with cross-spec review |
 | Implementation dispatch | Manual via `/kiro:spec-impl` | Autonomous or manual via `/kiro-impl` |

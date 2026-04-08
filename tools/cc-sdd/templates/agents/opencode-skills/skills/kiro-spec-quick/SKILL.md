@@ -14,12 +14,15 @@ In Automatic Mode:
 - Execute ALL 4 phases in a continuous loop without stopping
 - Display progress after each phase (e.g., "Phase 1/4 complete: spec initialized")
 - IGNORE any "Next Step" messages from Phase 2-4 (they are for standalone usage)
-- Stop ONLY after Phase 4 completes or if error occurs
+- After Phase 4, run the final sanity review before exiting
+- Stop ONLY after the sanity review completes or if error occurs
 
 ---
 
 ## Core Task
 Execute 4 spec phases sequentially. In automatic mode, execute all phases without stopping. In interactive mode, prompt user for approval between phases.
+
+Before claiming quick generation is complete, run one lightweight sanity review over the generated requirements, design, and tasks. If the host supports fresh sub-agents, use one. Otherwise run the sanity review inline.
 
 ## Execution Steps
 
@@ -49,7 +52,7 @@ Execute these 4 phases in order:
 **Core Logic**:
 
 1. **Check for Brief**:
-   - If `{{KIRO_DIR}}/specs/{feature-name}/brief.md` exists (created by `/kiro-brainstorm`), read it for brainstorm context (problem, approach, scope, constraints)
+   - If `{{KIRO_DIR}}/specs/{feature-name}/brief.md` exists (created by `/kiro-discovery`), read it for discovery context (problem, approach, scope, constraints)
    - Use brief content as the project description instead of `$ARGUMENTS`
 
 2. **Generate Feature Name**:
@@ -59,11 +62,11 @@ Execute these 4 phases in order:
 
 3. **Check Uniqueness**:
    - Use Glob to check `{{KIRO_DIR}}/specs/*/`
-   - If directory exists with only `brief.md` (no `spec.json`), use that directory (brainstorm created it)
+   - If directory exists with only `brief.md` (no `spec.json`), use that directory (discovery created it)
    - Otherwise if feature name exists, append `-2`, `-3`, etc.
 
 4. **Create Directory**:
-   - Use Bash: `mkdir -p {{KIRO_DIR}}/specs/{feature-name}` (skip if already exists from brainstorm)
+   - Use Bash: `mkdir -p {{KIRO_DIR}}/specs/{feature-name}` (skip if already exists from discovery)
 
 5. **Initialize Files from Templates**:
 
@@ -137,7 +140,20 @@ Wait for completion.
 
 **Output Progress**: "Phase 4/4 complete: Tasks generated"
 
-**All 4 phases complete. Loop is DONE.**
+#### Final Sanity Review
+
+After Phase 4, run a lightweight sanity review before claiming completion.
+
+- Review `requirements.md`, `design.md`, and `tasks.md` directly from disk. If `brief.md` exists, use it only as supporting context.
+- Prefer a fresh review sub-agent when the host supports it. Pass only file paths and the review objective; the reviewer should read the generated files itself.
+- Review focus:
+  - Do requirements, design, and tasks tell a coherent story?
+  - Are there obvious contradictions, missing prerequisites, or missing task coverage for required design work?
+  - Are `_Depends:_`, `_Boundary:_`, and `(P)` markers plausible for implementation?
+- If the review finds only task-plan-local issues, repair or update the generated `tasks.md` once, then re-run the sanity review.
+- If the review finds a real requirements/design gap or contradiction, stop and report follow-up instead of claiming the quick spec is implementation-ready.
+
+**All 4 phases plus sanity review complete.**
 
 Output final completion summary (see Output Description section) and exit.
 
@@ -170,6 +186,7 @@ Quick Spec Generation (Automatic Mode)
 
 All phases execute automatically without prompts.
 Note: Skips optional validations (gap analysis, design review) and user approval prompts. Internal review gates still run.
+Final sanity review still runs.
 ```
 
 ### Intermediate Output
@@ -198,6 +215,8 @@ Quick generation skipped:
 - `/kiro-validate-gap` - Gap analysis (integration check)
 - `/kiro-validate-design` - Design review (architecture validation)
 
+Sanity review: PASSED | FOLLOW-UP REQUIRED
+
 ## Next Steps:
 1. Review generated specs (especially design.md)
 2. Optional validation:
@@ -225,6 +244,11 @@ Quick generation skipped:
 - Stop workflow
 - Show current state and completed phases
 - Suggest: "Continue manually from `/kiro-spec-{next-phase} {feature}`"
+
+**Sanity Review Failed**:
+- Stop workflow
+- Report the exact contradiction, missing prerequisite, or task-plan issue
+- Suggest targeted follow-up with `/kiro-spec-design {feature}`, `/kiro-spec-tasks {feature}`, or manual edits depending on the finding
 
 **User Cancellation** (Interactive Mode):
 - Stop gracefully

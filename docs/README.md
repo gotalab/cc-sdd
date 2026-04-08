@@ -12,6 +12,7 @@ Quick pointers to the most relevant guides, workflows, and historical notes for 
 ## Deep Dives (WIP)
 
 - [Spec-Driven Development Workflow](guides/spec-driven.md)
+- [Skill Reference](guides/skill-reference.md)
 - [Claude Code Subagents Workflow](guides/claude-subagents.md)
 
 ## Legacy Reference (Archived)

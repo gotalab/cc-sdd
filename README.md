@@ -23,6 +23,12 @@ cc-sdd turns approved specs into executable work instead of leaving them as pass
 - ✅ **Review and final validation flows are built in** — The system is designed to re-check work, remediate concrete findings, and stop honestly when work is blocked or not ready to claim complete
 - ✅ **Team-aligned templates keep adoption practical** — Customize once and generated requirements, design reviews, tasks, and steering docs fit your approval process
 
+### Core ideas
+- **Boundary-first** — Specs are most useful when they make responsibility boundaries and contracts explicit enough that teams and agents can work independently.
+- **Spec-centered, mechanically grounded** — Markdown specs carry intent, scope, and boundaries, while tests, builds, linting, and runtime checks keep that intent connected to reality.
+- **Change-friendly by design** — cc-sdd stays intentionally simple and customizable so teams can adapt templates, rules, and workflows to fit their own operating model.
+- **Autonomy with explicit stopping points** — `/kiro-impl` can execute `tasks.md` task by task through TDD and review, but it is designed to stop when human approval, clarification, or judgment is genuinely needed.
+
 ### Why Agent Skills matter:
 - Agent Skills package workflow instructions, domain knowledge, playbooks, and tool restrictions into composable units instead of scattering them across ad hoc docs
 - The same skills-based workflow works across Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity
@@ -39,21 +45,29 @@ npx cc-sdd@latest
 # Choose a different agent with flags like --codex-skills, --cursor-skills, or --windsurf-skills.
 ```
 
-Then start with:
+Then start with one of these:
 
 ```bash
-/kiro:brainstorm <idea>                # Optional: explore and refine ideas first
-/kiro:spec-init <what-to-build>
-/kiro:spec-requirements <feature-name>
-/kiro:spec-design <feature-name>
-/kiro:spec-tasks <feature-name>
+/kiro-discovery <idea>                # Skills mode: the safest entry point for any new work
+/kiro:spec-init <what-to-build>       # Legacy mode: direct entry point
 ```
 
-For larger approved task sets, run `/kiro-impl` to start autonomous implementation with per-task subagent dispatch and review.
+If you are using skills mode and are not sure where to start, start with `kiro-discovery`.
 
-**Installation takes 30 seconds.** 8 skills-based agents (Claude, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity) with 14 skills each × 13 languages. Legacy command modes also available but deprecated.
+### Common workflows
 
-📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
+| You want to... | Skills mode | Legacy mode |
+|----------|----------|----------|
+| Start a new feature or product-sized idea | `kiro-discovery` → `kiro-spec-init` → `kiro-spec-requirements` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:spec-init` → `kiro:spec-requirements` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
+| Extend an existing system | `kiro:steering` → `kiro-discovery` or `kiro:spec-init` → optional `kiro:validate-gap` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:steering` → `kiro:spec-init` → optional `kiro:validate-gap` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
+| Break down a large initiative | `kiro-discovery` → `kiro-spec-batch` | Not available |
+| Implement a small change with no spec | `kiro-discovery` → direct implementation | Direct implementation |
+
+For larger approved task sets, run `kiro-impl` to start autonomous implementation with per-task subagent dispatch, review, and final validation gates.
+
+**Installation takes 30 seconds.** 8 skills-based agents (Claude, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity) × 13 languages. Legacy command modes also available but deprecated.
+
+📖 **Next steps:** [All installation options](#%EF%B8%8F-advanced-installation) | [Skill Reference](docs/guides/skill-reference.md) | [Command Reference](docs/guides/command-reference.md) | [Spec-Driven Guide](docs/guides/spec-driven.md)
 
 ## 📋 See It In Action
 
@@ -75,15 +89,25 @@ Want to inspect a complex, large-scale requirements set? Jump to the advanced [c
 
 ![Example: design.md System Flow](assets/design-system_flow.png)
 
-## 🎯 Use Cases
+## 🎯 Workflow Entry Points
 
 | Scenario | Workflow |
 |----------|----------|
-| **New feature (greenfield)** | (`brainstorm` →) `spec-init` → `spec-requirements` → `spec-design` → `spec-tasks` → `kiro-impl` |
-| **Enhance existing code (brownfield)** | `steering` → (`brainstorm` →) `spec-init` → (`validate-gap` →) `spec-design` → (`validate-design` →) `spec-tasks` → `kiro-impl` |
-| **Rapid ideation** | `brainstorm` → explore and refine ideas → `spec-init` when ready |
-| **Batch spec generation** | `spec-batch` → generate requirements, design, and tasks in one pass |
-| **Team process alignment** | Customize templates once in `.kiro/settings/templates/` → all agents follow same format |
+| **New work (feature to initiative)** | Skills mode: `discovery` → `spec-init` → `spec-requirements` → `spec-design` → `spec-tasks` → `kiro-impl`; legacy: `spec-init` → `spec-requirements` → `spec-design` → `spec-tasks` |
+| **Enhance existing code (brownfield)** | Skills mode: `steering` → `discovery` or `spec-init` → optional `validate-gap` → `spec-design` → optional `validate-design` → `spec-tasks` → `kiro-impl`; legacy: `steering` → `spec-init` → optional `validate-gap` → `spec-design` → optional `validate-design` → `spec-tasks` |
+| **Discovery and scoping** | Skills mode only: `discovery` → route the work, refine scope, and write `brief.md` / `roadmap.md` → stop with the correct next command |
+| **Batch spec generation** | `spec-batch` → generate requirements, design, and tasks in one pass from roadmap-driven briefs |
+| **Team process alignment** | Customize templates once in `.kiro/settings/templates/` → all agents follow the same workflow |
+
+### After Discovery
+
+`kiro-discovery` is the entry point for new work in skills mode. It should help the user answer one question first: "What should happen next?" After routing the work and writing persistent files, it should stop.
+
+- Existing spec: continue with `kiro-spec-requirements {feature}`
+- No spec needed: implement directly
+- Single spec: default to `kiro-spec-init <feature>`; use `kiro-spec-quick <feature>` only when you intentionally want the fast path
+- Multi-spec: default to `kiro-spec-batch`; use `kiro-spec-init <first-feature>` first if you want to validate one slice before batching the rest
+- Mixed decomposition: let discovery separate existing-spec updates, new specs, and direct-implementation candidates before choosing the next step
 
 ## 🎨 Customization
 
@@ -101,15 +125,15 @@ Common use cases: PRD-style requirements, API/database schemas, approval gates, 
 ### Choose Your Agent (Skills Mode — Recommended)
 
 ```bash
-npx cc-sdd@latest                     # Claude Code Skills (default, 14 skills)
+npx cc-sdd@latest                     # Claude Code Skills (default, 17 skills)
 npx cc-sdd@latest --claude-skills     # Claude Code Skills
-npx cc-sdd@latest --codex-skills      # Codex CLI Skills (14 skills)
-npx cc-sdd@latest --cursor-skills     # Cursor IDE Skills (14 skills)
-npx cc-sdd@latest --copilot-skills    # GitHub Copilot Skills (14 skills)
-npx cc-sdd@latest --windsurf-skills   # Windsurf IDE Skills (14 skills)
-npx cc-sdd@latest --opencode-skills   # OpenCode Skills (14 skills)
-npx cc-sdd@latest --gemini-skills     # Gemini CLI Skills (14 skills)
-npx cc-sdd@latest --antigravity       # Antigravity Skills (14 skills)
+npx cc-sdd@latest --codex-skills      # Codex CLI Skills (17 skills)
+npx cc-sdd@latest --cursor-skills     # Cursor IDE Skills (17 skills)
+npx cc-sdd@latest --copilot-skills    # GitHub Copilot Skills (17 skills)
+npx cc-sdd@latest --windsurf-skills   # Windsurf IDE Skills (17 skills)
+npx cc-sdd@latest --opencode-skills   # OpenCode Skills (17 skills)
+npx cc-sdd@latest --gemini-skills     # Gemini CLI Skills (17 skills)
+npx cc-sdd@latest --antigravity       # Antigravity Skills (17 skills)
 ```
 
 ### Legacy Modes (Deprecated — will be removed)
@@ -154,7 +178,8 @@ npx cc-sdd@latest --kiro-dir docs
 
 | Guide | What You'll Learn | Links |
 |-------|-------------------|-------|
-| **Command Reference** | All 11 `/kiro:*` commands with detailed usage, parameters, and examples | [English](docs/guides/command-reference.md) \| [日本語](docs/guides/ja/command-reference.md) |
+| **Skill Reference** | Skills-mode workflow, supporting skills, and when to use each one | [English](docs/guides/skill-reference.md) \| [日本語](docs/guides/ja/skill-reference.md) |
+| **Command Reference** | Legacy `/kiro:*` commands with detailed usage, parameters, and examples | [English](docs/guides/command-reference.md) \| [日本語](docs/guides/ja/command-reference.md) |
 | **Customization Guide** | 7 practical examples: PRD requirements, frontend/backend designs, JIRA integration | [English](docs/guides/customization-guide.md) \| [日本語](docs/guides/ja/customization-guide.md) |
 | **Spec-Driven Guide** | Complete workflow methodology from requirements to implementation | [English](docs/guides/spec-driven.md) \| [日本語](docs/guides/ja/spec-driven.md) |
 | **Claude Subagents** | Advanced: Using 9 specialized subagents for complex projects | [English](docs/guides/claude-subagents.md) \| [日本語](docs/guides/ja/claude-subagents.md) |
