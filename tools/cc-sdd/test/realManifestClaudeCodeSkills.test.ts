@@ -52,7 +52,7 @@ describe('real claude-code-skills manifest', () => {
     const doc = join(cwd, 'CLAUDE.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
-    expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
+    expect(text).toMatch(/# Agentic SDLC and Spec-Driven Development/);
     expect(text).toContain('/kiro-spec-status');
     expect(text).not.toContain('/kiro:spec-status');
     expect(text).toContain('autonomous mode');

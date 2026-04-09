@@ -9,7 +9,7 @@ import type { FileOperation } from './fileOperations.js';
 export const SHARED_RULES_DIR = 'templates/shared/settings/rules';
 
 export const parseSharedRules = (content: string): string[] => {
-  const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+  const fmMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!fmMatch) return [];
 
   const frontmatter = fmMatch[1];

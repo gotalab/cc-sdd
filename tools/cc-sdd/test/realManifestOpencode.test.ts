@@ -52,7 +52,7 @@ describe('real opencode manifest', () => {
     const doc = join(cwd, 'AGENTS.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
-    expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
+    expect(text).toMatch(/# Agentic SDLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
     const cmd = join(cwd, '.opencode/commands/kiro-spec-init.md');
@@ -88,7 +88,7 @@ describe('real opencode manifest (linux)', () => {
     const doc = join(cwd, 'AGENTS.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
-    expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
+    expect(text).toMatch(/# Agentic SDLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
     const cmd = join(cwd, '.opencode/commands/kiro-spec-init.md');

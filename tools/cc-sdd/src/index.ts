@@ -225,7 +225,7 @@ export const runCli = async (
     return 1;
   }
 
-  parsedArgs.agent = await ensureAgentSelection(parsedArgs.agent, io);
+  parsedArgs.agent = await ensureAgentSelection(parsedArgs.agent ?? loadedConfig.agent, io);
 
   if (parsedArgs.agent === 'codex') {
     io.log('');

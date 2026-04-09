@@ -70,7 +70,7 @@ describe('real codex-skills manifest', () => {
     const doc = join(cwd, 'AGENTS.md');
     expect(await exists(doc)).toBe(true);
     const docText = await readFile(doc, 'utf8');
-    expect(docText).toMatch(/# AI-DLC and Spec-Driven Development/);
+    expect(docText).toMatch(/# Agentic SDLC and Spec-Driven Development/);
     expect(docText).toContain('$kiro-spec-status');
     expect(docText).not.toContain('/prompts:kiro-spec-status');
     expect(docText).toContain('autonomous mode');

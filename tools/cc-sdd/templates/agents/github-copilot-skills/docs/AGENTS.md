@@ -1,6 +1,6 @@
-# AI-DLC and Spec-Driven Development
+# Agentic SDLC and Spec-Driven Development
 
-Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life Cycle)
+Kiro-style Spec-Driven Development on an agentic SDLC
 
 ## Project Memory
 Project memory keeps persistent guidance (steering, specs notes, component docs) so GitHub Copilot honors your standards each run. Treat it as the long-lived source of truth for patterns, conventions, and decisions.

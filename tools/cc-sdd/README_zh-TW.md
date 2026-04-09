@@ -8,264 +8,203 @@
 <a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
-✨ **把已核准規格轉成長時間自律實作工作流。最小、易調整的 SDD harness。**
+**把已核准規格轉成長時間自律實作工作流。** 單一指令將 agentic SDLC 工作流安裝為 Agent Skills: discovery, requirements, design, tasks 以及帶有任務級別 independent review 的自律實作。支援 8 個 AI coding agent，每個平台使用相同的 17-skill 套件。
 
-👻 **Kiro 相容** — Kiro IDE 的 Spec-Driven / AI-DLC 風格互通。既有 Kiro 規格可直接使用。
+👻 **Kiro 風格。** Kiro IDE 的 spec-driven / agentic SDLC 風格。既有 Kiro 規格可直接使用。
 
-cc-sdd 把已核准規格轉成可執行工作流：需求 → 設計 → 任務 → 自律實作 + 對抗式審查 + 最終驗證。規格不是用來讀的文件，而是直接控制每個階段行為的機制。
+## v3.0 的新功能
 
-**為什麼選 cc-sdd:**
-- ✅ **規格可執行** — 每個 artifact（需求、設計、任務）直接控制下一階段。File Structure Plan 驅動任務邊界，Task Brief 驅動實作，git diff 驅動審查
-- ✅ **長時間自律實作** — `/kiro-impl` 為每個任務執行 TDD (Feature Flag Protocol) + fresh implementer + 獨立審查者 + 失敗時自動 debug + 任務間知見傳遞。無外部依賴
-- ✅ **從小需求到產品級規模都適用** — `/kiro-discovery` 是新工作入口，從單一功能到多個 spec 的大型 initiative 都能處理。`/kiro-spec-batch` 平行建立所有 spec + cross-spec 一致性驗證
-- ✅ **自訂一次，隨模型進化調整** — 17 個 skills，共享規則為 single source of truth。團隊模板貼合批准流程。模型進化時可輕量化 harness
+cc-sdd v3.0 是圍繞 Agent Skills 與長時間自律實作的重寫。
 
-**為什麼 Agent Skills:**
-- Skills 是按需載入的可組合單位（progressive disclosure）
-- 同一套工作流適用於 Claude Code、Codex、Cursor、Copilot、Windsurf、OpenCode、Gemini CLI、Antigravity
-- Skills 模式為推薦安裝 — 舊版命令模式將在未來移除
+- **`/kiro-discovery` 作為新入口。** discovery 把新需求路由到「擴充既有 spec / 直接實作 / 建立一個新 spec / 拆成多個 spec / mixed decomposition」其中之一。它會寫入 `brief.md` 以及必要時的 `roadmap.md`，讓你可以在不重新說明 scope 的情況下恢復工作。
+- **`/kiro-impl` 執行長時間自律實作。** 每個任務由 fresh implementer 在 feature flag 後執行 TDD (RED → GREEN)，獨立的 reviewer 做機械驗證，失敗時由 auto-debug pass 在乾淨 context 中調查根本原因。任務間的知見透過 `tasks.md` 的 `## Implementation Notes` 傳給下一個 implementer。每次迭代處理 1 個任務，中斷後再執行也安全。
+- **邊界優先的 spec discipline。** `design.md` 新增 File Structure Plan，成為任務邊界的依據。任務帶有 `_Boundary:_` / `_Depends:_` 標註。review 與 validation 尋找邊界違規而非僅看風格。
+- **`/kiro-spec-batch` 支援多 spec initiative。** 從 roadmap 並行產生多個 spec，並執行 cross-spec review 以捕捉 spec 間矛盾、責務重複與介面不一致。
+- **Agent Skills 橫跨 8 個 AI coding agent。** 每次安裝 17 個 skills、按需載入（progressive disclosure）。Claude Code 與 Codex 為 stable；Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity 為 beta。零外部依賴，subagent 透過各平台原生 spawn 啟動。
 
-> 規格，從讀的文件變成執行的工具。
+Skills 模式完整工作流與 `/kiro-impl` 內部細節請參考 [Skill Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/skill-reference.md)。
 
-> 只想看安裝？跳到 [安裝](#-安裝)。若要維持 1.1.5，使用 `npx cc-sdd@1.1.5 --claude-code ...`；升級 v2.0.0 請參考 [Migration Guide](../../docs/guides/migration-guide.md) ｜ [日文版](../../docs/guides/ja/migration-guide.md)。
+從 v1.x 或 v2.x 升級？請參考 [Migration Guide](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/migration-guide.md#5-v2x-to-v30)。
 
-## 🚀 安裝
+## 為什麼選 cc-sdd
 
-只需一個指令，即可為主要 AI 程式代理匯入 **AI-DLC（AI Driven Development Life Cycle）× SDD（Spec-Driven Development）** 工作流程。需求、設計、任務、指導文件與長時間實作迴圈也會同步建立，並對齊團隊既有批准流程。
+cc-sdd 把 spec 視為系統各部分之間的契約，不是交給代理的「命令文件」。程式碼仍然是 source of truth，spec 是用來讓程式碼各部分之間的契約變得明確，讓人類與代理可以平行工作而不需要持續同步。
+
+賭注很簡單: 適當粒度的明確契約會讓團隊規模的 AI 驅動開發變得更快，而不是更慢。代理寫 spec，人類在 phase gate 核准契約，真正出貨的是程式碼。
+
+邊界不是額外負擔，邊界的存在讓你可以在內部自由移動，同時保護外部。
+
+完整的設計理由、取捨、適用與不適用情境: [Why cc-sdd? A philosophy note](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/why-cc-sdd.md)（英文版）。
+
+## 快速開始
 
 ```bash
-# 基本安裝（預設：英文文件，Claude Code Skills 代理）
+cd your-project
 npx cc-sdd@latest
+```
 
-# 語言選項（預設：--lang en）
+預設會安裝 **Claude Code Skills** 與英文文件。若要指定其他代理或語言:
+
+```bash
+npx cc-sdd@latest --codex-skills --lang ja      # Codex, 日語
+npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE, 繁體中文
+```
+
+支援 8 個 AI coding agent（Claude Code 與 Codex 為 stable；Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity 為 beta）和 13 種語言。完整列表請參考 [支援的代理](#支援的代理)。
+
+然後在你的代理裡執行:
+
+```bash
+/kiro-discovery <想做的事情>
+```
+
+不確定從哪裡開始？先執行 `kiro-discovery`。它會幫你整理需求並告訴你下一步該用什麼指令。
+
+### 常見工作流
+
+| 你想做的事 | Skills 模式 |
+|---|---|
+| 開始新功能或產品規模的構想 | `kiro-discovery` → `kiro-spec-init` → `kiro-spec-requirements` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` |
+| 擴充既有系統 | `kiro-steering` → `kiro-discovery` 或 `kiro-spec-init` → 可選 `kiro-validate-gap` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` |
+| 分解大型 initiative | `kiro-discovery` → `kiro-spec-batch` |
+| 不需要 spec 的小改動 | `kiro-discovery` → 直接實作 |
+
+舊版 `/kiro:*` 指令模式（`--claude`, `--cursor` 等）仍然可用但已棄用。升級方式請參考 [Migration Guide](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/migration-guide.md)。
+
+對較大規模的已核准任務集合，執行 `kiro-impl` 會以任務級別的 subagent spawn、independent review、失敗時 auto-debug 開始自律實作。
+
+## 實際操作
+
+範例: 建立一個新的 Photo Albums 功能。
+
+```bash
+/kiro-discovery Photo albums with upload, tagging, and sharing
+# discovery 會寫入 brief.md（多 spec 時還會寫 roadmap.md）並提示下一個指令
+/kiro-spec-init photo-albums
+/kiro-spec-requirements photo-albums
+/kiro-spec-design photo-albums
+/kiro-spec-tasks photo-albums
+/kiro-impl photo-albums
+# 自律執行: 每個任務使用 fresh implementer, independent reviewer, auto-debug
+```
+
+spec 階段的典型產出（10 分鐘以內）:
+
+- `requirements.md`: EARS 格式的需求與驗收條件。
+- `design.md`: 附有 Mermaid 圖與 File Structure Plan 的架構文件。
+- `tasks.md`: 帶有邊界與相依性標註的實作任務。
+
+接著 `/kiro-impl` 會以 feature flag 後的 TDD (RED → GREEN)、獨立的 reviewer pass 以及失敗時的 auto-debug 自律執行任務。
+
+## 支援的代理
+
+全部 8 個 skills variant 提供相同的 17-skill 套件。差異在於各平台整合累積了多少實戰驗證。
+
+| 代理 | Skills 模式 | 穩定度 | 舊版模式 |
+|---|---|---|---|
+| **Claude Code** | `--claude-skills` | Stable | `--claude` / `--claude-agent`（已棄用） |
+| **Codex** | `--codex-skills` | Stable | `--codex`（已封鎖） |
+| **Cursor IDE** | `--cursor-skills` | Beta | `--cursor`（已棄用） |
+| **GitHub Copilot** | `--copilot-skills` | Beta | `--copilot`（已棄用） |
+| **Windsurf IDE** | `--windsurf-skills` | Beta | `--windsurf`（已棄用） |
+| **OpenCode** | `--opencode-skills` | Beta | `--opencode` / `--opencode-agent`（已棄用） |
+| **Gemini CLI** | `--gemini-skills` | Beta | `--gemini`（已棄用） |
+| **Antigravity** | `--antigravity` | Beta (experimental) | — |
+| **Qwen Code** | — | — | `--qwen` |
+
+這裡的 "Beta" 不代表「功能不完整」。所有 8 個平台共用相同的 17 skills 與模板。Beta 指的是平台整合（subagent spawn 行為、操作感、`SKILL.md` 載入）相較於 Claude Code 與 Codex 的實戰驗證較少，可能仍有邊界狀況。若遇到問題請至 [Issues](https://github.com/gotalab/cc-sdd/issues) 回報。
+
+## 安裝詳情
+
+### 語言
+
+```bash
 npx cc-sdd@latest --lang zh-TW # 繁體中文
 npx cc-sdd@latest --lang ja    # 日語
 npx cc-sdd@latest --lang es    # 西班牙語
-...（支援語言：en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el）
-
-# 代理選項（預設：claude-code-skills / --claude-skills）
-# Skills 模式（建議）
-npx cc-sdd@latest --claude-skills --lang zh-TW     # Claude Code Skills（預設，17 個技能）
-npx cc-sdd@latest --codex-skills --lang zh-TW      # Codex CLI Skills（17 個技能）
-npx cc-sdd@latest --cursor-skills --lang zh-TW     # Cursor IDE Skills（17 個技能）
-npx cc-sdd@latest --copilot-skills --lang zh-TW    # GitHub Copilot Skills（17 個技能）
-npx cc-sdd@latest --windsurf-skills --lang zh-TW   # Windsurf IDE Skills（17 個技能）
-npx cc-sdd@latest --opencode-skills --lang zh-TW   # OpenCode Skills（17 個技能）
-npx cc-sdd@latest --gemini-skills --lang zh-TW     # Gemini CLI Skills（17 個技能）
-npx cc-sdd@latest --antigravity --lang zh-TW       # Antigravity Skills（17 個技能）
-# 舊版模式（已棄用 — 將在未來版本移除）
-npx cc-sdd@latest --claude --lang zh-TW        # 請改用 --claude-skills
-npx cc-sdd@latest --cursor --lang zh-TW        # 請改用 --cursor-skills
-npx cc-sdd@latest --copilot --lang zh-TW       # 請改用 --copilot-skills
-npx cc-sdd@latest --windsurf --lang zh-TW      # 請改用 --windsurf-skills
-npx cc-sdd@latest --opencode --lang zh-TW      # 請改用 --opencode-skills
-npx cc-sdd@latest --gemini --lang zh-TW        # 請改用 --gemini-skills
-npx cc-sdd@latest --qwen --lang zh-TW          # Qwen Code
-
-# 注意：@next 現已保留給未來的 alpha/beta 版本
+# 支援語言: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el
 ```
 
-## 🌐 支援語言
+### 舊版模式（已棄用）
 
-| 語言 | 代碼 |  |
-|------|------|------|
-| 英語 | `en` | 🇬🇧 |
-| 日語 | `ja` | 🇯🇵 |
-| 繁體中文 | `zh-TW` | 🇹🇼 |
-| 簡體中文 | `zh` | 🇨🇳 |
-| 西班牙語 | `es` | 🇪🇸 |
-| 葡萄牙語 | `pt` | 🇵🇹 |
-| 德語 | `de` | 🇩🇪 |
-| 法語 | `fr` | 🇫🇷 |
-| 俄語 | `ru` | 🇷🇺 |
-| 義大利語 | `it` | 🇮🇹 |
-| 韓語 | `ko` | 🇰🇷 |
-| 阿拉伯語 | `ar` | 🇸🇦 |
-| 希臘語 | `el` | 🇬🇷 |
-
-**使用方法**: `npx cc-sdd@latest --lang <代碼>` (例如繁體中文使用 `--lang zh-TW`)
-
-## ✨ 快速開始
-
-### 先選工作流
-
-| 你想做的事 | Skills 模式 | 舊版模式 |
-| --- | --- | --- |
-| 開始新的工作（從功能到大型 initiative） | `kiro-discovery` → `kiro-spec-init` → `kiro-spec-requirements` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:spec-init` → `kiro:spec-requirements` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
-| 擴充既有系統 | `kiro:steering` → `kiro-discovery` 或 `kiro:spec-init` → 可選 `kiro:validate-gap` → `kiro-spec-design` → `kiro-spec-tasks` → `kiro-impl` | `kiro:steering` → `kiro:spec-init` → 可選 `kiro:validate-gap` → `kiro:spec-design` → `kiro:spec-tasks` → `kiro:spec-impl` |
-| 分解大型 initiative | `kiro-discovery` → `kiro-spec-batch` | 不支援 |
-| 直接做小改動 | `kiro-discovery` → 直接實作 | 直接實作 |
-
-### 新專案
 ```bash
-# Skills 模式：第一次使用時建議從這裡開始
-/kiro-discovery 使用 OAuth 建構使用者認證系統
-
-# 舊版模式
-/kiro:spec-init 使用 OAuth 建構使用者認證系統
+npx cc-sdd@latest --claude        # Claude Code 指令（請改用 --claude-skills）
+npx cc-sdd@latest --claude-agent  # Claude Code subagent（請改用 --claude-skills）
+npx cc-sdd@latest --cursor        # Cursor IDE 指令（請改用 --cursor-skills）
+npx cc-sdd@latest --copilot       # GitHub Copilot 提示（請改用 --copilot-skills）
+npx cc-sdd@latest --windsurf      # Windsurf IDE 工作流程（請改用 --windsurf-skills）
+npx cc-sdd@latest --opencode      # OpenCode 指令（請改用 --opencode-skills）
+npx cc-sdd@latest --gemini        # Gemini CLI 指令（請改用 --gemini-skills）
+npx cc-sdd@latest --qwen          # Qwen Code
 ```
 
-![design.md - System Flow Diagram](https://raw.githubusercontent.com/gotalab/cc-sdd/refs/heads/main/assets/design-system_flow.png)
-*Example of system flow during the design phase `design.md`*
-
-### 現有專案（建議）
-```bash
-# 首先建立專案上下文，然後進行開發
-/kiro:steering                                     # AI 學習現有專案上下文
-
-/kiro:spec-init 為現有認證新增 OAuth            # AI 建立強化計劃
-/kiro:spec-requirements oauth-enhancement          # AI 提出澄清問題
-/kiro:validate-gap oauth-enhancement               # 可選：分析現有 vs 需求
-/kiro:spec-design oauth-enhancement                # 人類驗證，AI 設計
-/kiro:validate-design oauth-enhancement            # 可選：驗證設計整合
-/kiro:spec-tasks oauth-enhancement                 # 分解為實作任務
-/kiro:spec-impl oauth-enhancement                  # 以 TDD 執行
-```
-
-**30 秒設定** → **AI 驅動「快速衝刺」（非衝刺）** → **小時交付結果**
-
-### Discovery 之後
-
-在 Skills 模式中，`kiro-discovery` 是第一次使用時最容易理解的入口。它不會替你一路跑到底，而是先決定應該走哪個 workflow，必要時寫入 `brief.md` / `roadmap.md`，給出下一個指令，然後停止。
-
-- Existing spec: 繼續執行 `kiro-spec-requirements {feature}`
-- 不需要 spec: 直接實作
-- Single spec: 預設走 `kiro-spec-init <feature>`；只有在明確想走 fast path 時才用 `kiro-spec-quick <feature>`
-- Multi-spec: 預設走 `kiro-spec-batch`；如果想先驗證第一個 slice，再執行 `kiro-spec-init <first-feature>`
-
-### 為何團隊選擇 cc-sdd
-1. **已核准規格會變成 executable work** — 需求、設計、任務與 supporting references 保持對齊，能直接驅動實作，而不是逐漸過期。
-2. **長時間自律實作** — per-task subagent dispatch + TDD + independent review + 失敗時自動 debug + 任務間知見傳遞。無需外部依賴，開箱即用。
-3. **Agent Skills 是更耐久的 surface** — 同一套 skill-based workflow 適用於 Claude Code、Codex、Cursor、Copilot、Windsurf、OpenCode、Gemini CLI、Antigravity。
-4. **內建審查與最終驗證流程** — 系統在宣告完成前，會朝著抓出 spec mismatch、placeholder 實作與 blocked state 的方向設計。
-5. **團隊化自訂只做一次** — 編輯 `.kiro/settings/templates/` 後，每個代理／slash command 都會反映你的工作流；非 skills 代理也會使用 `.kiro/settings/rules/`。
-
-## ✨ 主要功能
-
-- **📋 Spec-Governed Development** — 結構化規格（需求 → 研究 → 設計 → 任務）不是只有規劃用途，而是作為約束實作的 governing contract
-- **🔁 長時間自律實作** — 執行 `/kiro-impl` 後放手：TDD (Feature Flag Protocol) + fresh implementer + independent reviewer + 失敗時 auto-debug。任務間知見自動傳遞。無外部依賴
-- **✅ 審查 + 最終驗證流程** — 內建 task-local review、validation passes 與 final validation flow，朝 honest completion 與 NO-GO outcomes 前進
-- **🚀 AI-DLC 方法論** — AI 執行，人類在各階段驗證。[集中式「快衝」](https://aws.amazon.com/jp/blogs/news/ai-driven-development-life-cycle/)取代數周衝刺
-- **🧠 持久專案記憶** — 指導文件在所有會話間維持架構、模式、規則與領域知識
-- **🧩 Agent Skills 支援** — 每個指令都是自足的 [Agent Skill](https://agentskills.io)（SKILL.md + 工具限制 + 同置規則），設計上可延伸到更多 skills-capable agents
-- **🛠 一次自訂** — 編輯 `{{KIRO_DIR}}/settings/templates/` 即可反映至所有代理。8 代理 × 13 語言共享相同流程
-- **🌍 團隊就緒** — 跨平台、具品質關卡的標準化工作流程。`--codex` 已封鎖，請改用 `--codex-skills`
-
-## 🤖 支援的 AI 代理
-
-| 代理 | Skills 模式（建議） | 舊版模式 |
-|------|--------------------------|-------------|
-| **Claude Code** | `--claude-skills` — 17 個技能 | `--claude` / `--claude-agent`（已棄用） |
-| **Codex CLI** | `--codex-skills` — 17 個技能 | `--codex`（已封鎖） |
-| **Cursor IDE** | `--cursor-skills` — 17 個技能 | `--cursor`（已棄用） |
-| **GitHub Copilot** | `--copilot-skills` — 17 個技能 | `--copilot`（已棄用） |
-| **Windsurf IDE** | `--windsurf-skills` — 17 個技能 | `--windsurf`（已棄用） |
-| **OpenCode** | `--opencode-skills` — 17 個技能 | `--opencode` / `--opencode-agent`（已棄用） |
-| **Gemini CLI** | `--gemini-skills` — 17 個技能 | `--gemini`（已棄用） |
-| **Antigravity** | `--antigravity` — 17 個技能 | — |
-| **Qwen Code** | — | `--qwen` |
-
-## 📋 指令
-
-### 規格驅動開發工作流程（Specs 方法論）
-```bash
-/kiro:spec-init <description>             # 初始化功能規格
-/kiro:spec-requirements <feature_name>    # 產生需求
-/kiro:spec-design <feature_name>          # 建立技術設計
-/kiro:spec-tasks <feature_name>           # 分解為實作任務
-/kiro:spec-impl <feature_name> <tasks>    # 以 TDD 執行
-/kiro:spec-status <feature_name>          # 檢查進度
-```
-
-> **規格作為基礎**：基於 [Kiro 的規格驅動方法論](https://kiro.dev/docs/specs/) - 規格將隨意開發轉換為系統工作流程，在明確的 AI-人類協作點將想法與實作連接。
-
-> **Kiro IDE 整合**：規格可移植到 [Kiro IDE](https://kiro.dev) - 提供強化的實作保護欄和團隊協作功能。
-
-### 品質驗證（可選 - 棕地開發）
-```bash
-# spec-design 之前（分析現有功能 vs 需求）：
-/kiro:validate-gap <feature_name>         # 分析現有功能與需求間的差距
-
-# spec-design 之後（驗證設計與現有系統）：
-/kiro:validate-design <feature_name>      # 審查設計與現有架構的相容性
-```
-
-> **棕地開發可選**：`validate-gap` 分析現有 vs 所需功能；`validate-design` 檢查整合相容性。兩者都是現有系統的可選品質關卡。
-
-### 專案記憶與上下文（必要）
-```bash
-/kiro:steering                            # 建立/更新專案記憶與上下文
-/kiro:steering-custom                     # 新增專門領域知識
-```
-
-> **關鍵基礎指令**：指導建立持久專案記憶 - AI 在所有會話中使用的上下文、規則和架構。**現有專案先執行**以大幅提升規格品質。
-
-## 🎨 自訂
-
-可編輯 `{{KIRO_DIR}}/settings/templates/` 中的模板以符合工作流程。保留核心結構（需求編號、勾選框、標題）並新增團隊的上下文—AI 會自動適應。
-
-**常見自訂**:
-- **PRD 風格需求** - 包含業務上下文與成功指標
-- **前端/後端設計** - 針對 React 元件或 API 規格最佳化
-- **批准關卡** - 用於安全、架構或合規審查
-- **JIRA/Linear 就緒任務** - 含估算、優先級、標籤
-- **領域指導** - API 標準、測試慣例、編碼指南
-
-📖 **[自訂指南](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)** — 7 個實用範例與可複製程式碼片段
-
-
-## ⚙️ 設定
+### 進階選項
 
 ```bash
-# 語言與平台
-npx cc-sdd@latest --lang zh-TW             # macOS / Linux / Windows（自動偵測）
-npx cc-sdd@latest --lang zh-TW --os mac    # 保留的可選覆寫
-
-# 安全操作
+# 套用前先預覽變更
 npx cc-sdd@latest --dry-run --backup
 
-# 自訂目錄
+# 自訂 specs 目錄
 npx cc-sdd@latest --kiro-dir docs
 ```
 
-## 📁 專案結構
+## 自訂
 
-安裝後，專案將新增：
+編輯 `{{KIRO_DIR}}/settings/` 下的模板與規則以符合團隊工作流。
+
+- `templates/`: requirements, design, tasks 的文件結構。
+- `rules/`: AI 生成原則與判斷基準。
+
+常見使用情境: PRD 風格需求、API 與資料庫 schema、核准關卡、JIRA 整合、領域特定標準。
+
+實用範例與可複製程式碼片段請參考 [自訂指南](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md)。
+
+## 專案結構
+
+安裝後，專案將新增:
 
 ```
 project/
-├── .claude/skills/           # 17 個技能（Claude Code Skills 模式，預設）
-├── .claude/commands/kiro/    # 11 個斜線指令（Claude Code）
-├── .agents/skills/           # 17 個技能（Codex CLI Skills 模式）
-├── .codex/prompts/           # 11 個提示指令（Codex CLI — 已封鎖，請使用 skills）
-├── .github/prompts/          # 11 個提示指令（GitHub Copilot）
-├── .windsurf/workflows/      # 11 個工作流程檔案（Windsurf IDE）
+# Skills 模式（建議）: 僅會安裝其中之一
+├── .claude/skills/           # 17 skills（Claude Code Skills，預設）
+├── .agents/skills/           # 17 skills（Codex Skills）
+├── .cursor/skills/           # 17 skills（Cursor Skills）
+├── .github/skills/           # 17 skills（GitHub Copilot Skills）
+├── .windsurf/skills/         # 17 skills（Windsurf Skills）
+├── .opencode/skills/         # 17 skills（OpenCode Skills）
+├── .gemini/skills/           # 17 skills（Gemini CLI Skills）
+├── .agent/skills/            # 17 skills（Antigravity Skills）
+# 舊版指令模式（已棄用）
+├── .claude/commands/kiro/    # 11 斜線指令（--claude）
+├── .github/prompts/          # 11 提示指令（--copilot）
+├── .windsurf/workflows/      # 11 工作流程檔案（--windsurf）
+# 共用的專案記憶與 spec 狀態
 ├── .kiro/settings/templates/ # 共用模板（以 {{KIRO_DIR}} 展開）
-├── .kiro/settings/rules/     # 共用規則（非技能代理專用）
-├── .kiro/specs/             # 功能規格文件
-├── .kiro/steering/          # AI 指導文件
-└── CLAUDE.md (Claude Code)    # 專案設定
+├── .kiro/settings/rules/     # 共用規則（非 skills 代理使用）
+├── .kiro/specs/              # 功能規格文件
+├── .kiro/steering/           # AI 指導文件
+└── CLAUDE.md / AGENTS.md     # 專案設定（依代理而異）
 ```
 
-> 提醒：實際只會建立所選代理需要的目錄，上方樹狀圖僅示範整個超集合。
+實際只會建立所選代理需要的目錄，上方樹狀圖僅示範整個超集合。
 
-## 📚 文件與支援
+## 文件
 
-- Skills 參考: [English](../../docs/guides/skill-reference.md) | [日本語](../../docs/guides/ja/skill-reference.md)
-- 指令參考: [English](../../docs/guides/command-reference.md) | [日本語](../../docs/guides/ja/command-reference.md)
-- 自訂指南: [English](../../docs/guides/customization-guide.md) | [日本語](../../docs/guides/ja/customization-guide.md)
-- 規格驅動開發指南: [English](../../docs/guides/spec-driven.md) | [日本語](../../docs/guides/ja/spec-driven.md)
-- Claude 子代理指南: [English](../../docs/guides/claude-subagents.md) | [日本語](../../docs/guides/ja/claude-subagents.md)
-- 遷移指南: [English](../../docs/guides/migration-guide.md) | [日本語](../../docs/guides/ja/migration-guide.md)
-- **[問題與支援](https://github.com/gotalab/cc-sdd/issues)** - 問題回報與提問
-- **[Kiro IDE](https://kiro.dev)**
+- Skill 參考: [English](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/skill-reference.md) | [日本語](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/skill-reference.md)
+- 指令參考: [English](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/command-reference.md) | [日本語](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/command-reference.md)
+- 自訂指南: [English](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/customization-guide.md) | [日本語](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/customization-guide.md)
+- 規格驅動開發指南: [English](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/spec-driven.md) | [日本語](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/spec-driven.md)
+- Why cc-sdd? 哲學說明: [English](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/why-cc-sdd.md) | [日本語](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/why-cc-sdd.md)
+- Claude 子代理指南: [English](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/claude-subagents.md) | [日本語](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/claude-subagents.md)
+- 遷移指南: [English](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/migration-guide.md) | [日本語](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/migration-guide.md)
+- [問題與支援](https://github.com/gotalab/cc-sdd/issues) - 問題回報與提問
+- [Kiro IDE](https://kiro.dev)
 
 ---
 
-**穩定版 v3.0.0** - 生產環境就緒。[回報問題](https://github.com/gotalab/cc-sdd/issues) | MIT License
+**穩定版 v3.0.0** 生產環境就緒。[回報問題](https://github.com/gotalab/cc-sdd/issues) | MIT License
 
 ### 平台支援
-- 支援 OS：macOS / Linux / Windows（預設自動偵測）。
-- 三大平台共用指令模板；`--os` 參數保留給相容性需求，可視情況指定。
 
-> **提醒:** 即使指定 `--os` 仍會成功執行，但所有平台現在會收到相同的指令模板。
+- 支援 OS: macOS, Linux, Windows（預設自動偵測）。
+- 所有平台使用統一的指令模板。`--os` 參數保留給相容性需求，可視情況指定。

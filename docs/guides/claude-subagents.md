@@ -2,6 +2,8 @@
 
 > 📖 **日本語ガイドはこちら:** [Claude サブエージェントガイド (日本語)](ja/claude-subagents.md)
 
+> **Scope:** this page covers the legacy **`--claude-agent` / `--claude-code-agent`** install target, which uses static Subagent files under `.claude/agents/kiro/*.md` to accelerate `spec-quick`. If you installed with `--claude-skills` (or any other `--*-skills` flag) and are looking for how skills mode dispatches implementer / reviewer / debugger roles, see the [Skill Reference](skill-reference.md) — specifically the "Inside `/kiro-impl`" and "Skills mode vs `--claude-agent`" sections.
+
 This guide explains how the **Claude Code Subagents** install target (`--claude-agent` / `--claude-code-agent`) accelerates the spec workflow via the `spec-quick` command. Other `/kiro:*` commands reuse the same Subagents, but this document focuses on the spec-quick orchestration because it is the only Subagent-enabled command with its own control logic.
 
 ## Installation Recap
@@ -75,53 +77,8 @@ Need to re-run just one phase? Mention `@agents-spec-design`, `@agents-spec-task
 - **Too many files analysed** – edit the file pattern expansion step in the relevant Subagent prompt to narrow the search.
 - **Outputs differ from templates** – update `{{KIRO_DIR}}/settings/templates` so that Subagent summaries point to the latest document sections.
 
-## Skills Mode (`--claude-skills` / `--codex-skills`)
-
-Skills mode (3.0) uses a fundamentally different subagent approach from the `--claude-agent` mode described above. Both are valid modes; choose the one that fits your workflow.
-
-### Entry Point: `/kiro-discovery`
-
-In skills mode, `/kiro-discovery` is the recommended entry point for new work. It routes the request into one of four outcomes: extend an existing spec, implement directly with no spec, create one new spec, or decompose the work into multiple specs. For new single-spec or multi-spec work it writes `brief.md` and, when needed, `roadmap.md`, so the next step can resume with persisted context.
-
-### Parallel Spec Creation: `/kiro-spec-batch`
-
-`/kiro-spec-batch` creates multiple specs in parallel from the roadmap produced by discovery. After generation, it runs a **cross-spec review** to catch contradictions, duplicated responsibilities, and interface mismatches. For Codex installs (`--codex-skills`), the cross-spec reviewer is defined in `.codex/agents/spec-reviewer.toml`.
-
-### How Skills Mode Dispatches Subagents
-
-Unlike `--claude-agent` mode, which relies on pre-defined subagent definitions in `.claude/agents/kiro/`, skills mode dispatches implementation subagents **dynamically** at runtime:
-
-- **No pre-defined agent files** -- there is no `tdd-task-implementer.md` or similar file in `.claude/agents/`. Subagents are created on-the-fly by `/kiro-impl` using prompt templates.
-- **Per-task subagent trio** -- each task can involve up to three subagent roles dispatched via the native Agent tool:
-  - **Implementer** -- fresh subagent that builds a Task Brief from the spec, then implements with TDD
-  - **Reviewer** -- independent adversarial subagent that runs `git diff`, grep for TODOs, test suite, and boundary checks
-  - **Debugger** -- fresh subagent spawned when implementer is BLOCKED or reviewer rejects after 2 rounds. Investigates root causes with web search in a clean context (no failed implementation history), then a new implementer retries with the fix plan. Max 2 debug rounds per task.
-- **Learnings propagation** -- when a task reveals cross-cutting insights (e.g., "better-sqlite3 needs Electron-specific ABI rebuild"), findings are recorded in `## Implementation Notes` in tasks.md and injected into subsequent implementer prompts.
-- **1-task-per-iteration** -- each iteration processes a single task to maintain context hygiene across long runs.
-
-### When to Use Which Mode
-
-| Consideration | `--claude-agent` | `--claude-skills` / `--codex-skills` |
-|--------------|------------------|--------------------------------------|
-| Discovery | N/A | `/kiro-discovery` skills-mode entry point for routing/scoping and next-step selection |
-| Spec generation (spec-quick) | Subagent-accelerated | Same spec commands |
-| Parallel spec batch | N/A | `/kiro-spec-batch` with cross-spec review |
-| Implementation dispatch | Manual via `/kiro:spec-impl` | Autonomous or manual via `/kiro-impl` |
-| Subagent definitions | Static files in `.claude/agents/kiro/` | Dynamic prompt templates |
-| Review process | Manual or via validate-impl | Built-in adversarial reviewer subagent |
-| Debug on failure | N/A | Auto debug subagent (max 2 rounds) with web search |
-| Session resume | Start fresh | Safe to re-run after interruption |
-| External dependencies | None | None (native Agent tool only) |
-
-### Customising Skills Mode Subagents
-
-Because subagent prompts are generated dynamically, customization works differently than editing `.claude/agents/kiro/*.md` files:
-
-1. **Steering documents** -- the primary customization lever. Implementer and reviewer subagents inherit rules from steering, so update `{{KIRO_DIR}}/steering/*.md` for architecture and convention changes.
-2. **Templates and rules** -- update `{{KIRO_DIR}}/settings/templates/*.md` and `{{KIRO_DIR}}/settings/rules/*.md` to influence the Task Brief and review criteria.
-3. **Skill files** -- advanced users can edit the installed skill SKILL.md files to adjust dispatch behaviour, review gates, or iteration strategy.
-
 ## See Also
 
+- [Skill Reference](skill-reference.md) — skills-mode workflow, including "Inside `/kiro-impl`" dispatch details and the Skills mode vs `--claude-agent` comparison
 - [Spec-Driven Development Workflow](spec-driven.md)
-- [Project README Installation Matrix](../../README.md#-supported-coding-agents)
+- [Project README — Supported Agents](../../README.md#supported-agents)

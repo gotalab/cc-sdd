@@ -2,6 +2,8 @@
 
 > 📖 **English guide:** [Claude Code Subagents Workflow](../claude-subagents.md)
 
+> **対象**: このページはレガシーの **`--claude-agent` / `--claude-code-agent`** インストール先について解説する。`.claude/agents/kiro/*.md` の静的 Subagent ファイルで `spec-quick` を加速する仕組み。`--claude-skills`（あるいは他の `--*-skills` フラグ）でインストールして Skills モードの implementer / reviewer / debugger の dispatch 詳細を知りたい場合は、[スキルリファレンス](skill-reference.md) の「`/kiro-impl` の内部」「Skills モードと `--claude-agent` の比較」節を参照すること。
+
 このガイドでは、`npx cc-sdd@latest --claude-agent`（または `--claude-code-agent`）で提供される **Claude Code Subagents** の中で、独自の制御ロジックを持つ `spec-quick` コマンドに焦点を当てて解説する。その他の `/kiro:*` コマンドも同じ Subagent を再利用するが、動作は標準版と変わらないため、ここでの説明は省略する。
 
 ## インストールの確認
@@ -74,41 +76,9 @@
 | 解析範囲が広すぎる | ファイル検索パターンが広すぎる（例: `*.*`）。 | 該当する Subagent のプロンプトを編集し、検索パターンをより具体的に絞り込むこと。 |
 | 出力がテンプレートと一致しない | Subagent が古いテンプレートを参照している。 | `{{KIRO_DIR}}/settings/templates` を最新の内容に更新し、Subagent がそれを正しく参照しているか確認すること。 |
 
-## Skills モードの Subagent（v3.0.0）
-
-`--claude-skills` または `--codex-skills` でインストールした場合、Subagent の管理方法がコマンドモード（`--claude-agent`）とは異なる。
-
-### コマンドモードとの違い
-
-| 項目 | コマンドモード (`--claude-agent`) | Skills モード (`--claude-skills`) |
-| --- | --- | --- |
-| Subagent 定義 | `.claude/agents/kiro/*.md` に静的に配置 | `/kiro-impl` がプロンプトテンプレートから動的に生成 |
-| ディスパッチ | `spec-quick` が固定フローで各フェーズの Subagent を呼び出す | `/kiro-impl` の自律モードがタスクごとに実装者+レビューア+デバッガーを起動 |
-| 失敗時のデバッグ | なし | 自動デバッグ Subagent（最大2ラウンド、Web検索付き） |
-| 外部依存 | なし | なし（v3.0.0で Ralph Loop プラグインを廃止し、ネイティブ Agent ツールのみ使用） |
-| 事前定義ファイル | `.claude/agents/kiro/` が必要 | 不要（Skill のプロンプトテンプレートが Subagent の振る舞いを定義） |
-
-### 自律モードの Subagent フロー
-
-`/kiro-impl` をタスク引数なしで実行すると、以下のフローが自動的に進行する:
-
-1. **タスク選択**: `tasks.md` から未完了の次タスクを1つ選択する（前タスクの Implementation Notes を次の実装者に注入）
-2. **実装者 Subagent の起動**: タスクブリーフ（Task Brief）を作成し、仕様から導出された具体的な受け入れ基準を明示してからコーディングに入る
-3. **レビューア Subagent の起動**: 実装完了後、独立したレビューアが機械的な検証を行う
-   - TODO / FIXME コメントの残存チェック（grep）
-   - テストの実行と結果確認
-   - git diff による変更境界の確認（タスクスコープ外の変更がないか）
-4. **失敗時のデバッグ**: 実装者が BLOCKED を返した場合、またはレビューアが2回連続で REJECTED した場合、**デバッグ Subagent** を新しいコンテキストで起動する。デバッグ Subagent は失敗した実装履歴を持たず、エラー情報のみを受け取って根本原因を調査する（Web検索を積極的に使用）。修正方針を受けて新しい実装者が再試行する。1タスクあたり最大2ラウンド。
-5. **タスク完了**: `tasks.md` の進捗を更新し、次のタスクへ（1タスク1イテレーション）
-
-この設計により、`.claude/agents/kiro/` にあらかじめ Subagent 定義ファイルを配置する必要がなく、Skill のテンプレートだけで完結する。
-
-### セッション再開
-
-`/kiro-impl` は中断耐性を持つ。セッションが中断された場合でも、再実行すると `tasks.md` の状態から未完了タスクを検出し、そこから処理を再開する。
-
 ## 関連リンク
 
+- [スキルリファレンス](skill-reference.md) — Skills モードのワークフロー、`/kiro-impl` の内部 dispatch、Skills モードと `--claude-agent` の比較
 - [Spec-Driven Development ワークフロー](spec-driven.md)
 - [Docs README](../README.md)
-- [対応コーディングエージェント一覧](../../README.md#-supported-coding-agents)
+- [Project README — 対応エージェント](../../README.md#supported-agents)

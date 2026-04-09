@@ -17,7 +17,7 @@ Use this table when you are deciding which skill to run first.
 | Create many specs from one initiative | `/kiro-spec-batch` | Review generated specs, then `/kiro-impl` on the approved one(s) |
 | Implement approved tasks | `/kiro-impl` | `/kiro-validate-impl` |
 | Validate feature integration | `/kiro-validate-impl` | Fix findings or report `GO` / `NO-GO` / `MANUAL_VERIFY_REQUIRED` |
-| Capture project memory | `/kiro:steering` or `/kiro:steering-custom` | Start or resume spec work |
+| Capture project memory | `/kiro-steering` or `/kiro-steering-custom` | Start or resume spec work |
 
 ## Workflow Skills
 
@@ -117,6 +117,60 @@ Fresh-evidence gate before success claims.
   - `VERIFIED`
   - `NOT_VERIFIED`
   - `MANUAL_VERIFY_REQUIRED`
+
+## Inside `/kiro-impl`: Dispatch and Iteration
+
+Most of the "what is a subagent here?" question lives inside `/kiro-impl`. Unlike the legacy `--claude-agent` install target, skills mode does not rely on pre-defined subagent files under `.claude/agents/kiro/`. Implementation dispatch is owned by the skill itself.
+
+### Dynamic dispatch, not static agent files
+
+- There is no `tdd-task-implementer.md` or similar file under `.claude/agents/`.
+- `/kiro-impl` spawns fresh execution contexts on demand through each platform's native subagent primitive (for example, Claude Code's Task tool), using prompt templates kept under the skill.
+- This is what lets the same `/kiro-impl` skill work across Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity without maintaining a separate agent file per platform.
+
+### Per-task role trio
+
+Each task may involve up to three roles dispatched by `/kiro-impl`:
+
+- **Implementer** — fresh execution context that builds a Task Brief from the spec, then implements with TDD (RED → GREEN under the Feature Flag Protocol).
+- **Reviewer** — independent pass that runs `git diff`, greps for TODOs, runs the test suite, and checks task-boundary compliance.
+- **Debugger** — triggered when the implementer is BLOCKED, or when the reviewer rejects after 2 remediation rounds. Investigates root causes in a clean context (with web search), produces a fix plan, and hands off to a new implementer. Max 2 debug rounds per task.
+
+These three roles correspond to the three supporting skills above (`kiro-review`, `kiro-debug`, `kiro-verify-completion`). The dispatch is dynamic — no file under `.claude/agents/` needs to exist.
+
+### Learnings propagation
+
+When a task reveals cross-cutting insights (for example "better-sqlite3 needs Electron-specific ABI rebuild"), the finding is recorded under `## Implementation Notes` in `tasks.md` and injected into subsequent implementer prompts. This is how later tasks benefit from what earlier tasks discovered.
+
+### 1 task per iteration
+
+Each iteration processes a single task. This keeps context hygiene across long autonomous runs, makes `/kiro-impl` safe to re-run after interruption, and bounds the scope of review and debug passes.
+
+## Skills mode vs `--claude-agent`
+
+Skills mode and the legacy `--claude-agent` install target take fundamentally different approaches to subagent work. Both are valid; choose the one that fits your workflow.
+
+| Concern | `--claude-agent` (legacy) | Skills mode |
+| --- | --- | --- |
+| Subagent definitions | Static `.claude/agents/kiro/*.md` files | Prompt templates inside skills, dispatched dynamically |
+| Cross-platform | Claude Code only | 8 platforms |
+| Spec generation (`spec-quick`) | Four-phase Subagent orchestration | Inline `kiro-spec-quick` skill that sequences the four spec skills |
+| Parallel spec batch | Not available | `/kiro-spec-batch` with cross-spec review |
+| Implementation | Manual via `/kiro:spec-impl` | Autonomous or manual via `/kiro-impl` |
+| Review process | Manual or via `validate-impl` | Built-in independent reviewer pass |
+| Debug on failure | Not available | Auto debug pass (max 2 rounds) with web search |
+| Session resume | Start fresh | Safe to re-run after interruption |
+| External dependencies | None | None (native subagent primitive only) |
+
+For the `--claude-agent` details, see [Claude Code Subagents Workflow](claude-subagents.md).
+
+## Customizing skills-mode dispatch
+
+Because skills mode generates prompts dynamically, customization works differently than editing `.claude/agents/kiro/*.md` files.
+
+1. **Steering documents** — the primary lever. Implementer and reviewer contexts inherit rules from steering, so update `{{KIRO_DIR}}/steering/*.md` for architecture and convention changes.
+2. **Templates and rules** — update `{{KIRO_DIR}}/settings/templates/*.md` and `{{KIRO_DIR}}/settings/rules/*.md` to influence the Task Brief and review criteria.
+3. **Skill files** — advanced users can edit the installed `SKILL.md` files under `.claude/skills/` (or the equivalent per platform) to adjust dispatch behaviour, review gates, or iteration strategy.
 
 ## Skills vs Commands
 

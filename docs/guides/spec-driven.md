@@ -1,8 +1,8 @@
-# Spec-Driven Development Workflow (WIP)
+# Spec-Driven Development Workflow
 
 > 📖 **日本語ガイドはこちら:** [仕様駆動開発ガイド (日本語)](ja/spec-driven.md)
 
-This document explains how cc-sdd implements Spec-Driven Development (SDD) inside the AI-Driven Development Life Cycle (AI-DLC). Use it as a reference when deciding which slash command to run, what artifact to review, and how to adapt the workflow to your team.
+This document explains how cc-sdd implements Spec-Driven Development (SDD) inside an agentic SDLC workflow. Use it as a reference when deciding which slash command to run, what artifact to review, and how to adapt the workflow to your team.
 
 ## Core Ideas
 
@@ -133,7 +133,7 @@ Each phase pauses for human review unless you explicitly bypass it (for example 
 
 ## Skills Workflow (3.0)
 
-Skills mode (`--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--windsurf-skills`, `--opencode-skills`, `--gemini-skills`, `--antigravity`) provides an alternative workflow that uses skill-based commands instead of `/kiro:*` slash commands. The spec phases are the same, but implementation and validation work differently.
+Skills mode (`--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--windsurf-skills`, `--opencode-skills`, `--gemini-skills`, `--antigravity`) provides an alternative workflow that uses skill-based commands instead of `/kiro:*` slash commands. The spec phases are the same, but implementation and validation work differently. For the complete skills-mode surface, including `/kiro-impl` subagent flow and customization, see the [Skill Reference](skill-reference.md).
 
 ### Commands vs Skills Equivalents
 
@@ -148,7 +148,7 @@ Skills mode (`--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-
 
 ### `/kiro-impl` Modes
 
-- **Autonomous mode** (no task args): Dispatches a fresh implementer subagent per task plus an independent adversarial reviewer subagent. If the implementer is blocked or the reviewer rejects after 2 remediation rounds, a **debug subagent** is spawned in a fresh context to investigate root causes (with web search) and produce a fix plan. A new implementer then retries with the debug findings. Max 2 debug rounds per task. Cross-cutting insights are recorded as **Implementation Notes** and injected into subsequent implementer prompts.
+- **Autonomous mode** (no task args): Spawns a fresh implementer subagent per task plus an independent reviewer subagent. If the implementer is blocked or the reviewer rejects after 2 remediation rounds, a **debug subagent** is spawned in a fresh context to investigate root causes (with web search) and produce a fix plan. A new implementer then retries with the debug findings. Max 2 debug rounds per task. Cross-cutting insights are recorded as **Implementation Notes** and injected into subsequent implementer prompts.
 - **Manual mode** (with task args): Runs TDD in the main conversation context, similar to the commands-based `/kiro:spec-impl`.
 
 Both modes enforce **1-task-per-iteration** discipline for context hygiene during long runs and are **session-resume safe** -- you can re-run `/kiro-impl` after an interruption without losing progress. Both modes also follow the **Feature Flag TDD** protocol (RED then GREEN) for safe, incremental delivery.
@@ -191,7 +191,7 @@ After an upstream fix lands, re-run validation and the relevant runtime smoke ch
 
 ## Related Resources
 
-- [Quick Start in README](../../README.md#-quick-start)
+- [Quick Start in README](../../README.md#quick-start)
 - [Skill Reference](skill-reference.md)
 - [Claude Code Subagents Workflow](claude-subagents.md)
 - [OpenAI: Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/)

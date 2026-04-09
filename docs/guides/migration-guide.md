@@ -2,7 +2,7 @@
 
 > 📖 **日本語ガイドはこちら:** [マイグレーションガイド (日本語)](ja/migration-guide.md)
 
-cc-sdd 1.x (especially 1.1.5) and 2.0.0 share the same AI-DLC philosophy and command list, but the **design artifacts, templates, and steering structure were rebuilt from the ground up**. Use this guide to pick one of two clear paths—either keep running 1.1.5 as-is, or accept the discontinuity and move to 2.0.0 where templates/rules make customization instant.
+cc-sdd 1.x (especially 1.1.5) and 2.0.0 share the same agentic SDLC philosophy and command list, but the **design artifacts, templates, and steering structure were rebuilt from the ground up**. Use this guide to pick one of two clear paths—either keep running 1.1.5 as-is, or accept the discontinuity and move to 2.0.0 where templates/rules make customization instant.
 
 ---
 
@@ -19,7 +19,7 @@ cc-sdd 1.x (especially 1.1.5) and 2.0.0 share the same AI-DLC philosophy and com
 
 - `.kiro/specs/<feature>/` directories you already authored remain valid inputs; simply regenerate newer templates when you are ready.
 - `.kiro/steering/` (or a single `steering.md`) can be reused as-is—the content is still consumed verbatim as project memory.
-- The 11 AI-DLC commands (`spec-*`, `validate-*`, `steering*`) and the high-level spec→design→tasks→impl flow stay identical; only the template internals have moved to a just-in-time, agentic style.
+- The 11 commands (`spec-*`, `validate-*`, `steering*`) and the high-level spec→design→tasks→impl flow stay identical; only the template internals have moved to a just-in-time, agentic style.
 
 ---
 
@@ -41,13 +41,13 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 
 ## 2. Why 2.0.0 is worth the jump
 
-> The AI-DLC workflow (spec-init → design → tasks → impl, with validation gates) and the 11 command entry points are unchanged. What changed is **where you customize and how much structure the resulting docs provide.**
+> The core workflow (spec-init → design → tasks → impl, with validation gates) and the 11 command entry points are unchanged. What changed is **where you customize and how much structure the resulting docs provide.**
 
 - **Template & rules driven customization** – stop patching commands; edit `.kiro/settings/templates/` and `.kiro/settings/rules/` once and every agent picks it up.
 - **Spec fidelity** – Research.md captures discovery logs while Design.md becomes reviewer friendly with Summary tables, Req Coverage, Supporting References, and lighter Components/Interfaces blocks.
 - **Steering = Project Memory** – drop structured knowledge across `.kiro/steering/*.md` files and every command consumes it.
 - **Brownfield guardrails** – `/kiro:validate-gap`, `validate-design`, `validate-impl` plus the research/design split make gap analysis and existing-system upgrades much safer.
-- **Unified coverage** – all 8 supported agents (Claude Code, Claude Subagents, Cursor, Codex CLI, Gemini CLI, GitHub Copilot, Qwen Code, OpenCode, Windsurf) run the same 11-command workflow, so mixing agents (e.g., Cursor + Claude) requires zero spec rewrites.
+- **Unified coverage** – all 8 supported agents in v2 (Claude Code, Cursor, Codex CLI, Gemini CLI, GitHub Copilot, Qwen Code, OpenCode, Windsurf) run the same 11-command workflow, so mixing agents (e.g., Cursor + Claude) requires zero spec rewrites. Claude Code also has an optional `--claude-agent` install target that adds a subagent-accelerated `spec-quick` flow.
 
 ---
 
@@ -107,8 +107,7 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 | Skill count | 12-13 | **17** |
 | Discovery | Basic idea refinement | **Routing/scoping entry point**; writes `brief.md` and, when needed, `roadmap.md` |
 | Spec batch | N/A | **`/kiro-spec-batch`** -- parallel multi-spec creation with cross-spec review |
-| Implementation | `kiro-spec-impl` + `kiro-ralph-impl` (separate skills) | **`/kiro-impl`** -- unified skill with native subagent dispatch (implementer + reviewer + debugger) |
-| Ralph Loop | External plugin dependency | **Removed**; replaced by native Agent tool dispatch |
+| Implementation | `kiro-spec-impl` (single-pass) | **`/kiro-impl`** -- unified skill with native subagent dispatch (implementer + reviewer + debugger) |
 | `--codex prompts` mode | Supported | **Blocked** (use `--codex-skills` instead) |
 | Session persistence | None | **`brief.md`** persists across sessions; downstream skills read it automatically |
 | TDD protocol | Basic TDD | **Feature Flag TDD**: RED then GREEN protocol for safe incremental delivery |
@@ -122,7 +121,7 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 1. **Reinstall** with the latest version (skills mode for your platform):
    ```bash
    npx cc-sdd@latest --claude-skills     # Claude Code (default)
-   npx cc-sdd@latest --codex-skills      # Codex CLI
+   npx cc-sdd@latest --codex-skills      # Codex
    npx cc-sdd@latest --cursor-skills     # Cursor IDE
    npx cc-sdd@latest --copilot-skills    # GitHub Copilot
    npx cc-sdd@latest --windsurf-skills   # Windsurf IDE
@@ -131,7 +130,7 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
    npx cc-sdd@latest --antigravity       # Antigravity
    ```
 
-2. **Remove legacy skill references** -- if you have custom scripts or documentation referencing `kiro-spec-impl` or `kiro-ralph-impl`, update them to `/kiro-impl`.
+2. **Remove legacy skill references** -- if you have custom scripts or documentation referencing `kiro-spec-impl`, update them to `/kiro-impl`.
 
 3. **Adopt the new entry point** -- start new features with `/kiro-discovery` instead of jumping straight to `/kiro:spec-init`. Discovery now produces `brief.md` and `roadmap.md` that feed into downstream skills.
 

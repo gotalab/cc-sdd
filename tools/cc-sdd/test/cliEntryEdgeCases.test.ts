@@ -155,6 +155,38 @@ describe('CLI entry edge cases', () => {
     expect(output).toMatch(/full1/);
   });
 
+  it('honors configured agent in non-interactive runs when no CLI agent flag is provided', async () => {
+    const templatesRoot = await mkTmp();
+    const manifestsDir = join(templatesRoot, 'templates', 'manifests');
+    await mkdir(manifestsDir, { recursive: true });
+
+    const claudeManifest = {
+      version: 1,
+      artifacts: [
+        { id: 'claude-only', source: { type: 'templateFile' as const, from: 'claude.tpl.md', toDir: 'out' } },
+      ],
+    };
+    const cursorManifest = {
+      version: 1,
+      artifacts: [
+        { id: 'cursor-only', source: { type: 'templateFile' as const, from: 'cursor.tpl.md', toDir: 'out' } },
+      ],
+    };
+
+    await writeFile(join(manifestsDir, 'claude-code-skills.json'), JSON.stringify(claudeManifest), 'utf8');
+    await writeFile(join(manifestsDir, 'cursor.json'), JSON.stringify(cursorManifest), 'utf8');
+    await writeFile(join(templatesRoot, 'claude.tpl.md'), '# Claude {{AGENT}}', 'utf8');
+    await writeFile(join(templatesRoot, 'cursor.tpl.md'), '# Cursor {{AGENT}}', 'utf8');
+
+    const ctx = makeIO();
+    const code = await runCli(['--dry-run'], runtime, ctx.io, { agent: 'cursor' }, { templatesRoot });
+    expect(code).toBe(0);
+
+    const output = ctx.logs.join('\n');
+    expect(output).toMatch(/cursor-only/);
+    expect(output).not.toMatch(/claude-only/);
+  });
+
   it('handles empty argv array', async () => {
     const ctx = makeIO();
     const cwd = await mkTmp();

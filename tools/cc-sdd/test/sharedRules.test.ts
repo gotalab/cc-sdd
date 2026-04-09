@@ -86,4 +86,14 @@ metadata:
 ---`;
     expect(parseSharedRules(content)).toEqual(['steering-principles.md']);
   });
+
+  it('handles CRLF frontmatter line endings', () => {
+    const content = '---\r\n'
+      + 'name: test\r\n'
+      + 'description: test\r\n'
+      + 'metadata:\r\n'
+      + '  shared-rules: "design-principles.md, design-synthesis.md"\r\n'
+      + '---\r\n';
+    expect(parseSharedRules(content)).toEqual(['design-principles.md', 'design-synthesis.md']);
+  });
 });
