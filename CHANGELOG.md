@@ -8,6 +8,31 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-04-10
+
+### Added
+- Introduce Agent Skills mode as the primary installation target across 8 platforms: Claude Code, Codex, Cursor, GitHub Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Add new workflow entry points for skills mode, including `/kiro-discovery`, `/kiro-spec-batch`, and long-running autonomous `/kiro-impl` with reviewer/debugger support ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Add `.kiro/settings/` rules and templates for boundary-first planning, design synthesis, review gates, task decomposition, and steering customization ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Add `cc-sdd-new-agent`, a plan-first SOP for adding new supported agents or migrating existing agents to skills mode ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+
+### Changed
+- Reposition cc-sdd around skills-mode workflows and native subagent dispatch, with updated docs, guides, and onboarding across the repository ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Change the default installer target from command-based Claude Code to `claude-code-skills` ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Update the package positioning to “long-running autonomous implementation” and align README / release messaging with the v3 workflow ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Restrict stale issue auto-close behavior so only maintainers who explicitly apply the `awaiting-response` label trigger timeout-based closure ([#138](https://github.com/gotalab/cc-sdd/pull/138))
+
+### Deprecated
+- Deprecate command-based agent installs such as `--claude-code`, `--cursor`, and related prompt-mode variants in favor of `--*-skills` installs ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+
+### Removed
+- Remove Codex prompts mode as a supported install path; `--codex` now blocks and directs users to `--codex-skills` ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Remove the external Ralph Loop dependency in favor of native subagent-driven autonomous implementation inside `kiro-impl` ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+
+### Fixed
+- Honor configured agent selection during non-interactive installs instead of forcing the default agent ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Accept CRLF frontmatter when resolving skill shared-rules so Windows-style checkouts install complete rule sets ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+
 ## [2.1.1] - 2026-02-02
 
 ### Fixed

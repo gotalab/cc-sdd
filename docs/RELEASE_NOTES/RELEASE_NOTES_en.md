@@ -6,7 +6,48 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v2.1.1.
+No unreleased features at this time. The latest stable release is v3.0.0.
+
+---
+
+## 🎉 Ver 3.0.0 (2026-04-10) – Skills Mode & Autonomous Implementation
+
+### 🎯 Highlights
+- **Agent Skills as the primary workflow**: cc-sdd now centers on `--*-skills` installs and a unified 17-skill workflow across 8 platforms.
+- **Specs you can run**: `/kiro-discovery`, `/kiro-spec-batch`, and long-running autonomous `/kiro-impl` turn approved specs into an execution control plane, not just project documents.
+- **Native subagent dispatch**: autonomous implementation, review, and debug loops now live inside cc-sdd without relying on the external Ralph Loop project.
+
+### ✨ Added
+- Skills-based agents for Cursor, GitHub Copilot, OpenCode, Gemini CLI, Windsurf, and Antigravity, alongside upgraded Claude Code Skills and Codex Skills support ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- New workflow entry points:
+  - `/kiro-discovery` for idea triage and roadmap routing
+  - `/kiro-spec-batch` for parallel multi-spec creation
+  - `/kiro-impl` for autonomous implementation with reviewer/debugger loops ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- New rules/templates for boundary-first planning, design synthesis, review gates, task decomposition, and steering customization under `.kiro/settings/` ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- `cc-sdd-new-agent`, a SOP-style skill for adding or migrating supported agents ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+
+### 🔧 Changed
+- Default install target is now `claude-code-skills`, making skills mode the out-of-the-box experience ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Documentation, onboarding, and positioning have been rewritten around the v3 workflow and “long-running autonomous implementation” model ([#141](https://github.com/gotalab/cc-sdd/pull/141))
+- Issue auto-close automation now activates only when maintainers intentionally apply the `awaiting-response` label ([#138](https://github.com/gotalab/cc-sdd/pull/138))
+
+### ⚠️ Breaking / Migration Notes
+- Skills mode is now the primary path. Command-based installs remain deprecated and should be migrated to `--*-skills`.
+- `--codex` prompts mode is no longer supported; use `--codex-skills` instead.
+- If you previously relied on external Ralph Loop orchestration, move to the built-in `/kiro-impl` autonomous flow.
+
+### 📖 Migration Guide
+- See [docs/guides/migration-guide.md](../guides/migration-guide.md) for upgrade guidance.
+
+### 🔗 Resources
+- **Pull Requests**: [#141](https://github.com/gotalab/cc-sdd/pull/141), [#138](https://github.com/gotalab/cc-sdd/pull/138)
+- **Full Changelog**: [CHANGELOG.md](../../CHANGELOG.md#300---2026-04-10)
+- **Release Notes**: [English](./RELEASE_NOTES_en.md) | [日本語](./RELEASE_NOTES_ja.md)
+
+### 📦 Installation
+```bash
+npx cc-sdd@latest
+```
 
 ---
 
