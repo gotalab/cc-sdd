@@ -1,0 +1,4 @@
+interface:
+  display_name: "CC-SDD New Agent"
+  short_description: "Add or migrate cc-sdd agent support using SOP workflow"
+  default_prompt: "Follow docs/cc-sdd/sop-new-agent.md to add support for a new coding agent in cc-sdd, including research, planning, implementation, verification, and migration notes for already supported skill-based agents."

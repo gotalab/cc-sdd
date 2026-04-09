@@ -18,11 +18,20 @@ export const categorizeTarget = (targetAbs: string, cwd: string, resolved: Resol
   return 'other';
 };
 
-export const categoryLabels: Record<InstallCategory, string> = {
+const defaultCategoryLabels: Record<InstallCategory, string> = {
   commands: 'Commands',
   'project-memory': 'Project Memory document',
   settings: 'Settings templates and rules',
   other: 'Other',
+};
+
+export const categoryLabels = defaultCategoryLabels;
+
+export const getCategoryLabel = (category: InstallCategory, resolved: ResolvedConfig): string => {
+  if (category === 'commands' && resolved.layout.commandsDir.includes('skills')) {
+    return 'Skills';
+  }
+  return defaultCategoryLabels[category];
 };
 
 export const categoryDescriptions = (category: InstallCategory, resolved: ResolvedConfig): string => {

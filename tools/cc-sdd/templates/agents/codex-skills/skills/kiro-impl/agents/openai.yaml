@@ -1,0 +1,6 @@
+interface:
+  display_name: "Implementation"
+  short_description: "Implement approved tasks using TDD with subagent dispatch"
+
+policy:
+  allow_implicit_invocation: false

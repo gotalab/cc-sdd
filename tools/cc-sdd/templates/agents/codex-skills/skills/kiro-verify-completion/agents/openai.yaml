@@ -1,0 +1,6 @@
+interface:
+  display_name: "Verify Completion"
+  short_description: "Verify completion claims with fresh evidence"
+
+policy:
+  allow_implicit_invocation: false

@@ -13,20 +13,20 @@ const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-manifest-'));
 
 describe('manifest planner glue', () => {
   it('plans artifacts from in-memory manifest using resolved config context', async () => {
-    const args = parseArgs([]); // defaults to claude-code, ja, os:auto
+    const args = parseArgs([]); // defaults to claude-code-skills
     const resolved = mergeConfigAndArgs(args, {}, runtimeDarwin);
 
     const manifest = {
       version: 1,
       artifacts: [
         {
-          id: 'commands_static_all',
+          id: 'skills_dir',
           source: {
             type: 'staticDir' as const,
-            from: 'templates/agents/{{AGENT}}/commands',
+            from: 'templates/agents/{{AGENT}}/skills',
             toDir: '{{AGENT_COMMANDS_DIR}}',
           },
-          when: { agent: ['claude-code'] },
+          when: { agent: ['claude-code-skills'] },
         },
         {
           id: 'doc_tpl',
@@ -42,9 +42,9 @@ describe('manifest planner glue', () => {
 
     const plan = planFromManifest(manifest as any, resolved);
     expect(plan).toHaveLength(2);
-    const staticDir = plan.find((p) => p.id === 'commands_static_all') as any;
-    expect(staticDir.source.from).toBe('templates/agents/claude-code/commands');
-    expect(staticDir.source.toDir).toBe('.claude/commands/kiro');
+    const staticDir = plan.find((p) => p.id === 'skills_dir') as any;
+    expect(staticDir.source.from).toBe('templates/agents/claude-code-skills/skills');
+    expect(staticDir.source.toDir).toBe('.claude/skills');
     const doc = plan.find((p) => p.id === 'doc_tpl') as any;
     expect(doc.source.toDir).toBe('.claude');
     expect(doc.source.outFile).toBe('CLAUDE.md');

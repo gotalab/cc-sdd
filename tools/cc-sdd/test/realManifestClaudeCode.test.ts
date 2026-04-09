@@ -34,7 +34,7 @@ const manifestPath = join(repoRoot, 'tools/cc-sdd/templates/manifests/claude-cod
 describe('real claude-code manifest', () => {
   it('dry-run prints plan for claude-code.json with placeholders applied', async () => {
     const ctx = makeIO();
-    const code = await runCli(['--dry-run', '--lang', 'en', '--manifest', manifestPath], runtime, ctx.io, {});
+    const code = await runCli(['--dry-run', '--lang', 'en', '--claude', '--manifest', manifestPath], runtime, ctx.io, {});
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
@@ -46,13 +46,13 @@ describe('real claude-code manifest', () => {
   it('apply writes CLAUDE.md and command files to cwd', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
-    const code = await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
+    const code = await runCli(['--lang', 'en', '--claude', '--manifest', manifestPath, '--overwrite=force'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0);
 
     const doc = join(cwd, 'CLAUDE.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
-    expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
+    expect(text).toMatch(/# Agentic SDLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
     const cmd = join(cwd, '.claude/commands/kiro/spec-init.md');
@@ -61,7 +61,7 @@ describe('real claude-code manifest', () => {
     const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
     expect(await exists(settingsRule)).toBe(true);
 
-    expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 });
 
@@ -70,7 +70,7 @@ describe('real claude-code manifest (linux)', () => {
 
   it('dry-run prints plan including commands for linux via windows template', async () => {
     const ctx = makeIO();
-    const code = await runCli(['--dry-run', '--lang', 'en', '--manifest', manifestPath], runtimeLinux, ctx.io, {});
+    const code = await runCli(['--dry-run', '--lang', 'en', '--claude', '--manifest', manifestPath], runtimeLinux, ctx.io, {});
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
     expect(out).toMatch(/Plan \(dry-run\)/);
@@ -82,13 +82,13 @@ describe('real claude-code manifest (linux)', () => {
   it('apply writes CLAUDE.md and command files to cwd on linux', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
-    const code = await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force'], runtimeLinux, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
+    const code = await runCli(['--lang', 'en', '--claude', '--manifest', manifestPath, '--overwrite=force'], runtimeLinux, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
     expect(code).toBe(0);
 
     const doc = join(cwd, 'CLAUDE.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
-    expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
+    expect(text).toMatch(/# Agentic SDLC and Spec-Driven Development/);
     expect(text).toContain('Steering: `.kiro/steering/`');
 
     const cmd = join(cwd, '.claude/commands/kiro/spec-init.md');
@@ -97,6 +97,6 @@ describe('real claude-code manifest (linux)', () => {
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');
     expect(await exists(settingsTemplate)).toBe(true);
 
-    expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 });

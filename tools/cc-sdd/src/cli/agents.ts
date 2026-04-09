@@ -1,6 +1,6 @@
 import { agentList, getAgentDefinition, type AgentType } from '../agents/registry.js';
 import type { CliIO } from './io.js';
-import { colors, formatAttention, formatHeading, formatSectionTitle } from './ui/colors.js';
+import { colors, formatAttention, formatHeading } from './ui/colors.js';
 import { isInteractive, promptSelect } from './ui/prompt.js';
 
 export type AgentOption = {
@@ -20,11 +20,14 @@ export const agentOptions: AgentOption[] = agentList.map((value) => {
   };
 });
 
+const DEFAULT_AGENT: AgentType = 'claude-code-skills';
+
 export const ensureAgentSelection = async (
   current: AgentType | undefined,
   io: CliIO,
-): Promise<AgentType | undefined> => {
-  if (current || !isInteractive()) return current;
+): Promise<AgentType> => {
+  if (current) return current;
+  if (!isInteractive()) return DEFAULT_AGENT;
 
   io.log(formatHeading('Select the agent you want to set up:'));
 
@@ -43,7 +46,7 @@ const buildGuideSteps = (agent: AgentType): string[] => {
   const definition = getAgentDefinition(agent);
   const steps: string[] = [
     `Launch ${definition.label} and run ${definition.commands.spec} to create a new specification.`,
-    `Tip: Steering holds persistent project knowledge—patterns, standards, and org-wide policies. Kick off ${definition.commands.steering} (essential for existing projects) and  ${definition.commands.steeringCustom}. Maintain Regularly`,
+    `Tip: Steering holds persistent project knowledge (patterns, standards, org-wide policies). Kick off ${definition.commands.steering} (essential for existing projects) and ${definition.commands.steeringCustom}. Maintain regularly.`,
     'Tip: Update `{{KIRO_DIR}}/settings/templates/` like `requirements.md`, `design.md`, and `tasks.md` so the generated steering and specs follow your team\'s and project\'s development process.',
   ];
 
@@ -58,16 +61,27 @@ const buildGuideSteps = (agent: AgentType): string[] => {
 };
 
 export const printCompletionGuide = (agent: AgentType, io: CliIO): void => {
-  io.log('');
   const definition = getAgentDefinition(agent);
-  const models = definition.recommendedModels;
-  if (models && models.length > 0) {
-    io.log(formatSectionTitle('Recommended models'));
-    models.forEach((model) => io.log(formatAttention(`  • ${model}`)));
+
+  if (definition.upgradeNotice) {
+    const line = '─'.repeat(60);
+    io.log('');
+    io.log(colors.yellow(line));
+    io.log(formatAttention('  DEPRECATED: This mode is no longer recommended.'));
+    io.log(formatAttention(`  ${definition.upgradeNotice}`));
+    io.log(colors.yellow(line));
     io.log('');
   }
-  io.log(formatSectionTitle('Next steps'));
+
+  const models = definition.recommendedModels;
+  if (models && models.length > 0) {
+    io.log(formatHeading('  Recommended models:'));
+    models.forEach((model) => io.log(formatAttention(`    ${model}`)));
+    io.log('');
+  }
+  io.log(formatHeading('  Get started:'));
   buildGuideSteps(agent).forEach((step, idx) => {
-    io.log(colors.cyan(`  ${idx + 1}. ${step}`));
+    io.log(colors.cyan(`    ${idx + 1}. ${step}`));
   });
+  io.log('');
 };

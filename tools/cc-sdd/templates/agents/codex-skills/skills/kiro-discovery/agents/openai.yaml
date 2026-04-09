@@ -1,0 +1,6 @@
+interface:
+  display_name: "Discovery"
+  short_description: "Route a new request to the right spec path and refine it into a concrete brief"
+
+policy:
+  allow_implicit_invocation: false

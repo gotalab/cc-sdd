@@ -48,7 +48,7 @@ describe('real gemini-cli manifest (mac)', () => {
     const doc = join(cwd, 'GEMINI.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
-    expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
+    expect(text).toMatch(/# Agentic SDLC and Spec-Driven Development/);
 
     const cmd = join(cwd, '.gemini/commands/kiro/spec-init.toml');
     expect(await exists(cmd)).toBe(true);
@@ -56,7 +56,7 @@ describe('real gemini-cli manifest (mac)', () => {
     const settingsRule = join(cwd, '.kiro/settings/rules/design-principles.md');
     expect(await exists(settingsRule)).toBe(true);
 
-    expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 });
 
@@ -83,7 +83,7 @@ describe('real gemini-cli manifest (linux)', () => {
     const doc = join(cwd, 'GEMINI.md');
     expect(await exists(doc)).toBe(true);
     const text = await readFile(doc, 'utf8');
-    expect(text).toMatch(/# AI-DLC and Spec-Driven Development/);
+    expect(text).toMatch(/# Agentic SDLC and Spec-Driven Development/);
 
     const cmd = join(cwd, '.gemini/commands/kiro/spec-init.toml');
     expect(await exists(cmd)).toBe(true);
@@ -91,6 +91,6 @@ describe('real gemini-cli manifest (linux)', () => {
     const settingsTemplate = join(cwd, '.kiro/settings/templates/specs/init.json');
     expect(await exists(settingsTemplate)).toBe(true);
 
-    expect(ctx.logs.join('\n')).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 });

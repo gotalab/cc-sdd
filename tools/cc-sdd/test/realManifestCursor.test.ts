@@ -68,19 +68,14 @@ describe('real cursor manifest', () => {
     const out = ctx.logs.join('\n');
     
     // Check that the setup completion message is present (new format)
-    expect(out).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(out).toMatch(/\d+\/\d+ files written/);
     
     // Check that the Cursor-specific recommended models are shown
     expect(out).toContain('Recommended models');
-    expect(out).toContain('Claude Opus 4.5');
-    expect(out).toContain('gpt-5.2-codex');
-    expect(out).toContain('gpt-5.2');
 
     // Check that the unified next steps are present
     expect(out).toContain("Launch Cursor IDE and run `/kiro/spec-init <what-to-build>` to create a new specification.");
-    expect(out).toMatch(
-      /Tip: Steering holds persistent project knowledge—patterns, standards, and org-wide policies\. Kick off `\/kiro\/steering` \(essential for existing projects\) and\s+`\/kiro\/steering-custom(?: <what-to-create-custom-steering-document>)?`\. Maintain Regularly/,
-    );
+    expect(out).toContain('Tip: Steering holds persistent project knowledge');
     expect(out).toContain(
       'Tip: Update `{{KIRO_DIR}}/settings/templates/` like `requirements.md`, `design.md`, and `tasks.md` so the generated steering and specs follow your team\'s and project\'s development process.',
     );

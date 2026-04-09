@@ -16,7 +16,7 @@ import { buildFileOperations, type FileOperation } from './plan/fileOperations.j
 import { ensureAgentSelection, printCompletionGuide } from './cli/agents.js';
 import { determineCategoryPolicies, printSummary, summarizeCategories, type CategoryPolicyMap } from './cli/policies.js';
 import { defaultIO, type CliIO } from './cli/io.js';
-import { colors, formatError, formatHeading, formatSuccess, formatWarning } from './cli/ui/colors.js';
+import { colors, formatBox, formatError, formatHeading, formatSuccess, formatWarning } from './cli/ui/colors.js';
 import { isInteractive, promptChoice, promptConfirm } from './cli/ui/prompt.js';
 
 const agentKeys = agentList;
@@ -114,7 +114,6 @@ const showVersion = (io: CliIO): void => {
   let version = 'dev';
   try {
     const require = createRequire(import.meta.url);
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const pkg = require('../package.json');
     version = pkg?.version ?? version;
   } catch {
@@ -151,6 +150,20 @@ const runPlanExecution = async (
   execOpts?: { cwd?: string; templatesRoot?: string },
 ): Promise<number> => {
   try {
+    const agentDef = getAgentDefinition(resolvedConfig.agent);
+
+    let version = 'dev';
+    try {
+      const require = createRequire(import.meta.url);
+      const pkg = require('../package.json');
+      version = pkg?.version ?? version;
+    } catch {
+      // ignore
+    }
+
+    io.log('');
+    io.log(formatBox(`cc-sdd v${version} / ${agentDef.label}`));
+
     const plan = await planFromFile(manifestPath, resolvedConfig);
     const operations = await buildFileOperations(plan, resolvedConfig, execOpts);
     const summaries = await summarizeCategories(operations);
@@ -175,7 +188,9 @@ const runPlanExecution = async (
       log: (message) => io.log(colors.dim(message)),
     });
 
-    io.log(formatSuccess(`✅ Setup completed: written=${result.written}, skipped=${result.skipped}`));
+    const total = result.written + result.skipped;
+    io.log(formatSuccess(`  ${result.written}/${total} files written`) + (result.skipped > 0 ? colors.yellow(`, ${result.skipped} skipped`) : ''));
+    io.log('');
     printCompletionGuide(resolvedConfig.agent, io);
     return 0;
   } catch (error) {
@@ -210,7 +225,18 @@ export const runCli = async (
     return 1;
   }
 
-  parsedArgs.agent = await ensureAgentSelection(parsedArgs.agent, io);
+  parsedArgs.agent = await ensureAgentSelection(parsedArgs.agent ?? loadedConfig.agent, io);
+
+  if (parsedArgs.agent === 'codex') {
+    io.log('');
+    io.log(formatError('  --codex (prompts mode) is no longer supported.'));
+    io.log('');
+    io.log(`  Codex no longer loads ${colors.dim('.codex/prompts/')}. Use Skills instead:`);
+    io.log('');
+    io.log(`  ${colors.bold('npx cc-sdd@latest --codex-skills')}`);
+    io.log('');
+    return 1;
+  }
 
   const resolved = mergeConfigAndArgs(parsedArgs, loadedConfig, runtime);
 

@@ -15,6 +15,7 @@ export const colors = {
   magenta: wrap('\u001b[35m', '\u001b[39m'),
   bold: wrap('\u001b[1m', '\u001b[22m'),
   dim: wrap('\u001b[2m', '\u001b[22m'),
+  white: wrap('\u001b[37m', '\u001b[39m'),
   reset: (value: string): string => value,
 };
 
@@ -36,5 +37,11 @@ export const formatAttention = (msg: string): string => {
 export const formatSectionTitle = (label: string): string => {
   if (!supportsColor) return `== ${label} ==`;
   return `
-[35m[1m== ${label} ==[22m[39m`;
+[35m[1m== ${label} ==[22m[39m`;
+};
+
+export const formatBox = (title: string): string => {
+  const line = '─'.repeat(title.length + 4);
+  if (!supportsColor) return `${line}\n  ${title}\n${line}`;
+  return `${colors.dim(line)}\n  ${colors.bold(title)}\n${colors.dim(line)}`;
 };

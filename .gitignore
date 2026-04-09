@@ -88,3 +88,6 @@ docs/kiro/
 .gemini/
 # GEMINI.md
 # AGENTS.md
+
+# Local dev tooling (not part of the project)
+.entire/

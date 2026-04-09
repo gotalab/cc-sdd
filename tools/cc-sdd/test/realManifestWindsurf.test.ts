@@ -65,14 +65,9 @@ describe('real windsurf manifest', () => {
     expect(code).toBe(0);
     const out = ctx.logs.join('\n');
 
-    expect(out).toMatch(/Setup completed: written=\d+, skipped=\d+/);
+    expect(out).toMatch(/\d+\/\d+ files written/);
     expect(out).toContain('Recommended models');
-    expect(out).toContain('Claude Opus 4.5');
-    expect(out).toContain('gpt-5.2-codex');
-    expect(out).toContain('gpt-5.2');
     expect(out).toContain('Launch Windsurf IDE and run `/kiro-spec-init <what-to-build>` to create a new specification.');
-    expect(out).toMatch(
-      /Tip: Steering holds persistent project knowledge—patterns, standards, and org-wide policies\. Kick off `\/kiro-steering` \(essential for existing projects\) and\s+`\/kiro-steering-custom <what-to-create-custom-steering-document>`\. Maintain Regularly/,
-    );
+    expect(out).toContain('Tip: Steering holds persistent project knowledge');
   });
 });

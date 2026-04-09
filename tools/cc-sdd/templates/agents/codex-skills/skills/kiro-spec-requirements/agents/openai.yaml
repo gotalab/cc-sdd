@@ -1,0 +1,6 @@
+interface:
+  display_name: "Spec Requirements"
+  short_description: "Generate comprehensive requirements for a specification"
+
+policy:
+  allow_implicit_invocation: false

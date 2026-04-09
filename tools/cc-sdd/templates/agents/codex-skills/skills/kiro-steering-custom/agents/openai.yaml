@@ -1,0 +1,6 @@
+interface:
+  display_name: "Steering Custom"
+  short_description: "Create custom steering documents for specialized project contexts"
+
+policy:
+  allow_implicit_invocation: false

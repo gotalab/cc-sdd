@@ -36,7 +36,7 @@ export type ResolvedConfig = {
 };
 
 const defaults = {
-  agent: 'claude-code' as AgentType,
+  agent: 'claude-code-skills' as AgentType,
   os: 'auto' as const,
   lang: 'en' as SupportedLanguage,
   kiroDir: '.kiro',

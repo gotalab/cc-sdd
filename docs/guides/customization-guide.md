@@ -64,6 +64,7 @@ cc-sdd commands read and understand documents through AI agents. The following e
 | **requirements.md** | Numbered criteria (`1.`, `2.`, `3.`...) | AI recognizes the number and structure of criteria |
 | | Consistency with template | AI learns structure from template |
 | **design.md** | **File existence** | Commands read this file |
+| | **File Structure Plan** (recommended in 3.0) | Implementer subagents use it for directory/file mapping |
 | **tasks.md** | `- [ ] N.` checkbox format | Task execution engine recognizes this |
 | | `_Requirements: X, Y_` references | Requirement traceability |
 | | Hierarchical structure (1, 1.1, 1.2...) | Dependency analysis |
@@ -179,6 +180,8 @@ requirements.md is very flexible for customization:
 - ✅ **Format changes**: Tables, bullet points, diagrams, etc. can be freely chosen
 
 **About Mermaid diagrams**: Basic syntax rules are defined in `{{KIRO_DIR}}/settings/rules/design-principles.md`, not in template constraints. You can change diagram requirements by editing the rules file.
+
+**File Structure Plan (3.0)**: In skills mode, `design.md` includes a **File Structure Plan** section that maps directory structure and file responsibilities. This section is recommended but not mandatory -- commands-based workflows can also benefit from adding it manually to their design template.
 
 **Only file existence is mandatory**: Commands read `design.md` but do not parse specific headings or formats.
 
@@ -474,7 +477,7 @@ When you run `/kiro:spec-requirements my-feature`:
 3. **Verification Method** and **Success Threshold** are added to each requirement
 4. **Non-Functional Requirements** section is automatically generated
 5. **Compliance & Approvals** checklist is added
-6. Requirement numbering and acceptance criteria structure are maintained (compatible with `/kiro:spec-impl`)
+6. Requirement numbering and acceptance criteria structure are maintained (compatible with `/kiro:spec-impl` and its skills mode equivalent `/kiro-impl`)
 
 ### 🧪 Testing Method
 
@@ -2070,7 +2073,7 @@ git commit -m "Add team-wide templates"
 
 - Deleting required structure (numbering, checkboxes)
 - Ambiguous rules ("should", "consider")
-- Templates exceeding 1000 lines
+- Templates exceeding 1500 lines
 - Committing without testing
 
 ---

@@ -1,6 +1,6 @@
-# AI-DLC and Spec-Driven Development
+# Agentic SDLC and Spec-Driven Development
 
-Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life Cycle)
+Kiro-style Spec-Driven Development on an agentic SDLC
 
 ## Project Context
 

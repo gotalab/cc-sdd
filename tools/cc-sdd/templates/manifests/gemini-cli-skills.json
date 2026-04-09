@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "artifacts": [
+    {
+      "id": "skills",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/skills",
+        "toDir": "{{AGENT_COMMANDS_DIR}}"
+      },
+      "when": { "agent": "gemini-cli-skills" }
+    },
+    {
+      "id": "doc_main",
+      "source": {
+        "type": "templateFile",
+        "from": "templates/agents/{{AGENT}}/docs/GEMINI.md",
+        "toDir": ".",
+        "rename": "{{AGENT_DOC}}"
+      },
+      "when": { "agent": "gemini-cli-skills" }
+    },
+    {
+      "id": "gemini_agents",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/{{AGENT}}/gemini-agents",
+        "toDir": ".gemini/agents"
+      },
+      "when": { "agent": "gemini-cli-skills" }
+    },
+    {
+      "id": "settings_templates",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/shared/settings/templates",
+        "toDir": "{{KIRO_DIR}}/settings/templates"
+      },
+      "when": { "agent": "gemini-cli-skills" }
+    }
+  ]
+}

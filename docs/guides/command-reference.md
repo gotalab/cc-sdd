@@ -2,7 +2,9 @@
 
 > 📖 **日本語ガイドはこちら:** [コマンドリファレンス (日本語)](ja/command-reference.md)
 
-Complete reference for all cc-sdd commands with detailed usage, examples, and troubleshooting.
+Complete reference for the legacy `/kiro:*` commands in cc-sdd with detailed usage, examples, and troubleshooting.
+
+If you are using skills mode, start with the [Skill Reference](skill-reference.md) instead.
 
 > **Note**: This reference is based on Claude Code command templates. While the core functionality is consistent across all supported agents (Cursor, Gemini CLI, Codex CLI, GitHub Copilot, Qwen Code, Windsurf), command syntax and features may vary slightly depending on your agent. Refer to your agent's specific documentation for platform-specific details.
 
@@ -28,6 +30,12 @@ Complete reference for all cc-sdd commands with detailed usage, examples, and tr
 
 ### Status & Utility
 - [`/kiro:spec-status`](#kirospec-status) - Check feature progress
+
+---
+
+## Skills Mode Note
+
+> **Applies to**: commands-based installs. Skills-mode installs (`--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--windsurf-skills`, `--opencode-skills`, `--gemini-skills`, `--antigravity`) should use the [Skill Reference](skill-reference.md).
 
 ---
 
@@ -701,6 +709,8 @@ P1 — Service Integration
 
 ### `/kiro:spec-impl`
 
+> **Skills mode equivalent**: `/kiro-impl`. Skills mode supports autonomous (subagent spawn per task) and manual (TDD in main context) modes. See [Skills Mode Reference](#skills-mode-reference).
+
 **Purpose**: Execute implementation tasks using Test-Driven Development (TDD) methodology.
 
 **Parameters**: `<feature-name> [task-numbers]`
@@ -1122,6 +1132,8 @@ Estimated fix time: 2-3 hours of design refinement.
 ---
 
 ### `/kiro:validate-impl`
+
+> **Skills mode equivalent**: `/kiro-validate-impl`. In skills mode, validation focuses on **integration** concerns (cross-task consistency, boundary correctness via `git diff`, mechanical enforcement) rather than per-task checks. See [Skills Mode Reference](#skills-mode-reference).
 
 **Purpose**: Validate implementation against requirements, design, and tasks to ensure quality and completeness.
 

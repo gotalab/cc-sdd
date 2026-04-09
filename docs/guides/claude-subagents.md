@@ -2,6 +2,8 @@
 
 > 📖 **日本語ガイドはこちら:** [Claude サブエージェントガイド (日本語)](ja/claude-subagents.md)
 
+> **Scope:** this page covers the legacy **`--claude-agent` / `--claude-code-agent`** install target, which uses static Subagent files under `.claude/agents/kiro/*.md` to accelerate `spec-quick`. If you installed with `--claude-skills` (or any other `--*-skills` flag) and are looking for how skills mode dispatches implementer / reviewer / debugger roles, see the [Skill Reference](skill-reference.md) — specifically the "Inside `/kiro-impl`" and "Skills mode vs `--claude-agent`" sections.
+
 This guide explains how the **Claude Code Subagents** install target (`--claude-agent` / `--claude-code-agent`) accelerates the spec workflow via the `spec-quick` command. Other `/kiro:*` commands reuse the same Subagents, but this document focuses on the spec-quick orchestration because it is the only Subagent-enabled command with its own control logic.
 
 ## Installation Recap
@@ -77,5 +79,6 @@ Need to re-run just one phase? Mention `@agents-spec-design`, `@agents-spec-task
 
 ## See Also
 
+- [Skill Reference](skill-reference.md) — skills-mode workflow, including "Inside `/kiro-impl`" dispatch details and the Skills mode vs `--claude-agent` comparison
 - [Spec-Driven Development Workflow](spec-driven.md)
-- [Project README Installation Matrix](../../README.md#-supported-coding-agents)
+- [Project README — Supported Agents](../../README.md#supported-agents)
