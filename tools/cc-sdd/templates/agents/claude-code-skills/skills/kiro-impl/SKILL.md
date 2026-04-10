@@ -193,7 +193,7 @@ For tasks that add or change behavior, enforce RED → GREEN with a feature flag
 
 1. **Add flag** (OFF by default): Introduce a toggle appropriate to the codebase (env var, config constant, boolean, conditional -- agent chooses the mechanism)
 2. **RED -- flag OFF**: Write tests for the new behavior. Run tests → must FAIL. If tests pass with flag OFF, the tests are not testing the right thing. Rewrite.
-3. **GREEN -- flag ON + implement**: Enable the flag, write implementation. Run tests �� must PASS.
+3. **GREEN -- flag ON + implement**: Enable the flag, write implementation. Run tests → must PASS.
 4. **Remove flag**: Make the code unconditional. Run tests → must still PASS.
 
 **Skip this protocol for**: refactoring, configuration, documentation, or tasks with no behavioral change.
