@@ -8,6 +8,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [3.0.1] - 2026-04-11
+
+### Changed
+- Refine English release messaging by replacing the awkward phrase `team-scale AI-driven development` with `AI-driven development at team scale` across the main README and philosophy guide ([#155](https://github.com/gotalab/cc-sdd/pull/155))
+
+### Fixed
+- Correct the mojibake in the Claude Code Skills `kiro-impl` template so the feature-flag test protocol renders the `→` arrow correctly ([#154](https://github.com/gotalab/cc-sdd/pull/154))
+
+### Security
+- Harden manifest-, template-, and shared-rule-derived path handling so generated file operations stay within the expected roots and fail closed on unsafe traversal inputs or symlinked destinations ([#155](https://github.com/gotalab/cc-sdd/pull/155))
+
 ## [3.0.0] - 2026-04-10
 
 ### Added
