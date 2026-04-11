@@ -1,6 +1,6 @@
 {
   "name": "cc-sdd",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Turn approved specs into long-running autonomous implementation. A minimal, adaptable SDD harness with Agent Skills for Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity.",
   "keywords": [
     "claude-code",

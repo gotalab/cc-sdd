@@ -6,7 +6,34 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v3.0.0.
+No unreleased features at this time. The latest stable release is v3.0.1.
+
+---
+
+## 🛡️ Ver 3.0.1 (2026-04-11) – Path Safety Hardening
+
+### Summary
+Patch release focused on safer filesystem handling in `cc-sdd`, plus a small follow-up fix for mojibake and English wording.
+
+### Fixed
+- Fixed the mojibake in the Claude Code Skills `kiro-impl` template so the feature-flag protocol renders the `→` arrow correctly ([#154](https://github.com/gotalab/cc-sdd/pull/154))
+
+### Security
+- Hardened manifest, template, and shared-rule path handling so generated file operations stay within their expected roots
+- Rejected unsafe traversal-style inputs and writes through symlinked destinations during execution ([#155](https://github.com/gotalab/cc-sdd/pull/155))
+
+### Documentation
+- Updated a few English docs lines to replace `team-scale AI-driven development` with the more natural `AI-driven development at team scale` ([#155](https://github.com/gotalab/cc-sdd/pull/155))
+
+### Resources
+- **Pull Requests**: [#154](https://github.com/gotalab/cc-sdd/pull/154), [#155](https://github.com/gotalab/cc-sdd/pull/155)
+- **Full Changelog**: [CHANGELOG.md](../../CHANGELOG.md#301---2026-04-11)
+- **Release Notes**: [English](./RELEASE_NOTES_en.md) | [日本語](./RELEASE_NOTES_ja.md)
+
+### Installation
+```bash
+npx cc-sdd@latest
+```
 
 ---
 
