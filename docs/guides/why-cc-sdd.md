@@ -8,7 +8,7 @@ This is the long version of "why does cc-sdd exist and what trade-off is it maki
 
 cc-sdd treats the spec as a contract between parts of the system, not a master command document to be handed to the agent. Code remains the source of truth. Specs make the contracts between parts of the code explicit, so humans and agents can work in parallel without constant synchronization.
 
-The bet is simple. Explicit contracts at the right granularity let team-scale AI-driven development move faster, not slower. Boundaries are not overhead. They are what lets you move freely inside while protecting the outside.
+The bet is simple. Explicit contracts at the right granularity let AI-driven development at team scale move faster, not slower. Boundaries are not overhead. They are what lets you move freely inside while protecting the outside.
 
 ## Specification vs Design
 
@@ -26,7 +26,7 @@ The human reviews and approves at the specification layer. The agent is free ins
 
 ## How cc-sdd thinks about speed
 
-The usual assumption about specs is that they slow you down. cc-sdd is built on the opposite assumption: explicit contracts at the right granularity make team-scale AI-driven development faster, not slower. Four things follow from that stance.
+The usual assumption about specs is that they slow you down. cc-sdd is built on the opposite assumption: explicit contracts at the right granularity make AI-driven development at team scale faster, not slower. Four things follow from that stance.
 
 ### Right-sized specs, not monolithic plans
 

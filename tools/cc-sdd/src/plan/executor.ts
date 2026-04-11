@@ -4,13 +4,16 @@ import type { ProcessedArtifact } from '../manifest/processor.js';
 import type { ResolvedConfig } from '../cli/config.js';
 import { buildFileOperations, type FileOperation, type SourceMode } from './fileOperations.js';
 import type { InstallCategory } from './categories.js';
-import { ensureDir, fileExists } from '../utils/fs.js';
+import { assertNoSymlinkInPath, ensureDir, fileExists } from '../utils/fs.js';
+import { assertPathInsideRoot } from '../utils/pathSafety.js';
 
 const backupIfNeeded = async (target: string, cwd: string, resolved: ResolvedConfig): Promise<void> => {
   if (!resolved.backupEnabled) return;
   if (!(await fileExists(target))) return;
   const rel = path.relative(cwd, target);
-  const backupPath = path.resolve(cwd, resolved.backupDir, rel);
+  const backupRoot = assertPathInsideRoot(path.resolve(cwd, resolved.backupDir), cwd, 'Backup directory');
+  const backupPath = assertPathInsideRoot(path.resolve(backupRoot, rel), backupRoot, 'Backup path');
+  await assertNoSymlinkInPath(backupPath, backupRoot);
   await ensureDir(path.dirname(backupPath));
   await copyFile(target, backupPath);
 };
@@ -62,12 +65,14 @@ const handleWrite = async (
   cwd: string,
   resolved: ResolvedConfig,
 ): Promise<void> => {
-  await backupIfNeeded(op.destAbs, cwd, resolved);
-  await ensureDir(path.dirname(op.destAbs));
+  const safeDest = assertPathInsideRoot(op.destAbs, cwd, 'Destination path');
+  await assertNoSymlinkInPath(safeDest, cwd);
+  await backupIfNeeded(safeDest, cwd, resolved);
+  await ensureDir(path.dirname(safeDest));
   if (typeof content === 'string') {
-    await writeFile(op.destAbs, content, 'utf8');
+    await writeFile(safeDest, content, 'utf8');
   } else {
-    await writeFile(op.destAbs, content);
+    await writeFile(safeDest, content);
   }
 };
 
@@ -82,13 +87,15 @@ const handleAppend = async (
     opts.log?.(`Append not supported for ${op.relTarget} (non-text content). Skipping.`);
     return false;
   }
-  await ensureDir(path.dirname(op.destAbs));
-  if (!(await fileExists(op.destAbs))) {
+  const safeDest = assertPathInsideRoot(op.destAbs, cwd, 'Destination path');
+  await assertNoSymlinkInPath(safeDest, cwd);
+  await ensureDir(path.dirname(safeDest));
+  if (!(await fileExists(safeDest))) {
     await handleWrite(op, content, cwd, resolved);
     return true;
   }
   const text = await ensureString(content);
-  await appendContent(op.destAbs, text);
+  await appendContent(safeDest, text);
   return true;
 };
 

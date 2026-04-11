@@ -1,5 +1,12 @@
+import { buildSharedRuleOperations, parseSharedRules } from '../src/plan/sharedRules';
 import { describe, it, expect } from 'vitest';
-import { parseSharedRules } from '../src/plan/sharedRules';
+import { mkdtemp, mkdir, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { parseArgs } from '../src/cli/args.js';
+import { mergeConfigAndArgs } from '../src/cli/config.js';
+const runtimeDarwin = { platform: 'darwin' } as const;
+const mkTmp = async () => mkdtemp(join(tmpdir(), 'ccsdd-shared-rules-'));
 
 describe('parseSharedRules', () => {
   it('parses comma-separated shared-rules from metadata', () => {
@@ -95,5 +102,34 @@ metadata:
       + '  shared-rules: "design-principles.md, design-synthesis.md"\r\n'
       + '---\r\n';
     expect(parseSharedRules(content)).toEqual(['design-principles.md', 'design-synthesis.md']);
+  });
+});
+
+describe('buildSharedRuleOperations', () => {
+  it('rejects path traversal in shared rule names', async () => {
+    const templatesRoot = await mkTmp();
+    const cwd = await mkTmp();
+    await mkdir(join(templatesRoot, 'templates/shared/settings/rules'), { recursive: true });
+    await writeFile(join(templatesRoot, 'templates/shared/settings/rules/design.md'), 'rule', 'utf8');
+
+    const resolved = mergeConfigAndArgs(parseArgs([]), {}, runtimeDarwin);
+    await expect(
+      buildSharedRuleOperations(
+        ['../escape.md'],
+        join(cwd, '.agents/skills/kiro-test'),
+        templatesRoot,
+        'skill',
+        cwd,
+        resolved,
+        {
+          LANG_CODE: 'en',
+          DEV_GUIDELINES: 'guidelines',
+          KIRO_DIR: '.kiro',
+          AGENT_DIR: '.agents',
+          AGENT_DOC: 'AGENTS.md',
+          AGENT_COMMANDS_DIR: '.agents/skills',
+        },
+      ),
+    ).rejects.toThrow(/invalid shared rule name/i);
   });
 });

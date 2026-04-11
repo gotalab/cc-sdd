@@ -7,6 +7,7 @@ import { renderJsonTemplate, renderTemplateString } from '../template/renderer.j
 import { categorizeTarget, type InstallCategory } from './categories.js';
 import { getAgentDefinition } from '../agents/registry.js';
 import { parseSharedRules, buildSharedRuleOperations } from './sharedRules.js';
+import { assertPathInsideRoot, resolveRelativePathInsideRoot } from '../utils/pathSafety.js';
 
 export type SourceMode = 'static' | 'template-text' | 'template-json';
 
@@ -90,12 +91,12 @@ export const buildFileOperations = async (
 
   for (const art of artifacts) {
     if (art.source.type === 'staticDir') {
-      const srcDir = path.resolve(templatesRoot, art.source.from);
-      const destDir = path.resolve(cwd, art.source.toDir);
+      const srcDir = resolveRelativePathInsideRoot(templatesRoot, art.source.from, `Artifact ${art.id} source path`);
+      const destDir = resolveRelativePathInsideRoot(cwd, art.source.toDir, `Artifact ${art.id} destination path`);
       const files = await walkDir(srcDir);
       for (const src of files) {
         const rel = path.relative(srcDir, src);
-        const destAbs = path.join(destDir, rel);
+        const destAbs = assertPathInsideRoot(path.join(destDir, rel), cwd, `Artifact ${art.id} destination file`);
         const relTarget = path.relative(cwd, destAbs);
         const category = categorizeTarget(destAbs, cwd, resolved);
         operations.push({
@@ -112,9 +113,9 @@ export const buildFileOperations = async (
     }
 
     if (art.source.type === 'templateFile') {
-      const srcAbs = path.resolve(templatesRoot, art.source.from);
-      const destDir = path.resolve(cwd, art.source.toDir);
-      const destAbs = path.join(destDir, art.source.outFile);
+      const srcAbs = resolveRelativePathInsideRoot(templatesRoot, art.source.from, `Artifact ${art.id} source path`);
+      const destDir = resolveRelativePathInsideRoot(cwd, art.source.toDir, `Artifact ${art.id} destination path`);
+      const destAbs = assertPathInsideRoot(path.join(destDir, art.source.outFile), cwd, `Artifact ${art.id} destination file`);
       const relTarget = path.relative(cwd, destAbs);
       const category = categorizeTarget(destAbs, cwd, resolved);
       const mode = determineModeFromFilename(art.source.outFile);
@@ -133,7 +134,11 @@ export const buildFileOperations = async (
             } catch (error) {
               const err = error as NodeJS.ErrnoException;
               if (err?.code === 'ENOENT' && fallbackRel) {
-                const fallbackAbs = path.resolve(templatesRoot, fallbackRel);
+                const fallbackAbs = resolveRelativePathInsideRoot(
+                  path.resolve(templatesRoot, '../..'),
+                  fallbackRel,
+                  `Artifact ${art.id} fallback template path`,
+                );
                 return readFile(fallbackAbs, 'utf8');
               }
               throw error;
@@ -151,8 +156,8 @@ export const buildFileOperations = async (
     }
 
     if (art.source.type === 'templateDir') {
-      const srcDir = path.resolve(templatesRoot, art.source.fromDir);
-      const destDir = path.resolve(cwd, art.source.toDir);
+      const srcDir = resolveRelativePathInsideRoot(templatesRoot, art.source.fromDir, `Artifact ${art.id} source path`);
+      const destDir = resolveRelativePathInsideRoot(cwd, art.source.toDir, `Artifact ${art.id} destination path`);
       const files = await walkDir(srcDir);
 
       // Collect shared-rules declarations from SKILL.md files
@@ -183,7 +188,7 @@ export const buildFileOperations = async (
         }
 
         const { outName, mode } = transformTemplateOutput(rel);
-        const destAbs = path.join(destDir, outName);
+        const destAbs = assertPathInsideRoot(path.join(destDir, outName), cwd, `Artifact ${art.id} destination file`);
         const relTarget = path.relative(cwd, destAbs);
         const category = categorizeTarget(destAbs, cwd, resolved);
         operations.push({

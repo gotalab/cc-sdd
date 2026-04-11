@@ -33,7 +33,7 @@ Upgrading from v1.x or v2.x? See the [Migration Guide](docs/guides/migration-gui
 
 cc-sdd treats the spec as a contract between parts of the system, not a master command document handed to the agent. Code remains the source of truth. Specs make the boundaries between parts of the code explicit so humans and agents can work in parallel without constant synchronization.
 
-The bet: explicit contracts at the right granularity let team-scale AI-driven development move faster, not slower. Agents write the spec, humans approve the contract at phase gates, code is what ships.
+The bet: explicit contracts at the right granularity let AI-driven development at team scale move faster, not slower. Agents write the spec, humans approve the contract at phase gates, code is what ships.
 
 Boundaries are not overhead. They are what lets you move freely inside while protecting the outside.
 

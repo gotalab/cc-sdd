@@ -5,6 +5,7 @@ import type { TemplateContext } from '../template/context.js';
 import { renderTemplateString } from '../template/renderer.js';
 import { categorizeTarget } from './categories.js';
 import type { FileOperation } from './fileOperations.js';
+import { assertPathInsideRoot, resolveRelativePathInsideRoot } from '../utils/pathSafety.js';
 
 export const SHARED_RULES_DIR = 'templates/shared/settings/rules';
 
@@ -42,10 +43,19 @@ export const buildSharedRuleOperations = async (
   ctx: TemplateContext,
 ): Promise<FileOperation[]> => {
   const operations: FileOperation[] = [];
+  const sharedRulesRoot = path.resolve(templatesRoot, SHARED_RULES_DIR);
 
   for (const ruleName of ruleNames) {
-    const srcAbs = path.resolve(templatesRoot, SHARED_RULES_DIR, ruleName);
-    const destAbs = path.join(skillDestDir, 'rules', ruleName);
+    if (!/^[A-Za-z0-9._-]+\.md$/.test(ruleName)) {
+      throw new Error(`Invalid shared rule name: ${ruleName}`);
+    }
+    const srcAbs = resolveRelativePathInsideRoot(sharedRulesRoot, ruleName, `Shared rule "${ruleName}" source path`);
+    const rulesDestDir = path.join(skillDestDir, 'rules');
+    const destAbs = assertPathInsideRoot(
+      path.join(rulesDestDir, ruleName),
+      rulesDestDir,
+      `Shared rule "${ruleName}" destination path`,
+    );
     const relTarget = path.relative(cwd, destAbs);
     const category = categorizeTarget(destAbs, cwd, resolved);
 
