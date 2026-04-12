@@ -203,7 +203,6 @@ Common use cases: PRD-style requirements, API and database schemas, approval gat
 
 - [Kiro IDE](https://kiro.dev): enhanced spec management and team collaboration.
 - [Kiro's Spec Methodology](https://kiro.dev/docs/specs/): the original spec-driven development methodology.
-- [AI-Assisted SDD: Spec-Driven Development with Gemini, Claude, and cc-sdd](https://www.amazon.com/dp/B0CW19YX9R): comprehensive book on Amazon.
 
 ## License
 
