@@ -1,4 +1,8 @@
 name = "spec-reviewer"
+description = """
+Use for cross-spec consistency review across multiple generated specifications.
+Detect contradictions, overlap, interface mismatches, and boundary problems between specs.
+"""
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 developer_instructions = """
