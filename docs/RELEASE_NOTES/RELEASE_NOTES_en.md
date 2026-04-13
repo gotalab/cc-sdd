@@ -6,7 +6,30 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v3.0.1.
+No unreleased features at this time. The latest stable release is v3.0.2.
+
+---
+
+## 🔧 Ver 3.0.2 (2026-04-14) – Patch Fixes & Docs Cleanup
+
+### Summary
+Patch release that keeps the Codex `spec-reviewer` role valid for cross-spec review and removes a README reference that no longer aligns with cc-sdd.
+
+### Fixed
+- Added the missing `description` field to the Codex `spec-reviewer` template so Codex keeps the custom role available instead of ignoring it as malformed ([#160](https://github.com/gotalab/cc-sdd/pull/160))
+
+### Documentation
+- Removed the README Amazon book reference after the linked title shifted to promote `ai-sdd`, a closed-source clone of cc-sdd without attribution ([#157](https://github.com/gotalab/cc-sdd/pull/157))
+
+### Resources
+- **Pull Requests**: [#157](https://github.com/gotalab/cc-sdd/pull/157), [#160](https://github.com/gotalab/cc-sdd/pull/160)
+- **Full Changelog**: [CHANGELOG.md](../../CHANGELOG.md#302---2026-04-14)
+- **Release Notes**: [English](./RELEASE_NOTES_en.md) | [日本語](./RELEASE_NOTES_ja.md)
+
+### Installation
+```bash
+npx cc-sdd@latest
+```
 
 ---
 
