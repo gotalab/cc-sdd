@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "f1772eec3b3f",
+  "strategy": "manual-commit",
+  "branch": "codex/fix-spec-reviewer-description",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tools/cc-sdd/templates/agents/codex-skills/codex-agents/spec-reviewer.toml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f1/772eec3b3f/0/metadata.json",
+      "transcript": "/f1/772eec3b3f/0/full.jsonl",
+      "content_hash": "/f1/772eec3b3f/0/content_hash.txt",
+      "prompt": "/f1/772eec3b3f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 7068,
+    "cache_creation_tokens": 1628801,
+    "cache_read_tokens": 321060150,
+    "output_tokens": 472439,
+    "api_call_count": 1255
+  }
+}
