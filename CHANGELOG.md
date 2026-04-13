@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [3.0.2] - 2026-04-14
+
+### Changed
+- Remove the README Amazon book reference after the linked title shifted to promote `ai-sdd`, a closed-source clone of cc-sdd without attribution ([#157](https://github.com/gotalab/cc-sdd/pull/157))
+
+### Fixed
+- Add the missing `description` field to the Codex `spec-reviewer` custom agent template so Codex keeps the role available for cross-spec review instead of dropping it as malformed ([#160](https://github.com/gotalab/cc-sdd/pull/160))
+
 ## [3.0.1] - 2026-04-11
 
 ### Changed
