@@ -1,4 +1,5 @@
 name = "spec-reviewer"
+description = "Cross-spec consistency reviewer that checks data model consistency, interface alignment, and dependency completeness across multiple feature specifications"
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 developer_instructions = """
