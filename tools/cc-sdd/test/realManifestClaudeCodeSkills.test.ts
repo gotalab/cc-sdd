@@ -56,6 +56,8 @@ describe('real claude-code-skills manifest', () => {
     expect(text).toContain('/kiro-spec-status');
     expect(text).not.toContain('/kiro:spec-status');
     expect(text).toContain('autonomous mode');
+    expect(text).toContain('[--review required|inline|off]');
+    expect(text).toContain('`--review off` skips task-local review');
 
     const skillSpecInit = join(cwd, '.claude/skills/kiro-spec-init/SKILL.md');
     expect(await exists(skillSpecInit)).toBe(true);
@@ -83,6 +85,8 @@ describe('real claude-code-skills manifest', () => {
     expect(skillValidateImplText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
     expect(skillValidateImplText).toContain('MANUAL_VERIFY_REQUIRED');
     expect(skillValidateImplText).toContain('Does NOT Do');
+    expect(skillValidateImplText).toContain('usually reviewed during implementation');
+    expect(skillValidateImplText).toContain('`--review off`');
 
     const skillValidateDesign = join(cwd, '.claude/skills/kiro-validate-design/SKILL.md');
     expect(await exists(skillValidateDesign)).toBe(true);
@@ -123,6 +127,10 @@ describe('real claude-code-skills manifest', () => {
     expect(skillImplText).toContain('No Destructive Reset');
     expect(skillImplText).toContain('stop the feature run');
     expect(skillImplText).not.toContain('discard the failed implementation (`git checkout .`)');
+    expect(skillImplText).toContain('argument-hint: <feature-name> [task-numbers] [--review required|inline|off]');
+    expect(skillImplText).toContain('Default review mode is `required`');
+    expect(skillImplText).toContain('skip review');
+    expect(skillImplText).toContain('If review mode is `off`');
 
     const implPrompt = join(cwd, '.claude/skills/kiro-impl/templates/implementer-prompt.md');
     expect(await exists(implPrompt)).toBe(true);

@@ -7,7 +7,7 @@ description: Validate feature-level integration after all tasks are implemented.
 # Implementation Integration Validation
 
 <background_information>
-Individual tasks have already been reviewed by the per-task reviewer during implementation. Your job is to catch problems that only become visible when looking across all tasks together.
+Individual tasks are usually reviewed during implementation. Your job is to catch problems that only become visible when looking across all tasks together.
 
 Boundary terminology continuity:
 - discovery identifies `Boundary Candidates`
@@ -23,7 +23,7 @@ Boundary terminology continuity:
   - Design structure is reflected end-to-end (not just per-component)
   - No orphaned code, conflicting implementations, integration seams, or boundary spillover
 
-**What This Skill Does NOT Do**: Per-task checks are the reviewer's responsibility during `@kiro-impl`. This skill does NOT re-check individual task acceptance criteria, per-file reality checks, or single-task spec alignment.
+**What This Skill Does NOT Do**: This skill is not a full replacement for task-local review during `@kiro-impl`. This skill does NOT re-check every individual task acceptance criterion, every per-file reality check, or every single-task spec detail unless a concrete integration finding forces it.
 
 This skill's main question is: when the completed tasks are viewed together, do they still respect the designed boundary seams and dependency direction?
 </background_information>
@@ -60,6 +60,8 @@ The following validation dimensions are independent and can be dispatched as **s
 If multi-agent is not available, run checks sequentially in main context.
 
 After all checks complete, synthesize findings for GO/NO-GO/MANUAL_VERIFY_REQUIRED assessment.
+
+If the implementation run explicitly skipped task-local review (for example `--review off`), tighten scrutiny on obvious task-level gaps that surface during integration validation and call out that reduced review coverage in the report.
 
 ### 2. Load Context
 

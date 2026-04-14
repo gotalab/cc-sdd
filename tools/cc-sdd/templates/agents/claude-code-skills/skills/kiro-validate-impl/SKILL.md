@@ -8,7 +8,7 @@ argument-hint: <feature-name> [task-numbers]
 # kiro-validate-impl Skill
 
 ## Role
-Individual tasks have already been reviewed by the per-task reviewer during implementation. Your job is to catch problems that only become visible when looking across all tasks together.
+Individual tasks are usually reviewed during implementation. Your job is to catch problems that only become visible when looking across all tasks together.
 
 Boundary terminology continuity:
 - discovery identifies `Boundary Candidates`
@@ -26,7 +26,7 @@ Boundary terminology continuity:
   - No orphaned code, conflicting implementations, integration seams, or boundary spillover
 
 ## What This Skill Does NOT Do
-Per-task checks are the reviewer's responsibility during `/kiro-impl`. This skill does **not** re-check:
+This skill is not a full replacement for task-local review during `/kiro-impl`. This skill does **not** re-check:
 - Individual task acceptance criteria
 - Per-file reality checks (mock/stub detection)
 - Single-task spec alignment
@@ -80,6 +80,8 @@ The following validation dimensions are independent and can be dispatched as **s
 - **Cross-task integration**: Verify data flows, API contracts, shared state consistency
 
 For simple features (few tasks, small scope), run checks in main context without subagent dispatch.
+
+If the implementation run explicitly skipped task-local review (for example `--review off`), tighten scrutiny on obvious task-level gaps that surface during integration validation and call out that reduced review coverage in the report.
 
 #### Mechanical Checks (run commands, use results)
 

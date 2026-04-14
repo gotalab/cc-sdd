@@ -74,6 +74,8 @@ describe('real github-copilot-skills manifest', () => {
     expect(docText).toContain('/kiro-spec-status');
     expect(docText).not.toContain('$kiro-spec-status');
     expect(docText).toContain('autonomous mode');
+    expect(docText).toContain('[--review required|inline|off]');
+    expect(docText).toContain('`--review off` skips task-local review');
 
     const skillSpecInit = join(cwd, '.github/skills/kiro-spec-init/SKILL.md');
     expect(await exists(skillSpecInit)).toBe(true);
@@ -110,6 +112,16 @@ describe('real github-copilot-skills manifest', () => {
     expect(skillValidateImplText).toContain('Core steering context: `product.md`, `tech.md`, `structure.md`');
     expect(skillValidateImplText).toContain('MANUAL_VERIFY_REQUIRED');
     expect(skillValidateImplText).toContain('Does NOT Do');
+    expect(skillValidateImplText).toContain('usually reviewed during implementation');
+    expect(skillValidateImplText).toContain('`--review off`');
+
+    const skillImpl = join(cwd, '.github/skills/kiro-impl/SKILL.md');
+    expect(await exists(skillImpl)).toBe(true);
+    const skillImplText = await readFile(skillImpl, 'utf8');
+    expect(skillImplText).toContain('Default is `required`');
+    expect(skillImplText).toContain('`--review required|inline|off`');
+    expect(skillImplText).toContain('skip review');
+    expect(skillImplText).toContain('If review mode is `off`');
 
     const skillValidateDesign = join(cwd, '.github/skills/kiro-validate-design/SKILL.md');
     expect(await exists(skillValidateDesign)).toBe(true);
