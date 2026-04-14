@@ -74,6 +74,8 @@ describe('real codex-skills manifest', () => {
     expect(docText).toContain('$kiro-spec-status');
     expect(docText).not.toContain('/prompts:kiro-spec-status');
     expect(docText).toContain('autonomous mode');
+    expect(docText).toContain('[--review required|inline|off]');
+    expect(docText).toContain('`--review off` skips task-local review');
 
     const skillSpecInit = join(cwd, '.agents/skills/kiro-spec-init/SKILL.md');
     expect(await exists(skillSpecInit)).toBe(true);
@@ -111,6 +113,8 @@ describe('real codex-skills manifest', () => {
     expect(skillValidateImplText).toContain('MANUAL_VERIFY_REQUIRED');
     expect(skillValidateImplText).toContain('Does NOT Do');
     expect(skillValidateImplText).toContain('kiro-verify-completion');
+    expect(skillValidateImplText).toContain('usually reviewed during implementation');
+    expect(skillValidateImplText).toContain('`--review off`');
 
     const skillImpl = join(cwd, '.agents/skills/kiro-impl/SKILL.md');
     expect(await exists(skillImpl)).toBe(true);
@@ -118,6 +122,10 @@ describe('real codex-skills manifest', () => {
     expect(skillImplText).toContain('No Destructive Reset');
     expect(skillImplText).toContain('stop the feature run');
     expect(skillImplText).not.toContain('discard the failed implementation (`git checkout .`)');
+    expect(skillImplText).toContain('Default is `required`');
+    expect(skillImplText).toContain('`--review required|inline|off`');
+    expect(skillImplText).toContain('skip review');
+    expect(skillImplText).toContain('If review mode is `off`');
 
     const skillValidateDesign = join(cwd, '.agents/skills/kiro-validate-design/SKILL.md');
     expect(await exists(skillValidateDesign)).toBe(true);

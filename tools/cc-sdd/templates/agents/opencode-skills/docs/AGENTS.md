@@ -39,9 +39,10 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
     - `/kiro-validate-design {feature}` (optional: design review)
     - `/kiro-spec-tasks {feature} [-y]`
   - Multi-spec: `/kiro-spec-batch` — creates all specs from roadmap.md in parallel by dependency wave
-- Phase 2 (Implementation): `/kiro-impl {feature} [tasks]`
+- Phase 2 (Implementation): `/kiro-impl {feature} [tasks] [--review required|inline|off]`
   - Without task numbers: autonomous mode (subagent per task + independent review + final validation)
   - With task numbers: manual mode (selected tasks in main context, still reviewer-gated before completion)
+  - `--review off` skips task-local review; use it intentionally and keep `/kiro-validate-impl {feature}` as the final quality gate
   - `/kiro-validate-impl {feature}` (standalone re-validation)
 - Progress check: `/kiro-spec-status {feature}` (use anytime)
 

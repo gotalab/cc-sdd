@@ -3,7 +3,7 @@ name: kiro-impl
 description: Implement approved tasks using TDD with native subagent dispatch. Runs all pending tasks autonomously or selected tasks manually.
 disable-model-invocation: true
 allowed-tools: Read, Write, Edit, MultiEdit, Bash, Glob, Grep, Agent, WebSearch, WebFetch
-argument-hint: <feature-name> [task-numbers]
+argument-hint: <feature-name> [task-numbers] [--review required|inline|off]
 ---
 
 # kiro-impl Skill
@@ -19,7 +19,13 @@ You operate in two modes:
   - Code passes all tests with no regressions
   - Tasks marked as completed in tasks.md
   - Implementation aligns with design and requirements
-  - Independent reviewer approves each task before completion
+  - Task completion follows the selected review mode
+
+## Review Mode
+- Default review mode is `required`
+- Accept explicit forms: `--review required|inline|off`
+- Also accept clear natural-language opt-outs such as `skip review` or `without review` as `off`
+- If the request is ambiguous, keep `required`
 
 ## Execution Steps
 
@@ -61,6 +67,10 @@ After all parallel research completes, synthesize implementation brief before st
 - Extract feature name from first argument
 - If task numbers provided (e.g., "1.1" or "1,2,3"): **manual mode**
 - If no task numbers: **autonomous mode** (all pending tasks)
+- Determine review mode from the invocation:
+  - `--review required` or omitted → `required`
+  - `--review inline` → `inline`
+  - `--review off`, `skip review`, or `without review` → `off`
 
 **Build task queue**:
 - Read tasks.md, identify actionable sub-tasks (X.Y numbering like 1.1, 2.3)
@@ -99,23 +109,33 @@ For each task (one at a time):
 - **BLOCKED** → dispatch debug subagent (see section below); do NOT immediately skip
 - **NEEDS_CONTEXT** → re-dispatch once with the requested additional context; if still unresolved → dispatch debug subagent
 
-**c) Dispatch reviewer**:
-- Read `templates/reviewer-prompt.md` from this skill's directory
-- Construct a review prompt with:
-  - The task description and relevant spec section numbers
-  - Paths to spec files (requirements.md, design.md) so the reviewer can read them directly
-  - The implementer's status report (for reference only — reviewer must verify independently)
-- The reviewer must apply the `kiro-review` protocol to this task-local review.
-- Preserve the existing task-specific context: task text, spec refs, `_Boundary:_` scope, validation commands, implementer report, and the actual `git diff` as the primary source of truth.
-- The reviewer subagent will run `git diff` itself to read the actual code changes and verify against the spec
-- Dispatch via **Agent tool** as a fresh subagent
+**c) Review the task**:
+- If review mode is `required`:
+  - Read `templates/reviewer-prompt.md` from this skill's directory
+  - Construct a review prompt with:
+    - The task description and relevant spec section numbers
+    - Paths to spec files (requirements.md, design.md) so the reviewer can read them directly
+    - The implementer's status report (for reference only — reviewer must verify independently)
+  - The reviewer must apply the `kiro-review` protocol to this task-local review.
+  - Preserve the existing task-specific context: task text, spec refs, `_Boundary:_` scope, validation commands, implementer report, and the actual `git diff` as the primary source of truth.
+  - The reviewer subagent will run `git diff` itself to read the actual code changes and verify against the spec
+  - Dispatch via **Agent tool** as a fresh subagent
+- If review mode is `inline`:
+  - Apply `kiro-review` in the parent context using the same task evidence and the actual `git diff`
+- If review mode is `off`:
+  - Skip task-local review
+  - Record in the parent context that task-local review was skipped for this task
 
 **d) Handle reviewer verdict**:
-- Parse reviewer verdict only from the exact `## Review Verdict` block and `- VERDICT:` field.
-- If `VERDICT` is missing, ambiguous, or replaced with prose, re-dispatch the reviewer once requesting the exact structured verdict only. Do NOT mark the task complete, commit, or continue to the next task without a parseable `APPROVED | REJECTED` value.
-- **APPROVED** → before marking the task `[x]` or making any success claim, apply `kiro-verify-completion` using fresh evidence from the current code state; then mark task `[x]` in tasks.md and perform selective git commit
-- **REJECTED (round 1-2)** → re-dispatch implementer with review feedback
-- **REJECTED (round 3)** → dispatch debug subagent (see section below)
+- If review mode is `off`:
+  - Do not fabricate a reviewer verdict
+  - Before marking the task `[x]` or making any success claim, apply `kiro-verify-completion` using fresh evidence from the current code state; then mark task `[x]` in tasks.md and perform selective git commit
+- Otherwise:
+  - Parse reviewer verdict only from the exact `## Review Verdict` block and `- VERDICT:` field.
+  - If `VERDICT` is missing, ambiguous, or replaced with prose, re-dispatch the reviewer once requesting the exact structured verdict only. Do NOT mark the task complete, commit, or continue to the next task without a parseable `APPROVED | REJECTED` value.
+  - **APPROVED** → before marking the task `[x]` or making any success claim, apply `kiro-verify-completion` using fresh evidence from the current code state; then mark task `[x]` in tasks.md and perform selective git commit
+  - **REJECTED (round 1-2)** → re-dispatch implementer with review feedback
+  - **REJECTED (round 3)** → dispatch debug subagent (see section below)
 
 **e) Commit** (parent-only, selective staging):
 - Stage only the files actually changed for this task, plus tasks.md
@@ -171,8 +191,13 @@ Before writing any code, read the relevant sections of requirements.md and desig
 - **GREEN**: Implement simplest solution to make test pass, following the design constraints.
 - **REFACTOR**: Improve code structure, remove duplication. All tests must still pass.
 - **VERIFY**: All tests pass (new and existing), no regressions. Confirm verification method passes.
-- **REVIEW**: Apply `kiro-review` before marking the task complete. If the host supports fresh subagents in manual mode, use a fresh reviewer; otherwise perform the review in the main context using the `kiro-review` protocol. Do NOT continue until the verdict is parseably `APPROVED`.
-- **MARK COMPLETE**: Only after review returns `APPROVED`, apply `kiro-verify-completion`, then update the checkbox from `- [ ]` to `- [x]` in tasks.md.
+- **REVIEW**:
+  - `required`: Apply `kiro-review` before marking the task complete. If the host supports fresh subagents in manual mode, use a fresh reviewer; otherwise perform the review in the main context using the `kiro-review` protocol. Do NOT continue until the verdict is parseably `APPROVED`.
+  - `inline`: Apply `kiro-review` in the main context before marking the task complete.
+  - `off`: Skip task-local review, but note that `kiro-validate-impl` becomes the primary quality gate before any feature-level completion claim.
+- **MARK COMPLETE**:
+  - `required|inline`: Only after review returns `APPROVED`, apply `kiro-verify-completion`, then update the checkbox from `- [ ]` to `- [x]` in tasks.md.
+  - `off`: Apply `kiro-verify-completion`, then update the checkbox from `- [ ]` to `- [x]` in tasks.md.
 
 ### Step 4: Final Validation
 
@@ -186,6 +211,7 @@ Before writing any code, read the relevant sections of requirements.md and desig
 
 **Manual mode**:
 - Suggest running `/kiro-validate-impl {feature}` but do not auto-execute
+- If review mode is `off`, treat `/kiro-validate-impl {feature}` as mandatory before any feature-level success claim
 
 ## Feature Flag Protocol
 
