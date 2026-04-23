@@ -33,9 +33,9 @@ Check `{{KIRO_DIR}}/steering/` status:
 
 1. Load templates from `{{KIRO_DIR}}/settings/templates/steering/`
 2. Analyze codebase (JIT):
-   - `glob_file_search` for source files
-   - `read_file` for README, package.json, etc.
-   - `grep` for patterns
+   - `Glob` for source files
+   - `Read` for README, package.json, etc.
+   - `Grep` for patterns
 3. Extract patterns (not lists):
    - Product: Purpose, value, core capabilities
    - Tech: Frameworks, decisions, conventions
@@ -78,10 +78,10 @@ Document patterns and principles, not exhaustive lists.
 
 ## Tool guidance
 
-- `glob_file_search`: Find source/config files
-- `read_file`: Read steering, docs, configs
-- `grep`: Search patterns
-- `list_dir`: Analyze structure
+- `Glob`: Find source/config files
+- `Read`: Read steering, docs, configs
+- `Grep`: Search patterns
+- `LS`: Analyze structure
 
 **JIT Strategy**: Fetch when needed, not upfront.
 
