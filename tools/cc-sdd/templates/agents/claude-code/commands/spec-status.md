@@ -1,6 +1,6 @@
 ---
 description: Show specification status and progress
-allowed-tools: Bash, Read, Glob, Write, Edit, MultiEdit, Update
+allowed-tools: Read, Glob
 argument-hint: <feature-name>
 ---
 
