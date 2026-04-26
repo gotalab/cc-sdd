@@ -47,7 +47,7 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
 - Progress check: `@kiro-spec-status {feature}` (use anytime)
 
 ## Skills Structure
-Skills are located in `.windsurf/skills@kiro-*/SKILL.md`
+Skills are located in `.windsurf/skills/kiro-*/SKILL.md`
 - Each skill is a directory with a `SKILL.md` file
 - Use `/skills` to inspect currently available skills
 - Invoke a skill directly with `@kiro-<skill-name>`
