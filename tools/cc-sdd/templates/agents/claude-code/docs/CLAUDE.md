@@ -18,6 +18,7 @@ Kiro-style Spec-Driven Development on an agentic SDLC
 - Use `/kiro:spec-status [feature-name]` to check progress
 
 ## Development Guidelines
+<!-- DEV_GUIDELINES: injected at install time with language-specific guidelines (npx cc-sdd@latest --lang <code>) -->
 {{DEV_GUIDELINES}}
 
 ## Minimal Workflow
