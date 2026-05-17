@@ -59,3 +59,25 @@ Skills are located under the agent-specific skills directory (e.g., `.claude/ski
 - Load entire `.kiro/steering/` as project memory
 - Default files: `product.md`, `tech.md`, `structure.md`
 - Custom files are supported (managed via `/kiro-steering-custom`)
+
+## Cursor Cloud specific instructions
+
+The sole buildable/testable package lives in `tools/cc-sdd/`. There are no external services, databases, or Docker containers.
+
+### Quick reference
+
+| Action | Command (from `tools/cc-sdd/`) |
+|---|---|
+| Install deps + build | `npm ci` (runs `prepare` → `tsc`) |
+| Type-check (lint) | `npx tsc --noEmit` |
+| Run all tests | `npm test` (vitest) |
+| Watch tests | `npm run test:watch` |
+| Build only | `npm run build` |
+| Run CLI | `node dist/cli.js [flags]` |
+
+### Notes
+
+- No dedicated linter (ESLint/Biome) is configured; `tsc --noEmit` with `strict: true` serves as the lint step.
+- `npm ci` automatically triggers `prepare` → `npm run build` → `tsc` + shebang injection, so a separate build step is not needed after install.
+- The CLI is a one-shot scaffolding tool (not a long-running server). Test it by running `node dist/cli.js --cursor-skills --lang en --dry-run` or with `-y` to write files to a temp directory.
+- All 39 test files are pure unit/integration tests via Vitest — no network, no filesystem side effects outside temp dirs.
