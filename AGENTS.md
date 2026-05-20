@@ -59,3 +59,24 @@ Skills are located under the agent-specific skills directory (e.g., `.claude/ski
 - Load entire `.kiro/steering/` as project memory
 - Default files: `product.md`, `tech.md`, `structure.md`
 - Custom files are supported (managed via `/kiro-steering-custom`)
+
+## Cursor Cloud specific instructions
+
+### Project layout
+- The publishable package lives at `tools/cc-sdd/` (TypeScript CLI, zero runtime dependencies).
+- The repo root contains docs, assets, specs, and CI config but no runnable code outside `tools/cc-sdd/`.
+
+### Development commands (all run from `tools/cc-sdd/`)
+| Task | Command |
+|------|---------|
+| Install deps | `npm ci` |
+| Build | `npm run build` |
+| Test | `npm test` (Vitest) |
+| Type check | `npx tsc --noEmit` |
+| Run CLI | `node dist/cli.js [options]` |
+
+### Notes
+- `npm ci` triggers the `prepare` script which runs the build automatically, so after install the `dist/` directory is ready.
+- There is no dedicated lint tool (ESLint/Biome); TypeScript strict mode (`tsc --noEmit`) serves as the lint check.
+- The CLI is a pure file-generation tool with no long-running server, background process, or external service dependency.
+- Tests are fast (~2 s) and fully self-contained; no fixtures, env vars, or network required.
