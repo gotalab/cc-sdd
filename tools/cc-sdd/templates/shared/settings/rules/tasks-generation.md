@@ -192,14 +192,14 @@ Before writing `tasks.md`, review the draft task plan and repair local issues un
 - [ ] 2.1 (P) Sub-task description
   - Detail items...
   - Observable completion condition
-  - _Requirements: Y.Y_
   - _Boundary: AuthService_
+  - _Requirements: Y.Y_
 
 - [ ] 2.2 (P) Sub-task description
   - Detail items...
   - Observable completion condition
-  - _Requirements: Z.Z_
   - _Boundary: UserRepository_
+  - _Requirements: Z.Z_
 
 - [ ] 3. Integration and wiring
 - [ ] 3.1 Sub-task description
