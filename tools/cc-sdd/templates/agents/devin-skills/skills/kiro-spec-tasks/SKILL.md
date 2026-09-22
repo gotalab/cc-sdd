@@ -141,7 +141,7 @@ Before writing `tasks.md`, run one lightweight independent sanity review of the 
 Provide brief summary in the language specified in spec.json:
 
 1. **Status**: Confirm tasks generated at `{{KIRO_DIR}}/specs/$1/tasks.md`
-2. **Task Summary**: 
+2. **Task Summary**:
    - Total: X major tasks, Y sub-tasks
    - All Z requirements covered
    - Average task size: 1-3 hours per sub-task

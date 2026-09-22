@@ -48,7 +48,7 @@ metadata:
    - **Complex Integration** → Comprehensive analysis required
 
 2. **Execute Appropriate Discovery Process**:
-   
+
    **For Complex/New Features**:
    - Read and execute `rules/design-discovery-full.md` from this skill's directory
    - Conduct thorough research using WebSearch/WebFetch:
@@ -56,12 +56,12 @@ metadata:
      - External dependency verification (APIs, libraries, versions, compatibility)
      - Official documentation, migration guides, known issues
      - Performance benchmarks and security considerations
-   
+
    **For Extensions**:
    - Read and execute `rules/design-discovery-light.md` from this skill's directory
    - Focus on integration points, existing patterns, compatibility
    - Use Grep to analyze existing codebase patterns
-   
+
    **For Simple Additions**:
    - Skip formal discovery, quick pattern check only
 

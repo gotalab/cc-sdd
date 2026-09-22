@@ -27,7 +27,7 @@ metadata:
 
 Check `{{KIRO_DIR}}/steering/` status:
 
-**Bootstrap Mode**: Empty OR missing core files (product.md, tech.md, structure.md)  
+**Bootstrap Mode**: Empty OR missing core files (product.md, tech.md, structure.md)\
 **Sync Mode**: All core files exist
 
 ---
@@ -83,7 +83,7 @@ From `rules/steering-principles.md` (in this skill's directory):
 
 Document patterns and principles, not exhaustive lists.
 
-**Bad**: List every file in directory tree  
+**Bad**: List every file in directory tree\
 **Good**: Describe organization pattern with examples
 
 </instructions>
@@ -131,11 +131,11 @@ Review and approve as Source of Truth.
 ## Examples
 
 ### Bootstrap
-**Input**: Empty steering, React TypeScript project  
+**Input**: Empty steering, React TypeScript project\
 **Output**: 3 files with patterns - "Feature-first", "TypeScript strict", "React 19"
 
 ### Sync
-**Input**: Existing steering, new `/api` directory  
+**Input**: Existing steering, new `/api` directory\
 **Output**: Updated structure.md, flagged non-compliant files, suggested api-standards.md
 
 ## Safety & Fallback
@@ -153,4 +153,3 @@ Review and approve as Source of Truth.
 - Avoid documenting agent-specific tooling directories (e.g. `.cursor/`, `.gemini/`, `.claude/`)
 - `{{KIRO_DIR}}/settings/` content should NOT be documented in steering files (settings are metadata, not project knowledge)
 - Light references to `{{KIRO_DIR}}/specs/` and `{{KIRO_DIR}}/steering/` are acceptable; avoid other `.kiro/` directories
-
