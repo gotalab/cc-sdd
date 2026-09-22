@@ -31,9 +31,7 @@ Select skills for the current task even when steering/spec context is already av
 - Read `{{KIRO_DIR}}/specs/{feature}/design.md` for design document
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to architecture boundaries, integrations, runtime prerequisites, domain rules, security/performance constraints, or team conventions that affect implementation readiness
-- Use skills explicitly requested by the user and skills relevant to the task's domain, including design, accessibility, and UX.
-- Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
-- Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
+- Use explicitly requested skills and task-relevant local skills/playbooks, including design, accessibility, and UX. Select by description and read only needed guidance, even for small tasks; preserve required checks and host/project rules.
 
 #### Parallel Research
 

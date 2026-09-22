@@ -27,9 +27,7 @@ metadata:
 - `{{KIRO_DIR}}/specs/$1/research.md` (if exists, contains gap analysis from `/kiro-validate-gap`)
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to requirement coverage, architecture boundaries, integrations, runtime prerequisites, security/performance constraints, or team conventions that affect implementation readiness
-- Use skills explicitly requested by the user and skills relevant to the task's domain, including design, accessibility, and UX.
-- Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
-- Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
+- Use explicitly requested skills and task-relevant local skills/playbooks, including design, accessibility, and UX. Select by description and read only needed guidance, even for small tasks; preserve required checks and host/project rules.
 - Consult relevant domain skills even when building by hand without adopting a new library.
 - `{{KIRO_DIR}}/settings/templates/specs/design.md` for document structure
 - Read `rules/design-principles.md` from this skill's directory for design principles
