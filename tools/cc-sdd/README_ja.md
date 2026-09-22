@@ -50,7 +50,7 @@ npx cc-sdd@latest --codex-skills --lang ja      # Codex、日本語
 npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE、繁体字中国語
 ```
 
-8 つの AI coding agent（Claude Code と Codex は stable、Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity は beta）と 13 言語に対応。全リストは [対応エージェント](#対応エージェント) を参照。
+8 つの AI coding agent（Claude Code と Codex は stable、Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity は beta）と 14 言語に対応。全リストは [対応エージェント](#対応エージェント) を参照。
 
 その後、エージェント上で:
 
@@ -122,7 +122,7 @@ spec フェーズの典型的な出力（10 分以内）:
 npx cc-sdd@latest --lang ja    # 日本語
 npx cc-sdd@latest --lang zh-TW # 繁体字中国語
 npx cc-sdd@latest --lang es    # スペイン語
-# 対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el
+# 対応言語: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el, vi
 ```
 
 ### レガシーモード（非推奨）

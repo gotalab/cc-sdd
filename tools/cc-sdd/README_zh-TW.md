@@ -50,7 +50,7 @@ npx cc-sdd@latest --codex-skills --lang ja      # Codex, 日語
 npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE, 繁體中文
 ```
 
-支援 8 個 AI coding agent（Claude Code 與 Codex 為 stable；Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity 為 beta）和 13 種語言。完整列表請參考 [支援的代理](#支援的代理)。
+支援 8 個 AI coding agent（Claude Code 與 Codex 為 stable；Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity 為 beta）和 14 種語言。完整列表請參考 [支援的代理](#支援的代理)。
 
 然後在你的代理裡執行:
 
@@ -122,7 +122,7 @@ spec 階段的典型產出（10 分鐘以內）:
 npx cc-sdd@latest --lang zh-TW # 繁體中文
 npx cc-sdd@latest --lang ja    # 日語
 npx cc-sdd@latest --lang es    # 西班牙語
-# 支援語言: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el
+# 支援語言: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el, vi
 ```
 
 ### 舊版模式（已棄用）

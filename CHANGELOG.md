@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- Add Vietnamese (vi) language support, bringing total to 14 languages
+
 ## [3.0.2] - 2026-04-14
 
 ### Changed

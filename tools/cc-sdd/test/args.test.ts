@@ -29,6 +29,7 @@ describe('parseArgs', () => {
   it('parses additional languages', () => {
     expect(parseArgs(['--lang', 'es']).lang).toBe('es');
     expect(parseArgs(['--lang', 'ko']).lang).toBe('ko');
+    expect(parseArgs(['--lang', 'vi']).lang).toBe('vi');
   });
 
   it('parses backup with and without value', () => {
