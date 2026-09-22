@@ -1,10 +1,10 @@
 ---
 name: kiro-spec-tasks
 description: Generate implementation tasks from requirements and design. Use when creating actionable task lists.
-allowed-tools: Read, Write, Edit, Glob, Grep, Agent
+allowed-tools: Read, Bash, Write, Edit, Glob, Grep, Agent
 argument-hint: <feature-name> [-y] [--sequential]
 metadata:
-  shared-rules: "tasks-generation.md, tasks-parallel-analysis.md"
+  shared-rules: "tasks-generation.md, tasks-parallel-analysis.md, markdown-validation.md"
 ---
 
 # kiro-spec-tasks Skill
@@ -105,6 +105,7 @@ Before writing `tasks.md`, run one lightweight independent sanity review of the 
 
 **Write tasks.md**:
 - Create/update `{{KIRO_DIR}}/specs/{feature}/tasks.md`
+- Apply `rules/markdown-validation.md` from this skill's directory to the authored `tasks.md` before continuing.
 - Update spec.json metadata:
   - Set `phase: "tasks-generated"`
   - Set `approvals.tasks.generated: true, approved: false`

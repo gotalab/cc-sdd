@@ -2,7 +2,7 @@
 name: kiro-spec-tasks
 description: Generate implementation tasks for a specification
 metadata:
-  shared-rules: "tasks-generation.md, tasks-parallel-analysis.md"
+  shared-rules: "tasks-generation.md, tasks-parallel-analysis.md, markdown-validation.md"
 ---
 
 
@@ -107,6 +107,7 @@ Before writing `tasks.md`, run one lightweight independent sanity review of the 
 
 **Write tasks.md**:
 - Create/update `{{KIRO_DIR}}/specs/$1/tasks.md`
+- Apply `rules/markdown-validation.md` from this skill's directory to the authored `tasks.md` before continuing.
 - Update spec.json metadata:
   - Set `phase: "tasks-generated"`
   - Set `approvals.tasks.generated: true, approved: false`

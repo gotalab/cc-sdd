@@ -1,9 +1,9 @@
 ---
 name: kiro-spec-requirements
 description: Generate EARS-format requirements based on project description and steering context. Use when generating requirements from project description.
-allowed-tools: Read, Write, Edit, Glob, Grep, Agent, WebSearch, WebFetch, AskUserQuestion
+allowed-tools: Read, Bash, Write, Edit, Glob, Grep, Agent, WebSearch, WebFetch, AskUserQuestion
 metadata:
-  shared-rules: "ears-format.md, requirements-review-gate.md"
+  shared-rules: "ears-format.md, requirements-review-gate.md, markdown-validation.md"
 ---
 
 # kiro-spec-requirements Skill
@@ -71,6 +71,7 @@ After all research completes, synthesize findings in main context before generat
 
 ### Step 5: Finalize and Update Metadata
 - Write `{{KIRO_DIR}}/specs/{feature}/requirements.md` only after the requirements review gate passes
+- Apply `rules/markdown-validation.md` from this skill's directory to the authored `requirements.md` before continuing.
 - Set `phase: "requirements-generated"`
 - Set `approvals.requirements.generated: true`
 - Update `updated_at` timestamp

@@ -1,10 +1,10 @@
 ---
 name: kiro-spec-design
 description: Generate comprehensive technical design translating requirements (WHAT) into architecture (HOW) with discovery process. Use when creating architecture from requirements.
-allowed-tools: Read, Write, Edit, Grep, Glob, WebSearch, WebFetch, Agent
+allowed-tools: Read, Bash, Write, Edit, Grep, Glob, WebSearch, WebFetch, Agent
 argument-hint: <feature-name> [-y]
 metadata:
-  shared-rules: "design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md"
+  shared-rules: "design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md, markdown-validation.md"
 ---
 
 # kiro-spec-design Skill
@@ -130,6 +130,7 @@ After all findings return, synthesize in main context before proceeding.
 1. **Write Final Design**:
    - Write `{{KIRO_DIR}}/specs/{feature}/design.md` only after the design review gate passes
    - Write research.md with discovery findings and synthesis outcomes (if not already written)
+   - Apply `rules/markdown-validation.md` from this skill's directory to the authored `design.md` and any `research.md` written or updated in this phase before continuing.
 
 2. **Update Metadata** in spec.json:
 

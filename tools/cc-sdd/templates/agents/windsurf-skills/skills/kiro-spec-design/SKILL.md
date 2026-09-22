@@ -2,7 +2,7 @@
 name: kiro-spec-design
 description: Create comprehensive technical design for a specification
 metadata:
-  shared-rules: "design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md"
+  shared-rules: "design-principles.md, design-discovery-full.md, design-discovery-light.md, design-synthesis.md, design-review-gate.md, markdown-validation.md"
 ---
 
 
@@ -135,6 +135,7 @@ After all findings return, synthesize in main context before proceeding.
    - Write `{{KIRO_DIR}}/specs/$1/design.md` only after the design review gate passes
    - Write research.md with discovery findings and synthesis outcomes (if not already written)
    - Persist any `research.md` updates that support the finalized design
+   - Apply `rules/markdown-validation.md` from this skill's directory to the authored `design.md` and any `research.md` written or updated in this phase before continuing.
 
 2. **Update Metadata** in spec.json:
    - Set `phase: "design-generated"`

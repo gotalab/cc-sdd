@@ -182,6 +182,15 @@ describe('real opencode-skills manifest', () => {
     expect(requirementsReviewGate).toContain('## EARS and Testability Review');
     expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
+    const markdownValidationRule = await readFile(
+      join(process.cwd(), 'templates/shared/settings/rules/markdown-validation.md'), 'utf8',
+    );
+    for (const phase of ['requirements', 'design', 'tasks']) {
+      expect(await readFile(
+        join(cwd, `.opencode/skills/kiro-spec-${phase}/rules/markdown-validation.md`), 'utf8',
+      )).toBe(markdownValidationRule);
+    }
+
     // Skills without shared-rules should NOT have rules/ directories
     const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-batch', 'kiro-impl', 'kiro-validate-impl', 'kiro-discovery'];
     for (const skill of noRulesSkills) {

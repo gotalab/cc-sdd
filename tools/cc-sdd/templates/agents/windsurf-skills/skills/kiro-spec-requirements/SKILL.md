@@ -2,7 +2,7 @@
 name: kiro-spec-requirements
 description: Generate comprehensive requirements for a specification
 metadata:
-  shared-rules: "ears-format.md, requirements-review-gate.md"
+  shared-rules: "ears-format.md, requirements-review-gate.md, markdown-validation.md"
 ---
 
 
@@ -75,6 +75,7 @@ After all research completes, synthesize findings in main context before generat
 
 5. **Finalize and Update Metadata**:
    - Write `{{KIRO_DIR}}/specs/$1/requirements.md` only after the requirements review gate passes
+   - Apply `rules/markdown-validation.md` from this skill's directory to the authored `requirements.md` before continuing.
    - Set `phase: "requirements-generated"`
    - Set `approvals.requirements.generated: true`
    - Update `updated_at` timestamp
