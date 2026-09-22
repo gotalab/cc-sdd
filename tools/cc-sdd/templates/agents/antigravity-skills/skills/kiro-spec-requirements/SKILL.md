@@ -26,7 +26,9 @@ metadata:
    - Read `{{KIRO_DIR}}/specs/$1/requirements.md` for project description
    - Core steering context: `product.md`, `tech.md`, `structure.md`
    - Additional steering files only when directly relevant to feature scope, user personas, business/domain rules, compliance/security constraints, operational constraints, or existing product boundaries
-   - Relevant local agent skills or playbooks only when they clearly match the feature's host environment or use case and contain domain terminology or workflow rules that shape user-observable requirements
+   - Use skills explicitly requested by the user and skills relevant to the task's domain, including design, accessibility, and UX.
+   - Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
+   - Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
 
 2. **Read Guidelines**:
    - Read `rules/ears-format.md` from this skill's directory for EARS syntax rules
