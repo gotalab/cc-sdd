@@ -33,6 +33,7 @@ const guidelinesMap: Record<SupportedLanguage, string> = {
   ko: '- Think in English, generate responses in Korean. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
   ar: '- Think in English, generate responses in Arabic. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
   el: '- Think in English, generate responses in Greek. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+  vi: '- Think in English, generate responses in Vietnamese. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
 };
 
 export const getDevGuidelines = (lang: SupportedLanguage): string => guidelinesMap[lang];

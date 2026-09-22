@@ -44,8 +44,16 @@ describe('buildTemplateContext', () => {
     expect(ctx.AGENT_DOC).toBe('CLAUDE.md');
   });
 
+  it('provides Vietnamese guidelines', () => {
+    const ctx = buildTemplateContext({ agent: 'claude-code', lang: 'vi' });
+    expect(ctx.LANG_CODE).toBe('vi');
+    expect(ctx.DEV_GUIDELINES).toBe(
+      '- Think in English, generate responses in Vietnamese. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).',
+    );
+  });
+
   it('provides guidelines for all supported languages', () => {
-    const langs = ['en', 'ja', 'zh-TW', 'zh', 'es', 'pt', 'de', 'fr', 'ru', 'it', 'ko', 'ar', 'el'] as const;
+    const langs = ['en', 'ja', 'zh-TW', 'zh', 'es', 'pt', 'de', 'fr', 'ru', 'it', 'ko', 'ar', 'el', 'vi'] as const;
     for (const lang of langs) {
       const ctx = buildTemplateContext({ agent: 'claude-code', lang });
       expect(ctx.DEV_GUIDELINES.length).toBeGreaterThan(0);

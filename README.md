@@ -53,7 +53,7 @@ npx cc-sdd@latest --codex-skills --lang ja      # Codex, Japanese
 npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE, Traditional Chinese
 ```
 
-Supports 8 AI coding agents (Claude Code and Codex stable; Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity in beta) and 13 languages. See [Supported Agents](#supported-agents) for the full list.
+Supports 8 AI coding agents (Claude Code and Codex stable; Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity in beta) and 14 languages. See [Supported Agents](#supported-agents) for the full list.
 
 Then, in your agent:
 
@@ -156,7 +156,7 @@ npx cc-sdd@latest --qwen           # Qwen Code
 npx cc-sdd@latest --lang ja        # Japanese
 npx cc-sdd@latest --lang zh-TW     # Traditional Chinese
 npx cc-sdd@latest --lang es        # Spanish
-# Supports: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el
+# Supports: en, ja, zh-TW, zh, es, pt, de, fr, ru, it, ko, ar, el, vi
 ```
 
 ### Advanced options
