@@ -6,6 +6,8 @@ cc-sdd の Skills モード向けリファレンスである。`--claude-skills`
 
 レガシーの `/kiro:*` コマンドを使っている場合は、[コマンドリファレンス](command-reference.md) を参照すること。
 
+以下は slash 呼び出し（`/kiro-*`）の例である。Codex は `$kiro-*`、Cascade は `@kiro-*` を使う。導入したホストの呼び出し手順に従うこと。
+
 ## まずどこから始めるか
 
 最初に覚えるべきなのは skill 名の一覧ではなく、「何をしたい時にどこから入るか」である。
@@ -41,7 +43,7 @@ cc-sdd の Skills モード向けリファレンスである。`--claude-skills`
 discovery や roadmap の結果、複数 spec に分けるべきと分かっている時に使う。
 
 - 役割:
-  - 複数 spec を並列生成する
+  - 依存関係の wave ごとに複数 spec を生成する。subagent が利用可能な場合は並列実行する
   - cross-spec の整合性を保つ
   - 1つの巨大 spec ではなく roadmap ベースの backlog を作る
 
@@ -50,7 +52,7 @@ discovery や roadmap の結果、複数 spec に分けるべきと分かって�
 `tasks.md` が承認済みで、実装を進めたい時に使う。
 
 - モード:
-  - 自律モード: task 引数なし。task ごとに fresh implementer + reviewer + debugger
+  - 自律モード: task 引数なし。subagent が利用可能な場合は task ごとに独立した implementer・reviewer・debugger を使い、それ以外はホスト別の inline フローに従う
   - マニュアルモード: task 引数あり。main context で TDD + review gate
 - 保証したいこと:
   - reviewer 承認前に完了しない
@@ -122,12 +124,12 @@ success claim の前に fresh evidence を要求する gate。
 ### 動的 dispatch（静的 agent ファイルではない）
 
 - `tdd-task-implementer.md` のような事前定義ファイルは `.claude/agents/` 配下に存在しない
-- `/kiro-impl` は各プラットフォーム標準の subagent primitive（例: Claude Code の Task tool）経由で fresh 実行コンテキストを都度 spawn する。使うプロンプトテンプレートは skill が持つ
-- この設計のおかげで、同じ `/kiro-impl` skill が Claude Code、Codex、Cursor、Copilot、Windsurf、OpenCode、Gemini CLI、Antigravity の 8 プラットフォームで、プラットフォームごとに別ファイルを持たずに動作する
+- `/kiro-impl` は subagent が利用可能な場合、ホストのツール（例: Claude Code の Agent tool）と skill 内のプロンプトテンプレートを使い、独立した実行コンテキストを起動する
+- 8 種類の skills adapter はホスト別の指示を持つ。Cascade 互換では同じコンテキスト内で順次実装・レビューし、他のホストでも subagent が利用できない場合は同様にフォールバックする。実行環境ごとの制約は [Agent compatibility](../agent-compatibility.md) を参照。skills の導入だけでは独立レビューの動作保証にならない
 
 ### タスクごとの 3 ロール
 
-各タスクは最大 3 つのロールで進行する:
+subagent が利用可能な場合、各タスクは最大 3 つの独立したロールで進行する:
 
 - **Implementer** — 仕様から Task Brief を作り、TDD（Feature Flag Protocol の RED → GREEN）で実装する fresh 実行コンテキスト
 - **Reviewer** — 独立した reviewer pass。`git diff`、TODO grep、テストスイート、タスク境界の検証を行う
@@ -152,12 +154,12 @@ Skills モードとレガシーの `--claude-agent` は subagent の扱いが根
 | Subagent 定義 | `.claude/agents/kiro/*.md` の静的ファイル | Skill 内のプロンプトテンプレート、動的 dispatch |
 | クロスプラットフォーム | Claude Code のみ | 8 プラットフォーム |
 | Spec 生成 (`spec-quick`) | 4 フェーズを Subagent で調整 | `kiro-spec-quick` skill が 4 つの spec skill を順に呼ぶ |
-| 並列 spec batch | なし | `/kiro-spec-batch` + cross-spec review |
+| Spec batch | なし | `/kiro-spec-batch` + cross-spec review。並列実行の可否はホストに依存 |
 | 実装 | `/kiro:spec-impl` で手動 | `/kiro-impl` の自律 or マニュアル |
-| レビュー | 手動 or `validate-impl` | 内蔵 independent reviewer pass |
-| 失敗時のデバッグ | なし | 自動 debug pass（最大 2 ラウンド、Web 検索あり） |
-| セッション再開 | 最初から | 中断後の再実行が安全 |
-| 外部依存 | なし | なし（native subagent primitive のみ） |
+| レビュー | 手動 or `validate-impl` | subagent が利用可能な場合は独立レビュー、それ以外は inline レビュー |
+| 失敗時のデバッグ | なし | subagent が利用可能な場合は自動 debug pass（最大 2 ラウンド）、それ以外は inline フロー |
+| セッション再開 | 最初から | task ファイルから継続。ホストごとの復旧動作は検証が必要 |
+| 外部依存 | なし | ホストのツールを使用し、追加ランタイムは導入しない |
 
 `--claude-agent` の詳細は [Claude Code Subagents ワークフロー](claude-subagents.md) を参照。
 

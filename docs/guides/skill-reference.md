@@ -6,6 +6,8 @@ Reference for the skills-mode workflow in cc-sdd. Use this guide when you instal
 
 If you are using legacy `/kiro:*` commands, use the [Command Reference](command-reference.md) instead.
 
+Examples use slash invocation (`/kiro-*`). Codex uses `$kiro-*`, while Cascade uses `@kiro-*`; follow the installed host’s invocation guidance.
+
 ## Start Here
 
 Use this table when you are deciding which skill to run first.
@@ -41,7 +43,7 @@ Use when you have new work but do not yet know whether it should become one spec
 Use when discovery or a roadmap already tells you the work should be split into multiple specs.
 
 - What it does:
-  - creates multiple specs in parallel
+  - creates multiple specs by dependency wave, in parallel when native subagents are available
   - keeps cross-spec consistency
   - prepares a roadmap-shaped backlog instead of one oversized spec
 - Typical next step:
@@ -53,7 +55,7 @@ Use when discovery or a roadmap already tells you the work should be split into 
 Use when `tasks.md` is approved and you want to execute implementation.
 
 - Modes:
-  - autonomous mode: no task args, one task per iteration, fresh implementer + reviewer + debugger
+  - autonomous mode: no task args, one task per iteration; fresh implementer, reviewer, and debugger contexts when native subagents are available, otherwise the host-specific inline fallback
   - manual mode: task args provided, TDD in main context with review gate
 - Guarantees:
   - reviewer approval before completion
@@ -125,12 +127,12 @@ Most of the "what is a subagent here?" question lives inside `/kiro-impl`. Unlik
 ### Dynamic dispatch, not static agent files
 
 - There is no `tdd-task-implementer.md` or similar file under `.claude/agents/`.
-- `/kiro-impl` spawns fresh execution contexts on demand through each platform's native subagent primitive (for example, Claude Code's Task tool), using prompt templates kept under the skill.
-- This is what lets the same `/kiro-impl` skill work across Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity without maintaining a separate agent file per platform.
+- When native subagents are available, `/kiro-impl` spawns fresh execution contexts using the host's tools (for example, Claude Code's Agent tool) and the prompt templates kept under the skill.
+- The eight skills adapters retain host-specific instructions. Cascade compatibility runs sequentially with inline review; other hosts use the inline fallback when delegation is unavailable. See [Agent compatibility](agent-compatibility.md) for execution-surface limits. A skill installation alone does not prove independent review.
 
 ### Per-task role trio
 
-Each task may involve up to three roles dispatched by `/kiro-impl`:
+When native subagents are available, each task may involve up to three roles dispatched by `/kiro-impl`:
 
 - **Implementer** — fresh execution context that builds a Task Brief from the spec, then implements with TDD (RED → GREEN under the Feature Flag Protocol).
 - **Reviewer** — independent pass that runs `git diff`, greps for TODOs, runs the test suite, and checks task-boundary compliance.
@@ -155,12 +157,12 @@ Skills mode and the legacy `--claude-agent` install target take fundamentally di
 | Subagent definitions | Static `.claude/agents/kiro/*.md` files | Prompt templates inside skills, dispatched dynamically |
 | Cross-platform | Claude Code only | 8 platforms |
 | Spec generation (`spec-quick`) | Four-phase Subagent orchestration | Inline `kiro-spec-quick` skill that sequences the four spec skills |
-| Parallel spec batch | Not available | `/kiro-spec-batch` with cross-spec review |
+| Spec batch | Not available | `/kiro-spec-batch` with cross-spec review; parallelism depends on the host |
 | Implementation | Manual via `/kiro:spec-impl` | Autonomous or manual via `/kiro-impl` |
-| Review process | Manual or via `validate-impl` | Built-in independent reviewer pass |
-| Debug on failure | Not available | Auto debug pass (max 2 rounds) with web search |
-| Session resume | Start fresh | Safe to re-run after interruption |
-| External dependencies | None | None (native subagent primitive only) |
+| Review process | Manual or via `validate-impl` | Independent reviewer when native subagents are available; inline review otherwise |
+| Debug on failure | Not available | Auto debug subagent (max 2 rounds) when available; otherwise follow the inline flow |
+| Session resume | Start fresh | Continue from task files; host recovery behavior must be verified |
+| External dependencies | None | Uses host tools; no additional runtime installed |
 
 For the `--claude-agent` details, see [Claude Code Subagents Workflow](claude-subagents.md).
 

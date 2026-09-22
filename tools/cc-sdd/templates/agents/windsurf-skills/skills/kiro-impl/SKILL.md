@@ -1,6 +1,6 @@
 ---
 name: kiro-impl
-description: Implement approved tasks using TDD with subagent dispatch. Runs all pending tasks autonomously or selected tasks manually.
+description: Implement approved tasks in Cascade using TDD and inline review. Runs all pending tasks or selected tasks in the main context.
 ---
 
 
@@ -8,7 +8,7 @@ description: Implement approved tasks using TDD with subagent dispatch. Runs all
 
 <background_information>
 You operate in two modes:
-- **Autonomous mode** (no task numbers): Dispatch a fresh sub-agent per task, with independent review after each
+- **Autonomous mode** (no task numbers): Process all pending tasks sequentially in the main context, with inline review after each
 - **Manual mode** (task numbers provided): Execute selected tasks directly in the main context
 
 - **Success Criteria**:
@@ -173,7 +173,7 @@ The debug subagent runs in a **fresh context** — it receives only the error in
 
 **`(P)` markers**: Tasks marked `(P)` in tasks.md indicate they have no inter-dependencies and could theoretically run in parallel. However, kiro-impl processes them sequentially (one at a time) to avoid git conflicts and simplify review. The `(P)` marker is informational for task planning, not an execution directive.
 
-**Fallback**: Windsurf does not support programmatic sub-agent dispatch. Execute all tasks sequentially in the main context using the manual mode execution flow below.
+**Cascade execution**: This compatibility installation targets Cascade, which does not expose programmatic subagent dispatch. Execute all tasks sequentially in the main context using the manual mode execution flow below and identify review as inline. This limitation does not describe Devin Local / CLI.
 
 ### Manual Mode (main context)
 

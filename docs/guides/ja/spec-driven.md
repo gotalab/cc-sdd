@@ -122,7 +122,7 @@ skill 名を覚えることより、どの workstream に入るかを先に決�
 
 ## Skills ワークフロー（v3.0.0）
 
-`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--windsurf-skills`、`--opencode-skills`、`--gemini-skills`、`--antigravity` でインストールした場合、コマンド（`/kiro:*`）の代わりに **Skills**（`/kiro-*`）を使用する。Skills モードでは、外部プラグインに依存せず、各プラットフォーム標準の subagent primitive のみで動作する。Skills モードの完全なリファレンス（`/kiro-impl` の subagent flow、カスタマイズ方法を含む）は [スキルリファレンス](skill-reference.md) を参照。
+`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--windsurf-skills`、`--opencode-skills`、`--gemini-skills`、`--antigravity` でインストールした場合、コマンド（`/kiro:*`）の代わりに **Skills** を使用する。以下の `/kiro-*` は slash 呼び出しの例であり、Codex は `$kiro-*`、Cascade は `@kiro-*` を使う。subagent の利用可否はホストと設定に依存し、利用できない場合は同じコンテキスト内で実装・レビューする。対応範囲は [Agent compatibility](../agent-compatibility.md) を参照。Skills モードの完全なリファレンス（`/kiro-impl` の subagent flow、カスタマイズ方法を含む）は [スキルリファレンス](skill-reference.md) を参照。
 
 ### コマンドモードと Skills モードの対応
 
@@ -136,7 +136,7 @@ skill 名を覚えることより、どの workstream に入るかを先に決�
 
 ### `/kiro-impl` の2つのモード
 
-- **自律モード（タスク引数なし）**: タスクごとに Subagent を spawn し、独立した実装とレビューを行う。各タスクについて、実装者 Subagent がタスクブリーフ（Task Brief: 仕様から導出された具体的な受け入れ基準）を作成してからコーディングに入る。レビューア Subagent は、TODO 残存チェック、テスト実行、git diff による境界確認などの機械的な検証を行う。実装者が BLOCKED を返した場合やレビューアが2回連続で REJECTED した場合、**デバッグ Subagent** が新しいコンテキストで起動し、Web検索を使って根本原因を調査する（最大2ラウンド）。タスク間で得られた知見は **Implementation Notes** として次の実装者に引き継がれる。1タスク1イテレーションの規律により、長時間実行時のコンテキスト衛生を維持する。
+- **自律モード（タスク引数なし）**: subagent が利用可能な場合、タスクごとに Subagent を spawn し、独立した実装とレビューを行う。各タスクについて、実装者 Subagent がタスクブリーフ（Task Brief: 仕様から導出された具体的な受け入れ基準）を作成してからコーディングに入る。レビューア Subagent は、TODO 残存チェック、テスト実行、git diff による境界確認などの機械的な検証を行う。実装者が BLOCKED を返した場合やレビューアが2回連続で REJECTED した場合、**デバッグ Subagent** が新しいコンテキストで起動し、Web検索を使って根本原因を調査する（最大2ラウンド）。タスク間で得られた知見は **Implementation Notes** として次の実装者に引き継がれる。1タスク1イテレーションの規律により、長時間実行時のコンテキスト衛生を維持する。
 - **マニュアルモード（タスク引数あり）**: メインコンテキスト内で TDD ベースの実装を行う。コマンドモードの `/kiro:spec-impl` と同等の動作である。
 
 ### セッション再開

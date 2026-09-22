@@ -74,7 +74,7 @@ describe('real windsurf-skills manifest', () => {
     expect(docText).toContain('@kiro-spec-status');
     expect(docText).not.toContain('$kiro-spec-status');
     expect(docText).not.toContain('/kiro-spec-status');
-    expect(docText).toContain('autonomous mode');
+    expect(docText).toContain('sequential execution in the main context');
     expect(docText).toContain('[--review required|inline|off]');
     expect(docText).toContain('`--review off` skips task-local review');
 

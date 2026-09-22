@@ -57,6 +57,8 @@ If roadmap contains `## Existing Spec Updates` or `## Direct Implementation Cand
 
 For each wave, dispatch all features in the wave as **parallel sub-agents**.
 
+Before dispatch, resolve `../kiro-spec-init/SKILL.md`, `../kiro-spec-requirements/SKILL.md`, `../kiro-spec-design/SKILL.md`, and `../kiro-spec-tasks/SKILL.md` relative to this skill’s installed directory. Pass their absolute paths in the prompt below so the worker does not need the parent’s skill-location context.
+
 **For each feature in the wave**, spawn a sub-agent with this task:
 
 ```
@@ -65,15 +67,15 @@ Create a complete specification for feature "{feature-name}".
 1. Read the brief at {{KIRO_DIR}}/specs/{feature-name}/brief.md for feature context
 2. Read the roadmap at {{KIRO_DIR}}/steering/roadmap.md for project context
 3. Execute the full spec pipeline. For each phase, read the corresponding skill's SKILL.md for complete instructions (templates, rules, review gates):
-   a. Initialize: Read .agent/skills/kiro-spec-init/SKILL.md, then create spec.json and requirements.md
-   b. Generate requirements: Read .agent/skills/kiro-spec-requirements/SKILL.md, then follow its steps
-   c. Generate design: Read .agent/skills/kiro-spec-design/SKILL.md, then follow its steps
-   d. Generate tasks: Read .agent/skills/kiro-spec-tasks/SKILL.md, then follow its steps
+   a. Initialize: Read {spec-init-skill-path}, then create spec.json and requirements.md
+   b. Generate requirements: Read {spec-requirements-skill-path}, then follow its steps
+   c. Generate design: Read {spec-design-skill-path}, then follow its steps
+   d. Generate tasks: Read {spec-tasks-skill-path}, then follow its steps
 4. Set all approvals to true in spec.json (auto-approve mode, equivalent of -y flag)
 5. Report completion with file list and task count
 ```
 
-Antigravity does not support programmatic sub-agent dispatch. Execute features in the wave sequentially in the main context.
+If native subagent tools are unavailable or disabled in the current Antigravity session, execute features in the wave sequentially in the main context and report that no parallel subagents were used.
 
 **After all sub-agents in the wave complete**:
 1. Verify each feature has: spec.json, requirements.md, design.md, tasks.md

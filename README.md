@@ -11,7 +11,7 @@ Package README: <a href="./tools/cc-sdd/README.md">English</a> | <a href="./tool
 
 ## Turn approved specs into long-running autonomous implementation
 
-One command installs an agentic SDLC workflow as Agent Skills: discovery, requirements, design, tasks, and autonomous implementation with per-task independent review. Works across 8 AI coding agents, with the same 17-skill set on each.
+One command installs an agentic SDLC workflow as Agent Skills: discovery, requirements, design, tasks, and autonomous implementation with per-task independent review on hosts with native subagents. Works across 8 AI coding agents, with the same 17-skill set on each.
 
 👻 **Kiro-inspired.** Similar spec-driven, agentic SDLC style as Kiro IDE. Existing Kiro specs remain compatible and portable.
 
@@ -23,7 +23,7 @@ cc-sdd v3.0 is a rework around Agent Skills and long-running autonomous implemen
 - **`/kiro-impl` for long-running autonomous implementation.** Each task gets a fresh implementer running TDD (RED → GREEN) behind a feature flag, an independent reviewer, and an auto-debug pass that investigates root causes in a clean context when the implementer is blocked or the reviewer rejects twice. Learnings from earlier tasks propagate forward via `## Implementation Notes` in `tasks.md`. 1 task per iteration, safe to re-run after interruption.
 - **Boundary-first spec discipline.** `design.md` now includes a File Structure Plan that drives task boundaries. Tasks carry `_Boundary:_` and `_Depends:_` annotations. Review and validation look for boundary violations, not just style issues.
 - **`/kiro-spec-batch` for multi-spec initiatives.** Turn a roadmap into multiple specs in parallel, with cross-spec review to catch contradictions, duplicated responsibilities, and interface mismatches.
-- **Agent Skills across 8 coding agents.** 17 skills per install, loaded on demand (progressive disclosure). Claude Code and Codex are stable; Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity are in beta. No external dependencies; subagents are spawned through each platform's native primitive.
+- **Agent Skills across 8 coding agents.** 17 skills per install, loaded on demand (progressive disclosure). Claude Code and Codex are stable; Cursor, Copilot, Devin Desktop (Cascade), OpenCode, Gemini CLI, and Antigravity are in beta. Native subagents are used when available; hosts without them execute sequentially with inline review.
 
 Full skills-mode workflow and `/kiro-impl` internals: [Skill Reference](docs/guides/skill-reference.md).
 
@@ -53,7 +53,7 @@ npx cc-sdd@latest --codex-skills --lang ja      # Codex, Japanese
 npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE, Traditional Chinese
 ```
 
-Supports 8 AI coding agents (Claude Code and Codex stable; Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity in beta) and 14 languages. See [Supported Agents](#supported-agents) for the full list.
+Supports 8 AI coding agents (Claude Code and Codex stable; Cursor, Copilot, Devin Desktop (Cascade), OpenCode, Gemini CLI, and Antigravity in beta) and 14 languages. See [Supported Agents](#supported-agents) for the full list.
 
 Then, in your agent:
 
@@ -74,7 +74,7 @@ Not sure where to start? Start with `kiro-discovery`. It routes your request and
 
 Legacy `/kiro:*` command modes are still available (`--claude`, `--cursor`, etc.) but are deprecated. See the [Migration Guide](docs/guides/migration-guide.md) for the upgrade path.
 
-For larger approved task sets, run `kiro-impl` to start autonomous implementation with per-task subagent spawn, independent review, and auto-debug on failure.
+For larger approved task sets, run `kiro-impl`. Native subagents provide per-task implementation, independent review, and auto-debug when available; otherwise the workflow runs in the main context with inline review.
 
 ## See It In Action
 
@@ -97,13 +97,13 @@ Typical spec outputs (under 10 minutes):
 - `design.md`: architecture with Mermaid diagrams and a File Structure Plan.
 - `tasks.md`: implementation tasks with boundaries and dependency annotations.
 
-Then `/kiro-impl` runs the tasks autonomously with TDD (RED → GREEN) behind feature flags, an independent reviewer pass, and auto-debug on failure.
+On a host with native subagents, `/kiro-impl` runs tasks with TDD (RED → GREEN) behind feature flags, independent review, and auto-debug on failure. Inline execution follows the same review protocol in the main context.
 
 ![Example: design.md System Flow](assets/design-system_flow.png)
 
 ## Supported Agents
 
-All 8 skills variants ship the same 17-skill set. The difference is how much real-world usage each platform integration has seen.
+All 8 skills variants ship 17 skills. Invocation, native subagent availability, and independent review depend on the execution surface and configuration.
 
 | Agent | Skills mode | Stability | Legacy mode |
 |---|---|---|---|
@@ -111,13 +111,13 @@ All 8 skills variants ship the same 17-skill set. The difference is how much rea
 | **Codex** | `--codex-skills` | Stable | `--codex` (blocked) |
 | **Cursor IDE** | `--cursor-skills` | Beta | `--cursor` (deprecated) |
 | **GitHub Copilot** | `--copilot-skills` | Beta | `--copilot` (deprecated) |
-| **Windsurf IDE** | `--windsurf-skills` | Beta | `--windsurf` (deprecated) |
+| **Devin Desktop / Windsurf (Cascade)** | `--windsurf-skills` | Beta | `--windsurf` (deprecated) |
 | **OpenCode** | `--opencode-skills` | Beta | `--opencode` / `--opencode-agent` (deprecated) |
 | **Gemini CLI** | `--gemini-skills` | Beta | `--gemini` (deprecated) |
-| **Antigravity** | `--antigravity` | Beta (experimental) | — |
+| **Antigravity** | `--antigravity` | Beta | — |
 | **Qwen Code** | — | — | `--qwen` |
 
-"Beta" does not mean "missing features", the 17 skills and templates are identical across all 8 platforms. It means the platform integration (subagent spawn behavior, ergonomics, `SKILL.md` loading) has had less real-world usage than Claude Code and Codex, and edge cases may still surface. Please [report issues](https://github.com/gotalab/cc-sdd/issues) if you hit any.
+Stability describes integration maturity. Installing 17 skills does not verify that a host can run the full autonomous loop. The Windsurf flags retain Cascade compatibility and inline review; they do not certify Devin Local / CLI or Cloud. Copilot subagents depend on the client. See [Agent compatibility](./docs/guides/agent-compatibility.md) for supported surfaces and Antigravity migration guidance.
 
 ## Advanced Installation
 
@@ -129,10 +129,10 @@ npx cc-sdd@latest --claude-skills     # Claude Code Skills
 npx cc-sdd@latest --codex-skills      # Codex Skills
 npx cc-sdd@latest --cursor-skills     # Cursor IDE Skills (beta)
 npx cc-sdd@latest --copilot-skills    # GitHub Copilot Skills (beta)
-npx cc-sdd@latest --windsurf-skills   # Windsurf IDE Skills (beta)
+npx cc-sdd@latest --windsurf-skills   # Cascade Skills in Devin Desktop / Windsurf (beta)
 npx cc-sdd@latest --opencode-skills   # OpenCode Skills (beta)
 npx cc-sdd@latest --gemini-skills     # Gemini CLI Skills (beta)
-npx cc-sdd@latest --antigravity       # Antigravity Skills (beta, experimental)
+npx cc-sdd@latest --antigravity       # Antigravity Skills (beta)
 ```
 
 ### Legacy modes (deprecated)
@@ -142,7 +142,7 @@ npx cc-sdd@latest --claude         # Claude Code commands (use --claude-skills)
 npx cc-sdd@latest --claude-agent   # Claude Code subagents (use --claude-skills)
 npx cc-sdd@latest --cursor         # Cursor IDE commands (use --cursor-skills)
 npx cc-sdd@latest --copilot        # GitHub Copilot prompts (use --copilot-skills)
-npx cc-sdd@latest --windsurf       # Windsurf IDE workflows (use --windsurf-skills)
+npx cc-sdd@latest --windsurf       # Cascade workflows (use --windsurf-skills)
 npx cc-sdd@latest --opencode       # OpenCode commands (use --opencode-skills)
 npx cc-sdd@latest --opencode-agent # OpenCode subagents (use --opencode-skills)
 npx cc-sdd@latest --gemini         # Gemini CLI commands (use --gemini-skills)

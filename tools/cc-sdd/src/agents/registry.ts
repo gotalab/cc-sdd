@@ -286,9 +286,9 @@ export const agentDefinitions = {
     manifestId: 'gemini-cli-skills',
   },
   windsurf: {
-    label: 'Windsurf IDE',
+    label: 'Devin Desktop / Windsurf (Cascade)',
     description:
-      'Installs kiro workflows in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro workflows for Cascade in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--windsurf'],
     recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4'],
     layout: {
@@ -305,9 +305,9 @@ export const agentDefinitions = {
     manifestId: 'windsurf',
   },
   'windsurf-skills': {
-    label: 'Windsurf Skills',
+    label: 'Devin Desktop / Windsurf (Cascade) Skills',
     description:
-      'Installs kiro skills in `.windsurf/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro skills for Cascade in `.windsurf/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--windsurf-skills'],
     recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4'],
     layout: {
@@ -417,11 +417,11 @@ export const agentDefinitions = {
   'antigravity-skills': {
     label: 'Antigravity Skills',
     description:
-      'Installs kiro skills in `.agent/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro skills in `.agents/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--antigravity-skills', '--antigravity'],
     layout: {
-      commandsDir: '.agent/skills',
-      agentDir: '.agent',
+      commandsDir: '.agents/skills',
+      agentDir: '.agents',
       docFile: 'AGENTS.md',
     },
     commands: {

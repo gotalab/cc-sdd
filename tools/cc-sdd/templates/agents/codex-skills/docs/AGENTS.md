@@ -58,23 +58,11 @@ Skills are located in `.agents/skills/kiro-*/SKILL.md`
 - Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
 - Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
 
-## Collaboration Modes (Optional)
-Enable collaboration modes in `~/.codex/config.toml` to let Codex choose focused execution modes for longer tasks:
+## Subagents
 
-```toml
-[features]
-collaboration_modes = true
-```
+Current Codex releases enable subagents by default. Use the available tools when the user, project rules, or this skill's workflow calls for delegation; no experimental feature flag is required. An administrator or user can disable subagents by setting `enabled = false` under `[agents]` in Codex configuration.
 
-## Multi-Agent (Experimental)
-If multi-agent is available, use it to parallelize independent research and validation within skills. Enable in `~/.codex/config.toml`:
-
-```toml
-[features]
-multi_agent = true
-```
-
-Skills with "Parallel Research" sections list independent work items that benefit from sub-agent spawning when this feature is active.
+Use a fresh context for each independent implementer or reviewer, passing the task-relevant inputs explicitly. If delegation is unavailable, follow the skill's inline fallback and identify the review as inline. Skill discovery alone does not prove subagent execution or independent review.
 
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation

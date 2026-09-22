@@ -709,7 +709,7 @@ P1 — Service Integration
 
 ### `/kiro:spec-impl`
 
-> **Skills mode equivalent**: `/kiro-impl`. Skills mode supports autonomous (subagent spawn per task) and manual (TDD in main context) modes. See [Skills Mode Reference](#skills-mode-reference).
+> **Skills mode equivalent**: `/kiro-impl`. Skills mode uses per-task subagents when available, with an inline fallback; manual mode runs TDD in the main context. Invocation and delegation depend on the host. See [Agent compatibility](agent-compatibility.md).
 
 **Purpose**: Execute implementation tasks using Test-Driven Development (TDD) methodology.
 
