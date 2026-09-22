@@ -27,6 +27,9 @@ metadata:
 - `{{KIRO_DIR}}/specs/$1/tasks.md` (if exists, for merge mode)
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to requirements coverage, design boundaries, runtime prerequisites, or team conventions that affect task executability
+- Use skills explicitly requested by the user and skills relevant to the task's domain, including design, accessibility, and UX.
+- Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
+- Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
 
 **Validate approvals**:
 - If `-y` flag provided: Auto-approve requirements and design in spec.json. Tasks approval is also handled automatically in Step 4.

@@ -28,12 +28,14 @@ You operate in two modes:
 
 ## Step 1: Gather Context
 
-If steering/spec context is already available from conversation, skip redundant file reads.
-Otherwise, load all necessary context:
+Reuse steering/spec context already available from conversation; load missing context below.
+Select skills for the current task even when steering/spec context is already available:
 - `{{KIRO_DIR}}/specs/{feature}/spec.json`, `requirements.md`, `design.md`, `tasks.md`
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to the selected task's boundary, runtime prerequisites, integrations, domain rules, security/performance constraints, or team conventions that affect implementation or validation
-- Relevant local agent skills or playbooks only when they clearly match the task's host environment or use case; read the specific artifact(s) you need, not entire directories
+- Use skills explicitly requested by the user and skills relevant to the task's domain, including design, accessibility, and UX.
+- Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
+- Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
 
 ### Parallel Research
 
@@ -94,9 +96,11 @@ If multi-agent capability is available, for each task (one at a time):
   - Paths to spec files: requirements.md, design.md, tasks.md
   - Exact requirement and design section numbers this task must satisfy (using source numbering, NOT invented `REQ-*` aliases)
   - Task-relevant steering context and parent-discovered validation commands (tests/build/smoke as relevant)
+  - Selected skill/playbook paths and concise task-relevant guidance, including required checks; inline necessary guidance when the worker cannot access those paths
   - Whether the task is behavioral (Feature Flag Protocol) or non-behavioral
   - **Previous learnings**: Include any `## Implementation Notes` entries from tasks.md that are relevant to this task's boundary or dependencies (e.g., "better-sqlite3 requires separate rebuild for Electron"). This prevents the same mistakes from recurring.
 - The implementer sub-agent will read the spec files and build its own Task Brief (acceptance criteria, completion definition, design constraints, verification method) before implementation
+- Preserve this task context, including selected skill guidance, on every implementer re-dispatch (context requests, review remediation, and debug retries); append the new context or feedback.
 - Spawn a fresh sub-agent with this prompt
 
 **b) Handle implementer status**:
@@ -162,7 +166,7 @@ The debug subagent runs in a **fresh context** — it receives only the error in
 - Parse `NEXT_ACTION` from the debug report's exact structured field.
 - If `NEXT_ACTION: STOP_FOR_HUMAN` → append `_Blocked: <ROOT_CAUSE>_` to tasks.md, stop the feature run, and report that human review is required before continuing
 - If `NEXT_ACTION: BLOCK_TASK` → append `_Blocked: <ROOT_CAUSE>_` to tasks.md, skip to next task
-- If `NEXT_ACTION: RETRY_TASK` → preserve the current worktree; do NOT reset or discard unrelated changes. Spawn a **new** implementer sub-agent with the debug report's `FIX_PLAN`, `NOTES`, and the current `git diff`, and require it to repair the task with explicit edits only
+- If `NEXT_ACTION: RETRY_TASK` → preserve the current worktree; do NOT reset or discard unrelated changes. Spawn a **new** implementer sub-agent with the original task context (including selected skill guidance), the debug report's `FIX_PLAN`, `NOTES`, and the current `git diff`, and require it to repair the task with explicit edits only
   - If the new implementer succeeds (READY_FOR_REVIEW → reviewer APPROVED) → normal flow
   - If the new implementer also fails → repeat debug cycle (max 2 debug rounds total). After 2 failed debug rounds → append `_Blocked: debug attempted twice, still failing — <ROOT_CAUSE>_` to tasks.md, skip
 - **Max 2 debug rounds per task**. Each round: fresh debug subagent → fresh implementer. If still failing after 2 rounds, the task is blocked.

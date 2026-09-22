@@ -21,12 +21,15 @@ metadata:
 
 ### Step 1: Gather Context
 
-If steering/spec context is already available from conversation, skip redundant file reads.
-Otherwise, load all necessary context:
+Reuse steering/spec context already available from conversation; load missing context below.
+Select skills for the current task even when steering/spec context is already available:
 - `{{KIRO_DIR}}/specs/{feature}/spec.json`, `requirements.md`, `design.md`
 - `{{KIRO_DIR}}/specs/{feature}/tasks.md` (if exists, for merge mode)
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to requirements coverage, design boundaries, runtime prerequisites, or team conventions that affect task executability
+- Use skills explicitly requested by the user and skills relevant to the task's domain, including design, accessibility, and UX.
+- Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
+- Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
 
 - Determine execution mode:
   - `sequential = (sequential flag is true)`

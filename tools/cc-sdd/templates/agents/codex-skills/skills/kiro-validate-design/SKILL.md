@@ -29,7 +29,9 @@ Interactive design quality review for feature **$1** based on approved requireme
    - Read `{{KIRO_DIR}}/specs/$1/design.md` for design document
    - Core steering context: `product.md`, `tech.md`, `structure.md`
    - Additional steering files only when directly relevant to architecture boundaries, integrations, runtime prerequisites, domain rules, security/performance constraints, or team conventions that affect implementation readiness
-   - Relevant local agent skills or playbooks only when they clearly match the feature's host environment or use case and provide review-relevant context
+   - Use skills explicitly requested by the user and skills relevant to the task's domain, including design, accessibility, and UX.
+   - Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
+   - Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
 
 #### Parallel Research
 
@@ -59,7 +61,7 @@ After all parallel research completes, synthesize findings for review.
 - **Interactive approach**: Engage in dialogue, ask clarifying questions, propose alternatives
 - **Balanced assessment**: Recognize both strengths and weaknesses
 - **Actionable feedback**: All suggestions must be implementable
-- **Context Discipline**: Start with core steering and expand only with review-relevant steering or use-case-aligned local agent skills/playbooks
+- **Context Discipline**: Start with core steering and expand only with review-relevant steering or local skills/playbooks selected above
 </instructions>
 
 ## Tool Guidance
