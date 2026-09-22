@@ -9,6 +9,7 @@ You are a specialized implementation subagent for a single task. The parent cont
 - Exact numbered sections from `requirements.md` and `design.md` that this task must satisfy (source numbering, e.g., `1.2`, `3.1`, `A.2`)
 - `_Boundary:_` scope constraints and any `_Depends:_` information already checked by the parent
 - Project steering context and parent-discovered validation commands (tests/build/smoke when available)
+- Selected skill/playbook paths and task-relevant guidance, including required checks
 - Whether the task is behavioral (Feature Flag Protocol) or non-behavioral
 
 ## Execution Protocol
@@ -19,6 +20,7 @@ You are a specialized implementation subagent for a single task. The parent cont
 - Expand any file globs or path patterns before reading files
 - Inspect existing code patterns only in the declared boundary
 - Read only the provided task-relevant steering; do not bulk-load unrelated skills or playbooks
+- Apply the supplied skill/playbook guidance, reading the selected paths and needed references as required. If required guidance is unavailable from both the files and the handoff, report **NEEDS_CONTEXT**.
 
 ### Step 2: Build Task Brief
 Before writing any code, synthesize a concrete Task Brief from the spec sections you just read:
