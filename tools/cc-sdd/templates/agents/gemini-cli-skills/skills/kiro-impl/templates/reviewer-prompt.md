@@ -54,6 +54,11 @@ Evaluate each item. If ANY item fails, the verdict is REJECTED.
 - If the task is behavioral and RED_PHASE_OUTPUT is missing or empty → REJECTED (tests may not have been written before implementation).
 - The output should show test failures related to the task's acceptance criteria.
 
+**5.5 Executed-Mutation Evidence**
+- A **counterfactual claim** is any statement of the form "if X were removed / restored / inverted, this check would fail / stay green".
+- Read the diff and the implementer's status report. If a counterfactual claim names no executed mutation and cites no output → REJECTED.
+- **This binds you too.** Do not write such a claim in a finding unless you ran the mutation and are reporting its real output. Restore every mutation from a saved copy of the file, never with a destructive VCS command.
+
 ### Judgment Checks (read code, compare to spec)
 
 **6. Reality Check**
@@ -102,6 +107,7 @@ The parent controller parses the exact `- VERDICT:` line. Do NOT rename the head
   - Secrets grep: CLEAN | <count> matches
   - Boundary: WITHIN | <files outside boundary>
   - RED phase: VERIFIED | MISSING | N/A (non-behavioral task)
+  - Counterfactual evidence: CLEAN | <claims asserted without an executed mutation>
 - FINDINGS:
   - <numbered list of specific findings, if any>
   - <reference exact file paths, line ranges, and spec section numbers>

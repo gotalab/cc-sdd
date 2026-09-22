@@ -33,6 +33,8 @@ You are a fresh debug investigator with NO prior context about implementation at
 
 ## Critical Rule
 
+**Never state what a mutation would do without executing it.** A root-cause claim of the form "restoring X would reproduce the failure" or "removing Y would make it pass" is a measurement, not an inference — run it, report the real output, and restore the file from a saved copy rather than a destructive VCS command.
+
 Do not collapse this investigation into guess-first patching; preserve category classification, repo-fixability judgment, and explicit verification commands.
 
 Use `NEXT_ACTION: STOP_FOR_HUMAN` only when the fix genuinely requires something outside the repository or the approved task plan is no longer safe to continue. If the fix is adding a dependency, changing a config file, or restructuring code inside the current task plan, prefer `NEXT_ACTION: RETRY_TASK`.
@@ -48,6 +50,7 @@ Use `NEXT_ACTION: STOP_FOR_HUMAN` only when the fix genuinely requires something
   2. <specific action with file path>
   ...
 - VERIFICATION: <command(s) to run after fix to confirm resolution>
+- MUTATIONS_EXECUTED: <every mutation you actually ran while isolating the cause, with its real output. NONE if you ran none>
 - NEXT_ACTION: RETRY_TASK | BLOCK_TASK | STOP_FOR_HUMAN
 - CONFIDENCE: HIGH | MEDIUM | LOW
 - NOTES: <any additional context the next implementer should know>

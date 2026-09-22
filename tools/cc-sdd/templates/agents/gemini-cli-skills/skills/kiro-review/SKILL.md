@@ -86,6 +86,13 @@ Run these checks and use the result as primary signal.
 - For behavioral tasks, verify that the implementer status report includes `RED_PHASE_OUTPUT`.
 - Reject if RED evidence is missing, empty, or unrelated to the task's acceptance criteria.
 
+### 5.5 Executed-Mutation Evidence
+- A **counterfactual claim** is any statement of the form "if X were removed / restored / inverted, this check would fail / stay green".
+- Wherever such a claim appears — in code comments, in a test's explanatory note, in the implementer's status report, **or in your own review findings** — it must name the mutation that was actually executed and cite its real output (failing count out of the total, or the measured result).
+- Reject an implementation whose comments or status report assert a counterfactual without cited evidence.
+- **This binds you too.** A counterfactual is a measurement, not an intuition: do not write one in a finding unless you ran the mutation.
+- Restore every mutation you make from a saved copy of the file. Never use a destructive VCS command to undo one.
+
 ### 6. Runtime-Sensitive Static Checks
 - If the project already has lint or equivalent static analysis for the touched stack, run the relevant command for the task boundary.
 - Pay attention to patterns that can survive typecheck/build yet fail at runtime: type-only imports used as values, missing namespace value imports for qualified-name access, unresolved globals, and newly introduced runtime-sensitive dependencies without matching boot/runtime handling.
@@ -147,6 +154,7 @@ Escalate instead of papering over the issue when:
 | “Tests pass, so approve” | Passing tests do not prove spec compliance or boundary respect. |
 | “The extra behavior is useful” | Extra behavior outside approved scope is still drift. |
 | “The implementer said RED was done” | RED must be evidenced, not asserted. |
+| “Removing that would obviously break the check” | A counterfactual is a measurement, not an intuition. Run the mutation and cite the output, or do not write the claim. |
 | “This gap is small enough to let through” | Real gaps must be rejected or escalated. |
 
 ## Output Format
@@ -163,6 +171,7 @@ Escalate instead of papering over the issue when:
   - Boundary: WITHIN | <files outside boundary>
   - Boundary audit: CLEAN | <spillover / hidden dependency findings>
   - RED phase: VERIFIED | MISSING | N/A
+  - Counterfactual evidence: CLEAN | <claims asserted without an executed mutation>
 - FINDINGS:
   1. <specific finding with exact files/spec refs>
 - REMEDIATION: <mandatory if REJECTED>

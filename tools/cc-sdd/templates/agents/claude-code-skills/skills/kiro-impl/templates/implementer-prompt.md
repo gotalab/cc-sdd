@@ -57,6 +57,7 @@ If any of these cannot be determined from the spec — the requirements are too 
 - Verify the tests prove the required behavior, not just scaffolding or a happy-path shell
 - Verify that any namespace or qualified-name access used at runtime (for example `React.X`, `module.Foo`, `pkg.Bar`) has a real value import or runtime binding, not only a type-only import or ambient type reference
 - Verify that any newly introduced runtime-sensitive dependency or packaging assumption (native modules, module-format boundaries, generated assets, required env vars, boot-time config) is reflected in validation or called out explicitly in `CONCERNS`
+- Verify that every **counterfactual claim** you wrote — in a code comment, in a test's explanatory note, or in your own status report — names a mutation you actually executed and cites its real output. A **counterfactual claim** is any statement of the form "if X were removed / restored / inverted, this check would fail / stay green". If you did not run it, delete the claim or run it now. Restore every mutation from a saved copy of the file, never with a destructive VCS command
 - If any review check fails, fix the implementation, re-run validation, and repeat this step
 
 ## Critical Constraints
@@ -64,6 +65,7 @@ If any of these cannot be determined from the spec — the requirements are too 
 - Do NOT create commits
 - Do NOT expand scope beyond the assigned task and boundary
 - Do NOT silently work around requirement or design mismatches
+- Do NOT claim that a mutation "would fail" or "would pass" without having executed it and reported its output
 - Use the exact section numbers from `requirements.md` and `design.md` in all notes and reports; do NOT invent `REQ-*` aliases
 - Do NOT stop at a mock, stub, placeholder, fake, or TODO-only implementation unless the task explicitly requires it
 - Prefer the minimal implementation that satisfies the Task Brief and tests
@@ -84,6 +86,7 @@ The parent controller parses the exact `- STATUS:` line. Do NOT rename the headi
 - REQUIREMENTS_CHECKED: <exact section numbers from requirements.md>
 - DESIGN_CHECKED: <exact section numbers from design.md>
 - RED_PHASE_OUTPUT: <test command and failing output from before implementation -- proves tests were written first>
+- MUTATIONS_EXECUTED: <for every counterfactual claim you wrote anywhere: the exact mutation, the command you ran, and its real output. Write NONE if you wrote no counterfactual claim>
 - TESTS_RUN: <test commands and final passing results>
 - CONCERNS: <optional -- describe any non-blocking concerns the reviewer should pay attention to>
 - BLOCKER: <only for BLOCKED -- describe what prevents completion>
