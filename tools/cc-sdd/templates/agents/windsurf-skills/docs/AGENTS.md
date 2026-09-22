@@ -2,6 +2,8 @@
 
 Kiro-style Spec-Driven Development on an agentic SDLC
 
+> Deprecated cc-sdd target: this installation is for legacy Windsurf/Cascade. For Devin Local in Devin Desktop or Devin CLI, migrate with `npx cc-sdd@latest --devin`. Review existing skills and AGENTS.md customizations first; cc-sdd does not move or delete the old files.
+
 ## Project Memory
 Project memory keeps persistent guidance (steering, specs notes, component docs) so Cascade honors your standards each run. Treat it as the long-lived source of truth for patterns, conventions, and decisions.
 
@@ -61,7 +63,7 @@ Skills are located in `.windsurf/skills/kiro-*/SKILL.md`
 
 This installation targets Cascade in Devin Desktop (formerly Windsurf). The `--windsurf-skills` flag and `.windsurf/skills` destination are retained for compatibility. Cascade uses `@kiro-<skill-name>` invocation and executes these workflows sequentially in the main context, including inline review.
 
-Devin Local / CLI is a separate harness with native subagents and slash-invoked skills. Devin Cloud is another execution surface. Their ability to discover compatible skill files does not establish support for this Cascade workflow; do not apply Cascade’s delegation limitation to those agents.
+Devin Local / CLI is a separate harness with native subagents and slash-invoked skills. Devin Cloud is another execution surface. Use the separate `--devin` / `--devin-skills` installation for Devin Local / CLI. Devin Cloud is outside that adapter’s scope. Do not apply Cascade’s delegation limitation to those agents.
 
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation

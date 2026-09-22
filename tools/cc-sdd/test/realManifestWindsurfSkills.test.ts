@@ -67,6 +67,9 @@ describe('real windsurf-skills manifest', () => {
     );
     expect(code).toBe(0);
 
+    expect(ctx.logs.join('\n')).toContain('DEPRECATED:');
+    expect(ctx.logs.join('\n')).toContain('npx cc-sdd@latest --devin');
+
     const doc = join(cwd, 'AGENTS.md');
     expect(await exists(doc)).toBe(true);
     const docText = await readFile(doc, 'utf8');

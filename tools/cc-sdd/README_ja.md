@@ -20,7 +20,7 @@ cc-sdd v3.0 は Agent Skills と長時間自律実装を軸にした再構築で
 - **`/kiro-impl` による長時間自律実装。** 各タスクに対し fresh implementer が feature flag 越しに TDD (RED → GREEN) で実装、独立した reviewer が機械的検証、失敗時は auto-debug pass が新しいコンテキストで根本原因を調査する。タスク間の知見は `tasks.md` の `## Implementation Notes` で次の implementer に引き継がれる。1 iteration = 1 task、中断後の再実行も安全。
 - **境界中心の spec discipline。** `design.md` に File Structure Plan が入り、タスク境界の根拠になる。タスクには `_Boundary:_` / `_Depends:_` アノテーションが付く。review と validation はスタイルではなく境界違反を見る。
 - **`/kiro-spec-batch` で複数 spec の並列作成。** roadmap から複数 spec を並列生成し、cross-spec review で矛盾・責務重複・インターフェースミスマッチを検出する。
-- **8 つの AI coding agent で Agent Skills を展開。** 17 skills × 8 プラットフォーム、on-demand ロード (progressive disclosure)。Claude Code と Codex は stable、Cursor, Copilot, Devin Desktop (Cascade), OpenCode, Gemini CLI, Antigravity は beta。利用可能な場合はホスト標準の subagent を使い、利用できない場合は同じコンテキスト内で順次実装・レビューする。
+- **8 つの AI coding agent で Agent Skills を展開。** 17 skills × 8 プラットフォーム、on-demand ロード (progressive disclosure)。Claude Code と Codex は stable、Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity は beta。利用可能な場合はホスト標準の subagent を使い、利用できない場合は同じコンテキスト内で順次実装・レビューする。
 
 Skills モードのワークフローと `/kiro-impl` 内部の詳細は [スキルリファレンス](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/skill-reference.md) を参照。
 
@@ -48,9 +48,10 @@ npx cc-sdd@latest
 ```bash
 npx cc-sdd@latest --codex-skills --lang ja      # Codex、日本語
 npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE、繁体字中国語
+npx cc-sdd@latest --devin                      # Devin Local / CLI (beta)
 ```
 
-8 つの AI coding agent（Claude Code と Codex は stable、Cursor, Copilot, Devin Desktop (Cascade), OpenCode, Gemini CLI, Antigravity は beta）と 14 言語に対応。全リストは [対応エージェント](#対応エージェント) を参照。
+8 つの AI coding agent（Claude Code と Codex は stable、Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity は beta）と 14 言語に対応。全リストは [対応エージェント](#対応エージェント) を参照。
 
 その後、エージェント上で:
 
@@ -98,7 +99,7 @@ spec フェーズの典型的な出力（10 分以内）:
 
 ## 対応エージェント
 
-全 8 種類の skills variant は 17 skills を配信する。呼び出し方、subagent の利用可否、独立レビューの実行可否は、利用するアプリ・CLI と設定に依存する。
+現行の 8 種類の統合はそれぞれ 17 skills を配信する。旧 Cascade の variant は移行用として残す。呼び出し方、subagent の利用可否、独立レビューの実行可否は、利用するアプリ・CLI と設定に依存する。
 
 | エージェント | Skills モード | 安定度 | レガシーモード |
 |---|---|---|---|
@@ -106,13 +107,14 @@ spec フェーズの典型的な出力（10 分以内）:
 | **Codex** | `--codex-skills` | Stable | `--codex`（ブロック済み） |
 | **Cursor IDE** | `--cursor-skills` | Beta | `--cursor`（非推奨） |
 | **GitHub Copilot** | `--copilot-skills` | Beta | `--copilot`（非推奨） |
-| **Devin Desktop / Windsurf (Cascade)** | `--windsurf-skills` | Beta | `--windsurf`（非推奨） |
+| **Devin Local / CLI** | `--devin` / `--devin-skills` | Beta | — |
+| **Windsurf / Cascade (legacy)** | `--windsurf-skills` | Deprecated | `--windsurf`（非推奨） |
 | **OpenCode** | `--opencode-skills` | Beta | `--opencode` / `--opencode-agent`（非推奨） |
 | **Gemini CLI** | `--gemini-skills` | Beta | `--gemini`（非推奨） |
 | **Antigravity** | `--antigravity` | Beta | — |
 | **Qwen Code** | — | — | `--qwen` |
 
-安定度は統合の成熟度を表す。17 skills の導入だけでは、自律実装全体の動作確認にはならない。Windsurf のフラグは Cascade 互換で、同じコンテキスト内でレビューする。Devin Local / CLI・Cloud の動作保証は含まない。Copilot の subagent 対応もクライアントごとに異なる。対応範囲と Antigravity の移行手順は [Agent compatibility](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/agent-compatibility.md) を参照。
+安定度は統合の成熟度を表す。17 skills の導入だけでは、自律実装全体の動作確認にはならない。Devin Desktop 内の Devin Local または Devin CLI には `--devin` を使う。新しい beta adapter のインストール・実機検証は未完了である。Windsurf のフラグは移行用の非推奨扱いとし、Devin Cloud は新 adapter の対象外である。Copilot の subagent 対応もクライアントごとに異なる。対応範囲と Antigravity の移行手順は [Agent compatibility](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/agent-compatibility.md) を参照。
 
 ## インストール詳細
 
@@ -132,7 +134,8 @@ npx cc-sdd@latest --claude        # Claude Code コマンド（--claude-skills �
 npx cc-sdd@latest --claude-agent  # Claude Code subagent（--claude-skills を使用）
 npx cc-sdd@latest --cursor        # Cursor IDE コマンド（--cursor-skills を使用）
 npx cc-sdd@latest --copilot       # GitHub Copilot プロンプト（--copilot-skills を使用）
-npx cc-sdd@latest --windsurf      # Windsurf IDE ワークフロー（--windsurf-skills を使用）
+npx cc-sdd@latest --windsurf      # 旧 Cascade ワークフロー（--devin に移行）
+npx cc-sdd@latest --windsurf-skills # Deprecated Cascade skills; migrate to --devin
 npx cc-sdd@latest --opencode      # OpenCode コマンド（--opencode-skills を使用）
 npx cc-sdd@latest --gemini        # Gemini CLI コマンド（--gemini-skills を使用）
 npx cc-sdd@latest --qwen          # Qwen Code
@@ -168,9 +171,10 @@ project/
 # Skills モード（推奨）: いずれか 1 つがインストールされる
 ├── .claude/skills/           # 17 skills（Claude Code Skills、デフォルト）
 ├── .agents/skills/           # 17 skills（Codex / Antigravity Skills）
+├── .devin/skills/            # 17 skills (Devin Local / CLI)
 ├── .cursor/skills/           # 17 skills（Cursor Skills）
 ├── .github/skills/           # 17 skills（GitHub Copilot Skills）
-├── .windsurf/skills/         # 17 skills（Cascade / Windsurf Skills）
+├── .windsurf/skills/         # 17 skills（Deprecated Cascade / Windsurf Skills）
 ├── .opencode/skills/         # 17 skills（OpenCode Skills）
 ├── .gemini/skills/           # 17 skills（Gemini CLI Skills）
 # レガシーコマンドモード（非推奨）

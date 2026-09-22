@@ -1,5 +1,7 @@
 # cc-sdd Migration Guide
 
+**Windsurf / Cascade → Devin:** `--windsurf` and `--windsurf-skills` are deprecated migration targets. Use `--devin` for the new Devin Local / CLI skills adapter. Preserve customizations and reconcile duplicate skill names using the [migration steps](agent-compatibility.md#migrating-windsurf--cascade-to-devin).
+
 > 📖 **日本語ガイドはこちら:** [マイグレーションガイド (日本語)](ja/migration-guide.md)
 
 cc-sdd 1.x (especially 1.1.5) and 2.0.0 share the same agentic SDLC philosophy and command list, but the **design artifacts, templates, and steering structure were rebuilt from the ground up**. Use this guide to pick one of two clear paths—either keep running 1.1.5 as-is, or accept the discontinuity and move to 2.0.0 where templates/rules make customization instant.

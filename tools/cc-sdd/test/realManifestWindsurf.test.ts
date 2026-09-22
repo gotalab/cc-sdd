@@ -67,7 +67,9 @@ describe('real windsurf manifest', () => {
 
     expect(out).toMatch(/\d+\/\d+ files written/);
     expect(out).toContain('Recommended models');
-    expect(out).toContain('Launch Devin Desktop / Windsurf (Cascade) and run `/kiro-spec-init <what-to-build>` to create a new specification.');
+    expect(out).toContain('DEPRECATED:');
+    expect(out).toContain('npx cc-sdd@latest --devin');
+    expect(out).toContain('Launch Windsurf / Cascade (deprecated) and run `/kiro-spec-init <what-to-build>` to create a new specification.');
     expect(out).toContain('Tip: Steering holds persistent project knowledge');
   });
 });

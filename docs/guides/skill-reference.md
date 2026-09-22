@@ -2,7 +2,7 @@
 
 > 📖 **日本語ガイドはこちら:** [スキルリファレンス (日本語)](ja/skill-reference.md)
 
-Reference for the skills-mode workflow in cc-sdd. Use this guide when you installed a skills-mode agent such as `--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--windsurf-skills`, `--opencode-skills`, `--gemini-skills`, or `--antigravity`.
+Reference for the skills-mode workflow in cc-sdd. Use this guide when you installed a skills-mode agent such as `--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--devin`, `--opencode-skills`, `--gemini-skills`, or `--antigravity`.
 
 If you are using legacy `/kiro:*` commands, use the [Command Reference](command-reference.md) instead.
 
@@ -128,7 +128,7 @@ Most of the "what is a subagent here?" question lives inside `/kiro-impl`. Unlik
 
 - There is no `tdd-task-implementer.md` or similar file under `.claude/agents/`.
 - When native subagents are available, `/kiro-impl` spawns fresh execution contexts using the host's tools (for example, Claude Code's Agent tool) and the prompt templates kept under the skill.
-- The eight skills adapters retain host-specific instructions. Cascade compatibility runs sequentially with inline review; other hosts use the inline fallback when delegation is unavailable. See [Agent compatibility](agent-compatibility.md) for execution-surface limits. A skill installation alone does not prove independent review.
+- The eight current integrations and the deprecated Cascade adapter retain host-specific instructions. Cascade compatibility runs sequentially with inline review; other hosts use the inline fallback when delegation is unavailable. See [Agent compatibility](agent-compatibility.md) for execution-surface limits. A skill installation alone does not prove independent review.
 
 ### Per-task role trio
 
@@ -155,7 +155,7 @@ Skills mode and the legacy `--claude-agent` install target take fundamentally di
 | Concern | `--claude-agent` (legacy) | Skills mode |
 | --- | --- | --- |
 | Subagent definitions | Static `.claude/agents/kiro/*.md` files | Prompt templates inside skills, dispatched dynamically |
-| Cross-platform | Claude Code only | 8 platforms |
+| Cross-platform | Claude Code only | 8 current targets plus deprecated Cascade compatibility |
 | Spec generation (`spec-quick`) | Four-phase Subagent orchestration | Inline `kiro-spec-quick` skill that sequences the four spec skills |
 | Spec batch | Not available | `/kiro-spec-batch` with cross-spec review; parallelism depends on the host |
 | Implementation | Manual via `/kiro:spec-impl` | Autonomous or manual via `/kiro-impl` |

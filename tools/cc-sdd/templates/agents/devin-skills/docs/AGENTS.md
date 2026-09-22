@@ -1,0 +1,80 @@
+# Agentic SDLC and Spec-Driven Development
+
+Kiro-style Spec-Driven Development on an agentic SDLC
+
+## Project Memory
+Project memory keeps persistent guidance (steering, specs notes, component docs) so Devin Local / CLI honors your standards each run. Treat it as the long-lived source of truth for patterns, conventions, and decisions.
+
+- Use `{{KIRO_DIR}}/steering/` for project-wide policies: architecture principles, naming schemes, security constraints, tech stack decisions, api standards, etc.
+- Use local `AGENTS.md` files for feature or library context (e.g. `src/lib/payments/AGENTS.md`): describe domain assumptions, API contracts, or testing conventions specific to that folder. Devin Local / CLI auto-loads these when working in the matching path.
+- Specs notes stay with each spec (under `{{KIRO_DIR}}/specs/`) to guide specification-level workflows.
+
+## Project Context
+
+### Paths
+- Steering: `{{KIRO_DIR}}/steering/`
+- Specs: `{{KIRO_DIR}}/specs/`
+
+### Steering vs Specification
+
+**Steering** (`{{KIRO_DIR}}/steering/`) - Guide AI with project-wide rules and context
+**Specs** (`{{KIRO_DIR}}/specs/`) - Formalize development process for individual features
+
+### Active Specifications
+- Check `{{KIRO_DIR}}/specs/` for active specifications
+- Use `/kiro-spec-status [feature-name]` to check progress
+
+## Development Guidelines
+{{DEV_GUIDELINES}}
+
+## Minimal Workflow
+- Phase 0 (optional): `/kiro-steering`, `/kiro-steering-custom`
+- Discovery: `/kiro-discovery "idea"` — determines action path, writes brief.md + roadmap.md for multi-spec projects
+- Phase 1 (Specification):
+  - Single spec: `/kiro-spec-quick {feature} [--auto]` or step by step:
+    - `/kiro-spec-init "description"`
+    - `/kiro-spec-requirements {feature}`
+    - `/kiro-validate-gap {feature}` (optional: for existing codebase)
+    - `/kiro-spec-design {feature} [-y]`
+    - `/kiro-validate-design {feature}` (optional: design review)
+    - `/kiro-spec-tasks {feature} [-y]`
+  - Multi-spec: `/kiro-spec-batch` — creates all specs from roadmap.md in parallel by dependency wave
+- Phase 2 (Implementation): `/kiro-impl {feature} [tasks] [--review required|inline|off]`
+  - Without task numbers: autonomous mode (subagent per task + independent review + final validation)
+  - With task numbers: manual mode (selected tasks in main context, still reviewer-gated before completion)
+  - `--review off` skips task-local review; use it intentionally and keep `/kiro-validate-impl {feature}` as the final quality gate
+  - `/kiro-validate-impl {feature}` (standalone re-validation)
+- Progress check: `/kiro-spec-status {feature}` (use anytime)
+
+## Skills Structure
+Skills are located in `.devin/skills/kiro-*/SKILL.md`
+- Each skill is a directory with a `SKILL.md` file
+- Invoke a skill directly with `/kiro-<skill-name>`
+- Use skills explicitly requested by the user and skills relevant to the task's domain, including design, accessibility, and UX.
+- Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
+- Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
+- `kiro-review` — task-local adversarial review protocol used by reviewer subagents
+- `kiro-debug` — root-cause-first debug protocol used by debugger subagents
+- `kiro-verify-completion` — fresh-evidence gate before success or completion claims
+
+## Devin Local / CLI Delegation
+
+This installation targets Devin Local in Devin Desktop and Devin CLI. It does not configure Devin Cloud. Use `/kiro-<skill-name>` to invoke a skill; workflow controllers run in the main conversation.
+
+- Use the available `run_subagent` and `read_subagent` tools with their current runtime schemas. Select `subagent_general` for implementation, review that runs tests, and debugging; `subagent_explore` is read-only and cannot implement changes.
+- Give each independent implementer and reviewer a fresh conversation, the exact checkout and absolute input paths, and the task-relevant instructions. Wait for the result before review or task completion. Keep repository writers sequential.
+- Prefer foreground workers when commands may need approval. Background workers cannot request new permissions. Handle a permission denial through the host's foreground approval flow; do not disable permissions or automatically grant tools.
+- Built-in child agents cannot delegate further by default. Keep orchestration in the parent. A batch worker must execute its phase skills and their required reviews inline when child delegation is unavailable.
+- CLI subagents can be disabled by configuration or organizational policy; Devin Desktop exposes a Subagents (Preview) setting. If native tools are unavailable, follow the inline fallback and report the review as inline rather than independent.
+
+## Development Rules
+- 3-phase approval workflow: Requirements → Design → Tasks → Implementation
+- Human review required each phase; use `-y` only for intentional fast-track
+- Keep steering current and verify alignment with `/kiro-spec-status`
+- Follow the user's instructions precisely, and within that scope act autonomously: gather the necessary context and complete the requested work end-to-end in this run, asking questions only when essential information is missing or the instructions are critically ambiguous.
+
+## Steering Configuration
+- For spec and implementation work, load the core steering files below from `{{KIRO_DIR}}/steering/`. Reuse current context rather than rereading unchanged files.
+- Load additional steering only when required by project rules or relevant to the task.
+- Default files: `product.md`, `tech.md`, `structure.md`
+- Custom files are supported (managed via `/kiro-steering-custom`)

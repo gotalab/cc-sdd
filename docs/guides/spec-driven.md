@@ -133,7 +133,7 @@ Each phase pauses for human review unless you explicitly bypass it (for example 
 
 ## Skills Workflow (3.0)
 
-Skills mode (`--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--windsurf-skills`, `--opencode-skills`, `--gemini-skills`, `--antigravity`) provides an alternative workflow that uses skill-based commands instead of `/kiro:*` slash commands. The spec phases are the same, but implementation and validation work differently. For the complete skills-mode surface, including `/kiro-impl` subagent flow and customization, see the [Skill Reference](skill-reference.md).
+Skills mode (`--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--devin`, `--opencode-skills`, `--gemini-skills`, `--antigravity`) provides an alternative workflow that uses skill-based commands instead of `/kiro:*` slash commands. The spec phases are the same, but implementation and validation work differently. For the complete skills-mode surface, including `/kiro-impl` subagent flow and customization, see the [Skill Reference](skill-reference.md).
 
 Examples below use slash invocation. Codex uses `$kiro-*`, while Cascade uses `@kiro-*`. Native subagent availability depends on the execution surface and configuration; hosts without it use inline execution and review. See [Agent compatibility](agent-compatibility.md).
 

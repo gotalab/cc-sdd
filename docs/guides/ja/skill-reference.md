@@ -2,7 +2,7 @@
 
 > 📖 **English guide:** [Skill Reference](../skill-reference.md)
 
-cc-sdd の Skills モード向けリファレンスである。`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--windsurf-skills`、`--opencode-skills`、`--gemini-skills`、`--antigravity` を使っている場合は、このページを参照する。
+cc-sdd の Skills モード向けリファレンスである。`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--devin`、`--opencode-skills`、`--gemini-skills`、`--antigravity` を使っている場合は、このページを参照する。
 
 レガシーの `/kiro:*` コマンドを使っている場合は、[コマンドリファレンス](command-reference.md) を参照すること。
 
@@ -125,7 +125,7 @@ success claim の前に fresh evidence を要求する gate。
 
 - `tdd-task-implementer.md` のような事前定義ファイルは `.claude/agents/` 配下に存在しない
 - `/kiro-impl` は subagent が利用可能な場合、ホストのツール（例: Claude Code の Agent tool）と skill 内のプロンプトテンプレートを使い、独立した実行コンテキストを起動する
-- 8 種類の skills adapter はホスト別の指示を持つ。Cascade 互換では同じコンテキスト内で順次実装・レビューし、他のホストでも subagent が利用できない場合は同様にフォールバックする。実行環境ごとの制約は [Agent compatibility](../agent-compatibility.md) を参照。skills の導入だけでは独立レビューの動作保証にならない
+- 現行の 8 種類の統合と、移行用の非推奨 Cascade adapter はホスト別の指示を持つ。Cascade 互換では同じコンテキスト内で順次実装・レビューし、他のホストでも subagent が利用できない場合は同様にフォールバックする。実行環境ごとの制約は [Agent compatibility](../agent-compatibility.md) を参照。skills の導入だけでは独立レビューの動作保証にならない
 
 ### タスクごとの 3 ロール
 
@@ -152,7 +152,7 @@ Skills モードとレガシーの `--claude-agent` は subagent の扱いが根
 | 観点 | `--claude-agent`（レガシー） | Skills モード |
 | --- | --- | --- |
 | Subagent 定義 | `.claude/agents/kiro/*.md` の静的ファイル | Skill 内のプロンプトテンプレート、動的 dispatch |
-| クロスプラットフォーム | Claude Code のみ | 8 プラットフォーム |
+| クロスプラットフォーム | Claude Code のみ | 現行の 8 種類と移行用の旧 Cascade |
 | Spec 生成 (`spec-quick`) | 4 フェーズを Subagent で調整 | `kiro-spec-quick` skill が 4 つの spec skill を順に呼ぶ |
 | Spec batch | なし | `/kiro-spec-batch` + cross-spec review。並列実行の可否はホストに依存 |
 | 実装 | `/kiro:spec-impl` で手動 | `/kiro-impl` の自律 or マニュアル |

@@ -23,7 +23,7 @@ cc-sdd v3.0 is a rework around Agent Skills and long-running autonomous implemen
 - **`/kiro-impl` for long-running autonomous implementation.** Each task gets a fresh implementer running TDD (RED → GREEN) behind a feature flag, an independent reviewer, and an auto-debug pass that investigates root causes in a clean context when the implementer is blocked or the reviewer rejects twice. Learnings from earlier tasks propagate forward via `## Implementation Notes` in `tasks.md`. 1 task per iteration, safe to re-run after interruption.
 - **Boundary-first spec discipline.** `design.md` now includes a File Structure Plan that drives task boundaries. Tasks carry `_Boundary:_` and `_Depends:_` annotations. Review and validation look for boundary violations, not just style issues.
 - **`/kiro-spec-batch` for multi-spec initiatives.** Turn a roadmap into multiple specs in parallel, with cross-spec review to catch contradictions, duplicated responsibilities, and interface mismatches.
-- **Agent Skills across 8 coding agents.** 17 skills per install, loaded on demand (progressive disclosure). Claude Code and Codex are stable; Cursor, Copilot, Devin Desktop (Cascade), OpenCode, Gemini CLI, and Antigravity are in beta. Native subagents are used when available; hosts without them execute sequentially with inline review.
+- **Agent Skills across 8 coding agents.** 17 skills per install, loaded on demand (progressive disclosure). Claude Code and Codex are stable; Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, and Antigravity are in beta. Native subagents are used when available; hosts without them execute sequentially with inline review.
 
 Full skills-mode workflow and `/kiro-impl` internals: [Skill Reference](docs/guides/skill-reference.md).
 
@@ -53,7 +53,7 @@ npx cc-sdd@latest --codex-skills --lang ja      # Codex, Japanese
 npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE, Traditional Chinese
 ```
 
-Supports 8 AI coding agents (Claude Code and Codex stable; Cursor, Copilot, Devin Desktop (Cascade), OpenCode, Gemini CLI, and Antigravity in beta) and 14 languages. See [Supported Agents](#supported-agents) for the full list.
+Supports 8 AI coding agents (Claude Code and Codex stable; Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, and Antigravity in beta) and 14 languages. See [Supported Agents](#supported-agents) for the full list.
 
 Then, in your agent:
 
@@ -103,7 +103,7 @@ On a host with native subagents, `/kiro-impl` runs tasks with TDD (RED → GREEN
 
 ## Supported Agents
 
-All 8 skills variants ship 17 skills. Invocation, native subagent availability, and independent review depend on the execution surface and configuration.
+Eight current integrations ship 17 skills each; the deprecated Cascade variant is retained for migration. Invocation, native subagent availability, and independent review depend on the execution surface and configuration.
 
 | Agent | Skills mode | Stability | Legacy mode |
 |---|---|---|---|
@@ -111,13 +111,14 @@ All 8 skills variants ship 17 skills. Invocation, native subagent availability, 
 | **Codex** | `--codex-skills` | Stable | `--codex` (blocked) |
 | **Cursor IDE** | `--cursor-skills` | Beta | `--cursor` (deprecated) |
 | **GitHub Copilot** | `--copilot-skills` | Beta | `--copilot` (deprecated) |
-| **Devin Desktop / Windsurf (Cascade)** | `--windsurf-skills` | Beta | `--windsurf` (deprecated) |
+| **Devin Local / CLI** | `--devin` / `--devin-skills` | Beta | — |
+| **Windsurf / Cascade (legacy)** | `--windsurf-skills` | Deprecated | `--windsurf` (deprecated) |
 | **OpenCode** | `--opencode-skills` | Beta | `--opencode` / `--opencode-agent` (deprecated) |
 | **Gemini CLI** | `--gemini-skills` | Beta | `--gemini` (deprecated) |
 | **Antigravity** | `--antigravity` | Beta | — |
 | **Qwen Code** | — | — | `--qwen` |
 
-Stability describes integration maturity. Installing 17 skills does not verify that a host can run the full autonomous loop. The Windsurf flags retain Cascade compatibility and inline review; they do not certify Devin Local / CLI or Cloud. Copilot subagents depend on the client. See [Agent compatibility](./docs/guides/agent-compatibility.md) for supported surfaces and Antigravity migration guidance.
+Stability describes integration maturity. Installing 17 skills does not verify that a host can run the full autonomous loop. Use `--devin` for Devin Local in Devin Desktop or Devin CLI. The new beta adapter still needs installation and runtime verification. The Windsurf flags are deprecated Cascade migration options; Devin Cloud is outside the new adapter’s scope. Copilot subagents depend on the client. See [Agent compatibility](./docs/guides/agent-compatibility.md) for supported surfaces and Antigravity migration guidance.
 
 ## Advanced Installation
 
@@ -129,7 +130,7 @@ npx cc-sdd@latest --claude-skills     # Claude Code Skills
 npx cc-sdd@latest --codex-skills      # Codex Skills
 npx cc-sdd@latest --cursor-skills     # Cursor IDE Skills (beta)
 npx cc-sdd@latest --copilot-skills    # GitHub Copilot Skills (beta)
-npx cc-sdd@latest --windsurf-skills   # Cascade Skills in Devin Desktop / Windsurf (beta)
+npx cc-sdd@latest --devin            # Devin Local / CLI Skills (beta)
 npx cc-sdd@latest --opencode-skills   # OpenCode Skills (beta)
 npx cc-sdd@latest --gemini-skills     # Gemini CLI Skills (beta)
 npx cc-sdd@latest --antigravity       # Antigravity Skills (beta)
@@ -142,7 +143,8 @@ npx cc-sdd@latest --claude         # Claude Code commands (use --claude-skills)
 npx cc-sdd@latest --claude-agent   # Claude Code subagents (use --claude-skills)
 npx cc-sdd@latest --cursor         # Cursor IDE commands (use --cursor-skills)
 npx cc-sdd@latest --copilot        # GitHub Copilot prompts (use --copilot-skills)
-npx cc-sdd@latest --windsurf       # Cascade workflows (use --windsurf-skills)
+npx cc-sdd@latest --windsurf       # Legacy Cascade workflows (migrate to --devin)
+npx cc-sdd@latest --windsurf-skills # Deprecated Cascade skills; migrate to --devin
 npx cc-sdd@latest --opencode       # OpenCode commands (use --opencode-skills)
 npx cc-sdd@latest --opencode-agent # OpenCode subagents (use --opencode-skills)
 npx cc-sdd@latest --gemini         # Gemini CLI commands (use --gemini-skills)

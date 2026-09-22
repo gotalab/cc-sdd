@@ -1,5 +1,7 @@
 # cc-sdd マイグレーションガイド
 
+**Windsurf / Cascade → Devin:** `--windsurf` と `--windsurf-skills` は移行用の非推奨ターゲット。Devin Local / CLI 向けには新しい `--devin` を使う。カスタマイズを保護し、同名スキルを整理する手順は [移行ガイド](../agent-compatibility.md#migrating-windsurf--cascade-to-devin) を参照。
+
 > 📖 **English guide:** [Migration Guide](../migration-guide.md)
 
 v1系（特に1.1.5）とv2.0.0は、**コマンドや agentic SDLC の基本思想は共通**であるものの、設計テンプレートやステアリング（steering）の構造が大幅に変更されている。このガイドでは、「v1.1.5をそのまま使い続ける」か、「非連続的なアップデートと割り切りv2へ移行する」かの選択肢を提示する。後者を選択した場合に、テンプレートとルール（rules）を用いて迅速にカスタマイズを行う手順を解説する。

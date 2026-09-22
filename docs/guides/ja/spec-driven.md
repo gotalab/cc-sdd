@@ -122,7 +122,7 @@ skill 名を覚えることより、どの workstream に入るかを先に決�
 
 ## Skills ワークフロー（v3.0.0）
 
-`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--windsurf-skills`、`--opencode-skills`、`--gemini-skills`、`--antigravity` でインストールした場合、コマンド（`/kiro:*`）の代わりに **Skills** を使用する。以下の `/kiro-*` は slash 呼び出しの例であり、Codex は `$kiro-*`、Cascade は `@kiro-*` を使う。subagent の利用可否はホストと設定に依存し、利用できない場合は同じコンテキスト内で実装・レビューする。対応範囲は [Agent compatibility](../agent-compatibility.md) を参照。Skills モードの完全なリファレンス（`/kiro-impl` の subagent flow、カスタマイズ方法を含む）は [スキルリファレンス](skill-reference.md) を参照。
+`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--devin`、`--opencode-skills`、`--gemini-skills`、`--antigravity` でインストールした場合、コマンド（`/kiro:*`）の代わりに **Skills** を使用する。以下の `/kiro-*` は slash 呼び出しの例であり、Codex は `$kiro-*`、Cascade は `@kiro-*` を使う。subagent の利用可否はホストと設定に依存し、利用できない場合は同じコンテキスト内で実装・レビューする。対応範囲は [Agent compatibility](../agent-compatibility.md) を参照。Skills モードの完全なリファレンス（`/kiro-impl` の subagent flow、カスタマイズ方法を含む）は [スキルリファレンス](skill-reference.md) を参照。
 
 ### コマンドモードと Skills モードの対応
 

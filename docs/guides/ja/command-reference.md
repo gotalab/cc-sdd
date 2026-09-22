@@ -133,7 +133,7 @@ Skills モードを使っている場合は、先に [スキルリファレン�
 
 ## Skills モード（v3.0.0）
 
-`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--windsurf-skills`、`--opencode-skills`、`--gemini-skills`、`--antigravity` でインストールした場合、17 個の Skills が提供される。以下の `/kiro-*` は slash 呼び出しの例であり、Codex は `$kiro-*`、Cascade は `@kiro-*` を使う。subagent の利用可否はホストと設定に依存し、利用できない場合は同じコンテキスト内で実装・レビューする。対応範囲は [Agent compatibility](../agent-compatibility.md) を参照。
+`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--devin`、`--opencode-skills`、`--gemini-skills`、`--antigravity` でインストールした場合、17 個の Skills が提供される。以下の `/kiro-*` は slash 呼び出しの例であり、Codex は `$kiro-*`、Cascade は `@kiro-*` を使う。subagent の利用可否はホストと設定に依存し、利用できない場合は同じコンテキスト内で実装・レビューする。対応範囲は [Agent compatibility](../agent-compatibility.md) を参照。
 
 ### `/kiro-discovery`
 - **目的**: 曖昧なアイデアや漠然とした要望を、`/kiro:spec-init` に渡せる具体的な機能提案に整理する。
