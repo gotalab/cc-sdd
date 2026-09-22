@@ -72,9 +72,7 @@ For each detected feature:
 - Read `{{KIRO_DIR}}/specs/<feature>/tasks.md` for task list and Implementation Notes
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to the validated boundaries, runtime prerequisites, integrations, domain rules, security/performance constraints, or team conventions that affect the GO/NO-GO call
-- Use skills explicitly requested by the user and skills relevant to the task's domain, including design, accessibility, and UX.
-- Select skills from their descriptions or metadata first, then read only the selected skills and the references needed for the task.
-- Follow explicit host and project rules and retain required workflow checks. Do not skip relevant skills just because the task is small.
+- Use explicitly requested skills and task-relevant local skills/playbooks, including design, accessibility, and UX. Select by description and read only needed guidance, even for small tasks; preserve required checks and host/project rules.
 
 **Discover canonical validation commands**:
 - Inspect repository-local sources of truth in this order: project scripts/manifests (`package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, app manifests), task runners (`Makefile`, `justfile`), CI/workflow files, existing e2e/integration configs, then `README*`

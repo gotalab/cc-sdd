@@ -241,8 +241,8 @@ describe('real windsurf-skills manifest', () => {
     expect(await exists(reviewPrompt)).toBe(true);
     const reviewPromptText = await readFile(reviewPrompt, 'utf8');
     expect(reviewPromptText).toContain('Apply the `kiro-review` protocol');
-    expect(reviewPromptText).toContain('Reality Check');
-    expect(reviewPromptText).toContain('Do Not Trust the Report');
+    expect(reviewPromptText).toContain('REVIEW_PROTOCOL_PATH');
+    expect(reviewPromptText).toContain('read the file directly');
     expect(reviewPromptText).toContain('The parent controller parses the exact `- VERDICT:` line');
   });
 });
