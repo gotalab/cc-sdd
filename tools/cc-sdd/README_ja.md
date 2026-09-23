@@ -114,7 +114,7 @@ spec フェーズの典型的な出力（10 分以内）:
 | **Antigravity** | `--antigravity` | Beta | — |
 | **Qwen Code** | — | — | `--qwen` |
 
-安定度は統合の成熟度を表す。17 skills の導入だけでは、自律実装全体の動作確認にはならない。Devin Desktop 内の Devin Local または Devin CLI には `--devin` を使う。新しい beta adapter のインストール・実機検証は未完了である。Windsurf のフラグは移行用の非推奨扱いとし、Devin Cloud は新 adapter の対象外である。Copilot の subagent 対応もクライアントごとに異なる。対応範囲と Antigravity の移行手順は [Agent compatibility](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/agent-compatibility.md) を参照。
+安定度は統合の成熟度を表す。17 skills の導入だけでは、自律実装全体の動作確認にはならない。Devin Desktop 内の Devin Local または Devin CLI には `--devin` を使う。新しい beta adapter はインストールとCLIでのスキル認識を確認済みだが、認証後のタスク実行は未確認である。Windsurf のフラグは移行用の非推奨扱いとし、Devin Cloud は新 adapter の対象外である。Copilot の subagent 対応もクライアントごとに異なる。対応範囲と Antigravity の移行手順は [Agent compatibility](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/agent-compatibility.md) を参照。
 
 ## インストール詳細
 

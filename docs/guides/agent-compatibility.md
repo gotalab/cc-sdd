@@ -12,7 +12,7 @@ The upstream interfaces below were checked on September 23, 2026. They describe 
 | `--codex-skills` | Codex skills in `.agents/skills`, invoked with `$kiro-*`. Current Codex releases enable subagents by default; session tools and policy still determine availability. |
 | `--cursor-skills` | Cursor skills. Editor, CLI, and cloud sessions can differ in configuration and access to personal skills. |
 | `--copilot-skills` | Copilot skills. VS Code and Copilot CLI support subagents; GitHub.com skills do not imply that same delegation capability. |
-| `--devin` / `--devin-skills` | New beta adapter for Devin Local in Devin Desktop and Devin CLI. Installs `.devin/skills` and uses `/kiro-*` with native subagents when enabled. Installation and runtime checks are pending. Devin Cloud is outside this adapter’s scope. |
+| `--devin` / `--devin-skills` | New beta adapter for Devin Local in Devin Desktop and Devin CLI. Installs `.devin/skills` and uses `/kiro-*` with native subagents when enabled. Installer checks and CLI skill discovery pass; authenticated execution remains unverified. Devin Cloud is outside this adapter’s scope. |
 | `--windsurf-skills` (deprecated) | Legacy Cascade migration support. Keeps `.windsurf/skills` and `@kiro-*`; implementation and review execute in the main context. |
 | `--opencode-skills` | OpenCode skills. Check discovery, invocation, and available subagent tools in the client/version being used. |
 | `--gemini-skills` | Gemini CLI skills. Gemini CLI remains a separate integration from Antigravity. Available subagent tools determine isolated execution. |
@@ -65,3 +65,17 @@ Current Codex releases enable subagents by default. Existing cc-sdd setup text p
 Subagent availability can be disabled through `enabled = false` in the `[agents]` table. Keep configuration changes under the user's control; cc-sdd installs guidance and does not edit global Codex settings. Check the tools actually exposed to the session before dispatching, and use the inline fallback if delegation is unavailable.
 
 Source: [Current Codex subagent configuration](https://learn.chatgpt.com/docs/agent-configuration/subagents).
+
+## Verification scope (2026-09-23)
+
+The repository suite passed 199 tests across 40 files and the TypeScript build passed. Built CLI installations for Antigravity and Devin produced all 17 skills in both English and Japanese, with the expected configured language. These checks establish installation behavior, not every host workflow.
+
+Antigravity CLI 1.1.24 was exercised in isolated local fixtures:
+
+- `/kiro-spec-status` read actual project files and reported requirements awaiting approval.
+- `/kiro-spec-batch` dispatched a native `self` subagent, generated one complete specification through requirements, design, and tasks, and updated phase approvals and the roadmap. Task-graph and cross-spec reviews were inline. The headless parent returned while its child was still working; resuming that same conversation was required to collect completion and finish the batch.
+- A controlled inline sanity-review fixture supplied `NEEDS_FIXES` twice. Workspace writing was proven with a separate probe; the skill then left `tasks.md` absent and `spec.json` byte-identical, despite `-y`, and reported the review as inline. This exercises failure handling with simulated reviewer verdicts, not reviewer judgment quality.
+
+For headless Antigravity runs, attach the intended project/workspace explicitly. The fixture used `--new-project --add-dir <fixture-directory>`. An earlier unbound run looked in the host's scratch context and encountered denied commands. Inspect actual artifacts, response content, and `denied_actions`: exit code 0 or `status: SUCCESS` alone did not prove workflow completion. Keep the conversation id and resume existing workers rather than dispatching duplicate work.
+
+Devin CLI 3000.11.1 discovered all 17 installed skills without parser errors. Authenticated Devin execution was not run because this environment was logged out. Full implementation-to-independent-review loops, long-running recovery, and the separate IDE/cloud surfaces remain unverified. Both new/updated integrations retain beta status.

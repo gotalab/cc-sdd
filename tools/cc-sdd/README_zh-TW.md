@@ -114,7 +114,7 @@ spec 階段的典型產出（10 分鐘以內）:
 | **Antigravity** | `--antigravity` | Beta | — |
 | **Qwen Code** | — | — | `--qwen` |
 
-穩定度表示整合成熟度。安裝 17 個 skills 並不代表已驗證完整的自律實作流程。Devin Desktop 中的 Devin Local 或 Devin CLI 請使用 `--devin`。新的 beta adapter 尚未完成安裝與實機驗證。Windsurf 旗標已棄用，僅保留供遷移；Devin Cloud 不在新 adapter 的支援範圍內。Copilot 的 subagent 支援也依客戶端而異。支援範圍與 Antigravity 遷移方式請參考 [Agent compatibility](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/agent-compatibility.md)。
+穩定度表示整合成熟度。安裝 17 個 skills 並不代表已驗證完整的自律實作流程。Devin Desktop 中的 Devin Local 或 Devin CLI 請使用 `--devin`。新的 beta adapter 已確認安裝與 CLI 技能載入；登入後的任務執行仍未驗證。Windsurf 旗標已棄用，僅保留供遷移；Devin Cloud 不在新 adapter 的支援範圍內。Copilot 的 subagent 支援也依客戶端而異。支援範圍與 Antigravity 遷移方式請參考 [Agent compatibility](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/agent-compatibility.md)。
 
 ## 安裝詳情
 

@@ -1,8 +1,9 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { runCli } from '../src/index';
+import * as prompts from '../src/cli/ui/prompt';
 
 const runtime = { platform: 'darwin' } as const;
 const directories: string[] = [];
@@ -35,6 +36,7 @@ const install = async (cwd: string, args: string[]) => {
 };
 
 afterEach(async () => {
+  vi.restoreAllMocks();
   await Promise.all(directories.splice(0).map((cwd) => rm(cwd, { recursive: true, force: true })));
 });
 
@@ -78,7 +80,8 @@ describe('real Devin skills manifest', () => {
     expect(output).not.toContain('DEPRECATED:');
   });
 
-  it('preserves legacy skills, specs, and customized instructions when conflicts are skipped', async () => {
+  it('preserves legacy skills, specs, and customized instructions with default non-interactive conflicts', async () => {
+    vi.spyOn(prompts, 'isInteractive').mockReturnValue(false);
     const cwd = await makeProject();
     const legacy = join(cwd, '.windsurf/skills/kiro-spec-init/SKILL.md');
     const spec = join(cwd, '.kiro/specs/existing/spec.json');
@@ -88,7 +91,7 @@ describe('real Devin skills manifest', () => {
     await writeFile(spec, '{"phase":"tasks-approved"}\n');
     await writeFile(join(cwd, 'AGENTS.md'), 'custom project instructions\n');
 
-    await install(cwd, ['--devin', '--overwrite=skip']);
+    await install(cwd, ['--devin']);
 
     expect(await readFile(legacy, 'utf8')).toBe('custom Cascade skill\n');
     expect(await readFile(spec, 'utf8')).toBe('{"phase":"tasks-approved"}\n');

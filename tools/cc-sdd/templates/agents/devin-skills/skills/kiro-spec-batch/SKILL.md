@@ -68,7 +68,7 @@ This batch uses the existing fast-track spec mode. Bind $1 to "{feature-name}" f
 1. Read the brief at {{KIRO_DIR}}/specs/{feature-name}/brief.md for feature context
 2. Read the roadmap at {{KIRO_DIR}}/steering/roadmap.md for project context
 3. Execute the full spec pipeline in this worker. Built-in Devin children cannot delegate further by default; apply required phase reviews inline when no child-delegation tools are available. For each phase, read the corresponding skill's SKILL.md for complete instructions (templates, rules, review gates):
-   a. Initialize: Read {spec-init-skill-path}; use the brief as $ARGUMENTS, retain the roadmap feature name, and create spec.json and requirements.md in the existing brief directory
+   a. Initialize: If spec.json already exists, reuse that spec without reinitializing or renaming it. Otherwise read {spec-init-skill-path}; use the brief as the project description and initialize spec.json and requirements.md in the existing brief directory. Later phases may update their own artifacts.
    b. Generate requirements: Read {spec-requirements-skill-path} and execute it with the bound feature argument
    c. Generate design: Read {spec-design-skill-path} and execute it with arguments "{feature-name} -y", including the required design review
    d. Generate tasks: Read {spec-tasks-skill-path} and execute it with arguments "{feature-name} -y", including the required task review

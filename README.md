@@ -118,7 +118,7 @@ Eight current integrations ship 17 skills each; the deprecated Cascade variant i
 | **Antigravity** | `--antigravity` | Beta | — |
 | **Qwen Code** | — | — | `--qwen` |
 
-Stability describes integration maturity. Installing 17 skills does not verify that a host can run the full autonomous loop. Use `--devin` for Devin Local in Devin Desktop or Devin CLI. The new beta adapter still needs installation and runtime verification. The Windsurf flags are deprecated Cascade migration options; Devin Cloud is outside the new adapter’s scope. Copilot subagents depend on the client. See [Agent compatibility](./docs/guides/agent-compatibility.md) for supported surfaces and Antigravity migration guidance.
+Stability describes integration maturity. Installing 17 skills does not verify that a host can run the full autonomous loop. Use `--devin` for Devin Local in Devin Desktop or Devin CLI. Installer checks and CLI skill discovery pass for the new beta adapter; authenticated task execution is still unverified. The Windsurf flags are deprecated Cascade migration options; Devin Cloud is outside the new adapter’s scope. Copilot subagents depend on the client. See [Agent compatibility](./docs/guides/agent-compatibility.md) for supported surfaces and Antigravity migration guidance.
 
 ## Advanced Installation
 
