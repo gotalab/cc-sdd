@@ -6,7 +6,35 @@ cc-sddの新機能・改善情報をお届けします。技術的な変更履�
 
 ## 🔬 開発中 (Unreleased)
 
-現在、未リリースの機能はありません。最新の安定版はv3.0.2です。
+追加の未リリース変更はありません。
+
+---
+
+## 🎉 Ver 3.1.0 (2026-09-23) - エージェント連携とワークフローの改善
+
+### 概要
+Devin Local / CLI 向けの Skills 対応を beta として追加し、既存エージェントとの連携と仕様作成・実装ワークフローを改善しました。
+
+### 主な変更
+- --devin（別名 --devin-skills）で Devin Local / CLI 向けの17スキルを導入できます。従来の Windsurf / Cascade フラグは移行用に維持し、非推奨にしました ([#197](https://github.com/gotalab/cc-sdd/pull/197))。
+- Antigravity の新規導入先を .agents/skills に変更しました。既存の .agent/skills は自動で移動・削除されないため、カスタマイズと同名スキルを確認してから更新してください ([#197](https://github.com/gotalab/cc-sdd/pull/197))。
+- Skills モードの実装でレビュー方式を指定できるようにしました。複数仕様の作成ではフェーズ承認とタスクレビューを維持し、途中まで作成した仕様も再利用します ([#163](https://github.com/gotalab/cc-sdd/pull/163), [#197](https://github.com/gotalab/cc-sdd/pull/197))。
+- ベトナム語を追加し、対応言語は14種類になりました ([#180](https://github.com/gotalab/cc-sdd/pull/180))。
+
+### その他の修正
+タスクに関係するスキルの指示が、実装担当や再試行時にも届くようにしました。レビュー・デバッグ手順の重複を減らし、共通のタスク書式、プレースホルダー、旧スキルのパス、エージェントのツール名も修正しました ([#166](https://github.com/gotalab/cc-sdd/pull/166), [#169](https://github.com/gotalab/cc-sdd/pull/169), [#170](https://github.com/gotalab/cc-sdd/pull/170), [#172](https://github.com/gotalab/cc-sdd/pull/172), [#193](https://github.com/gotalab/cc-sdd/pull/193), [#194](https://github.com/gotalab/cc-sdd/pull/194), [#196](https://github.com/gotalab/cc-sdd/pull/196), [#198](https://github.com/gotalab/cc-sdd/pull/198))。
+
+### 移行と検証範囲
+Devin への移行、Antigravity の更新、ホストごとの起動方法は [互換性ガイド](../guides/agent-compatibility.md) を参照してください。Devin と Antigravity の連携は beta 扱いです。認証後の Devin タスク実行や、各ホストでの無人の実装・独立レビュー全体は、このリリースでは検証できていません。
+
+### リソース
+- **変更履歴**: [CHANGELOG.md](../../CHANGELOG.md#310---2026-09-23)
+- **リリースノート**: [English](./RELEASE_NOTES_en.md) | [日本語](./RELEASE_NOTES_ja.md)
+
+### インストール
+```bash
+npx cc-sdd@latest
+```
 
 ---
 

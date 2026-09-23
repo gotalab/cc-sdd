@@ -8,8 +8,23 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-09-23
+
 ### Added
-- Add Vietnamese (vi) language support, bringing total to 14 languages
+- Add Vietnamese (vi) language support, bringing the total to 14 languages ([#180](https://github.com/gotalab/cc-sdd/pull/180))
+- Add a beta Devin Local / CLI skills target with --devin and --devin-skills ([#197](https://github.com/gotalab/cc-sdd/pull/197))
+- Add configurable task review modes for skills-based implementation ([#163](https://github.com/gotalab/cc-sdd/pull/163))
+
+### Changed
+- Prefer .agents/skills for new Antigravity installs while documenting migration from .agent/skills; update Codex setup and host-specific support guidance ([#197](https://github.com/gotalab/cc-sdd/pull/197))
+- Select relevant skills per task, carry their guidance through implementer retries, and reduce duplicated controller and debugger instructions ([#193](https://github.com/gotalab/cc-sdd/pull/193), [#194](https://github.com/gotalab/cc-sdd/pull/194), [#196](https://github.com/gotalab/cc-sdd/pull/196), [#197](https://github.com/gotalab/cc-sdd/pull/197))
+
+### Fixed
+- Require successful task-graph review and correct phase approvals in spec-batch; preserve partial specs during retries ([#197](https://github.com/gotalab/cc-sdd/pull/197))
+- Align generated task formatting, instructions, and placeholders; correct legacy skill paths and agent tool names ([#166](https://github.com/gotalab/cc-sdd/pull/166), [#169](https://github.com/gotalab/cc-sdd/pull/169), [#170](https://github.com/gotalab/cc-sdd/pull/170), [#172](https://github.com/gotalab/cc-sdd/pull/172), [#198](https://github.com/gotalab/cc-sdd/pull/198))
+
+### Deprecated
+- Mark --windsurf and --windsurf-skills as Cascade migration targets; retain their flags and existing destinations ([#197](https://github.com/gotalab/cc-sdd/pull/197))
 
 ## [3.0.2] - 2026-04-14
 
