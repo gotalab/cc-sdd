@@ -124,6 +124,10 @@ Fresh-evidence gate before success claims.
 
 Most of the "what is a subagent here?" question lives inside `/kiro-impl`. Unlike the legacy `--claude-agent` install target, skills mode does not rely on pre-defined subagent files under `.claude/agents/kiro/`. Implementation dispatch is owned by the skill itself.
 
+Use native subagents for bounded implementation, review, and debugging within one run. Use a separate host-managed chat for work with its own feature/PR lifecycle; that chat can run cc-sdd and use subagents internally. Keep one controller responsible for each spec's task state and commits. Separate chats do not by themselves isolate file edits: choose separate worktrees when independent writers need isolation.
+
+Workers receive task-specific inputs and source references rather than the full parent conversation. The controller retains outcomes, evidence references, unresolved constraints, and relevant learnings. Reviewer and debugger prompts load their canonical `kiro-review` and `kiro-debug` protocols through explicit paths, so the handoff does not duplicate those procedures.
+
 ### Dynamic dispatch, not static agent files
 
 - There is no `tdd-task-implementer.md` or similar file under `.claude/agents/`.
@@ -136,7 +140,7 @@ When native subagents are available, each task may involve up to three roles dis
 
 - **Implementer** — fresh execution context that builds a Task Brief from the spec, then implements with TDD (RED → GREEN under the Feature Flag Protocol).
 - **Reviewer** — independent pass that runs `git diff`, greps for TODOs, runs the test suite, and checks task-boundary compliance.
-- **Debugger** — triggered when the implementer is BLOCKED, or when the reviewer rejects after 2 remediation rounds. Investigates root causes in a clean context (with web search), produces a fix plan, and hands off to a new implementer. Max 2 debug rounds per task.
+- **Debugger** — triggered when the implementer is BLOCKED, or when the reviewer rejects after 2 remediation rounds. Receives current failure evidence and a concise account of attempted fixes in a fresh context, investigates the root cause, and produces a fix plan for a new implementer. Max 2 debug rounds per task.
 
 These three roles correspond to the three supporting skills above (`kiro-review`, `kiro-debug`, `kiro-verify-completion`). The dispatch is dynamic — no file under `.claude/agents/` needs to exist.
 
@@ -189,4 +193,3 @@ Because skills mode generates prompts dynamically, customization works different
 1. [Spec-Driven Development Workflow](spec-driven.md)
 2. This skill reference
 3. [Command Reference](command-reference.md) only if you need legacy mode
-

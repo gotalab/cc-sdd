@@ -121,6 +121,10 @@ success claim の前に fresh evidence を要求する gate。
 
 「ここでの subagent って何？」という疑問の大半は `/kiro-impl` の中で起きている。レガシーの `--claude-agent` インストール先と違い、Skills モードでは `.claude/agents/kiro/` 配下の事前定義ファイルに依存しない。実装 dispatch は skill 自身が持っている。
 
+1つの実行内での実装・レビュー・デバッグには、ホストの subagent を使う。機能やPRとして独立した仕事はホスト側で別チャットに分け、その中で cc-sdd と subagent を使う。各specのタスク状態とコミットは1つの controller が管理する。チャットを分けるだけでは編集ファイルは分離されないため、独立した作業者を隔離する場合は別 worktree を選ぶ。
+
+worker には親の会話全体ではなく、対象タスクの情報と参照先を渡す。controller は結果、検証証跡の参照先、未解決の制約、関連する知見を保持する。reviewer と debugger は明示されたパスから `kiro-review`・`kiro-debug` の正本を読み、引き継ぎ文に手順を重複させない。
+
 ### 動的 dispatch（静的 agent ファイルではない）
 
 - `tdd-task-implementer.md` のような事前定義ファイルは `.claude/agents/` 配下に存在しない
@@ -133,7 +137,7 @@ subagent が利用可能な場合、各タスクは最大 3 つの独立した�
 
 - **Implementer** — 仕様から Task Brief を作り、TDD（Feature Flag Protocol の RED → GREEN）で実装する fresh 実行コンテキスト
 - **Reviewer** — 独立した reviewer pass。`git diff`、TODO grep、テストスイート、タスク境界の検証を行う
-- **Debugger** — implementer が BLOCKED を返したか、reviewer が 2 ラウンド reject した時に起動。失敗履歴を持たないクリーンなコンテキストで root cause を調査し（Web 検索あり）、修正プランを次の implementer に渡す。1 タスクあたり最大 2 ラウンド
+- **Debugger** — implementer が BLOCKED を返したか、reviewer の2回の修正ラウンドでも解決しない時に起動。新しいコンテキストに現在の失敗証跡と試行結果の要約を渡し、原因調査と修正プランを次の implementer に引き継ぐ。1 タスクあたり最大 2 ラウンド
 
 これら 3 つのロールは上で触れた 3 つの supporting skill（`kiro-review`、`kiro-debug`、`kiro-verify-completion`）に対応する。dispatch は動的で、`.claude/agents/` 配下にファイルを置く必要はない。
 
@@ -186,4 +190,3 @@ Skills モードはプロンプトを動的に生成するため、`.claude/agen
 1. [仕様駆動開発ガイド](spec-driven.md)
 2. このスキルリファレンス
 3. レガシーモードが必要な場合だけ [コマンドリファレンス](command-reference.md)
-
