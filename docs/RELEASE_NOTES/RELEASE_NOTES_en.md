@@ -6,7 +6,35 @@ New features and improvements for cc-sdd. See [CHANGELOG.md](../../CHANGELOG.md)
 
 ## 🔬 In Development (Unreleased)
 
-No unreleased features at this time. The latest stable release is v3.0.2.
+No additional unreleased changes are recorded.
+
+---
+
+## 🎉 Ver 3.1.0 (2026-09-23) – Agent Compatibility and Workflow Reliability
+
+### Summary
+cc-sdd now supports Devin Local / CLI as a beta skills target, updates existing agent integrations, and includes workflow fixes accumulated since v3.0.2.
+
+### Highlights
+- Install 17 skills for Devin Local / CLI with --devin (alias --devin-skills). The existing Windsurf / Cascade flags remain available for migration and are deprecated ([#197](https://github.com/gotalab/cc-sdd/pull/197)).
+- New Antigravity installs prefer .agents/skills. Existing .agent/skills installations are not moved or deleted; review customizations and duplicate skill names before upgrading ([#197](https://github.com/gotalab/cc-sdd/pull/197)).
+- Skills-based implementation supports explicit review modes. Spec-batch now keeps phase approvals and task reviews intact, including when resuming a partial spec ([#163](https://github.com/gotalab/cc-sdd/pull/163), [#197](https://github.com/gotalab/cc-sdd/pull/197)).
+- Vietnamese is available as the 14th documentation language ([#180](https://github.com/gotalab/cc-sdd/pull/180)).
+
+### Other fixes
+Task-relevant skill guidance reaches implementers and retries; duplicated review and debugging instructions were reduced. Shared task formatting, placeholders, legacy skill paths, and agent tool names were corrected ([#166](https://github.com/gotalab/cc-sdd/pull/166), [#169](https://github.com/gotalab/cc-sdd/pull/169), [#170](https://github.com/gotalab/cc-sdd/pull/170), [#172](https://github.com/gotalab/cc-sdd/pull/172), [#193](https://github.com/gotalab/cc-sdd/pull/193), [#194](https://github.com/gotalab/cc-sdd/pull/194), [#196](https://github.com/gotalab/cc-sdd/pull/196), [#198](https://github.com/gotalab/cc-sdd/pull/198)).
+
+### Migration and scope
+See the [agent compatibility guide](../guides/agent-compatibility.md) for Devin migration, Antigravity upgrades, and platform-specific invocation. Devin and Antigravity remain beta integrations. Authenticated Devin task execution and complete unattended implementation and independent-review loops across hosts are not verified by this release.
+
+### Resources
+- **Full Changelog**: [CHANGELOG.md](../../CHANGELOG.md#310---2026-09-23)
+- **Release Notes**: [English](./RELEASE_NOTES_en.md) | [日本語](./RELEASE_NOTES_ja.md)
+
+### Installation
+```bash
+npx cc-sdd@latest
+```
 
 ---
 
