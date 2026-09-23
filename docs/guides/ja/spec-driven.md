@@ -95,9 +95,9 @@ skill 名を覚えることより、どの workstream に入るかを先に決�
 2. **仕様策定の開始 (Spec Initiation)**: `/kiro:spec-init <feature>` コマンドが `.kiro/specs/<feature>/` ディレクトリを生成し、機能単位のワークスペースを確保する。
 3. **要件定義 (Requirements)**: `/kiro:spec-requirements <feature>` コマンドが、AIとの対話を通じて `requirements.md` を作成する。ここにはEARS形式の要件や未解決の課題が記録される。
 4. **設計 (Design)**: `/kiro:spec-design <feature>` コマンドが、まず調査ログとして `research.md` を生成・更新する（調査が不要な場合はスキップされる）。その内容に基づき、詳細設計書 `design.md` が出力される。この設計書は、要件カバレッジ、コンポーネントとインターフェース定義、参考文献などを備えた、レビューに適したドキュメントである。v3.0.0では、`design.md` に **File Structure Plan**（ディレクトリ構造とファイル責務の定義）が含まれるようになった。行数上限は1500行に拡大されている。
-5. **タスク計画 (Task Planning)**: `/kiro:spec-tasks <feature>` コマンドで、実装タスクを `tasks.md` ファイルにTODO形式で分解する。各タスクは要件IDと紐付けられ、ドメインやレイヤーごとのブロックに標準化される。同時に、`P0`（逐次実行）や `P1`（並列実行可）といった実行順序ラベルが付与され、並行開発の境界が示される。
+5. **タスク計画 (Task Planning)**: `/kiro:spec-tasks <feature>` コマンドで、実装タスクを `tasks.md` ファイルにTODO形式で分解する。各タスクは要件IDと紐付けられ、ドメインやレイヤーごとのブロックに標準化される。並列実行可能なタスクでは、番号の直後に `(P)` を付け、`_Boundary:_` で対象コンポーネントを示す。順序だけでは分からない依存関係は `_Depends:_` に記録する。
 6. **実装 (Implementation)**: `/kiro:spec-impl <feature> <task-ids>` コマンド（コマンドモード）、または `/kiro-impl`（Skills モード）が、指定されたタスク単位での実装とテストのプロセスを支援する。Skills モードでは、自律モード（タスク引数なし）とマニュアルモード（タスク引数あり）の2つの動作形態がある（詳細は後述の「Skills ワークフロー」セクションを参照）。
-7. **品質ゲート (Quality Gates)**: `/kiro:validate-gap`、`/kiro:validate-design`、`/kiro:validate-impl` といった検証コマンドが、既存コードとの整合性や、設計・実装の品質をチェックする。v3.0.0では、`/kiro:validate-impl`（および Skills モードの `/kiro-validate-impl`）は**インテグレーション検証**（タスク横断の整合性チェック）に焦点が移り、個別タスクの検証はレビューア Subagent が担当する。
+7. **品質ゲート (Quality Gates)**: `/kiro:validate-gap`、`/kiro:validate-design`、`/kiro:validate-impl` といった検証コマンドが、既存コードとの整合性や、設計・実装の品質をチェックする。Skills モードの `/kiro-validate-impl` は**インテグレーション検証**（タスク横断の整合性チェック）に焦点を当てる。個別タスクのレビューは、subagent が利用可能なら独立した reviewer、それ以外は同じコンテキスト内で行う。
 8. **進捗追跡 (Status Tracking)**: `/kiro:spec-status <feature>` コマンドが、各開発フェーズの承認状況と未完了のタスクを要約して表示する。
 
 > すべてのフェーズは、開発者によるレビューのために一旦停止する。`-y` オプションや `--auto` フラグでこの確認をスキップすることも可能だが、本番環境向けの作業では手動での承認プロセスを維持することが推奨される。テンプレートにチェックリストを埋め込んでおくことで、一貫した品質ゲートを毎回強制することができる。
@@ -137,11 +137,11 @@ skill 名を覚えることより、どの workstream に入るかを先に決�
 ### `/kiro-impl` の2つのモード
 
 - **自律モード（タスク引数なし）**: subagent が利用可能な場合、タスクごとに Subagent を spawn し、独立した実装とレビューを行う。各タスクについて、実装者 Subagent がタスクブリーフ（Task Brief: 仕様から導出された具体的な受け入れ基準）を作成してからコーディングに入る。レビューア Subagent は、TODO 残存チェック、テスト実行、git diff による境界確認などの機械的な検証を行う。実装者が BLOCKED を返した場合やレビューアが2回連続で REJECTED した場合、**デバッグ Subagent** が新しいコンテキストで起動し、Web検索を使って根本原因を調査する（最大2ラウンド）。タスク間で得られた知見は **Implementation Notes** として次の実装者に引き継がれる。1タスク1イテレーションの規律により、長時間実行時のコンテキスト衛生を維持する。
-- **マニュアルモード（タスク引数あり）**: メインコンテキスト内で TDD ベースの実装を行う。コマンドモードの `/kiro:spec-impl` と同等の動作である。
+- **マニュアルモード（タスク引数あり）**: メインコンテキスト内で TDD ベースの実装を行う。完了前のレビューは既定で必須であり、subagent が利用可能なら独立した reviewer、それ以外は同じコンテキスト内で行う。
 
 ### セッション再開
 
-`/kiro-impl` は中断後の再実行に対応している。`tasks.md` の進捗状態に基づいて未完了タスクから処理を再開する。
+`/kiro-impl` は `tasks.md` に進捗を記録する。中断後は未完了の変更と実行中の worker を確認し、記録された状態から再開する。すべてのホストでの中断復旧を保証するものではない。
 
 ## Discovery の後
 
@@ -178,7 +178,7 @@ upstream 修正後は、その変更に依存している spec を対象に `/ki
 
 ## 関連リソース
 
-- [Docs README](../README.md)
+- [Docs README](../../README.md)
 - [スキルリファレンス](skill-reference.md)
 - [コマンドリファレンス](command-reference.md)
 - [Claude Code Subagents ワークフロー](claude-subagents.md)

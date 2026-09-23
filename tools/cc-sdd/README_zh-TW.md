@@ -17,9 +17,9 @@
 cc-sdd v3.0 是圍繞 Agent Skills 與長時間自律實作的重寫。
 
 - **`/kiro-discovery` 作為新入口。** discovery 把新需求路由到「擴充既有 spec / 直接實作 / 建立一個新 spec / 拆成多個 spec / mixed decomposition」其中之一。它會寫入 `brief.md` 以及必要時的 `roadmap.md`，讓你可以在不重新說明 scope 的情況下恢復工作。
-- **`/kiro-impl` 執行長時間自律實作。** 每個任務由 fresh implementer 在 feature flag 後執行 TDD (RED → GREEN)，獨立的 reviewer 做機械驗證，失敗時由 auto-debug pass 在乾淨 context 中調查根本原因。任務間的知見透過 `tasks.md` 的 `## Implementation Notes` 傳給下一個 implementer。每次迭代處理 1 個任務，中斷後再執行也安全。
+- **`/kiro-impl` 執行長時間自律實作。** 原生 subagent 可用時，每個任務由 fresh implementer 在 feature flag 後執行 TDD (RED → GREEN)，獨立的 reviewer 進行驗證；實作受阻或審查反覆未通過時，由 auto-debug 調查根本原因。否則在同一個 context 內實作與審查。知見與進度記錄於 `tasks.md`，每次迭代處理 1 個任務。中斷後先確認未完成的變更與仍在執行的 worker，再依記錄恢復。
 - **邊界優先的 spec discipline。** `design.md` 新增 File Structure Plan，成為任務邊界的依據。任務帶有 `_Boundary:_` / `_Depends:_` 標註。review 與 validation 尋找邊界違規而非僅看風格。
-- **`/kiro-spec-batch` 支援多 spec initiative。** 從 roadmap 並行產生多個 spec，並執行 cross-spec review 以捕捉 spec 間矛盾、責務重複與介面不一致。
+- **`/kiro-spec-batch` 支援多 spec initiative。** 依 roadmap 的相依順序產生多個 spec，原生 subagent 可用時才並行執行，並透過 cross-spec review 捕捉 spec 間矛盾、責務重複與介面不一致。
 - **Agent Skills 橫跨 8 個 AI coding agent。** 每次安裝 17 個 skills、按需載入（progressive disclosure）。Claude Code 與 Codex 為 stable；Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity 為 beta。原生 subagent 可用時才會啟動；否則在同一個 context 內依序實作與審查。
 
 Skills 模式完整工作流與 `/kiro-impl` 內部細節請參考 [Skill Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/skill-reference.md)。
@@ -86,7 +86,7 @@ npx cc-sdd@latest --devin                      # Devin Local / CLI (beta)
 /kiro-spec-design photo-albums
 /kiro-spec-tasks photo-albums
 /kiro-impl photo-albums
-# 自律執行: 每個任務使用 fresh implementer, independent reviewer, auto-debug
+# 自律執行: subagent 可用時使用獨立實作與審查，否則在同一個 context 內執行
 ```
 
 spec 階段的典型產出（10 分鐘以內）:

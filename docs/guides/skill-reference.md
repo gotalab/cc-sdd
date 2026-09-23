@@ -146,7 +146,7 @@ When a task reveals cross-cutting insights (for example "better-sqlite3 needs El
 
 ### 1 task per iteration
 
-Each iteration processes a single task. This keeps context hygiene across long autonomous runs, makes `/kiro-impl` safe to re-run after interruption, and bounds the scope of review and debug passes.
+Each iteration processes a single task, bounding the scope of review and debug passes. Progress is recorded in `tasks.md`; before resuming an interrupted run, inspect unfinished changes and any active workers. Recorded progress is not a guarantee of interruption recovery on every host.
 
 ## Skills mode vs `--claude-agent`
 

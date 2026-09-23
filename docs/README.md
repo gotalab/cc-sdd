@@ -17,6 +17,7 @@ Quick pointers to the most relevant guides, workflows, and historical notes for 
 - [Customization Guide](guides/customization-guide.md) — templates and rules customization
 - [Why cc-sdd?](guides/why-cc-sdd.md) — design rationale, trade-offs, and when to use (or not use) the tool
 - [Migration Guide](guides/migration-guide.md) — v1.x → v2 → v3 upgrade paths
+- [Agent compatibility](guides/agent-compatibility.md) — execution surfaces, Devin and Antigravity migration, and verification scope
 - [Claude Code Subagents Workflow](guides/claude-subagents.md) — legacy `--claude-agent` spec-quick Subagent install target
 
 ## Legacy Reference (Archived)

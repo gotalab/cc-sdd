@@ -8,7 +8,7 @@
 <a href="./README.md">English</a> | 日本語 | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-**承認済みの仕様を、長時間でも壊れない自律実装ワークフローに変える。** ワンコマンドで agentic SDLC ワークフローを Agent Skills として導入する: discovery, requirements, design, tasks, そしてホストが subagent に対応する場合の独立レビュー付き自律実装。8 つの AI coding agent に対応、同じ 17-skill セットで動作する。
+**承認済みの仕様を、長時間の自律実装ワークフローに変える。** ワンコマンドで agentic SDLC ワークフローを Agent Skills として導入する: discovery, requirements, design, tasks, そしてホストが subagent に対応する場合の独立レビュー付き自律実装。8 つの AI coding agent に対応、同じ 17-skill セットで動作する。
 
 👻 **Kiro スタイル。** Kiro IDE の spec-driven / agentic SDLC スタイル。既存の Kiro 仕様書もそのまま使える。
 
@@ -17,9 +17,9 @@
 cc-sdd v3.0 は Agent Skills と長時間自律実装を軸にした再構築である。
 
 - **`/kiro-discovery` が新しいエントリポイント。** discovery が新規依頼を「既存 spec を拡張 / spec 不要で直接実装 / 1 つの新規 spec / 複数 spec に分解 / mixed decomposition」に振り分ける。`brief.md` と必要に応じて `roadmap.md` を書き出すので、セッションを再開しても scope を説明し直さずに続けられる。
-- **`/kiro-impl` による長時間自律実装。** 各タスクに対し fresh implementer が feature flag 越しに TDD (RED → GREEN) で実装、独立した reviewer が機械的検証、失敗時は auto-debug pass が新しいコンテキストで根本原因を調査する。タスク間の知見は `tasks.md` の `## Implementation Notes` で次の implementer に引き継がれる。1 iteration = 1 task、中断後の再実行も安全。
+- **`/kiro-impl` による長時間自律実装。** subagent が利用可能な場合、タスクごとに fresh implementer が feature flag 越しの TDD (RED → GREEN) で実装し、独立した reviewer が検証する。実装が行き詰まった場合やレビューで繰り返し指摘された場合は auto-debug が根本原因を調査する。利用できない場合は同じコンテキスト内で実装・レビューする。知見と進捗を `tasks.md` に記録し、1 iteration = 1 task で処理する。中断後は未完了の変更や実行中の worker を確認して再開する。
 - **境界中心の spec discipline。** `design.md` に File Structure Plan が入り、タスク境界の根拠になる。タスクには `_Boundary:_` / `_Depends:_` アノテーションが付く。review と validation はスタイルではなく境界違反を見る。
-- **`/kiro-spec-batch` で複数 spec の並列作成。** roadmap から複数 spec を並列生成し、cross-spec review で矛盾・責務重複・インターフェースミスマッチを検出する。
+- **`/kiro-spec-batch` で複数 spec を作成。** roadmap の依存順に spec を生成し、subagent が利用可能な場合は並列化する。cross-spec review で矛盾・責務重複・インターフェースミスマッチを検出する。
 - **8 つの AI coding agent で Agent Skills を展開。** 17 skills × 8 プラットフォーム、on-demand ロード (progressive disclosure)。Claude Code と Codex は stable、Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity は beta。利用可能な場合はホスト標準の subagent を使い、利用できない場合は同じコンテキスト内で順次実装・レビューする。
 
 Skills モードのワークフローと `/kiro-impl` 内部の詳細は [スキルリファレンス](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/skill-reference.md) を参照。
@@ -86,7 +86,7 @@ npx cc-sdd@latest --devin                      # Devin Local / CLI (beta)
 /kiro-spec-design photo-albums
 /kiro-spec-tasks photo-albums
 /kiro-impl photo-albums
-# 自律実行: タスクごとに fresh implementer, independent reviewer, auto-debug
+# 自律実行: subagent が利用可能なら独立した実装・レビュー、それ以外は同一コンテキスト内で実行
 ```
 
 spec フェーズの典型的な出力（10 分以内）:
