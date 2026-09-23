@@ -6,9 +6,9 @@ cc-sdd のレガシー `/kiro:*` コマンド向けリファレンスである�
 
 Skills モードを使っている場合は、先に [スキルリファレンス](skill-reference.md) を参照すること。
 
-> **補足**: コマンドのテンプレートは Claude Code を基準にしているが、Cursor、Gemini CLI、Codex CLI、GitHub Copilot、Qwen Code、Windsurf など、他のエージェントでも同じ11個のコマンドが利用可能である（UIの詳細は各エージェントのドキュメントを参照すること）。
+> **補足**: 例はレガシーの Claude Code コマンド形式を使う。ほかのレガシーターゲットでは呼び出し形式が異なる。Codex のプロンプトインストールはブロック済みのため `--codex-skills` を使う。Windsurf / Cascade の両ターゲットは非推奨であり、[Devin への移行手順](../agent-compatibility.md#migrating-windsurf--cascade-to-devin)を参照。現行 Skills ターゲットと実行環境の違いは[互換性ガイド](../agent-compatibility.md)で確認できる。
 >
-> インストールやワークスペースの前提条件については[プロジェクトのREADME](../../README.md)を、各ドキュメントの概要については[Docs README](../README.md)を参照すること。
+> インストールやワークスペースの前提条件については[プロジェクトのREADME](../../../README.md)を、各ドキュメントの概要については[Docs README](../../README.md)を参照すること。
 
 ## 目次
 
@@ -93,8 +93,8 @@ Skills モードを使っている場合は、先に [スキルリファレン�
 - **レビューの観点**: アーキテクチャの境界、トレーサビリティ、コンポーネントの結合度に関するルールが守られているか、また、長文の資料や外部リンクが参考文献（Supporting References）として適切に分離されているかを確認する。
 
 ### `/kiro:spec-tasks`
-- **目的**: `design.md` を基に実装タスクリスト (`tasks.md`) を作成する。その際、`P0`（逐次実行が必須）や `P1`（並列実行が可能）といった実行順序のラベルを付け、並行開発を容易にする。
-- **ポイント**: v2.0.0では、ドメインやレイヤーごとのブロックが標準化され、機能追加やリファクタリングの案件にも再利用しやすくなった。要件IDとの紐付け、チェックボックス、実行順序ラベルがセットで生成される。
+- **目的**: `design.md` を基に実装タスクリスト (`tasks.md`) を作成する。並列実行可能なタスクは番号の直後に `(P)` を付け、`_Boundary:_` で対象コンポーネントを示す。
+- **ポイント**: 通常はタスクの並び順が依存関係を表す。順序だけでは分からない依存関係は `_Depends:_` に記録し、前提タスクを完了してから並列実行する。数値の要件IDだけを含む `_Requirements:_` を最後の注釈に置く。逐次実行モードでは `(P)` を付けない。
 
 ### `/kiro:spec-impl`
 - **目的**: 指定タスクを AI で実装。テストコマンドや検証内容も併せて提案。
@@ -118,7 +118,7 @@ Skills モードを使っている場合は、先に [スキルリファレン�
 ### `/kiro:validate-impl`
 - **役割**: 実装済みのタスクが `tasks.md` に記載された受け入れ条件を満たしているかを確認する。テストコマンドやログの不足、差分（Diff）の概要などをまとめて報告する。
 - **入力**: `[feature-name] [task-ids]`（引数を省略した場合は、直近のタスクを自動的に検出する）。
-- **v3.0.0での変更**: Skills モード（`/kiro-validate-impl`）では、**インテグレーション検証**（タスク横断の整合性チェック）に焦点が移った。個別タスクの検証はレビューア Subagent が自律的に実施する。
+- **v3.0.0での変更**: Skills モード（`/kiro-validate-impl`）では、**インテグレーション検証**（タスク横断の整合性チェック）に焦点が移った。個別タスクの検証は、subagent が利用可能な場合は独立したレビューアが、それ以外は同じコンテキスト内のレビューが担当する。
 
 ---
 
@@ -133,7 +133,7 @@ Skills モードを使っている場合は、先に [スキルリファレン�
 
 ## Skills モード（v3.0.0）
 
-`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--windsurf-skills`、`--opencode-skills`、`--gemini-skills`、`--antigravity` でインストールした場合、一部のコマンドが Skills（`/kiro-*`）として提供される。Skills モードでは外部プラグインに依存せず、各プラットフォーム標準の subagent primitive のみで動作する。
+`--claude-skills`、`--codex-skills`、`--cursor-skills`、`--copilot-skills`、`--devin`、`--opencode-skills`、`--gemini-skills`、`--antigravity` でインストールした場合、17 個の Skills が提供される。以下の `/kiro-*` は slash 呼び出しの例であり、Codex は `$kiro-*`、Cascade は `@kiro-*` を使う。subagent の利用可否はホストと設定に依存し、利用できない場合は同じコンテキスト内で実装・レビューする。対応範囲は [Agent compatibility](../agent-compatibility.md) を参照。
 
 ### `/kiro-discovery`
 - **目的**: 曖昧なアイデアや漠然とした要望を、`/kiro:spec-init` に渡せる具体的な機能提案に整理する。
@@ -141,12 +141,12 @@ Skills モードを使っている場合は、先に [スキルリファレン�
 
 ### `/kiro-impl`
 - **目的**: コマンドモードの `/kiro:spec-impl` に相当する実装 Skill。2つのモードを持つ。
-- **自律モード（タスク引数なし）**: タスクごとに実装者・レビューア・デバッガーの3種類の Subagent を spawn。実装者が BLOCKED またはレビューアが2回 REJECTED した場合、デバッグ Subagent が新しいコンテキストで根本原因を調査（Web検索付き、最大2ラウンド）。タスク間の知見は Implementation Notes として次の実装者に引き継がれる。
+- **自律モード（タスク引数なし）**: subagent が利用可能な場合、タスクごとに実装者・レビューア・デバッガーの3種類の Subagent を spawn。実装者が BLOCKED またはレビューアが2回 REJECTED した場合、デバッグ Subagent が新しいコンテキストで根本原因を調査（Web検索付き、最大2ラウンド）。タスク間の知見は Implementation Notes として次の実装者に引き継がれる。
 - **マニュアルモード（タスク引数あり）**: メインコンテキスト内で TDD ベースの実装を行う。コマンドモードの `/kiro:spec-impl` と同等の動作。
 - **セッション再開**: 中断後に再実行すると、`tasks.md` の進捗状態に基づいて未完了タスクから処理を再開する。
 
 ### `/kiro-validate-impl`
-- **目的**: コマンドモードの `/kiro:validate-impl` に相当する検証 Skill。**インテグレーション検証**（タスク横断の整合性チェック）に特化している。個別タスクの品質チェックは `/kiro-impl` の自律モードでレビューア Subagent が担当するため、この Skill ではタスク間の境界整合性を検証する。
+- **目的**: コマンドモードの `/kiro:validate-impl` に相当する検証 Skill。**インテグレーション検証**（タスク横断の整合性チェック）に特化している。個別タスクの品質チェックは `/kiro-impl` の自律モードで独立レビューまたは inline レビューが担当するため、この Skill ではタスク間の境界整合性を検証する。
 
 ---
 

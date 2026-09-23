@@ -8,7 +8,7 @@
 <a href="./README.md">English</a> | <a href="./README_ja.md">日本語</a> | 繁體中文
 </sub></div>
 
-**把已核准規格轉成長時間自律實作工作流。** 單一指令將 agentic SDLC 工作流安裝為 Agent Skills: discovery, requirements, design, tasks 以及帶有任務級別 independent review 的自律實作。支援 8 個 AI coding agent，每個平台使用相同的 17-skill 套件。
+**把已核准規格轉成長時間自律實作工作流。** 單一指令將 agentic SDLC 工作流安裝為 Agent Skills: discovery, requirements, design, tasks，以及在支援原生 subagent 的環境中提供獨立審查的自律實作。支援 8 個 AI coding agent，每個平台使用相同的 17-skill 套件。
 
 👻 **Kiro 風格。** Kiro IDE 的 spec-driven / agentic SDLC 風格。既有 Kiro 規格可直接使用。
 
@@ -17,10 +17,10 @@
 cc-sdd v3.0 是圍繞 Agent Skills 與長時間自律實作的重寫。
 
 - **`/kiro-discovery` 作為新入口。** discovery 把新需求路由到「擴充既有 spec / 直接實作 / 建立一個新 spec / 拆成多個 spec / mixed decomposition」其中之一。它會寫入 `brief.md` 以及必要時的 `roadmap.md`，讓你可以在不重新說明 scope 的情況下恢復工作。
-- **`/kiro-impl` 執行長時間自律實作。** 每個任務由 fresh implementer 在 feature flag 後執行 TDD (RED → GREEN)，獨立的 reviewer 做機械驗證，失敗時由 auto-debug pass 在乾淨 context 中調查根本原因。任務間的知見透過 `tasks.md` 的 `## Implementation Notes` 傳給下一個 implementer。每次迭代處理 1 個任務，中斷後再執行也安全。
+- **`/kiro-impl` 執行長時間自律實作。** 原生 subagent 可用時，每個任務由 fresh implementer 在 feature flag 後執行 TDD (RED → GREEN)，獨立的 reviewer 進行驗證；實作受阻或審查反覆未通過時，由 auto-debug 調查根本原因。否則在同一個 context 內實作與審查。知見與進度記錄於 `tasks.md`，每次迭代處理 1 個任務。中斷後先確認未完成的變更與仍在執行的 worker，再依記錄恢復。
 - **邊界優先的 spec discipline。** `design.md` 新增 File Structure Plan，成為任務邊界的依據。任務帶有 `_Boundary:_` / `_Depends:_` 標註。review 與 validation 尋找邊界違規而非僅看風格。
-- **`/kiro-spec-batch` 支援多 spec initiative。** 從 roadmap 並行產生多個 spec，並執行 cross-spec review 以捕捉 spec 間矛盾、責務重複與介面不一致。
-- **Agent Skills 橫跨 8 個 AI coding agent。** 每次安裝 17 個 skills、按需載入（progressive disclosure）。Claude Code 與 Codex 為 stable；Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity 為 beta。零外部依賴，subagent 透過各平台原生 spawn 啟動。
+- **`/kiro-spec-batch` 支援多 spec initiative。** 依 roadmap 的相依順序產生多個 spec，原生 subagent 可用時才並行執行，並透過 cross-spec review 捕捉 spec 間矛盾、責務重複與介面不一致。
+- **Agent Skills 橫跨 8 個 AI coding agent。** 每次安裝 17 個 skills、按需載入（progressive disclosure）。Claude Code 與 Codex 為 stable；Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity 為 beta。原生 subagent 可用時才會啟動；否則在同一個 context 內依序實作與審查。
 
 Skills 模式完整工作流與 `/kiro-impl` 內部細節請參考 [Skill Reference](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/skill-reference.md)。
 
@@ -48,9 +48,10 @@ npx cc-sdd@latest
 ```bash
 npx cc-sdd@latest --codex-skills --lang ja      # Codex, 日語
 npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE, 繁體中文
+npx cc-sdd@latest --devin                      # Devin Local / CLI (beta)
 ```
 
-支援 8 個 AI coding agent（Claude Code 與 Codex 為 stable；Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity 為 beta）和 14 種語言。完整列表請參考 [支援的代理](#支援的代理)。
+支援 8 個 AI coding agent（Claude Code 與 Codex 為 stable；Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity 為 beta）和 14 種語言。完整列表請參考 [支援的代理](#支援的代理)。
 
 然後在你的代理裡執行:
 
@@ -71,7 +72,7 @@ npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE, 繁體中文
 
 舊版 `/kiro:*` 指令模式（`--claude`, `--cursor` 等）仍然可用但已棄用。升級方式請參考 [Migration Guide](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/migration-guide.md)。
 
-對較大規模的已核准任務集合，執行 `kiro-impl` 會以任務級別的 subagent spawn、independent review、失敗時 auto-debug 開始自律實作。
+較大規模的已核准任務集合可使用 `kiro-impl`。原生 subagent 可用時，逐項進行獨立實作、審查與 auto-debug；否則在同一個 context 內實作與審查。
 
 ## 實際操作
 
@@ -85,7 +86,7 @@ npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE, 繁體中文
 /kiro-spec-design photo-albums
 /kiro-spec-tasks photo-albums
 /kiro-impl photo-albums
-# 自律執行: 每個任務使用 fresh implementer, independent reviewer, auto-debug
+# 自律執行: subagent 可用時使用獨立實作與審查，否則在同一個 context 內執行
 ```
 
 spec 階段的典型產出（10 分鐘以內）:
@@ -94,11 +95,11 @@ spec 階段的典型產出（10 分鐘以內）:
 - `design.md`: 附有 Mermaid 圖與 File Structure Plan 的架構文件。
 - `tasks.md`: 帶有邊界與相依性標註的實作任務。
 
-接著 `/kiro-impl` 會以 feature flag 後的 TDD (RED → GREEN)、獨立的 reviewer pass 以及失敗時的 auto-debug 自律執行任務。
+原生 subagent 可用時，`/kiro-impl` 會以 feature flag 後的 TDD (RED → GREEN)、獨立審查與失敗時的 auto-debug 執行任務。否則在同一個 context 內套用審查協定。
 
 ## 支援的代理
 
-全部 8 個 skills variant 提供相同的 17-skill 套件。差異在於各平台整合累積了多少實戰驗證。
+目前的 8 種整合各提供 17 個 skills；舊 Cascade variant 保留作為遷移用途。呼叫方式、subagent 可用性與獨立審查能力取決於使用的應用程式、CLI 和設定。
 
 | 代理 | Skills 模式 | 穩定度 | 舊版模式 |
 |---|---|---|---|
@@ -106,13 +107,14 @@ spec 階段的典型產出（10 分鐘以內）:
 | **Codex** | `--codex-skills` | Stable | `--codex`（已封鎖） |
 | **Cursor IDE** | `--cursor-skills` | Beta | `--cursor`（已棄用） |
 | **GitHub Copilot** | `--copilot-skills` | Beta | `--copilot`（已棄用） |
-| **Windsurf IDE** | `--windsurf-skills` | Beta | `--windsurf`（已棄用） |
+| **Devin Local / CLI** | `--devin` / `--devin-skills` | Beta | — |
+| **Windsurf / Cascade (legacy)** | `--windsurf-skills` | Deprecated | `--windsurf`（已棄用） |
 | **OpenCode** | `--opencode-skills` | Beta | `--opencode` / `--opencode-agent`（已棄用） |
 | **Gemini CLI** | `--gemini-skills` | Beta | `--gemini`（已棄用） |
-| **Antigravity** | `--antigravity` | Beta (experimental) | — |
+| **Antigravity** | `--antigravity` | Beta | — |
 | **Qwen Code** | — | — | `--qwen` |
 
-這裡的 "Beta" 不代表「功能不完整」。所有 8 個平台共用相同的 17 skills 與模板。Beta 指的是平台整合（subagent spawn 行為、操作感、`SKILL.md` 載入）相較於 Claude Code 與 Codex 的實戰驗證較少，可能仍有邊界狀況。若遇到問題請至 [Issues](https://github.com/gotalab/cc-sdd/issues) 回報。
+穩定度表示整合成熟度。安裝 17 個 skills 並不代表已驗證完整的自律實作流程。Devin Desktop 中的 Devin Local 或 Devin CLI 請使用 `--devin`。新的 beta adapter 已確認安裝與 CLI 技能載入；登入後的任務執行仍未驗證。Windsurf 旗標已棄用，僅保留供遷移；Devin Cloud 不在新 adapter 的支援範圍內。Copilot 的 subagent 支援也依客戶端而異。支援範圍與 Antigravity 遷移方式請參考 [Agent compatibility](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/agent-compatibility.md)。
 
 ## 安裝詳情
 
@@ -132,7 +134,8 @@ npx cc-sdd@latest --claude        # Claude Code 指令（請改用 --claude-skil
 npx cc-sdd@latest --claude-agent  # Claude Code subagent（請改用 --claude-skills）
 npx cc-sdd@latest --cursor        # Cursor IDE 指令（請改用 --cursor-skills）
 npx cc-sdd@latest --copilot       # GitHub Copilot 提示（請改用 --copilot-skills）
-npx cc-sdd@latest --windsurf      # Windsurf IDE 工作流程（請改用 --windsurf-skills）
+npx cc-sdd@latest --windsurf      # 舊 Cascade 工作流程（請遷移至 --devin）
+npx cc-sdd@latest --windsurf-skills # Deprecated Cascade skills; migrate to --devin
 npx cc-sdd@latest --opencode      # OpenCode 指令（請改用 --opencode-skills）
 npx cc-sdd@latest --gemini        # Gemini CLI 指令（請改用 --gemini-skills）
 npx cc-sdd@latest --qwen          # Qwen Code
@@ -167,13 +170,13 @@ npx cc-sdd@latest --kiro-dir docs
 project/
 # Skills 模式（建議）: 僅會安裝其中之一
 ├── .claude/skills/           # 17 skills（Claude Code Skills，預設）
-├── .agents/skills/           # 17 skills（Codex Skills）
+├── .agents/skills/           # 17 skills（Codex / Antigravity Skills）
+├── .devin/skills/            # 17 skills (Devin Local / CLI)
 ├── .cursor/skills/           # 17 skills（Cursor Skills）
 ├── .github/skills/           # 17 skills（GitHub Copilot Skills）
-├── .windsurf/skills/         # 17 skills（Windsurf Skills）
+├── .windsurf/skills/         # 17 skills（Deprecated Cascade / Windsurf Skills）
 ├── .opencode/skills/         # 17 skills（OpenCode Skills）
 ├── .gemini/skills/           # 17 skills（Gemini CLI Skills）
-├── .agent/skills/            # 17 skills（Antigravity Skills）
 # 舊版指令模式（已棄用）
 ├── .claude/commands/kiro/    # 11 斜線指令（--claude）
 ├── .github/prompts/          # 11 提示指令（--copilot）

@@ -1,5 +1,9 @@
 # cc-sdd マイグレーションガイド
 
+**Windsurf / Cascade → Devin:** `--windsurf` と `--windsurf-skills` は移行用の非推奨ターゲット。Devin Local / CLI 向けには新しい `--devin` を使う。カスタマイズを保護し、同名スキルを整理する手順は [移行ガイド](../agent-compatibility.md#migrating-windsurf--cascade-to-devin) を参照。
+
+> 現行の Skills モードへの移行は [v2.x → v3.0](#5-v2x--v30) を参照。セクション1〜4は過去のv1→v2移行手順であり、コマンドは `2.0.0` に固定している。
+
 > 📖 **English guide:** [Migration Guide](../migration-guide.md)
 
 v1系（特に1.1.5）とv2.0.0は、**コマンドや agentic SDLC の基本思想は共通**であるものの、設計テンプレートやステアリング（steering）の構造が大幅に変更されている。このガイドでは、「v1.1.5をそのまま使い続ける」か、「非連続的なアップデートと割り切りv2へ移行する」かの選択肢を提示する。後者を選択した場合に、テンプレートとルール（rules）を用いて迅速にカスタマイズを行う手順を解説する。
@@ -11,7 +15,7 @@ v1系（特に1.1.5）とv2.0.0は、**コマンドや agentic SDLC の基本思
 | 目的 | 推奨アクション |
 | --- | --- |
 | 既存の1.x系ワークフローを維持したい | `npx cc-sdd@1.1.5` を明示的に指定し、旧バージョンのCLIを継続利用する。エージェント固有のプロンプトを直接編集する従来のスタイルを維持できるが、利用可能なコマンドは旧来の8つに限られる。 |
-| 8種類のエージェントで共通のテンプレートや、調査（Research）と設計（Design）の分離といった新機能を利用したい | `npx cc-sdd@latest`（v2.0.0相当）を再インストールし、`.kiro/settings/templates/*` と `rules/` のみをカスタマイズする。これにより、`validate-*` コマンド群を含む全11コマンドが利用可能になる。 |
+| 8種類のエージェントで共通のテンプレートや、調査（Research）と設計（Design）の分離といった新機能を利用したい | `npx cc-sdd@2.0.0`を再インストールし、`.kiro/settings/templates/*` と `rules/` のみをカスタマイズする。これにより、`validate-*` コマンド群を含む全11コマンドが利用可能になる。 |
 
 > ⚠️ 1.x系と2.x系の `.kiro` ディレクトリ構成の混在は推奨されない。リポジトリやブランチ単位で、使用するバージョンをどちらか一方に固定すること。
 
@@ -34,7 +38,7 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 
 - `.claude/commands/*` や `.cursor/prompts/*` といったエージェント固有のディレクトリを直接編集する、従来の運用を継続できる。
 - エージェント固有のディレクトリ（例: `.claude/commands/*`）も、v1の構造がそのまま維持される。
-- ただし、新機能は `@latest`（v2系）にのみ追加され、v1.1.5へのバックポートは行われない。
+- ただし、新機能は現行バージョンにのみ追加され、v1.1.5へのバックポートは行われない。
 - `/kiro:validate-gap`、`/kiro:validate-design`、`/kiro:validate-impl` といった検証コマンドはv1.1.5には存在しない。これらの機能が必要な場合は、v2への移行が必須となる。
 
 ---
@@ -61,9 +65,9 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 
 2. **v2 をクリーンインストール（対話的オプションを活用）**
    ```bash
-   npx cc-sdd@latest                 # デフォルト (Claude Code)
-   npx cc-sdd@latest --cursor        # その他エージェント
-   npx cc-sdd@latest --claude-agent  # Subagents モード
+   npx cc-sdd@2.0.0                 # v2 デフォルト (Claude Code)
+   npx cc-sdd@2.0.0 --cursor        # v2 その他エージェント
+   npx cc-sdd@2.0.0 --claude-agent  # v2 Subagents モード
    ```
    - インストーラがファイル群ごとに「上書き(overwrite)」「追記(append)」「保持(keep)」のいずれかを選択するよう尋ねる。既存のステアリング情報や仕様書を維持したい場合は “keep” を、差分を追加したい場合は “append” を選択できる。
 
@@ -80,7 +84,7 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
    - 調査・設計フェーズのテンプレートもステアリング情報を参照するため、既存のメモや覚書はここへ移行することが望ましい。
 
 6. **自動化スクリプトを更新**
-   - CI/CDスクリプトなどは、すべて `npx cc-sdd@latest` を基準とするように統一し、旧式の `@next` 指定は削除する。
+   - v2を継続するスクリプトは `npx cc-sdd@2.0.0` に固定する。現行 Skills モードへ進む場合はセクション5に従う。
    - 旧バージョンのCLIを直接実行していた箇所は、v2で提供される11個のコマンド (`spec-*`, `validate-*`, `steering*`) を使用するように置き換える。
 
 ---
@@ -98,17 +102,17 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 
 ## 5. v2.x → v3.0
 
-> v3.0 は全 `--*-skills` インストールに適用。Skills モードは8プラットフォームで利用可能: Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity。コマンドベースのエージェント（`--claude`, `--cursor` 等）は引き続き動作するが非推奨、将来削除予定。
+> 現行の Skills モードは8プラットフォームに対応: Claude Code, Codex, Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity。Windsurf / Cascade の両ターゲットは移行用の非推奨扱い。ほかのコマンドモード（`--claude`, `--cursor` 等）も非推奨である。subagent の利用可否と inline fallback はホストに依存する。[互換性ガイド](../agent-compatibility.md)を参照。
 
 | 領域 | v2.x | v3.0 |
 | --- | --- | --- |
 | スキル数 | 12-13 | **17** |
 | `/kiro-discovery` | 基本的なアイデア整理 | **ルーティング/スコープ整理のエントリポイント**; `brief.md` を作成し、必要な場合のみ `roadmap.md` も書き出す |
-| `/kiro-spec-batch` | なし | 並列マルチスペック作成 + cross-spec レビュー |
-| `/kiro-impl` | `kiro-spec-impl`（単一パス） | 統合スキル（implementer + reviewer + debugger） |
-| 失敗時デバッグ | なし | **Debug subagent** — フレッシュコンテキストで根本原因調査（最大2ラウンド） |
+| `/kiro-spec-batch` | なし | 依存順の複数spec作成 + cross-spec レビュー（対応ホストでは並列化） |
+| `/kiro-impl` | `kiro-spec-impl`（単一パス） | subagent 利用時は独立した implementer / reviewer / debugger、それ以外は inline fallback |
+| 失敗時デバッグ | なし | **Debug 調査** — subagent 利用時はフレッシュコンテキスト（最大2ラウンド） |
 | 知見引き継ぎ | なし | **Implementation Notes** がタスク間で次の implementer に注入される |
-| Skills 対応 | Claude Code, Codex | **8プラットフォーム**: Claude, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity |
+| Skills 対応 | Claude Code, Codex | **現行8プラットフォーム**: Claude, Codex, Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity。非推奨の Cascade は移行用に維持 |
 | TDD | 基本 TDD | **Feature Flag TDD**: RED → GREEN プロトコル |
 | セッション永続化 | なし | **`brief.md`** がセッション間で永続化 |
 
@@ -120,12 +124,12 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
    npx cc-sdd@latest --codex-skills      # Codex
    npx cc-sdd@latest --cursor-skills     # Cursor IDE
    npx cc-sdd@latest --copilot-skills    # GitHub Copilot
-   npx cc-sdd@latest --windsurf-skills   # Windsurf IDE
+   npx cc-sdd@latest --devin            # Devin Local / CLI (beta)
    npx cc-sdd@latest --opencode-skills   # OpenCode
    npx cc-sdd@latest --gemini-skills     # Gemini CLI
    npx cc-sdd@latest --antigravity       # Antigravity
    ```
-2. **レガシーモードから移行** — `--claude`, `--cursor`, `--copilot`, `--windsurf`, `--opencode`, `--gemini` は非推奨。`--codex` はブロック済み。対応する `--*-skills` フラグを使用。
+2. **レガシーモードから移行** — `--claude`, `--cursor`, `--copilot`, `--opencode`, `--gemini` は非推奨。`--codex` はブロック済み。対応する `--*-skills` フラグを使用する。`--windsurf` と `--windsurf-skills` は、[Cascade の移行手順](../agent-compatibility.md#migrating-windsurf--cascade-to-devin)に従って `--devin` へ移行する。
 3. **`/kiro-discovery`** をエントリポイントとして使用 — `brief.md` + `roadmap.md` が下流スキルに引き継がれる。
 4. **`/kiro-spec-batch`** をマルチフィーチャー作業に使用。
 
@@ -148,4 +152,4 @@ npx cc-sdd@1.1.5 --lang ja      # 旧来の言語オプション
 
 - **v1.1.5の継続利用者**: `npx cc-sdd@1.1.5` のようにバージョンを固定し、従来通りテンプレートやコマンドプロンプトを直接編集する。
 - **v2.xの利用者**: Skills モード（`--*-skills`）への移行を推奨。レガシーコマンドモードは将来削除予定。
-- **v3.0への移行者**: Skills モードで再インストールし、`/kiro-discovery` → `/kiro-spec-batch` → `/kiro-impl` のワークフローを活用する。8プラットフォーム対応、デバッグ自動化、タスク間知見引き継ぎが利用可能。
+- **v3.0への移行者**: セクション5に従って Skills モードを導入し、`/kiro-discovery` で単一specか複数specかに応じた次の手順を確認する。独立レビューや並列実行の可否はホストに依存する。

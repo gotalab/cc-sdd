@@ -2,6 +2,8 @@
 
 Kiro-style Spec-Driven Development on an agentic SDLC
 
+> Deprecated cc-sdd target: this installation is for legacy Windsurf/Cascade. For Devin Local in Devin Desktop or Devin CLI, migrate with `npx cc-sdd@latest --devin`. Review existing skills and AGENTS.md customizations first; cc-sdd does not move or delete the old files.
+
 ## Project Context
 
 ### Paths

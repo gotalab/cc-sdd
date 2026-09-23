@@ -48,7 +48,7 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
 - Progress check: `/kiro-spec-status {feature}` (use anytime)
 
 ## Skills Structure
-Skills are located in `.agent/skills/kiro-*/SKILL.md`
+Skills are located in `.agents/skills/kiro-*/SKILL.md`
 - Each skill is a directory with a `SKILL.md` file
 - Use `/skills` to inspect currently available skills
 - Invoke a skill directly with `/kiro-<skill-name>`
@@ -59,7 +59,9 @@ Skills are located in `.agent/skills/kiro-*/SKILL.md`
 - `kiro-debug` — root-cause-first debug protocol used by debugger subagents
 - `kiro-verify-completion` — fresh-evidence gate before success or completion claims
 
-> Antigravity does not support programmatic sub-agent dispatch. Skills that reference parallel sub-agents will execute sequentially in the main context.
+Antigravity supports native subagents on documented 2.0 / CLI surfaces. Use the subagent tools available in the current session to give implementers, reviewers, and debuggers fresh contexts. If those tools are unavailable or disabled, run sequentially in the main context and report that the review was inline. Do not claim an independent review without a separate reviewer context.
+
+New cc-sdd installs use `.agents/skills`. Existing `.agent/skills` installations remain supported by Antigravity. Before upgrading, reconcile customized skills and any same-named skills used by other agents; the installer does not move or remove the old directory.
 
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation

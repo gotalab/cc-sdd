@@ -1,5 +1,9 @@
 # cc-sdd Migration Guide
 
+**Windsurf / Cascade → Devin:** `--windsurf` and `--windsurf-skills` are deprecated migration targets. Use `--devin` for the new Devin Local / CLI skills adapter. Preserve customizations and reconcile duplicate skill names using the [migration steps](agent-compatibility.md#migrating-windsurf--cascade-to-devin).
+
+> For current skills installations, start with [v2.x to v3.0](#5-v2x-to-v30). Sections 1–4 document the historical v1-to-v2 transition; their v2 commands are pinned to `2.0.0`.
+
 > 📖 **日本語ガイドはこちら:** [マイグレーションガイド (日本語)](ja/migration-guide.md)
 
 cc-sdd 1.x (especially 1.1.5) and 2.0.0 share the same agentic SDLC philosophy and command list, but the **design artifacts, templates, and steering structure were rebuilt from the ground up**. Use this guide to pick one of two clear paths—either keep running 1.1.5 as-is, or accept the discontinuity and move to 2.0.0 where templates/rules make customization instant.
@@ -11,7 +15,7 @@ cc-sdd 1.x (especially 1.1.5) and 2.0.0 share the same agentic SDLC philosophy a
 | Goal | Recommended action |
 | --- | --- |
 | Keep the legacy 1.x workflow untouched | Run `npx cc-sdd@1.1.5` whenever you install/refresh files. Continue editing agent-specific prompt folders (only the original 8 spec/steering commands exist). |
-| Adopt unified templates, research/design split, and consistent behavior across all 8 supported agents | Reinstall with `npx cc-sdd@latest` (=2.0.0) and customize only `.kiro/settings/templates/*` plus `.kiro/settings/rules/` (full 11-command set, including validate-*). |
+| Adopt unified templates, research/design split, and consistent behavior across all 8 supported agents | Reinstall with `npx cc-sdd@2.0.0` and customize only `.kiro/settings/templates/*` plus `.kiro/settings/rules/` (full 11-command set, including validate-*). |
 
 > ⚠️ Mixing 1.x and 2.x layouts in the same `.kiro` tree is not supported. Pick one path per repo/branch.
 
@@ -61,9 +65,9 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 
 2. **Install v2 cleanly (reuse interactive choices)**
    ```bash
-   npx cc-sdd@latest                 # default (Claude Code)
-   npx cc-sdd@latest --cursor        # other agents
-   npx cc-sdd@latest --claude-agent  # Subagents mode
+   npx cc-sdd@2.0.0                 # v2 default (Claude Code)
+   npx cc-sdd@2.0.0 --cursor        # other v2 agents
+   npx cc-sdd@2.0.0 --claude-agent  # v2 Subagents mode
    ```
    - The installer now prompts per file group (overwrite / append / keep). You can choose “append” for steering/specs to merge existing documents, or “keep” to skip untouched assets.
 
@@ -80,7 +84,7 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
    - Research/design templates reference this folder, so migrate existing notes here.
 
 6. **Update automation**
-   - Point all scripts/docs to `npx cc-sdd@latest`; retire `@next` usage.
+   - Pin v2 scripts/docs to `npx cc-sdd@2.0.0`; follow section 5 when upgrading to current skills mode.
    - Map old manual command invocations to the 11 supported ones (`spec-*`, `validate-*`, `steering*`).
 
 ---
@@ -98,7 +102,7 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 
 ## 5. v2.x to v3.0
 
-> v3.0 applies to all `--*-skills` install targets. Skills modes are now available for 8 platforms: Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity. Commands-based agents (`--claude-code`, `--cursor`, etc.) still work but are deprecated and will be removed in a future release.
+> The current skills targets cover 8 platforms: Claude Code, Codex, Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, and Antigravity. Both Windsurf / Cascade targets are deprecated migration options. Other commands-based targets (`--claude-code`, `--cursor`, etc.) also remain deprecated. Native delegation and inline fallbacks vary by host; see [Agent compatibility](agent-compatibility.md).
 
 ### TL;DR
 
@@ -106,15 +110,15 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 | --- | --- | --- |
 | Skill count | 12-13 | **17** |
 | Discovery | Basic idea refinement | **Routing/scoping entry point**; writes `brief.md` and, when needed, `roadmap.md` |
-| Spec batch | N/A | **`/kiro-spec-batch`** -- parallel multi-spec creation with cross-spec review |
-| Implementation | `kiro-spec-impl` (single-pass) | **`/kiro-impl`** -- unified skill with native subagent dispatch (implementer + reviewer + debugger) |
+| Spec batch | N/A | **`/kiro-spec-batch`** -- dependency-wave spec creation with cross-spec review; parallel when supported |
+| Implementation | `kiro-spec-impl` (single-pass) | **`/kiro-impl`** -- native implementer/reviewer/debugger contexts when available; inline fallback otherwise |
 | `--codex prompts` mode | Supported | **Blocked** (use `--codex-skills` instead) |
 | Session persistence | None | **`brief.md`** persists across sessions; downstream skills read it automatically |
 | TDD protocol | Basic TDD | **Feature Flag TDD**: RED then GREEN protocol for safe incremental delivery |
 | Codex cross-spec review | N/A | **`.codex/agents/spec-reviewer.toml`** for Codex installs |
-| Debug on failure | N/A | **Debug subagent** -- fresh context investigation with web search (max 2 rounds) |
+| Debug on failure | N/A | **Debug investigation** -- fresh context when native subagents are available (max 2 rounds) |
 | Learnings propagation | N/A | **Implementation Notes** in tasks.md injected into subsequent implementer prompts |
-| Skills platforms | Claude Code, Codex | **8 platforms**: Claude, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity |
+| Skills platforms | Claude Code, Codex | **8 current platforms**: Claude, Codex, Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity; deprecated Cascade retained |
 
 ### Key migration steps
 
@@ -124,7 +128,7 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
    npx cc-sdd@latest --codex-skills      # Codex
    npx cc-sdd@latest --cursor-skills     # Cursor IDE
    npx cc-sdd@latest --copilot-skills    # GitHub Copilot
-   npx cc-sdd@latest --windsurf-skills   # Windsurf IDE
+   npx cc-sdd@latest --devin            # Devin Local / CLI (beta)
    npx cc-sdd@latest --opencode-skills   # OpenCode
    npx cc-sdd@latest --gemini-skills     # Gemini CLI
    npx cc-sdd@latest --antigravity       # Antigravity
@@ -134,9 +138,9 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 
 3. **Adopt the new entry point** -- start new features with `/kiro-discovery` instead of jumping straight to `/kiro:spec-init`. Discovery now produces `brief.md` and `roadmap.md` that feed into downstream skills.
 
-4. **Use `/kiro-spec-batch`** for multi-feature work -- when your roadmap contains multiple specs, `/kiro-spec-batch` creates them in parallel and runs a cross-spec review to catch contradictions.
+4. **Use `/kiro-spec-batch`** for multi-feature work -- when your roadmap contains multiple specs, `/kiro-spec-batch` creates them by dependency wave (parallel when native subagents are available) and runs a cross-spec review to catch contradictions.
 
-5. **Migrate from legacy modes** -- all non-skills modes (`--claude`, `--cursor`, `--copilot`, `--windsurf`, `--opencode`, `--gemini`) are deprecated and will be removed. `--codex` is already blocked. Use the corresponding `--*-skills` flag.
+5. **Migrate from legacy modes** -- commands modes (`--claude`, `--cursor`, `--copilot`, `--opencode`, `--gemini`) are deprecated; use the corresponding `--*-skills` flag. `--codex` is already blocked. For both `--windsurf` and `--windsurf-skills`, migrate to `--devin` using the [Cascade migration steps](agent-compatibility.md#migrating-windsurf--cascade-to-devin).
 
 6. **Leverage `brief.md` for session continuity** -- after discovery, you can close the session and resume later. The brief file preserves the feature context so you do not need to re-explain scope.
 
@@ -162,5 +166,5 @@ npx cc-sdd@1.1.5 --lang ja       # legacy i18n flags still work
 ## 7. Takeaways
 
 - **Stay on 1.1.5** if you just need the legacy workflow—pin the version and continue as before.
-- **Move to 2.0.0** if you want unified templates, Supporting References, research/design separation, and minimal maintenance via rules.
+- **Use section 5 for current skills mode**. The v2 instructions above are retained for projects intentionally staying on that historical version.
 - Future features and fixes target v2+, so upgrading unlocks the full spec-driven development experience.

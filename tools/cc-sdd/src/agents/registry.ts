@@ -31,6 +31,9 @@ export interface AgentDefinition {
 const makeUpgradeNotice = (flag: string): string =>
   `This mode will be removed in a future release. Migrate now: npx cc-sdd@latest ${flag}`;
 
+const windsurfMigrationNotice =
+  'Windsurf/Cascade is a legacy target. For Devin Local / CLI, migrate with npx cc-sdd@latest --devin. Review existing customizations first; old files are not moved or deleted.';
+
 export const agentDefinitions = {
   'claude-code': {
     label: 'Claude Code',
@@ -285,10 +288,36 @@ export const agentDefinitions = {
     },
     manifestId: 'gemini-cli-skills',
   },
-  windsurf: {
-    label: 'Windsurf IDE',
+  'devin-skills': {
+    label: 'Devin Local / CLI Skills',
     description:
-      'Installs kiro workflows in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro skills for Devin Local in Devin Desktop and Devin CLI in `.devin/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+    aliasFlags: ['--devin', '--devin-skills'],
+    layout: {
+      commandsDir: '.devin/skills',
+      agentDir: '.devin',
+      docFile: 'AGENTS.md',
+    },
+    commands: {
+      spec: '`/kiro-spec-init <what-to-build>`',
+      steering: '`/kiro-steering`',
+      steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
+    },
+    completionGuide: {
+      prependSteps: [
+        'For Devin Local in Devin Desktop or Devin CLI, start with `/kiro-discovery <idea>` when the scope is unclear.',
+      ],
+      appendSteps: [
+        'Use `/kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
+        'When migrating from Cascade, reconcile same-named skills in `.windsurf/skills` and `.devin/skills` and preserve customized AGENTS.md instructions.',
+      ],
+    },
+    manifestId: 'devin-skills',
+  },
+  windsurf: {
+    label: 'Windsurf / Cascade (deprecated)',
+    description:
+      'Installs kiro workflows for Cascade in `.windsurf/workflows/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--windsurf'],
     recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4'],
     layout: {
@@ -301,13 +330,13 @@ export const agentDefinitions = {
       steering: '`/kiro-steering`',
       steeringCustom: '`/kiro-steering-custom <what-to-create-custom-steering-document>`',
     },
-    upgradeNotice: makeUpgradeNotice('--windsurf-skills'),
+    upgradeNotice: windsurfMigrationNotice,
     manifestId: 'windsurf',
   },
   'windsurf-skills': {
-    label: 'Windsurf Skills',
+    label: 'Windsurf / Cascade Skills (deprecated)',
     description:
-      'Installs kiro skills in `.windsurf/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro skills for Cascade in `.windsurf/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--windsurf-skills'],
     recommendedModels: ['Planning / review: Claude Opus 4.6 or newer / gpt-5.4 high', 'Implementation: Claude Sonnet 4.6 or newer / gpt-5.4'],
     layout: {
@@ -328,6 +357,7 @@ export const agentDefinitions = {
         'Use `@kiro-spec-quick <what-to-build> [--auto]` only when you intentionally want the fast path for a single spec.',
       ],
     },
+    upgradeNotice: windsurfMigrationNotice,
     manifestId: 'windsurf-skills',
   },
   'qwen-code': {
@@ -417,11 +447,11 @@ export const agentDefinitions = {
   'antigravity-skills': {
     label: 'Antigravity Skills',
     description:
-      'Installs kiro skills in `.agent/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
+      'Installs kiro skills in `.agents/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--antigravity-skills', '--antigravity'],
     layout: {
-      commandsDir: '.agent/skills',
-      agentDir: '.agent',
+      commandsDir: '.agents/skills',
+      agentDir: '.agents',
       docFile: 'AGENTS.md',
     },
     commands: {

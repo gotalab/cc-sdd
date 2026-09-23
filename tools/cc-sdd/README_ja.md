@@ -8,7 +8,7 @@
 <a href="./README.md">English</a> | 日本語 | <a href="./README_zh-TW.md">繁體中文</a>
 </sub></div>
 
-**承認済みの仕様を、長時間でも壊れない自律実装ワークフローに変える。** ワンコマンドで agentic SDLC ワークフローを Agent Skills として導入する: discovery, requirements, design, tasks, そしてタスクごとの independent review 付きの自律実装。8 つの AI coding agent に対応、同じ 17-skill セットで動作する。
+**承認済みの仕様を、長時間の自律実装ワークフローに変える。** ワンコマンドで agentic SDLC ワークフローを Agent Skills として導入する: discovery, requirements, design, tasks, そしてホストが subagent に対応する場合の独立レビュー付き自律実装。8 つの AI coding agent に対応、同じ 17-skill セットで動作する。
 
 👻 **Kiro スタイル。** Kiro IDE の spec-driven / agentic SDLC スタイル。既存の Kiro 仕様書もそのまま使える。
 
@@ -17,10 +17,10 @@
 cc-sdd v3.0 は Agent Skills と長時間自律実装を軸にした再構築である。
 
 - **`/kiro-discovery` が新しいエントリポイント。** discovery が新規依頼を「既存 spec を拡張 / spec 不要で直接実装 / 1 つの新規 spec / 複数 spec に分解 / mixed decomposition」に振り分ける。`brief.md` と必要に応じて `roadmap.md` を書き出すので、セッションを再開しても scope を説明し直さずに続けられる。
-- **`/kiro-impl` による長時間自律実装。** 各タスクに対し fresh implementer が feature flag 越しに TDD (RED → GREEN) で実装、独立した reviewer が機械的検証、失敗時は auto-debug pass が新しいコンテキストで根本原因を調査する。タスク間の知見は `tasks.md` の `## Implementation Notes` で次の implementer に引き継がれる。1 iteration = 1 task、中断後の再実行も安全。
+- **`/kiro-impl` による長時間自律実装。** subagent が利用可能な場合、タスクごとに fresh implementer が feature flag 越しの TDD (RED → GREEN) で実装し、独立した reviewer が検証する。実装が行き詰まった場合やレビューで繰り返し指摘された場合は auto-debug が根本原因を調査する。利用できない場合は同じコンテキスト内で実装・レビューする。知見と進捗を `tasks.md` に記録し、1 iteration = 1 task で処理する。中断後は未完了の変更や実行中の worker を確認して再開する。
 - **境界中心の spec discipline。** `design.md` に File Structure Plan が入り、タスク境界の根拠になる。タスクには `_Boundary:_` / `_Depends:_` アノテーションが付く。review と validation はスタイルではなく境界違反を見る。
-- **`/kiro-spec-batch` で複数 spec の並列作成。** roadmap から複数 spec を並列生成し、cross-spec review で矛盾・責務重複・インターフェースミスマッチを検出する。
-- **8 つの AI coding agent で Agent Skills を展開。** 17 skills × 8 プラットフォーム、on-demand ロード (progressive disclosure)。Claude Code と Codex は stable、Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity は beta。外部依存なし、subagent は各プラットフォーム標準の spawn で立ち上がる。
+- **`/kiro-spec-batch` で複数 spec を作成。** roadmap の依存順に spec を生成し、subagent が利用可能な場合は並列化する。cross-spec review で矛盾・責務重複・インターフェースミスマッチを検出する。
+- **8 つの AI coding agent で Agent Skills を展開。** 17 skills × 8 プラットフォーム、on-demand ロード (progressive disclosure)。Claude Code と Codex は stable、Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity は beta。利用可能な場合はホスト標準の subagent を使い、利用できない場合は同じコンテキスト内で順次実装・レビューする。
 
 Skills モードのワークフローと `/kiro-impl` 内部の詳細は [スキルリファレンス](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/skill-reference.md) を参照。
 
@@ -48,9 +48,10 @@ npx cc-sdd@latest
 ```bash
 npx cc-sdd@latest --codex-skills --lang ja      # Codex、日本語
 npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE、繁体字中国語
+npx cc-sdd@latest --devin                      # Devin Local / CLI (beta)
 ```
 
-8 つの AI coding agent（Claude Code と Codex は stable、Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, Antigravity は beta）と 14 言語に対応。全リストは [対応エージェント](#対応エージェント) を参照。
+8 つの AI coding agent（Claude Code と Codex は stable、Cursor, Copilot, Devin Local / CLI, OpenCode, Gemini CLI, Antigravity は beta）と 14 言語に対応。全リストは [対応エージェント](#対応エージェント) を参照。
 
 その後、エージェント上で:
 
@@ -71,7 +72,7 @@ npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE、繁体字中国�
 
 レガシーの `/kiro:*` コマンドモード (`--claude`, `--cursor` など) も引き続き利用可能だが、非推奨である。アップグレード手順は [Migration Guide](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/ja/migration-guide.md) を参照。
 
-規模の大きい承認済み task set に対しては、`kiro-impl` を走らせるとタスクごとの subagent spawn、independent review、失敗時の auto-debug 付きで自律実装が始まる。
+規模の大きい承認済み task set は `kiro-impl` で実行する。subagent が利用できる場合はタスクごとの独立した実装・レビューと auto-debug を行い、それ以外は同じコンテキスト内で実装・レビューする。
 
 ## 実際の動き
 
@@ -85,7 +86,7 @@ npx cc-sdd@latest --cursor-skills --lang zh-TW  # Cursor IDE、繁体字中国�
 /kiro-spec-design photo-albums
 /kiro-spec-tasks photo-albums
 /kiro-impl photo-albums
-# 自律実行: タスクごとに fresh implementer, independent reviewer, auto-debug
+# 自律実行: subagent が利用可能なら独立した実装・レビュー、それ以外は同一コンテキスト内で実行
 ```
 
 spec フェーズの典型的な出力（10 分以内）:
@@ -94,11 +95,11 @@ spec フェーズの典型的な出力（10 分以内）:
 - `design.md`: Mermaid 図と File Structure Plan 付きアーキテクチャ。
 - `tasks.md`: 境界と依存関係のアノテーション付き実装タスク。
 
-その後 `/kiro-impl` が feature flag 越しの TDD (RED → GREEN), 独立した reviewer pass, 失敗時の auto-debug と共にタスクを自律実行する。
+ホストで subagent が利用できる場合、`/kiro-impl` は feature flag 越しの TDD (RED → GREEN)、独立レビュー、失敗時の auto-debug でタスクを実行する。利用できない場合は、同じコンテキスト内でレビュープロトコルを適用する。
 
 ## 対応エージェント
 
-全 8 種類の skills variant は同じ 17-skill セットを配信する。違いは各プラットフォーム統合が実運用でどれだけ検証されているか、である。
+現行の 8 種類の統合はそれぞれ 17 skills を配信する。旧 Cascade の variant は移行用として残す。呼び出し方、subagent の利用可否、独立レビューの実行可否は、利用するアプリ・CLI と設定に依存する。
 
 | エージェント | Skills モード | 安定度 | レガシーモード |
 |---|---|---|---|
@@ -106,13 +107,14 @@ spec フェーズの典型的な出力（10 分以内）:
 | **Codex** | `--codex-skills` | Stable | `--codex`（ブロック済み） |
 | **Cursor IDE** | `--cursor-skills` | Beta | `--cursor`（非推奨） |
 | **GitHub Copilot** | `--copilot-skills` | Beta | `--copilot`（非推奨） |
-| **Windsurf IDE** | `--windsurf-skills` | Beta | `--windsurf`（非推奨） |
+| **Devin Local / CLI** | `--devin` / `--devin-skills` | Beta | — |
+| **Windsurf / Cascade (legacy)** | `--windsurf-skills` | Deprecated | `--windsurf`（非推奨） |
 | **OpenCode** | `--opencode-skills` | Beta | `--opencode` / `--opencode-agent`（非推奨） |
 | **Gemini CLI** | `--gemini-skills` | Beta | `--gemini`（非推奨） |
-| **Antigravity** | `--antigravity` | Beta (experimental) | — |
+| **Antigravity** | `--antigravity` | Beta | — |
 | **Qwen Code** | — | — | `--qwen` |
 
-ここでの "Beta" は「機能が不足している」という意味ではない。17 skills とテンプレートは全 8 プラットフォームで同一である。プラットフォーム統合（subagent spawn 挙動、操作感、`SKILL.md` ロード）が Claude Code と Codex に比べて実運用実績が少なく、エッジケースが残っている可能性があるという意味である。問題に遭遇した場合は [Issues](https://github.com/gotalab/cc-sdd/issues) まで報告いただけると助かる。
+安定度は統合の成熟度を表す。17 skills の導入だけでは、自律実装全体の動作確認にはならない。Devin Desktop 内の Devin Local または Devin CLI には `--devin` を使う。新しい beta adapter はインストールとCLIでのスキル認識を確認済みだが、認証後のタスク実行は未確認である。Windsurf のフラグは移行用の非推奨扱いとし、Devin Cloud は新 adapter の対象外である。Copilot の subagent 対応もクライアントごとに異なる。対応範囲と Antigravity の移行手順は [Agent compatibility](https://github.com/gotalab/cc-sdd/blob/main/docs/guides/agent-compatibility.md) を参照。
 
 ## インストール詳細
 
@@ -132,7 +134,8 @@ npx cc-sdd@latest --claude        # Claude Code コマンド（--claude-skills �
 npx cc-sdd@latest --claude-agent  # Claude Code subagent（--claude-skills を使用）
 npx cc-sdd@latest --cursor        # Cursor IDE コマンド（--cursor-skills を使用）
 npx cc-sdd@latest --copilot       # GitHub Copilot プロンプト（--copilot-skills を使用）
-npx cc-sdd@latest --windsurf      # Windsurf IDE ワークフロー（--windsurf-skills を使用）
+npx cc-sdd@latest --windsurf      # 旧 Cascade ワークフロー（--devin に移行）
+npx cc-sdd@latest --windsurf-skills # Deprecated Cascade skills; migrate to --devin
 npx cc-sdd@latest --opencode      # OpenCode コマンド（--opencode-skills を使用）
 npx cc-sdd@latest --gemini        # Gemini CLI コマンド（--gemini-skills を使用）
 npx cc-sdd@latest --qwen          # Qwen Code
@@ -167,13 +170,13 @@ npx cc-sdd@latest --kiro-dir docs
 project/
 # Skills モード（推奨）: いずれか 1 つがインストールされる
 ├── .claude/skills/           # 17 skills（Claude Code Skills、デフォルト）
-├── .agents/skills/           # 17 skills（Codex Skills）
+├── .agents/skills/           # 17 skills（Codex / Antigravity Skills）
+├── .devin/skills/            # 17 skills (Devin Local / CLI)
 ├── .cursor/skills/           # 17 skills（Cursor Skills）
 ├── .github/skills/           # 17 skills（GitHub Copilot Skills）
-├── .windsurf/skills/         # 17 skills（Windsurf Skills）
+├── .windsurf/skills/         # 17 skills（Deprecated Cascade / Windsurf Skills）
 ├── .opencode/skills/         # 17 skills（OpenCode Skills）
 ├── .gemini/skills/           # 17 skills（Gemini CLI Skills）
-├── .agent/skills/            # 17 skills（Antigravity Skills）
 # レガシーコマンドモード（非推奨）
 ├── .claude/commands/kiro/    # 11 スラッシュコマンド（--claude）
 ├── .github/prompts/          # 11 プロンプトコマンド（--copilot）

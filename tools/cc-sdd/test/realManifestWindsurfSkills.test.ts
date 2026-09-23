@@ -67,6 +67,9 @@ describe('real windsurf-skills manifest', () => {
     );
     expect(code).toBe(0);
 
+    expect(ctx.logs.join('\n')).toContain('DEPRECATED:');
+    expect(ctx.logs.join('\n')).toContain('npx cc-sdd@latest --devin');
+
     const doc = join(cwd, 'AGENTS.md');
     expect(await exists(doc)).toBe(true);
     const docText = await readFile(doc, 'utf8');
@@ -74,7 +77,7 @@ describe('real windsurf-skills manifest', () => {
     expect(docText).toContain('@kiro-spec-status');
     expect(docText).not.toContain('$kiro-spec-status');
     expect(docText).not.toContain('/kiro-spec-status');
-    expect(docText).toContain('autonomous mode');
+    expect(docText).toContain('sequential execution in the main context');
     expect(docText).toContain('[--review required|inline|off]');
     expect(docText).toContain('`--review off` skips task-local review');
 

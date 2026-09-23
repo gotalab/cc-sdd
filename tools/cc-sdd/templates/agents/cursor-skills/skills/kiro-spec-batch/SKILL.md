@@ -61,15 +61,16 @@ For each wave, dispatch all features in the wave as **parallel sub-agents**.
 
 ```
 Create a complete specification for feature "{feature-name}".
+Bind the feature argument in each phase to "{feature-name}" (including `$1` or `{feature}` references). This batch uses the existing fast-track mode: supply `-y` to design and tasks before entering their approval checks. Required phase review gates still apply.
 
 1. Read the brief at {{KIRO_DIR}}/specs/{feature-name}/brief.md for feature context
 2. Read the roadmap at {{KIRO_DIR}}/steering/roadmap.md for project context
 3. Execute the full spec pipeline. For each phase, read the corresponding skill's SKILL.md for complete instructions (templates, rules, review gates):
-   a. Initialize: Read .cursor/skills/kiro-spec-init/SKILL.md, then create spec.json and requirements.md
-   b. Generate requirements: Read .cursor/skills/kiro-spec-requirements/SKILL.md, then follow its steps
-   c. Generate design: Read .cursor/skills/kiro-spec-design/SKILL.md, then follow its steps
-   d. Generate tasks: Read .cursor/skills/kiro-spec-tasks/SKILL.md, then follow its steps
-4. Set all approvals to true in spec.json (auto-approve mode, equivalent of -y flag)
+   a. Initialize: If spec.json already exists, reuse that spec without reinitializing or renaming it. Otherwise read .cursor/skills/kiro-spec-init/SKILL.md; use the brief as the project description and initialize spec.json and requirements.md in the existing brief directory. Later phases may update their own artifacts.
+   b. Generate requirements: Read .cursor/skills/kiro-spec-requirements/SKILL.md and execute for feature "{feature-name}"
+   c. Generate design: Read .cursor/skills/kiro-spec-design/SKILL.md and execute with arguments "{feature-name} -y", including required design review
+   d. Generate tasks: Read .cursor/skills/kiro-spec-tasks/SKILL.md and execute with arguments "{feature-name} -y", including required task review
+4. Let each successful phase record its approvals through its documented fast-track flow. If a phase review fails or needs human input, stop this feature and report the blocker; do not force its approvals to true
 5. Report completion with file list and task count
 ```
 
@@ -139,7 +140,7 @@ Next: Review generated specs, then start implementation with /kiro-impl <feature
 </instructions>
 
 ## Critical Constraints
-- **Controller stays lightweight**: Only read roadmap.md and brief.md existence checks in main context. All spec generation happens in sub-agents.
+- **Controller context**: When delegating, keep per-spec generation in workers. In inline fallback, read the phase instructions and spec inputs needed to perform their checks in the main context.
 - **Wave ordering is strict**: Never start a wave until all features in previous waves are complete.
 - **Parallel within waves**: All features in the same wave should be dispatched in parallel if multi-agent is available.
 - **No partial waves**: If a feature in a wave fails, still complete the other features in that wave before reporting.

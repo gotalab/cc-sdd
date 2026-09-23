@@ -1,11 +1,12 @@
 {
   "name": "cc-sdd",
   "version": "3.0.2",
-  "description": "Turn approved specs into long-running autonomous implementation. A minimal, adaptable SDD harness with Agent Skills for Claude Code, Codex, Cursor, Copilot, Windsurf, OpenCode, Gemini CLI, and Antigravity.",
+  "description": "Turn approved specs into long-running autonomous implementation. A minimal, adaptable SDD harness with Agent Skills for Claude Code, Codex, Cursor, Copilot, Devin Local/CLI, OpenCode, Gemini CLI, and Antigravity.",
   "keywords": [
     "claude-code",
     "cursor",
     "windsurf",
+    "devin",
     "gemini-cli",
     "codex",
     "github-copilot",

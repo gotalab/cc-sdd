@@ -95,8 +95,8 @@ Use this table when you are deciding how to enter the workflow, not which skill 
 2. **Spec Initiation** – `/kiro:spec-init <feature>` creates the feature workspace (`.kiro/specs/<feature>/`).
 3. **Requirements** – `/kiro:spec-requirements <feature>` collects clarifications and produces `requirements.md`.
 4. **Design** – `/kiro:spec-design <feature>` first emits/updates `research.md` with investigation notes (skipped when no research is needed), then yields `design.md` for human approval. In 3.0, `design.md` also includes a **File Structure Plan** section that maps directory structure and file responsibilities.
-5. **Task Planning** – `/kiro:spec-tasks <feature>` creates `tasks.md`, mapping deliverables to implementable chunks and tagging each wave with `P0`, `P1`, etc. so teams know which tasks can run in parallel.
-6. **Implementation** – `/kiro:spec-impl <feature> <task-ids>` drives execution and validation. In skills mode, `/kiro-impl` replaces this command and supports both autonomous mode (subagent dispatch per task) and manual mode (TDD in main context). See the Skills Workflow section below.
+5. **Task Planning** – `/kiro:spec-tasks <feature>` creates `tasks.md`, mapping deliverables to implementable chunks and marking parallel-capable tasks with `(P)` immediately after the task number. `_Boundary:_` identifies their component scope, and `_Depends:_` records non-obvious dependencies.
+6. **Implementation** – `/kiro:spec-impl <feature> <task-ids>` drives execution and validation. In skills mode, `/kiro-impl` replaces this command and supports both autonomous mode (per-task subagents when available, otherwise inline execution) and manual mode (TDD in main context). See the Skills Workflow section below.
 7. **Quality Gates** – optional `/kiro:validate-gap` and `/kiro:validate-design` commands compare requirements/design against existing code before implementation.
 8. **Validation** – `/kiro:validate-impl` verifies implementation quality. In skills mode, this command focuses on **integration validation** across tasks rather than per-task checks.
 9. **Status Tracking** – `/kiro:spec-status <feature>` summarises progress and approvals.
@@ -114,7 +114,7 @@ Each phase pauses for human review unless you explicitly bypass it (for example 
 | `/kiro:spec-init <feature>` | Start a new feature | `.kiro/specs/<feature>/`
 | `/kiro:spec-requirements <feature>` | Capture requirements & gaps | `requirements.md`
 | `/kiro:spec-design <feature>` | Produce investigation log + implementation design | `research.md` (when needed), `design.md`
-| `/kiro:spec-tasks <feature>` | Break design into tasks with parallel waves | `tasks.md` (with P-labels)
+| `/kiro:spec-tasks <feature>` | Break design into tasks with explicit parallel candidates | `tasks.md` (with `(P)` markers)
 | `/kiro:spec-impl <feature> <task-ids>` | Implement specific tasks | Code + task updates
 | `/kiro:validate-gap <feature>` | Optional gap analysis vs existing code | `gap-report.md`
 | `/kiro:validate-design <feature>` | Optional design validation | `design-validation.md`
@@ -122,7 +122,7 @@ Each phase pauses for human review unless you explicitly bypass it (for example 
 
 ## Customising the Workflow
 
-- **Templates** – adjust `{{KIRO_DIR}}/settings/templates/{requirements,design,tasks}.md` to mirror your review process. cc-sdd copies these into every spec.
+- **Templates** – adjust `{{KIRO_DIR}}/settings/templates/specs/{requirements,design,tasks}.md` to mirror your review process. Skills and commands read these templates when generating spec artifacts.
 - **Approvals** – embed checklists or required sign-offs in template headers. Agents will surface them during each phase.
 - **Artifacts** – extend templates with additional sections (risk logs, test plans, etc.) to make the generated documents match company standards.
 
@@ -133,29 +133,31 @@ Each phase pauses for human review unless you explicitly bypass it (for example 
 
 ## Skills Workflow (3.0)
 
-Skills mode (`--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--windsurf-skills`, `--opencode-skills`, `--gemini-skills`, `--antigravity`) provides an alternative workflow that uses skill-based commands instead of `/kiro:*` slash commands. The spec phases are the same, but implementation and validation work differently. For the complete skills-mode surface, including `/kiro-impl` subagent flow and customization, see the [Skill Reference](skill-reference.md).
+Skills mode (`--claude-skills`, `--codex-skills`, `--cursor-skills`, `--copilot-skills`, `--devin`, `--opencode-skills`, `--gemini-skills`, `--antigravity`) provides an alternative workflow that uses skill-based commands instead of `/kiro:*` slash commands. The spec phases are the same, but implementation and validation work differently. For the complete skills-mode surface, including `/kiro-impl` subagent flow and customization, see the [Skill Reference](skill-reference.md).
+
+Examples below use slash invocation. Codex uses `$kiro-*`, while Cascade uses `@kiro-*`. Native subagent availability depends on the execution surface and configuration; hosts without it use inline execution and review. See [Agent compatibility](agent-compatibility.md).
 
 ### Commands vs Skills Equivalents
 
 | Phase | Commands Mode | Skills Mode | Notes |
 |-------|--------------|-------------|-------|
 | Discovery | N/A | `/kiro-discovery` | Skills-mode-only routing/scoping entry point; writes brief.md and, when needed, roadmap.md |
-| Spec Batch | N/A | `/kiro-spec-batch` | Parallel multi-spec creation with cross-spec review |
-| Steering | `/kiro:steering` | `/kiro:steering` | Same in both modes |
-| Spec (init through tasks) | `/kiro:spec-init` ... `/kiro:spec-tasks` | Same | Same in both modes |
+| Spec Batch | N/A | `/kiro-spec-batch` | Dependency-wave spec creation with cross-spec review; parallel when supported |
+| Steering | `/kiro:steering` | `/kiro-steering` | Same phase, host-specific invocation |
+| Spec (init through tasks) | `/kiro:spec-init` ... `/kiro:spec-tasks` | `/kiro-spec-init` ... `/kiro-spec-tasks` | Same phases, host-specific invocation |
 | Implementation | `/kiro:spec-impl <feature> <tasks>` | `/kiro-impl` | See below |
 | Validation | `/kiro:validate-impl` | `/kiro-validate-impl` | Integration-focused in skills mode |
 
 ### `/kiro-impl` Modes
 
-- **Autonomous mode** (no task args): Spawns a fresh implementer subagent per task plus an independent reviewer subagent. If the implementer is blocked or the reviewer rejects after 2 remediation rounds, a **debug subagent** is spawned in a fresh context to investigate root causes (with web search) and produce a fix plan. A new implementer then retries with the debug findings. Max 2 debug rounds per task. Cross-cutting insights are recorded as **Implementation Notes** and injected into subsequent implementer prompts.
-- **Manual mode** (with task args): Runs TDD in the main conversation context, similar to the commands-based `/kiro:spec-impl`.
+- **Autonomous mode** (no task args): When native subagents are available, spawns a fresh implementer subagent per task plus an independent reviewer subagent. If the implementer is blocked or the reviewer rejects after 2 remediation rounds, a **debug subagent** is spawned in a fresh context to investigate root causes (with web search) and produce a fix plan. A new implementer then retries with the debug findings. Max 2 debug rounds per task. Cross-cutting insights are recorded as **Implementation Notes** and injected into subsequent implementer prompts.
+- **Manual mode** (with task args): Runs TDD in the main conversation context. Review is required by default before completion, using a fresh reviewer when supported or the inline review protocol otherwise.
 
-Both modes enforce **1-task-per-iteration** discipline for context hygiene during long runs and are **session-resume safe** -- you can re-run `/kiro-impl` after an interruption without losing progress. Both modes also follow the **Feature Flag TDD** protocol (RED then GREEN) for safe, incremental delivery.
+Both modes process **one task per iteration** and record progress in `tasks.md`. Before resuming an interrupted run, inspect unfinished changes and any active workers; recorded progress does not guarantee recovery on every host. Both modes follow the **Feature Flag TDD** protocol (RED then GREEN).
 
 ### `/kiro-spec-batch` for Parallel Spec Creation
 
-`/kiro-spec-batch` creates multiple specs in parallel from the roadmap produced by `/kiro-discovery`. After all specs are generated, it runs a **cross-spec review** to detect contradictions, duplicated responsibilities, and interface mismatches across the batch. For Codex installs, the cross-spec review is delegated to `.codex/agents/spec-reviewer.toml`.
+`/kiro-spec-batch` creates specs by dependency wave from the roadmap produced by `/kiro-discovery`, in parallel when native subagents are available and sequentially otherwise. It then runs a **cross-spec review** to detect contradictions, duplicated responsibilities, and interface mismatches. Codex installs include `.codex/agents/spec-reviewer.toml` for delegation when available; fallback reviews are reported as inline.
 
 ### Session Persistence via `brief.md`
 

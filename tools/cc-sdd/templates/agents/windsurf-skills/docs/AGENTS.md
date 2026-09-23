@@ -2,11 +2,13 @@
 
 Kiro-style Spec-Driven Development on an agentic SDLC
 
+> Deprecated cc-sdd target: this installation is for legacy Windsurf/Cascade. For Devin Local in Devin Desktop or Devin CLI, migrate with `npx cc-sdd@latest --devin`. Review existing skills and AGENTS.md customizations first; cc-sdd does not move or delete the old files.
+
 ## Project Memory
-Project memory keeps persistent guidance (steering, specs notes, component docs) so Windsurf honors your standards each run. Treat it as the long-lived source of truth for patterns, conventions, and decisions.
+Project memory keeps persistent guidance (steering, specs notes, component docs) so Cascade honors your standards each run. Treat it as the long-lived source of truth for patterns, conventions, and decisions.
 
 - Use `{{KIRO_DIR}}/steering/` for project-wide policies: architecture principles, naming schemes, security constraints, tech stack decisions, api standards, etc.
-- Use local `AGENTS.md` files for feature or library context (e.g. `src/lib/payments/AGENTS.md`): describe domain assumptions, API contracts, or testing conventions specific to that folder. Windsurf auto-loads these when working in the matching path.
+- Use local `AGENTS.md` files for feature or library context (e.g. `src/lib/payments/AGENTS.md`): describe domain assumptions, API contracts, or testing conventions specific to that folder. Cascade auto-loads these when working in the matching path.
 - Specs notes stay with each spec (under `{{KIRO_DIR}}/specs/`) to guide specification-level workflows.
 
 ## Project Context
@@ -39,9 +41,9 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
     - `@kiro-spec-design {feature} [-y]`
     - `@kiro-validate-design {feature}` (optional: design review)
     - `@kiro-spec-tasks {feature} [-y]`
-  - Multi-spec: `@kiro-spec-batch` — creates all specs from roadmap.md in parallel by dependency wave
+  - Multi-spec: `@kiro-spec-batch` — creates specs from roadmap.md sequentially by dependency wave
 - Phase 2 (Implementation): `@kiro-impl {feature} [tasks] [--review required|inline|off]`
-  - Without task numbers: autonomous mode (subagent per task + independent review + final validation)
+  - Without task numbers: sequential execution in the main context, with inline review and final validation
   - With task numbers: manual mode (selected tasks in main context, still reviewer-gated before completion)
   - `--review off` skips task-local review; use it intentionally and keep `@kiro-validate-impl {feature}` as the final quality gate
   - `@kiro-validate-impl {feature}` (standalone re-validation)
@@ -59,7 +61,9 @@ Skills are located in `.windsurf/skills/kiro-*/SKILL.md`
 - `kiro-debug` — root-cause-first debug protocol used by debugger subagents
 - `kiro-verify-completion` — fresh-evidence gate before success or completion claims
 
-> Windsurf does not support programmatic sub-agent dispatch. Skills that reference parallel sub-agents will execute sequentially in the main context.
+This installation targets Cascade in Devin Desktop (formerly Windsurf). The `--windsurf-skills` flag and `.windsurf/skills` destination are retained for compatibility. Cascade uses `@kiro-<skill-name>` invocation and executes these workflows sequentially in the main context, including inline review.
+
+Devin Local / CLI is a separate harness with native subagents and slash-invoked skills. Devin Cloud is another execution surface. Use the separate `--devin` / `--devin-skills` installation for Devin Local / CLI. Devin Cloud is outside that adapter’s scope. Do not apply Cascade’s delegation limitation to those agents.
 
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation

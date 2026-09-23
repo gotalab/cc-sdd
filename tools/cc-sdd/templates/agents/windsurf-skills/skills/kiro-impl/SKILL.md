@@ -1,6 +1,6 @@
 ---
 name: kiro-impl
-description: Implement approved tasks using TDD with subagent dispatch. Runs all pending tasks autonomously or selected tasks manually.
+description: Implement approved tasks in Cascade using TDD and inline review. Runs all pending tasks or selected tasks in the main context.
 ---
 
 
@@ -8,7 +8,7 @@ description: Implement approved tasks using TDD with subagent dispatch. Runs all
 
 <background_information>
 You operate in two modes:
-- **Autonomous mode** (no task numbers): Dispatch a fresh sub-agent per task, with independent review after each
+- **Autonomous mode** (no task numbers): Process all pending tasks sequentially in the main context, with inline review after each
 - **Manual mode** (task numbers provided): Execute selected tasks directly in the main context
 
 - **Success Criteria**:
@@ -30,18 +30,11 @@ You operate in two modes:
 
 Reuse steering/spec context already available from conversation; load missing context below.
 Select skills for the current task even when steering/spec context is already available:
-- `{{KIRO_DIR}}/specs/{feature}/spec.json`, `requirements.md`, `design.md`, `tasks.md`
+- `{{KIRO_DIR}}/specs/{feature}/spec.json` and `tasks.md` for approvals, task selection, and dependencies
+- Referenced sections of `requirements.md` and `design.md`, expanding to related contracts as needed for the selected task
 - Core steering context: `product.md`, `tech.md`, `structure.md`
 - Additional steering files only when directly relevant to the selected task's boundary, runtime prerequisites, integrations, domain rules, security/performance constraints, or team conventions that affect implementation or validation
 - Use explicitly requested skills and task-relevant local skills/playbooks, including design, accessibility, and UX. Select by description and read only needed guidance, even for small tasks; preserve required checks and host/project rules.
-
-### Parallel Research
-
-The following research areas are independent and can be executed in parallel:
-1. **Spec context loading**: spec.json, requirements.md, design.md, tasks.md
-2. **Steering, playbooks, & patterns**: Core steering, task-relevant extra steering, matching local agent skills/playbooks, and existing code patterns
-
-After all parallel research completes, synthesize implementation brief before starting.
 
 ### Preflight
 
@@ -83,7 +76,9 @@ After all parallel research completes, synthesize implementation brief before st
 
 **Iteration discipline**: Process exactly ONE sub-task (e.g., 1.1) per iteration. Do NOT batch multiple sub-tasks into a single sub-agent dispatch. Each iteration follows the full cycle: dispatch implementer → review → commit → re-read tasks.md → next.
 
-**Context management**: At the start of each iteration, re-read `tasks.md` to determine the next actionable sub-task. Do NOT rely on accumulated memory of previous iterations. After completing each iteration, retain only a one-line summary (e.g., "1.1: READY_FOR_REVIEW, 3 files changed") and discard the full status report and reviewer details.
+**Context management**: Re-read `tasks.md` before each iteration. Carry forward the task outcome, commit/evidence references, unresolved constraints, and relevant Implementation Notes; do not repeat completed worker transcripts in later handoffs.
+
+**Delegation scope**: Use native subagents for these task-local steps, passing the focused inputs below rather than the full parent conversation. Independent feature/PR chats and their worktrees are managed through the host; do not create a standalone chat for each implementation or review step.
 
 If multi-agent capability is available, for each task (one at a time):
 
@@ -148,21 +143,14 @@ If multi-agent capability is available, for each task (one at a time):
 
 **g) Debug subagent** (triggered by BLOCKED, NEEDS_CONTEXT unresolved, or REJECTED after 2 remediation rounds):
 
-The debug subagent runs in a **fresh context** — it receives only the error information, not the failed implementation history. This avoids the context pollution that causes infinite retry loops.
-
 - Read `templates/debugger-prompt.md` from this skill's directory
-- Construct a debug prompt with:
-  - The error description / blocker reason / reviewer rejection findings
-  - `git diff` of the current uncommitted changes
-  - The task description and relevant spec section numbers
-  - Paths to spec files so the debugger can read them
-- The debugger must apply the `kiro-debug` protocol to this failure investigation.
-- Preserve rich failure context: error output, reviewer findings, current `git diff`, task/spec refs, and any relevant Implementation Notes.
-- When available, the debugger should inspect runtime/config state and use web or official documentation research to validate root-cause hypotheses before proposing a fix plan.
-- Spawn a fresh sub-agent with this prompt
+- Resolve `../kiro-debug/SKILL.md` relative to this skill's directory and pass its absolute path as `DEBUG_PROTOCOL_PATH`
+- Supply the task brief/boundary, exact spec references, failure output, reviewer findings, current changed files/diff, and relevant Implementation Notes/runtime constraints
+- Include attempted fixes and their observed results concisely, without copying the failed workers' conversation history
+- Spawn a fresh sub-agent with these inputs; it reads the canonical `kiro-debug` procedure itself
 
 **Handle debug report**:
-- Parse `NEXT_ACTION` from the debug report's exact structured field.
+- Require a `## Debug Report` and parse its exact `- NEXT_ACTION:` field (`RETRY_TASK | BLOCK_TASK | STOP_FOR_HUMAN`). If the protocol or a valid report is missing, stop this feature and report the missing input; do not guess a next action or dispatch another implementer.
 - If `NEXT_ACTION: STOP_FOR_HUMAN` → append `_Blocked: <ROOT_CAUSE>_` to tasks.md, stop the feature run, and report that human review is required before continuing
 - If `NEXT_ACTION: BLOCK_TASK` → append `_Blocked: <ROOT_CAUSE>_` to tasks.md, skip to next task
 - If `NEXT_ACTION: RETRY_TASK` → preserve the current worktree; do NOT reset or discard unrelated changes. Spawn a **new** implementer sub-agent with the original task context (including selected skill guidance), the debug report's `FIX_PLAN`, `NOTES`, and the current `git diff`, and require it to repair the task with explicit edits only
@@ -173,7 +161,7 @@ The debug subagent runs in a **fresh context** — it receives only the error in
 
 **`(P)` markers**: Tasks marked `(P)` in tasks.md indicate they have no inter-dependencies and could theoretically run in parallel. However, kiro-impl processes them sequentially (one at a time) to avoid git conflicts and simplify review. The `(P)` marker is informational for task planning, not an execution directive.
 
-**Fallback**: Windsurf does not support programmatic sub-agent dispatch. Execute all tasks sequentially in the main context using the manual mode execution flow below.
+**Cascade execution**: This compatibility installation targets Cascade, which does not expose programmatic subagent dispatch. Execute all tasks sequentially in the main context using the manual mode execution flow below and identify review as inline. This limitation does not describe Devin Local / CLI.
 
 ### Manual Mode (main context)
 

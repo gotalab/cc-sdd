@@ -264,8 +264,9 @@ describe('real codex-skills manifest', () => {
     expect(await exists(debugPrompt)).toBe(true);
     const debugPromptText = await readFile(debugPrompt, 'utf8');
     expect(debugPromptText).toContain('Apply the `kiro-debug` protocol');
-    expect(debugPromptText).toContain('web or official docs research');
-    expect(debugPromptText).toContain('repo-fixability judgment');
+    expect(debugPromptText).toContain('DEBUG_PROTOCOL_PATH');
+    expect(debugPromptText).toContain('read the file directly');
+    expect(debugPromptText).toContain('NEXT_ACTION: RETRY_TASK | BLOCK_TASK | STOP_FOR_HUMAN');
 
     const skillReview = join(cwd, '.agents/skills/kiro-review/SKILL.md');
     expect(await exists(skillReview)).toBe(true);
@@ -281,6 +282,7 @@ describe('real codex-skills manifest', () => {
     expect(skillDebugText).toContain('Search the Web if Available');
     expect(skillDebugText).toContain('NEXT_ACTION: RETRY_TASK | BLOCK_TASK | STOP_FOR_HUMAN');
     expect(skillDebugText).toContain('TASK_ORDERING_PROBLEM');
+    expect(skillDebugText).toContain('TASK_DECOMPOSITION_PROBLEM');
 
     const skillVerifyCompletion = join(cwd, '.agents/skills/kiro-verify-completion/SKILL.md');
     expect(await exists(skillVerifyCompletion)).toBe(true);

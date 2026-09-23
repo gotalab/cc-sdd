@@ -58,6 +58,10 @@ Skills are located in `.github/skills/kiro-*/SKILL.md`
 - `kiro-debug` — root-cause-first debug protocol used by debugger subagents
 - `kiro-verify-completion` — fresh-evidence gate before success or completion claims
 
+## Execution Surface
+
+Copilot capabilities depend on the client. VS Code and Copilot CLI support native subagents; GitHub.com supports skills but does not provide the same subagent surface. Check the tools actually available in this session before dispatching. When delegation is unavailable, use the skill’s inline fallback and report inline review rather than independent subagent review.
+
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation
 - Human review required each phase; use `-y` only for intentional fast-track
