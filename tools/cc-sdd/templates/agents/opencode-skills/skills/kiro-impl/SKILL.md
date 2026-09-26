@@ -1,6 +1,9 @@
 ---
 name: kiro-impl
 description: Implement approved tasks using TDD with subagent dispatch. Runs all pending tasks autonomously or selected tasks manually.
+disable-model-invocation: true
+allowed-tools: Read, Write, Edit, MultiEdit, Bash, Glob, Grep, Agent, WebSearch, WebFetch
+argument-hint: <feature-name> [task-numbers] [--review required|inline|off]
 ---
 
 

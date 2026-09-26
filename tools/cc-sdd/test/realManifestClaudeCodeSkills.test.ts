@@ -230,6 +230,7 @@ describe('real claude-code-skills manifest', () => {
       'kiro-spec-quick',
       'kiro-spec-batch',
       'kiro-impl',
+      'kiro-ralph-impl',
       'kiro-validate-impl',
       'kiro-discovery',
       'kiro-review',
@@ -246,7 +247,7 @@ describe('real claude-code-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 
-  it('generates exactly 17 skill directories', async () => {
+  it('generates exactly 18 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(['--lang', 'en', '--manifest', manifestPath, '--overwrite=force', '--claude-skills'], runtime, ctx.io, {}, { cwd, templatesRoot: process.cwd() });
@@ -263,6 +264,7 @@ describe('real claude-code-skills manifest', () => {
       'kiro-spec-requirements',
       'kiro-spec-tasks',
       'kiro-impl',
+      'kiro-ralph-impl',
       'kiro-steering',
       'kiro-steering-custom',
       'kiro-validate-design',
@@ -280,6 +282,11 @@ describe('real claude-code-skills manifest', () => {
     expect(await exists(join(cwd, '.claude/skills/kiro-impl/templates/implementer-prompt.md'))).toBe(true);
     expect(await exists(join(cwd, '.claude/skills/kiro-impl/templates/reviewer-prompt.md'))).toBe(true);
     expect(await exists(join(cwd, '.claude/skills/kiro-impl/templates/debugger-prompt.md'))).toBe(true);
+
+    // kiro-ralph-impl has prompt templates
+    expect(await exists(join(cwd, '.claude/skills/kiro-ralph-impl/templates/implementer-prompt.md'))).toBe(true);
+    expect(await exists(join(cwd, '.claude/skills/kiro-ralph-impl/templates/reviewer-prompt.md'))).toBe(true);
+    expect(await exists(join(cwd, '.claude/skills/kiro-ralph-impl/templates/debugger-prompt.md'))).toBe(true);
 
     // No agents directory (tdd-task-implementer removed)
     expect(await exists(join(cwd, '.claude/agents'))).toBe(false);

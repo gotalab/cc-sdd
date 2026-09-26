@@ -28,6 +28,15 @@
         "toDir": "{{KIRO_DIR}}/settings/templates"
       },
       "when": { "agent": "opencode-skills" }
+    },
+    {
+      "id": "opencode_plugins",
+      "source": {
+        "type": "templateDir",
+        "fromDir": "templates/agents/opencode-agent/plugin",
+        "toDir": ".opencode/plugin"
+      },
+      "when": { "agent": "opencode-skills" }
     }
   ]
 }

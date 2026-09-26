@@ -183,7 +183,7 @@ describe('real opencode-skills manifest', () => {
     expect(requirementsReviewGate).toContain('## Structure and Quality Review');
 
     // Skills without shared-rules should NOT have rules/ directories
-    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-batch', 'kiro-impl', 'kiro-validate-impl', 'kiro-discovery'];
+    const noRulesSkills = ['kiro-spec-init', 'kiro-spec-status', 'kiro-spec-quick', 'kiro-spec-batch', 'kiro-impl', 'kiro-ralph-impl', 'kiro-validate-impl', 'kiro-discovery'];
     for (const skill of noRulesSkills) {
       expect(await exists(join(cwd, `.opencode/skills/${skill}/rules`))).toBe(false);
     }
@@ -191,7 +191,7 @@ describe('real opencode-skills manifest', () => {
     expect(ctx.logs.join('\n')).toMatch(/\d+\/\d+ files written/);
   });
 
-  it('generates exactly 17 skill directories', async () => {
+  it('generates exactly 18 skill directories', async () => {
     const cwd = await mkTmp();
     const ctx = makeIO();
     await runCli(
@@ -211,6 +211,7 @@ describe('real opencode-skills manifest', () => {
       'kiro-spec-design',
       'kiro-spec-tasks',
       'kiro-impl',
+      'kiro-ralph-impl',
       'kiro-spec-status',
       'kiro-steering',
       'kiro-steering-custom',
@@ -243,5 +244,10 @@ describe('real opencode-skills manifest', () => {
     expect(reviewPromptText).toContain('REVIEW_PROTOCOL_PATH');
     expect(reviewPromptText).toContain('read the file directly');
     expect(reviewPromptText).toContain('The parent controller parses the exact `- VERDICT:` line');
+
+    // kiro-ralph-impl has prompt templates
+    expect(await exists(join(cwd, '.opencode/skills/kiro-ralph-impl/templates/implementer-prompt.md'))).toBe(true);
+    expect(await exists(join(cwd, '.opencode/skills/kiro-ralph-impl/templates/reviewer-prompt.md'))).toBe(true);
+    expect(await exists(join(cwd, '.opencode/skills/kiro-ralph-impl/templates/debugger-prompt.md'))).toBe(true);
   });
 });
