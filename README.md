@@ -171,6 +171,25 @@ npx cc-sdd@latest --dry-run
 npx cc-sdd@latest --kiro-dir docs
 ```
 
+### Autohand Code (manual)
+
+cc-sdd does not currently ship a native Autohand installer target. Autohand Code can still read the existing Agent Skills templates if you copy complete skill folders into its skills directory:
+
+```bash
+git clone https://github.com/gotalab/cc-sdd.git
+cd cc-sdd
+
+# Global install
+mkdir -p ~/.autohand/skills/
+cp -R tools/cc-sdd/templates/agents/codex-skills/skills/kiro-* ~/.autohand/skills/
+
+# Project-level install
+mkdir -p .autohand/skills/
+cp -R tools/cc-sdd/templates/agents/codex-skills/skills/kiro-* .autohand/skills/
+```
+
+Autohand Code also supports `autohand --skill-install` for cataloged skills, with `--project` for workspace-level installs. Until cc-sdd is listed there, use the direct copy path above.
+
 ## Customization
 
 Edit templates and rules in `{{KIRO_DIR}}/settings/` to match your team's workflow.
