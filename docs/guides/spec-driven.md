@@ -198,3 +198,4 @@ After an upstream fix lands, re-run validation and the relevant runtime smoke ch
 - [Claude Code Subagents Workflow](claude-subagents.md)
 - [OpenAI: Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/)
 - [InfoQ: Spec Driven Development: When Architecture Becomes Executable](https://www.infoq.com/articles/spec-driven-development/)
+- [MySpec: Web-based SDD platform and architecture contracts](https://myspec.dev?utm_source=github&utm_medium=referral&utm_campaign=gotalab-ccsdd)
