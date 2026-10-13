@@ -18,6 +18,15 @@ argument-hint: <feature-name:$1> [task-numbers:$2]
 ## Core Task
 Execute implementation tasks for feature **$1** using Test-Driven Development.
 
+## Task Hierarchy and Completion
+
+- A major task with sub-tasks is a container, not a separate execution unit. Identify children by their numbered prefix (`1.1`, `1.2` belong to `1.`), regardless of indentation or `(P)` markers.
+- A major task without sub-tasks is an executable task. Apply the same implementation, review, verification, and checkbox rules as for an executable sub-task; this also applies in mixed task lists.
+- A container is complete if and only if all of its sub-tasks are `[x]`, including optional `*` sub-tasks, and none are blocked. If any child is unchecked or blocked, the container is incomplete. Do not infer child completion from a checked parent.
+- Selecting a container task number expands to its executable sub-tasks; selecting a standalone major task executes that task. For all-pending mode, queue unchecked executable tasks only, not container rows. Preserve dependency and blocked-task checks.
+- After each task checkbox update, re-read tasks.md and synchronize its parent: set the container to `[x]` only when all children are complete; otherwise set it to `[ ]`. Reconcile stale container checkboxes before queue selection and before final validation, including when there are no pending executable tasks. Do not change executable checkboxes without the required implementation/review/verification evidence.
+- Count executable tasks only when reporting progress; do not count containers twice. In autonomous mode, the parent controller owns checkbox synchronization and includes it in the task commit.
+
 ## Execution Steps
 
 ### Step 1: Load Context
@@ -61,7 +70,7 @@ For each selected task, follow Kent Beck's TDD cycle:
    - Code coverage maintained or improved
 
 5. **MARK COMPLETE**:
-   - Update checkbox from `- [ ]` to `- [x]` in tasks.md
+   - Update the executable task checkbox from `- [ ]` to `- [x]` in tasks.md, then synchronize its parent as specified above
 
 ## Critical Constraints
 - **TDD Mandatory**: Tests MUST be written before implementation code

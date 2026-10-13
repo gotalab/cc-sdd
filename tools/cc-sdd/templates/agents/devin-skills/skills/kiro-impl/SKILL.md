@@ -26,6 +26,15 @@ You operate in two modes:
 
 <instructions>
 
+## Task Hierarchy and Completion
+
+- A major task with sub-tasks is a container, not a separate execution unit. Identify children by their numbered prefix (`1.1`, `1.2` belong to `1.`), regardless of indentation or `(P)` markers.
+- A major task without sub-tasks is an executable task. Apply the same implementation, review, verification, and checkbox rules as for an executable sub-task; this also applies in mixed task lists.
+- A container is complete if and only if all of its sub-tasks are `[x]`, including optional `*` sub-tasks, and none are blocked. If any child is unchecked or blocked, the container is incomplete. Do not infer child completion from a checked parent.
+- Selecting a container task number expands to its executable sub-tasks; selecting a standalone major task executes that task. For all-pending mode, queue unchecked executable tasks only, not container rows. Preserve dependency and blocked-task checks.
+- After each task checkbox update, re-read tasks.md and synchronize its parent: set the container to `[x]` only when all children are complete; otherwise set it to `[ ]`. Reconcile stale container checkboxes before queue selection and before final validation, including when there are no pending executable tasks. Do not change executable checkboxes without the required implementation/review/verification evidence.
+- Count executable tasks only when reporting progress; do not count containers twice. In autonomous mode, the parent controller owns checkbox synchronization and includes it in the task commit.
+
 ## Step 1: Gather Context
 
 Reuse steering/spec context already available from conversation; load missing context below.
@@ -63,8 +72,8 @@ Select skills for the current task even when steering/spec context is already av
   - `--review off`, `skip review`, or `without review` → `off`
 
 **Build task queue**:
-- Read tasks.md, identify actionable sub-tasks (X.Y numbering like 1.1, 2.3)
-- Major tasks (1., 2.) are grouping headers, not execution units
+- Read tasks.md, identify executable tasks: sub-tasks (X.Y numbering like 1.1, 2.3) and major tasks without children (1., 2.)
+- Major tasks with children are containers; apply Task Hierarchy and Completion above
 - Skip tasks with `_Blocked:_` annotation
 - For each selected task, check `_Depends:_` annotations -- verify referenced tasks are `[x]`
 - If prerequisites incomplete, execute them first or warn the user
@@ -74,7 +83,7 @@ Select skills for the current task even when steering/spec context is already av
 
 ### Autonomous Mode (sub-agent dispatch)
 
-**Iteration discipline**: Process exactly ONE sub-task (e.g., 1.1) per iteration. Do NOT batch multiple sub-tasks into a single sub-agent dispatch. Each iteration follows the full cycle: dispatch implementer → review → commit → re-read tasks.md → next.
+**Iteration discipline**: Process exactly ONE executable task (e.g., 1.1 or standalone 2.) per iteration. Do NOT batch multiple executable tasks into a single sub-agent dispatch. Each iteration follows the full cycle: dispatch implementer → review → commit → re-read tasks.md → next.
 
 **Context management**: Re-read `tasks.md` before each iteration. Carry forward the task outcome, commit/evidence references, unresolved constraints, and relevant Implementation Notes; do not repeat completed worker transcripts in later handoffs.
 
@@ -128,11 +137,11 @@ If multi-agent capability is available, for each task (one at a time):
 **d) Handle reviewer verdict**:
 - If review mode is `off`:
   - Do not fabricate a reviewer verdict
-  - Before marking the task `[x]` or making any success claim, apply `kiro-verify-completion` using fresh evidence from the current code state; then mark task `[x]` in tasks.md and perform selective git commit
+  - Before marking the task `[x]` or making any success claim, apply `kiro-verify-completion` using fresh evidence from the current code state; then mark task `[x]`, synchronize its parent as specified above, and perform selective git commit
 - Otherwise:
   - Parse reviewer verdict only from the exact `## Review Verdict` block and `- VERDICT:` field.
   - If `VERDICT` is missing, ambiguous, or replaced with prose, re-dispatch the reviewer once requesting the exact structured verdict only. Do NOT mark the task complete, commit, or continue to the next task without a parseable `APPROVED | REJECTED` value.
-  - **APPROVED** → before marking the task `[x]` or making any success claim, apply `kiro-verify-completion` using fresh evidence from the current code state; then mark task `[x]` in tasks.md and perform selective git commit
+  - **APPROVED** → before marking the task `[x]` or making any success claim, apply `kiro-verify-completion` using fresh evidence from the current code state; then mark task `[x]`, synchronize its parent as specified above, and perform selective git commit
   - **REJECTED (round 1-2)** → re-dispatch implementer with review feedback
   - **REJECTED (round 3)** → dispatch debug subagent (see section below)
 
@@ -188,8 +197,8 @@ Before writing any code, read the relevant sections of requirements.md and desig
   - `inline`: Apply `kiro-review` in the main context before marking the task complete.
   - `off`: Skip task-local review, but note that `kiro-validate-impl` becomes the primary quality gate before any feature-level completion claim.
 - **MARK COMPLETE**:
-  - `required|inline`: Only after review returns `APPROVED`, apply `kiro-verify-completion`, then update the checkbox from `- [ ]` to `- [x]` in tasks.md.
-  - `off`: Apply `kiro-verify-completion`, then update the checkbox from `- [ ]` to `- [x]` in tasks.md.
+  - `required|inline`: Only after review returns `APPROVED`, apply `kiro-verify-completion`, then update the executable task checkbox from `- [ ]` to `- [x]` in tasks.md and synchronize its parent as specified above.
+  - `off`: Apply `kiro-verify-completion`, then update the executable task checkbox from `- [ ]` to `- [x]` in tasks.md and synchronize its parent as specified above.
 
 ## Step 4: Final Validation
 
