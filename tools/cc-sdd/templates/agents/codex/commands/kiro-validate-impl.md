@@ -22,6 +22,15 @@ arguments:
 ## Core Task
 Validate implementation for feature(s) and task(s) based on approved specifications.
 
+## Task Hierarchy and Completion
+
+- A major task with sub-tasks is a container, not a separate execution unit. Identify children by their numbered prefix (`1.1`, `1.2` belong to `1.`), regardless of indentation or `(P)` markers.
+- A major task without sub-tasks is an executable task. Apply the same implementation, review, verification, and checkbox rules as for an executable sub-task; this also applies in mixed task lists.
+- A container is complete if and only if all of its sub-tasks are `[x]`, including optional `*` sub-tasks, and none are blocked. If any child is unchecked or blocked, the container is incomplete. Do not infer child completion from a checked parent.
+- Evaluate container completion from its children before checking task completion or dependencies. A stale parent checkbox alone must not cause NO-GO when all children are complete; report the bookkeeping mismatch. A checked parent cannot hide an unchecked or blocked child.
+- Do not modify tasks.md during validation. Report stale parent checkboxes for the implementation command to synchronize. Standalone major tasks and selected executable sub-tasks must themselves be `[x]`.
+- Selecting a container for validation expands to all of its executable sub-tasks. For explicit sub-task validation, unchecked siblings outside the selected scope do not fail that sub-task or mark its parent complete. For feature-level GO, every executable task must be complete and all existing test, coverage, design, integration, and blocked-task gates must pass. Count executable tasks only in task coverage.
+
 ## Execution Steps
 
 ### 1. Detect Validation Target
@@ -56,7 +65,7 @@ For each detected feature:
 For each task, verify:
 
 #### Task Completion Check
-- Checkbox is `[x]` in tasks.md
+- Executable task checkbox is `[x]` in tasks.md; evaluate containers from their children as specified above
 - If not completed, flag as "Task not marked complete"
 
 #### Test Coverage Check

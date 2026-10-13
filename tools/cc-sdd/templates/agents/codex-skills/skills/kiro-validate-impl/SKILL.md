@@ -16,7 +16,7 @@ Boundary terminology continuity:
 - feature validation checks for cross-task `Boundary Violations`
 
 - **Success Criteria**:
-  - All tasks marked `[x]` in tasks.md
+  - All executable tasks marked `[x]` in tasks.md; container completion derived from their children
   - Full test suite passes (not just per-task tests)
   - Cross-task integration works (data flows between components, interfaces match)
   - Requirements coverage is complete across all tasks (no gaps between tasks)
@@ -29,6 +29,15 @@ This skill's main question is: when the completed tasks are viewed together, do 
 </background_information>
 
 <instructions>
+## Task Hierarchy and Completion
+
+- A major task with sub-tasks is a container, not a separate execution unit. Identify children by their numbered prefix (`1.1`, `1.2` belong to `1.`), regardless of indentation or `(P)` markers.
+- A major task without sub-tasks is an executable task. Apply the same implementation, review, verification, and checkbox rules as for an executable sub-task; this also applies in mixed task lists.
+- A container is complete if and only if all of its sub-tasks are `[x]`, including optional `*` sub-tasks, and none are blocked. If any child is unchecked or blocked, the container is incomplete. Do not infer child completion from a checked parent.
+- Evaluate container completion from its children before checking task completion or dependencies. A stale parent checkbox alone must not cause NO-GO when all children are complete; report the bookkeeping mismatch. A checked parent cannot hide an unchecked or blocked child.
+- Do not modify tasks.md during validation. Report stale parent checkboxes for the implementation command to synchronize. Standalone major tasks and selected executable sub-tasks must themselves be `[x]`.
+- Selecting a container for validation expands to all of its executable sub-tasks. For explicit sub-task validation, unchecked siblings outside the selected scope do not fail that sub-task or mark its parent complete. For feature-level GO, every executable task must be complete and all existing test, coverage, design, integration, and blocked-task gates must pass. Count executable tasks only in task coverage.
+
 ## Execution Steps
 
 ### 1. Detect Validation Target

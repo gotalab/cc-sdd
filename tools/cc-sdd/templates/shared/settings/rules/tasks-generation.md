@@ -154,6 +154,13 @@ Before writing `tasks.md`, review the draft task plan and repair local issues un
 - If a major task would contain only a single actionable item, collapse the structure and promote the sub-task to the major level (e.g., replace `1.1` with `1.`).
 - When a major task exists purely as a container, keep the checkbox description concise and avoid duplicating detailed bullets—reserve specifics for its sub-tasks.
 
+## Task Hierarchy and Completion
+
+- A major task with sub-tasks is a container, not a separate execution unit. Identify children by their numbered prefix (`1.1`, `1.2` belong to `1.`), regardless of indentation or `(P)` markers.
+- A major task without sub-tasks is an executable task. Apply the same implementation, review, verification, and checkbox rules as for an executable sub-task; this also applies in mixed task lists.
+- A container is complete if and only if all of its sub-tasks are `[x]`, including optional `*` sub-tasks, and none are blocked. If any child is unchecked or blocked, the container is incomplete. Do not infer child completion from a checked parent.
+- Generate both standalone executable major tasks and container rows with checkboxes. Keep container details in their children and synchronize container checkboxes after child state changes; never auto-complete a standalone major task from an empty child list.
+
 ### Sequential Numbering
 - Major tasks MUST increment: 1, 2, 3, 4, 5...
 - Sub-tasks reset per major task: 1.1, 1.2, then 2.1, 2.2...
