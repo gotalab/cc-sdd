@@ -40,6 +40,7 @@ export const agentDefinitions = {
     recommendedModels: [
       'Planning / review: Claude Opus 4.6 or newer',
       'Implementation: Claude Sonnet 4.6 or newer',
+      'MiniMax-M3.1-Flash',
       'MiniMax-M3',
     ],
     layout: {
@@ -66,6 +67,7 @@ export const agentDefinitions = {
     recommendedModels: [
       'Planning / review: Claude Opus 4.6 or newer',
       'Implementation: Claude Sonnet 4.6 or newer',
+      'MiniMax-M3.1-Flash',
       'MiniMax-M3',
     ],
     layout: {
@@ -92,6 +94,7 @@ export const agentDefinitions = {
     recommendedModels: [
       'Planning / review: Claude Opus 4.6 or newer',
       'Implementation: Claude Sonnet 4.6 or newer',
+      'MiniMax-M3.1-Flash',
       'MiniMax-M3',
     ],
     layout: {
@@ -141,7 +144,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro skills in `.agents/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--codex-skills'],
-    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4'],
+    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4', 'MiniMax-M3.1-Flash', 'MiniMax-M3'],
     layout: {
       commandsDir: '.agents/skills',
       agentDir: '.agents',
@@ -364,7 +367,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro prompts in `.opencode/commands/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode'],
-    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4', 'MiniMax-M3'],
+    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4', 'MiniMax-M3.1-Flash', 'MiniMax-M3'],
     layout: {
       commandsDir: '.opencode/commands',
       agentDir: '.opencode',
@@ -383,7 +386,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro commands in `.opencode/commands/`, a kiro agent library in `.opencode/agents/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode-agent'],
-    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4', 'MiniMax-M3'],
+    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4', 'MiniMax-M3.1-Flash', 'MiniMax-M3'],
     layout: {
       commandsDir: '.opencode/commands',
       agentDir: '.opencode',
@@ -405,7 +408,7 @@ export const agentDefinitions = {
     description:
       'Installs kiro skills in `.opencode/skills/kiro-*/`, shared settings in `{{KIRO_DIR}}/settings/`, and an AGENTS.md quickstart.',
     aliasFlags: ['--opencode-skills'],
-    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4', 'MiniMax-M3'],
+    recommendedModels: ['Planning / review: gpt-5.4 high or xhigh', 'Implementation: gpt-5.4', 'MiniMax-M3.1-Flash', 'MiniMax-M3'],
     layout: {
       commandsDir: '.opencode/skills',
       agentDir: '.opencode',
