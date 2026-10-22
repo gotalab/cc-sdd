@@ -17,23 +17,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: tools/cc-sdd/package.json
+
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
           check-latest: true
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Toolchain versions
+        run: node --version && pnpm --version && npm --version
+
       - name: Install
         working-directory: tools/cc-sdd
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         working-directory: tools/cc-sdd
-        run: npm run build --if-present
+        run: pnpm run build
 
       - name: Test
         working-directory: tools/cc-sdd
-        run: npm test --if-present
+        run: pnpm test
 
       - name: Publish
         working-directory: tools/cc-sdd

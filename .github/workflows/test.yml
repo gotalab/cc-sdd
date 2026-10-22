@@ -1,0 +1,32 @@
+name: Test Package
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/cc-sdd
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: tools/cc-sdd/package.json
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          check-latest: true
+      - name: Toolchain versions
+        run: node --version && pnpm --version && npm --version
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm run build
+      - name: Check npm package
+        run: npm pack --dry-run
