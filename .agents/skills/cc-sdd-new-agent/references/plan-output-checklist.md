@@ -30,7 +30,7 @@ Use this checklist before completing the planning phase.
 - Expected file counts where relevant
 
 5. Verification plan
-- `npm test`
+- `pnpm test`
 - build + dry-run
 - temp directory apply test
 - language option checks (`ja`, `en`)

@@ -91,8 +91,8 @@ Always document compatibility impact and CLI flag impact in the plan.
 ### 5) Verify Before Reporting
 
 Run verification in `tools/cc-sdd`:
-- `npm test`
-- `npm run build && node dist/index.js --agent {agent-id} --dry-run`
+- `pnpm test`
+- `pnpm run build && node dist/index.js --agent {agent-id} --dry-run`
 - local temp-directory apply test with `--overwrite=force`
 - language checks (`--lang ja`, `--lang en`)
 - generated file count checks
